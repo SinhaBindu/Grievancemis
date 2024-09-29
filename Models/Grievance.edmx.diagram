@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="54fdc407e0da4715b74d4f0b9760a9ff" Name="Diagram1" ZoomLevel="72" >
+        <EntityTypeShape EntityType="Grievance_DBModel.AspNetRole" Width="1.5" PointX="3.75" PointY="2.5" />
+        <EntityTypeShape EntityType="Grievance_DBModel.AspNetUserClaim" Width="1.5" PointX="8.25" PointY="1" />
+        <EntityTypeShape EntityType="Grievance_DBModel.AspNetUserLogin" Width="1.5" PointX="8.25" PointY="3.75" />
+        <EntityTypeShape EntityType="Grievance_DBModel.AspNetUser" Width="1.5" PointX="6" PointY="1.375" />
+        <AssociationConnector Association="Grievance_DBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="Grievance_DBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="Grievance_DBModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="Grievance_DBModel.m_State_Master" Width="1.5" PointX="3.375" PointY="6.75" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Grievance" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_LoginVerification" Width="1.5" PointX="0.75" PointY="6.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

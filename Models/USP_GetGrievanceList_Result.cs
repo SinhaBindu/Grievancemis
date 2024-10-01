@@ -10,17 +10,18 @@
 namespace Grievancemis.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Tbl_LoginVerification
+    public partial class USP_GetGrievanceList_Result
     {
         public System.Guid Id { get; set; }
         public string Email { get; set; }
-        public Nullable<bool> Issent { get; set; }
-        public string VerificationCode { get; set; }
-        public Nullable<long> Timeminutes { get; set; }
-        public Nullable<bool> IsActive { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
-        public Nullable<bool> IsValidEmailId { get; set; }
+        public string Name { get; set; }
+        public string PhoneNo { get; set; }
+        public string GrievanceType { get; set; }
+        public string StateName { get; set; }
+        public string Location { get; set; }
+        public string Title { get; set; }
+        public string Grievance_Message { get; set; }
+        public Nullable<bool> IsConsent { get; set; }
     }
 }

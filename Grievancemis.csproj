@@ -47,6 +47,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="SubSonic.Core">
+      <HintPath>E:\proj\nopCommerce_3.60_Source\Presentation\Nop.Web\bin\SubSonic.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -178,6 +181,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Manager\CommonModel.cs" />
+    <Compile Include="Manager\SP_Model.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>Grievance.tt</DependentUpon>
@@ -217,10 +221,10 @@
     <Compile Include="Models\Tbl_Grievance.cs">
       <DependentUpon>Grievance.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tbl_LoginVerification.cs">
+    <Compile Include="Models\GrivanceModel.cs" />
+    <Compile Include="Models\USP_GetGrievanceList_Result.cs">
       <DependentUpon>Grievance.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GrivanceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -278,6 +282,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="SubSonic.Core.dll" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

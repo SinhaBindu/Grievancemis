@@ -6,8 +6,10 @@ using System.Web;
 
 namespace Grievancemis.Models
 {
+
     public class GrivanceModel
     {
+
         [Key]
         public Guid Id { get; set; }
 
@@ -75,11 +77,15 @@ namespace Grievancemis.Models
         [Display(Name = "Deleted On")]
         public DateTime? DeletedOn { get; set; }
 
-        [Display(Name = "VerificationCode")]
-        public string VerificationCode { get; set; }
+        [Display(Name = "StateName")]
+        public string StateName { get; set; }
+
+        //[Display(Name = "GrievanceType")]
+        //public string GrievanceType { get; set; }
 
 
 
         public List<GrivanceModel> Grievances { get; set; }
+
     }
 }

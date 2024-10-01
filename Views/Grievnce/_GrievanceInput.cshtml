@@ -1,4 +1,9 @@
-﻿@model IEnumerable<Grievancemis.Models.GrivanceModel>
+﻿@model DataTable
+@using System.Data
+@using Grievancemis.Manager
+{
+
+}
 
 <strong>Grievance </strong>
 <div class="row row-deck">
@@ -6,30 +11,28 @@
         <div class="card">
             <div class="table-responsive">
                 <table class="table table-bordered table-hover dt-responsive display tbl" id="Tbl_Grievance" width="100%">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Email</th>
-                            <th>Name</th>
-                            <th>Grievance Type</th>
-                            <th>State</th>
-                            <th>Location</th>
-                            <th>Title</th>
-                            <th>Grievance Message</th>
-                        </tr>
-                    </thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Grievance Type</th>
+                        <th>State</th>
+                        <th>Location</th>
+                        <th>Title</th>
+                        <th>Grievance Message</th>
+                    </tr>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (DataRow row in Model.Rows)
                         {
                             <tr>
-                                <td>@item.Id</td>
-                                <td>@item.Email</td>
-                                <td>@item.Name</td>
-                                <td>@item.GrievanceType</td>
-                                <td>@item.StateId</td>
-                                <td>@item.Location</td>
-                                <td>@item.Title</td>
-                                <td>@item.GrievanceMessage</td>
+                                <td>@row["Id"]</td>
+                                <td>@row["Email"]</td>
+                                <td>@row["Name"]</td>
+                                <td>@row["GrievanceType"]</td>
+                                <td>@row["StateName"]</td>
+                                <td>@row["Location"]</td>
+                                <td>@row["Title"]</td>
+                                <td>@row["Grievance_Message"]</td>
                             </tr>
                         }
                     </tbody>
@@ -37,4 +40,23 @@
             </div>
         </div>
     </div>
+</div>
+<div class="filters">
+    <label>State:</label>
+    <select id="state-filter">
+        @*<option value="">All</option>*@
+        @foreach (var state in CommonModel.GetState(true))
+        {
+            <option value="@state.Value">@state.Text</option>
+        }
+    </select>
+    <label>Grievance Type:</label>
+    <select id="type-filter">
+        @*<option value="">All</option>*@
+        @foreach (var type in CommonModel.GetGrievanceType(true))
+        {
+            <option value="@type.Value">@type.Text</option>
+        }
+    </select>
+    <button id="search-button" class="btn btn-primary">Search</button>
 </div>

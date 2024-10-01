@@ -88,19 +88,6 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="IsDeletedOn" Type="datetime" />
         </EntityType>
-        <EntityType Name="Tbl_LoginVerification">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="250" />
-          <Property Name="Issent" Type="bit" />
-          <Property Name="VerificationCode" Type="nvarchar" MaxLength="25" />
-          <Property Name="Timeminutes" Type="bigint" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
-          <Property Name="IsValidEmailId" Type="bit" />
-        </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -129,6 +116,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="USP_GetGrievanceList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Grievance_DBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -137,7 +125,6 @@
           <EntitySet Name="M_GrievanceType" EntityType="Self.M_GrievanceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="m_State_Master" EntityType="Self.m_State_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Grievance" EntityType="Self.Tbl_Grievance" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_LoginVerification" EntityType="Self.Tbl_LoginVerification" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -165,9 +152,9 @@
           </AssociationSet>
           <EntitySet Name="m_State_Master" EntityType="Grievance_DBModel.m_State_Master" />
           <EntitySet Name="Tbl_Grievance" EntityType="Grievance_DBModel.Tbl_Grievance" />
-          <EntitySet Name="Tbl_LoginVerification" EntityType="Grievance_DBModel.Tbl_LoginVerification" />
           <EntitySet Name="AspNetRoles" EntityType="Grievance_DBModel.AspNetRole" />
           <EntitySet Name="M_GrievanceType" EntityType="Grievance_DBModel.M_GrievanceType" />
+          <FunctionImport Name="USP_GetGrievanceList" ReturnType="Collection(Grievance_DBModel.USP_GetGrievanceList_Result)" />
         </EntityContainer>
         <EntityType Name="AspNetUserClaim">
           <Key>
@@ -267,19 +254,6 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="IsDeletedOn" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="Tbl_LoginVerification">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Issent" Type="Boolean" />
-          <Property Name="VerificationCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="Timeminutes" Type="Int64" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="IsValidEmailId" Type="Boolean" />
-        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -297,6 +271,18 @@
           <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <ComplexType Name="USP_GetGrievanceList_Result">
+          <Property Type="Guid" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="PhoneNo" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="GrievanceType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StateName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Title" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Grievance_Message" Nullable="true" />
+          <Property Type="Boolean" Name="IsConsent" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -372,20 +358,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_LoginVerification">
-            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_LoginVerification">
-              <MappingFragment StoreEntitySet="Tbl_LoginVerification">
-                <ScalarProperty Name="IsValidEmailId" ColumnName="IsValidEmailId" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Timeminutes" ColumnName="Timeminutes" />
-                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
-                <ScalarProperty Name="Issent" ColumnName="Issent" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="Grievance_DBModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
@@ -405,6 +377,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="USP_GetGrievanceList" FunctionName="Grievance_DBModel.Store.USP_GetGrievanceList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Grievance_DBModel.USP_GetGrievanceList_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="GrievanceType" ColumnName="GrievanceType" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Grievance_Message" ColumnName="Grievance_Message" />
+                <ScalarProperty Name="IsConsent" ColumnName="IsConsent" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

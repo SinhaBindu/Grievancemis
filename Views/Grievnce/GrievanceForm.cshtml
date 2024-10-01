@@ -35,6 +35,7 @@
         background-color: #f9f9f9;
         padding: 20px;
     }
+
     .hide {
         display: none;
     }
@@ -48,95 +49,95 @@
                 {
                     @Html.AntiForgeryToken()
 
-                <div class="form-horizontal">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="button" id="send-code" class="btn btn-default">Send Code</button>
-                            <button type="button" id="verify-code" class="btn btn-default hide">Verify Code</button>
-                            <input type="text" id="verification-code" class="form-control hide" placeholder="Enter verification code">
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="button" id="send-code" class="btn btn-default">Send Code</button>
+                                <button type="button" id="verify-code" class="btn btn-default hide">Verify Code</button>
+                                <input type="text" id="verification-code" class="form-control hide" placeholder="Enter verification code">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group hide">
-                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        <div class="form-group hide">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group hide">
-                        @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                        <div class="form-group hide">
+                            @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group hide">
-                        @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
+                        <div class="form-group hide">
+                            @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group hide">
-                        @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                        <div class="form-group hide">
+                            @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
+                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group hide">
-                        @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                        <div class="form-group hide">
+                            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Location, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group hide">
-                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                        <div class="form-group hide">
+                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group hide">
-                        @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control", rows = 5 })
-                            @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
+                        <div class="form-group hide">
+                            @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control", rows = 5 })
+                                @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group hide">
-                        @*@Html.LabelFor(model => model.IsConsent, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                        <div class="col-md-10">
-                            @Html.CheckBoxFor(model => model.IsConsent)
-                            @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additonal document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
-                            @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
+                        <div class="form-group hide">
+                            @*@Html.LabelFor(model => model.IsConsent, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                            <div class="col-md-10">
+                                @Html.CheckBoxFor(model => model.IsConsent)
+                                @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additonal document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
+                                @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group hide">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
+                        <div class="form-group hide">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Save" class="btn btn-default" />
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
             </div>
         </div>
@@ -150,7 +151,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/JS/Master.js"></script>
-    
+
     <script>
         $(document).ready(function () {
             $('#Email').on('blur', function () {
@@ -237,6 +238,22 @@
                 });
             });
         });
-       
+        $('#search-button').on('click', function () {
+            var stateFilter = $('#state-filter').val();
+            var typeFilter = $('#type-filter').val();
+            $.ajax({
+                type: "GET",
+                url: "/Grievnce/GetGrievances",
+                data: { stateFilter: stateFilter, typeFilter: typeFilter },
+                success: function (data) {
+                    $("#grievances-list").html(data);
+                    $('#Tbl_Grievance').DataTable();
+                }
+            });
+        });
+
+
     </script>
+   
+
 }

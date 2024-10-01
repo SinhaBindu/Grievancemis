@@ -75,7 +75,11 @@ namespace Grievancemis.Models
         [Display(Name = "Deleted On")]
         public DateTime? DeletedOn { get; set; }
 
-       
+        [Display(Name = "VerificationCode")]
+        public string VerificationCode { get; set; }
+
+
+
         public List<GrivanceModel> Grievances { get; set; }
     }
 }

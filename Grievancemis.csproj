@@ -208,6 +208,9 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\M_GrievanceType.cs">
+      <DependentUpon>Grievance.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\m_State_Master.cs">
       <DependentUpon>Grievance.tt</DependentUpon>
     </Compile>
@@ -375,7 +378,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
- 
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

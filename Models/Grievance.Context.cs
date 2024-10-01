@@ -25,12 +25,13 @@ namespace Grievancemis.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<m_State_Master> m_State_Master { get; set; }
         public virtual DbSet<Tbl_Grievance> Tbl_Grievance { get; set; }
         public virtual DbSet<Tbl_LoginVerification> Tbl_LoginVerification { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<M_GrievanceType> M_GrievanceType { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Grievancemis.Models;
+using Grievancemis.Manager;
 
 namespace Grievancemis.Controllers
 {
@@ -39,6 +40,7 @@ namespace Grievancemis.Controllers
                 _signInManager = value; 
             }
         }
+        
 
         public ApplicationUserManager UserManager
         {

@@ -79,6 +79,20 @@ namespace Grievancemis.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Phone Number")]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Invalid phone number format.")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Role")]
+        public string RoleID { get; set; }
+        [Display(Name = "Role")]
+        public string RoleName { get; set; }
+        public string Id { get; set; }
+
+
+
     }
 
     public class ResetPasswordViewModel

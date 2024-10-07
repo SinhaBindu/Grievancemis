@@ -12,8 +12,6 @@ namespace Grievancemis.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
-    using System.Linq;
     
     public partial class Grievance_DBEntities : DbContext
     {
@@ -27,17 +25,15 @@ namespace Grievancemis.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<m_State_Master> m_State_Master { get; set; }
-        public virtual DbSet<Tbl_Grievance> Tbl_Grievance { get; set; }
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<m_District_Master> m_District_Master { get; set; }
         public virtual DbSet<M_GrievanceType> M_GrievanceType { get; set; }
-    
-        public virtual ObjectResult<USP_GetGrievanceList_Result> USP_GetGrievanceList()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_GetGrievanceList_Result>("USP_GetGrievanceList");
-        }
+        public virtual DbSet<m_State_Master> m_State_Master { get; set; }
+        public virtual DbSet<Tbl_ExceptionHandle> Tbl_ExceptionHandle { get; set; }
+        public virtual DbSet<Tbl_Grievance> Tbl_Grievance { get; set; }
+        public virtual DbSet<Tbl_LoginVerification> Tbl_LoginVerification { get; set; }
     }
 }

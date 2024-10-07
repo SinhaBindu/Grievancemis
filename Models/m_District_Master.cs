@@ -10,18 +10,13 @@
 namespace Grievancemis.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class USP_GetGrievanceList_Result
+    public partial class m_District_Master
     {
-        public System.Guid Id { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
-        public string PhoneNo { get; set; }
-        public string GrievanceType { get; set; }
+        public int DistrictId_pk { get; set; }
+        public Nullable<int> StateId_fk { get; set; }
         public string StateName { get; set; }
-        public string Location { get; set; }
-        public string Title { get; set; }
-        public string Grievance_Message { get; set; }
-        public Nullable<bool> IsConsent { get; set; }
+        public string DistrictName { get; set; }
     }
 }

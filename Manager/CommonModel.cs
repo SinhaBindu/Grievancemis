@@ -102,9 +102,6 @@ namespace Grievancemis.Manager
         }
         #endregion
 
-
-        #region Master 
-
         //public static List<SelectListItem> GetGrievanceType()
         //{
         //    List<SelectListItem> list = new List<SelectListItem>();
@@ -119,6 +116,7 @@ namespace Grievancemis.Manager
         //    list.Add(new SelectListItem { Value = "8", Text = "Unsafe Working Conditions" });
         //    return list;
         //}
+        #region Master 
         public static List<SelectListItem> GetGrievanceType(bool IsAll = false)
         {
             Grievance_DBEntities db_ = new Grievance_DBEntities();
@@ -171,8 +169,6 @@ namespace Grievancemis.Manager
                 throw;
             }
         }
-       
-
         public static List<SelectListItem> GetState(bool IsAll = false)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
@@ -192,9 +188,88 @@ namespace Grievancemis.Manager
                 throw;
             }
         }
-        
         #endregion
 
+        public static int SendMailForUser(string Toemailid)
+        {
+            Grievance_DBEntities _db = new Grievance_DBEntities();
+            int noofsend = 0;
+            string To = "", Subject = "", Body = "", ReceiverName = "Hi,"
+                , SenderName = "", RandomValue = "", OTPCode = "";
+            string ASDT = ""; string DurationTime = ""; string BatchName = "";
+            string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
+            string OtherEmailID = "sinhabinduk@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
+            Grievance_DBEntities db_ = new Grievance_DBEntities();
+            string bodydata = string.Empty;
+            string bodyTemplate = string.Empty;
+            Guid AssessmentScheduleId_pk = Guid.Empty;
+            Guid ParticipantId = Guid.Empty;
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
+            {
+                bodyTemplate = reader.ReadToEnd();
+            }
+            try
+            {
+                Random random = new Random();
+
+                // Generate a random double between 0.0 and 1.0
+                int randomNumber = random.Next(0, 1011455); // Generates a number between 0.0 and 1.0
+
+                var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
+                var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
+                tbl_v.Id = Guid.NewGuid();
+                tbl_v.EmailId = Toemailid.Trim();
+                tbl_v.VerificationCode = randomNumber.ToString();
+                tbl_v.CreatedOn = DateTime.Now;
+                tbl_v.StartTime = DateTime.Now.TimeOfDay;
+                tbl_v.EndTime = DateTime.Now.TimeOfDay;
+                tbl_v.Date = DateTime.Now.Date;
+                tbl_v.IsActive = true;
+                tbl_v.IsValidEmailId = false;
+                _db.Tbl_LoginVerification.Add(tbl_v);
+                _db.SaveChanges();
+
+                To = Toemailid;
+
+                bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
+                    .Replace("{bodytext}", "When the user submits the code for verification, check if the code was generated within the last hour. If the current time exceeds the one-hour limit, the OTP is invalid.")
+                    .Replace("{EmailID}", To)
+                    .Replace("{OTPCode}", tbl_v.VerificationCode);
+                //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
+                //{
+                //    bodyTemplate = reader.ReadToEnd();
+                //}
+                //bodyTemplate = "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n\t\t<tbody>\r\n <tr>\r\n\t\t\t<td align=\"center\"> " + bodydata + "\r\n\t\t\t\t\r\n  \t</tbody></tr>\r\n</table>";
+                MailMessage mail = new MailMessage();
+                //mail.To.Add("bindu@careindia.org");
+                mail.To.Add(To + "," + OtherEmailID);
+                mail.From = new MailAddress("kgbvjh4care@gmail.com", "Grievance Query");
+                //mail.From = new MailAddress("hunarmis2024@gmail.com");
+                mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
+
+                //bodydata = bodyTemplate.Replace("{bodytext}", Body);
+                mail.Body = bodydata;
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.UseDefaultCredentials = false;
+                //smtp.Credentials = new System.Net.NetworkCredential("hunarmis2024@gmail.com", "Hunar@2024");//Pasw-Care@321 // Enter seders User name and password       
+                //smtp.Credentials = new System.Net.NetworkCredential("careindiabtsp@gmail.com", "gupczsbvzinhivzw");//Pasw-Care@321 // Enter seders User name and password       
+                smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+                tbl_v.Issent = true;
+                tbl_v.SentOn = DateTime.Now;
+                _db.SaveChanges();
+                return 1;
+
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
 
     }
 }

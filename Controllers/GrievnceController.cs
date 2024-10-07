@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using Antlr.Runtime.Tree;
 using Grievancemis.Manager;
 using Grievancemis.Models;
 
@@ -18,6 +19,112 @@ namespace Grievancemis.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult GrievanceCaseAdd() { return View(); }
+        [HttpPost]
+        public ActionResult GrievanceCaseAdd(GrivanceModel grievanceModel)
+        {
+            try
+            {
+                int res = 0;
+                if (ModelState.IsValid)
+                {
+                    using (var db = new Grievance_DBEntities())
+                    {
+                        Tbl_Grievance tbl_Grievance = new Tbl_Grievance
+                        {
+                            Id = Guid.NewGuid(),
+                            Email = grievanceModel.Email,
+                            Name = grievanceModel.Name,
+                            PhoneNo = grievanceModel.PhoneNo,
+                            GrievanceType = grievanceModel.GrievanceType,
+                            StateId = grievanceModel.StateId,
+                            Location = grievanceModel.Location,
+                            Title = grievanceModel.Title,
+                            Grievance_Message = grievanceModel.GrievanceMessage,
+                            IsConsent = grievanceModel.IsConsent,
+                            IsActive = true,
+                            CreatedOn = DateTime.Now
+                        };
+                        db.Tbl_Grievance.Add(tbl_Grievance);
+                        res = db.SaveChanges();
+                    }
+                    if (res > 0)
+                    {
+                        return Json(new { success = true, message = "Data saved successfully!" });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Failed to save data. Please try again." });
+                    }
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Invalid input. Please check your form data." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult OPtSendMail(string EmailId, string OPTCode)
+        {
+            var res = -1;
+            if (!string.IsNullOrWhiteSpace(EmailId) && string.IsNullOrWhiteSpace(OPTCode))
+            {
+                var vildemailid = EmailId.Trim().Split('@')[1];
+                if (vildemailid.ToLower() == "pciglobal.in")
+                {
+                    res = CommonModel.SendMailForUser(EmailId);
+                    if (res == 1)
+                    {
+                        return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
+                    }
+                    return Json(new { success = false, message = "EmailId not verify.", resdata = res });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(EmailId) && !string.IsNullOrWhiteSpace(OPTCode))
+            {
+                Grievance_DBEntities _db = new Grievance_DBEntities();
+                var vildemailid = EmailId.Trim().Split('@')[1];
+                if (vildemailid.ToLower() == "pciglobal.in")
+                {
+                    var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim())?.FirstOrDefault();// && x.Date == DateTime.Now.Date
+                    if (tbl != null)
+                    {
+                        tbl.IsValidEmailId = true;
+                        tbl.IsActive = false;
+                        res = _db.SaveChanges();
+                        if (res == 1)
+                        {
+                            return Json(new { success = true, message = "EmailId Invalid.", resdata = 2 });
+                        }
+                    }
+                    else
+                    {
+                        tbl.IsValidEmailId = false;
+                        tbl.IsActive = false;
+                    }
+                    res = _db.SaveChanges();
+                    if (res == 1)
+                    {
+                        return Json(new { success = false, message = "EmailId Invalid.", resdata = 3 });
+                    }
+                }
+                else
+                {
+                    return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
+                }
+            }
+
+            return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
         }
         public ActionResult GrievanceForm()
         {

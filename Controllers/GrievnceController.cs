@@ -95,7 +95,7 @@ namespace Grievancemis.Controllers
                 Grievance_DBEntities _db = new Grievance_DBEntities();
                 var vildemailid = EmailId.Trim().Split('@')[1];
                 if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com")
-                {
+                { 
                     var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim())?.FirstOrDefault();// && x.Date == DateTime.Now.Date
                     if (tbl != null)
                     {

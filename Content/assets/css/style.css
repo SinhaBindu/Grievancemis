@@ -1,0 +1,41 @@
+﻿img {
+    width: 100%;
+    height: auto;
+}
+.main-header {
+    padding: 10px 20px 5px;
+    background: #fff;
+}
+.header {
+    margin: auto;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-middle {
+    width: 160px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 35px;
+    font-weight: bold;
+}
+    .header-middle span {
+        padding: 10px 15px;
+        background: #F3987A;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: normal;
+        color: #fff;
+        margin-right: 12px
+    }
+.header-middle i {
+    margin-right: 10px
+}
+.login-btn {
+    padding: 8px 22px;
+    background: #DCDEF9;
+    border-radius: 5px;
+    color: #000
+}

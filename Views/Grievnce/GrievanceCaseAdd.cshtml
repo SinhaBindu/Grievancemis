@@ -16,23 +16,40 @@
     <link rel="icon" href="~/Content/assets/images/favicon.ico" />
 
     <link rel="stylesheet" href="~/Content/assets/css/style.min.css" />
+    <link href="~/Content/assets/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
-</head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" /></head>
 <body>
+    <!-- Header -->
+    <div class="main-header">
+        <div class="header">
+            <a href="/">
+                <img src="~/Content/assets/images/pci_logo.png" alt="PCI logo" />
+            </a>
+            <div class="header-middle">
+                <span class=""><i class="fa fa-phone"></i>139</span>Call Us
+            </div>
+            <a href="#" class="login-btn">Login</a>
+        </div>
+    </div>
+    <!-- Banner -->
+    <div class="page-banenr">
+        <img src="~/Content/assets/images/grievance-banner.jpg" alt="Grievance Banner" />
+    </div>
+    <!-- Content -->
     <div class="wrapper-page">
-        <div class="navbar" id="navbar">
+        @*<div class="navbar" id="navbar">
             <div class="container">
                 <a class="logo" href="/" style="margin-right:20px;"><img src="~/Content/assets/images/pci_logo.png" style="width:152px;" /></a>
                 <div class="menu-btn-wrapper">
                     <button class="menu-btn" aria-label="Menu"><span></span><span></span><span></span><span></span></button>
                 </div>
-                @*<nav class="nav ">
+                <nav class="nav ">
                         <a href="/about">About</a>
                         <a href="/posts">Blog Posts</a>
-                    </nav>*@
+                    </nav>
             </div>
-        </div>
+        </div>*@
         <div class="content-section">
             <div class="container">
                 <div class="headerSpeakers">
@@ -182,24 +199,18 @@
             </div>
         </div>
     </div>
+
     <footer class="main-footer">
         <div class="container">
             <div class="footer-list">
                 <div class="footer-copyright">
                     2024 https://www.pciglobal.in/ PCI India, All rights reserved.
                 </div>
-                @*<div class="footer-links">
-                        <a href="/terms-and-conditions">Terms &amp; Conditions</a>
-                        <a href="/privacy">Privacy Policy</a>
-                        <a href="mailto:info@fixmyspeakers.com">Contact</a>
-                    </div>*@
             </div>
         </div>
     </footer>
     <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    @*<script src="~/Content/assets/js/jquery-2.2.0.min.js"></script>*@
-
 
     <script>
         $(document).ready(function () {

@@ -76,7 +76,7 @@ namespace Grievancemis.Controllers
             if (!string.IsNullOrWhiteSpace(EmailId) && string.IsNullOrWhiteSpace(OPTCode))
             {
                 var vildemailid = EmailId.Trim().Split('@')[1];
-                if (vildemailid.ToLower() == "pciglobal.in")
+                if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com")
                 {
                     res = CommonModel.SendMailForUser(EmailId);
                     if (res == 1)
@@ -94,7 +94,7 @@ namespace Grievancemis.Controllers
             {
                 Grievance_DBEntities _db = new Grievance_DBEntities();
                 var vildemailid = EmailId.Trim().Split('@')[1];
-                if (vildemailid.ToLower() == "pciglobal.in")
+                if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com")
                 {
                     var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim())?.FirstOrDefault();// && x.Date == DateTime.Now.Date
                     if (tbl != null)
@@ -106,11 +106,15 @@ namespace Grievancemis.Controllers
                         {
                             return Json(new { success = true, message = "EmailId Invalid.", resdata = 2 });
                         }
+                       
                     }
                     else
                     {
-                        tbl.IsValidEmailId = false;
-                        tbl.IsActive = false;
+                        if (tbl != null)
+                        {
+                            tbl.IsValidEmailId = false;
+                            tbl.IsActive = false;
+                        }
                     }
                     res = _db.SaveChanges();
                     if (res == 1)

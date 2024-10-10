@@ -159,6 +159,11 @@ img {
     .form-control-input:hover {
         border: 1px solid #F3987A !important
     }
+.left-box select {
+    color: #000 !important;
+    padding: 7px 10px !important;
+    height: 40px
+}
     .btn-submit {
         width: 100%;
         border-radius: 6px;

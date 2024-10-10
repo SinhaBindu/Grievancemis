@@ -244,6 +244,7 @@
     <Content Include="Content\assets\images\grievance-banner.jpg" />
     <Content Include="Content\assets\images\pci_logo.png" />
     <Content Include="Content\assets\images\pci_logo1.png" />
+    <Content Include="Content\assets\images\grievance.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />

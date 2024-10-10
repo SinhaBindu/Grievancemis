@@ -33,185 +33,184 @@
         </div>
     </div>
     <!-- Banner -->
-    <div class="page-banenr">
-        <img src="~/Content/assets/images/grievance-banner.jpg" alt="Grievance Banner" />
+    <div class="page-banner">
+        <div class="banner-content">
+            <h3>Brief description of the <br /><span>purpose of the portal</span></h3>
+            <p>
+                PCI is a safe, healthy and happy workplace where each person is respected and valued.
+                If you have any form of complaint, this is the space to write in for a fast, fair and
+                transparent process of redressal. Your concerns will be taken up by a committee / person
+                authorised by the organisation to hear you and find an appropriate solution.
+            </p>
+        </div>
     </div>
     <!-- Content -->
-    <div class="wrapper-page">
-        @*<div class="navbar" id="navbar">
-            <div class="container">
-                <a class="logo" href="/" style="margin-right:20px;"><img src="~/Content/assets/images/pci_logo.png" style="width:152px;" /></a>
-                <div class="menu-btn-wrapper">
-                    <button class="menu-btn" aria-label="Menu"><span></span><span></span><span></span><span></span></button>
+    <div class="grievance-message">
+        <span>
+        <i class="fa fa-info-circle"></i>
+        <br />
+        Grievance
+        </span>
+            <p>
+                A grievance typically refers to a formal complaint or concern raised by an individual or
+                group, often in the context of a workplace or academic setting. It usually involves
+                perceived unfair treatment, violation of rights, or dissatisfaction with policies,
+                procedures, or decisions. The grievance process usually provides a structured way to
+                address and resolve such concerns.
+            </p>
+        </div>
+    <!-- Grievance Form -->
+    <div class="grievance-form">
+        <h2><i class="fa-solid fa-layer-group"></i>Register Grievance</h2>
+        <div class="sub-form">
+            <div class="left-box">
+                <div class="col-md-12" id="div-evc" style="display:block;">
+                    <label>
+                        Email Id :
+                    </label>
+                    <div class="form-group" id="div-emailid" style="display:block">
+                        <input id="Email_Id" name="Email_Id" class="form-control-input" maxlength="100" placeholder="Enter the email" required>
+                    </div>
+                    <div class="form-group" id="div-vc" style="display:none">
+                        <label>
+                            OTP
+                        </label>
+                        <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Opt Code" required>
+                    </div>
+                    <div class="col-md-offset-2 col-md-10" style="margin-bottom:10px;">
+                        <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyEamilMailSendPost()"> Proceed</button>
+                        @*<input type="submit" id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick=" VerifyEamilMailSendPost()" />*@
+                    </div>
                 </div>
-                <nav class="nav ">
-                        <a href="/about">About</a>
-                        <a href="/posts">Blog Posts</a>
-                    </nav>
-            </div>
-        </div>*@
-        <div class="content-section">
-            <div class="container">
-                <div class="headerSpeakers">
-                    <h1>Grievance</h1>
-                    <p>A grievance typically refers to a formal complaint or concern raised by an individual or group, often in the context of a workplace or academic setting. It usually involves perceived unfair treatment, violation of rights, or dissatisfaction with policies, procedures, or decisions. The grievance process usually provides a structured way to address and resolve such concerns.</p>
-                </div>
-                <h2>
-                    📧 Brief description of the purpose of the portal
-                </h2>
-                <p>
-                    PCI is a safe, healthy and happy workplacewhere each person is respected and valued. If you have any form of complaint, this is the space to write in for a fast, fair and transparent process of redressal.Your concerns will be taken up by a committee / person authorised by the organisation to hear you and find an appropriate solution.
-                </p>
-                <div class="sub-form">
-                    <div class="left-box">
-                        <div class="col-md-12" id="div-evc" style="display:block;">
-                            <label>
-                                Email Id :
-                            </label>
-                            <div class="form-group" id="div-emailid" style="display:block">
-                                <input id="Email_Id" name="Email_Id" class="form-control-input" maxlength="100" placeholder="Enter the email" required>
-                            </div>
-                            <div class="form-group" id="div-vc" style="display:none">
-                                <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Opt Code" required>
-                            </div>
-                            <div class="col-md-offset-2 col-md-10" style="margin-bottom:10px;">
-                                <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyEamilMailSendPost()"> Proceed</button>
-                                @*<input type="submit" id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick=" VerifyEamilMailSendPost()" />*@
-                            </div>
+                <div class="row" id="div-g" style="display:none;">
+                    <div class="col-md-12">
+                        <div class="card">
+                            @using (Html.BeginForm("GrievanceCaseAdd", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
+                            {
+                                @Html.AntiForgeryToken()
 
-                        </div>
+                                <div class="form-horizontal">
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        <div class="row" id="div-g" style="display:none;">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    @using (Html.BeginForm("GrievanceCaseAdd", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-
-                                        <div class="form-horizontal">
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control-input" })
-                                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control-input" })
-                                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input" })
-                                                    @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control-input" })
-                                                    @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control-input", @required = "required" })
-                                                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(model => model.Location, new { @class = "form-control-input" })
-                                                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control-input" })
-                                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                <div class="col-md-10">
-                                                    @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
-                                                    @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                @*@Html.LabelFor(model => model.IsConsent, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                                                <div class="col-md-10">
-                                                    @Html.CheckBoxFor(model => model.IsConsent)
-                                                    @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additonal document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
-                                                    @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-10">
-                                                    <input type="submit" value="Submit" class="btn-submit" />
-                                                </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control-input" })
+                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="flex-form">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control-input" })
+                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
-                                    }
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input" })
+                                                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex-form">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control-input" })
+                                                @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control-input", @required = "required" })
+                                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-form">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Location, new { @class = "form-control-input" })
+                                                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control-input" })
+                                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
+                                            @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @*@Html.LabelFor(model => model.IsConsent, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                        <div class="col-md-10">
+                                            @Html.CheckBoxFor(model => model.IsConsent)
+                                            @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additonal document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
+                                            @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Submit" class="btn-submit" />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            @*<form action="" id="subscribe">
-                                    <div class="form-group">
-                                        <input id="name" class="form-control-input" name="name" placeholder="Your Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="email" class="form-control-input" name="email" placeholder="johndoe@example.com" type="email">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                                        <label for="vehicle1"> I have a bike</label>
-                                        <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
-                                        <label for="vehicle2"> I have a car</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn-submit"> Subscribe </button>
-                                    </div>
-                                </form>*@
+                            }
                         </div>
                     </div>
-                    <div class="right-box">
-                        <img src="~/Content/assets/images/GReport.png" style="width:auto;" />
-                    </div>
-
+                    @*<form action="" id="subscribe">
+                        <div class="form-group">
+                            <input id="name" class="form-control-input" name="name" placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <input id="email" class="form-control-input" name="email" placeholder="johndoe@example.com" type="email">
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                            <label for="vehicle1"> I have a bike</label>
+                            <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+                            <label for="vehicle2"> I have a car</label>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-submit"> Subscribe </button>
+                        </div>
+                    </form>*@
                 </div>
+            </div>
+            <div class="right-box">
+                @*<h2> Grievance</h2>*@
+                @*<img src="~/Content/assets/images/grievance.png" alt="grievance" />*@
+                <img src="~/Content/assets/images/grievance.png" alt="grievance" />
             </div>
         </div>
     </div>
-
+    <!-- Footer -->
     <footer class="main-footer">
-        <div class="container">
-            <div class="footer-list">
-                <div class="footer-copyright">
-                    2024 https://www.pciglobal.in/ PCI India, All rights reserved.
-                </div>
-            </div>
+        <div class="footer-copyright">
+            2024 PCI India, All rights reserved.
         </div>
     </footer>
     <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
     <script>
         $(document).ready(function () {
             $(".menu-btn").click(function () {

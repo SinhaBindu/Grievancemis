@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="76660833c1e34655bc29fccf921e54f7" Name="Diagram1">
+      <Diagram DiagramId="76660833c1e34655bc29fccf921e54f7" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="Grievance_DBModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Grievance_DBModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="Grievance_DBModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
@@ -13,11 +13,11 @@
         <EntityTypeShape EntityType="Grievance_DBModel.M_GrievanceType" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Grievance_DBModel.m_State_Master" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_ExceptionHandle" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Grievance" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_LoginVerification" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
         <AssociationConnector Association="Grievance_DBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="Grievance_DBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="Grievance_DBModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Grievance" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_LoginVerification" Width="1.5" PointX="9.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

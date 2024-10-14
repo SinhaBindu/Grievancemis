@@ -222,7 +222,7 @@ namespace Grievancemis.Manager
                 tbl_v.VerificationCode = randomNumber.ToString();
                 tbl_v.CreatedOn = DateTime.Now;
                 tbl_v.StartTime = DateTime.Now.TimeOfDay;
-                tbl_v.EndTime = DateTime.Now.TimeOfDay;
+                tbl_v.EndTime = tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
                 tbl_v.Date = DateTime.Now.Date;
                 tbl_v.IsActive = true;
                 tbl_v.IsValidEmailId = false;

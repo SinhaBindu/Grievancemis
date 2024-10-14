@@ -80,6 +80,13 @@ namespace Grievancemis.Models
         [Display(Name = "StateName")]
         public string StateName { get; set; }
 
+        [Display(Name = "Document Upload")]
+        public HttpPostedFileBase DocUpload { get; set; }
+
+        [Display(Name = "Case ID")]
+        public long? CaseId { get; set; }
+
+
         //[Display(Name = "GrievanceType")]
         //public string GrievanceType { get; set; }
 

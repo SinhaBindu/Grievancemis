@@ -32,5 +32,7 @@ namespace Grievancemis.Models
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> IsDeletedOn { get; set; }
+        public string DocUpload { get; set; }
+        public Nullable<long> CaseId { get; set; }
     }
 }

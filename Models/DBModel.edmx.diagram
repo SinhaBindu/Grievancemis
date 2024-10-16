@@ -18,6 +18,8 @@
         <AssociationConnector Association="Grievance_DBModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Grievance" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_LoginVerification" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Grievance_Documents" Width="1.5" PointX="9.625" PointY="5.125" />
+        <AssociationConnector Association="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

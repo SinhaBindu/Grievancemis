@@ -14,6 +14,12 @@ namespace Grievancemis.Models
     
     public partial class Tbl_Grievance
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Tbl_Grievance()
+        {
+            this.Tbl_Grievance_Documents = new HashSet<Tbl_Grievance_Documents>();
+        }
+    
         public System.Guid Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
@@ -34,5 +40,8 @@ namespace Grievancemis.Models
         public Nullable<System.DateTime> IsDeletedOn { get; set; }
         public string DocUpload { get; set; }
         public Nullable<long> CaseId { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Grievance_Documents> Tbl_Grievance_Documents { get; set; }
     }
 }

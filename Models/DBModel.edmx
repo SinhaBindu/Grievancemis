@@ -123,6 +123,17 @@
           <Property Name="DocUpload" Type="varchar(max)" />
           <Property Name="CaseId" Type="bigint" />
         </EntityType>
+        <EntityType Name="Tbl_Grievance_Documents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GrievanceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DocumentPath" Type="varchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="Tbl_LoginVerification">
           <Key>
             <PropertyRef Name="Id" />
@@ -196,6 +207,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_Grievance_Documents_Tbl_Grievance">
+          <End Role="Tbl_Grievance" Type="Self.Tbl_Grievance" Multiplicity="1" />
+          <End Role="Tbl_Grievance_Documents" Type="Self.Tbl_Grievance_Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Grievance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Grievance_Documents">
+              <PropertyRef Name="GrievanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Grievance_DBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -207,6 +230,7 @@
           <EntitySet Name="m_State_Master" EntityType="Self.m_State_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_ExceptionHandle" EntityType="Self.Tbl_ExceptionHandle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Grievance" EntityType="Self.Tbl_Grievance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Grievance_Documents" EntityType="Self.Tbl_Grievance_Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_LoginVerification" EntityType="Self.Tbl_LoginVerification" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -223,6 +247,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Grievance_Documents_Tbl_Grievance" Association="Self.FK_Tbl_Grievance_Documents_Tbl_Grievance">
+            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
+            <End Role="Tbl_Grievance_Documents" EntitySet="Tbl_Grievance_Documents" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -375,6 +403,11 @@
           </AssociationSet>
           <EntitySet Name="Tbl_Grievance" EntityType="Grievance_DBModel.Tbl_Grievance" />
           <EntitySet Name="Tbl_LoginVerification" EntityType="Grievance_DBModel.Tbl_LoginVerification" />
+          <EntitySet Name="Tbl_Grievance_Documents" EntityType="Grievance_DBModel.Tbl_Grievance_Documents" />
+          <AssociationSet Name="FK_Tbl_Grievance_Documents_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance">
+            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
+            <End Role="Tbl_Grievance_Documents" EntitySet="Tbl_Grievance_Documents" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Tbl_Grievance">
           <Key>
@@ -400,6 +433,7 @@
           <Property Name="IsDeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DocUpload" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CaseId" Type="Int64" />
+          <NavigationProperty Name="Tbl_Grievance_Documents" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_Grievance_Documents" />
         </EntityType>
         <EntityType Name="Tbl_LoginVerification">
           <Key>
@@ -418,6 +452,30 @@
           <Property Name="VerificationCodeOn" Type="DateTime" Precision="3" />
           <Property Name="IsActive" Type="Boolean" />
         </EntityType>
+        <EntityType Name="Tbl_Grievance_Documents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GrievanceId" Type="Guid" Nullable="false" />
+          <Property Name="DocumentPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance_Documents" ToRole="Tbl_Grievance" />
+        </EntityType>
+        <Association Name="FK_Tbl_Grievance_Documents_Tbl_Grievance">
+          <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1" />
+          <End Type="Grievance_DBModel.Tbl_Grievance_Documents" Role="Tbl_Grievance_Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Grievance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Grievance_Documents">
+              <PropertyRef Name="GrievanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -563,6 +621,18 @@
                 <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Grievance_Documents">
+            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_Grievance_Documents">
+              <MappingFragment StoreEntitySet="Tbl_Grievance_Documents">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DocumentPath" ColumnName="DocumentPath" />
+                <ScalarProperty Name="GrievanceId" ColumnName="GrievanceId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

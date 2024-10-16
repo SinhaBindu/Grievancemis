@@ -39,7 +39,6 @@ namespace Grievancemis.Models
         public string Location { get; set; }
 
         [Display(Name = "Is Sent")]
-        [Required]
         public bool IsSent { get; set; }
 
         [Display(Name = "Title")]

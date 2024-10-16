@@ -35,5 +35,6 @@ namespace Grievancemis.Models
         public virtual DbSet<Tbl_ExceptionHandle> Tbl_ExceptionHandle { get; set; }
         public virtual DbSet<Tbl_Grievance> Tbl_Grievance { get; set; }
         public virtual DbSet<Tbl_LoginVerification> Tbl_LoginVerification { get; set; }
+        public virtual DbSet<Tbl_Grievance_Documents> Tbl_Grievance_Documents { get; set; }
     }
 }

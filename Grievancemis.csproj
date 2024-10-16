@@ -231,6 +231,9 @@
     <Compile Include="Models\Tbl_Grievance.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tbl_Grievance_Documents.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tbl_LoginVerification.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

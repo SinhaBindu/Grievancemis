@@ -342,8 +342,9 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Grievnce\GrievanceForm.cshtml" />
-    <Content Include="Views\Grievnce\_GrievanceInput.cshtml" />
+    <Content Include="Views\Grievnce\_GrievanceData.cshtml" />
     <Content Include="Views\Grievnce\GrievanceCaseAdd.cshtml" />
+    <Content Include="Views\Grievnce\GrievanceList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

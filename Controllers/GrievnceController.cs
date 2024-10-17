@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Antlr.Runtime.Tree;
 using Grievancemis.Manager;
 using Grievancemis.Models;
+using Newtonsoft.Json;
 
 namespace Grievancemis.Controllers
 {
@@ -48,6 +49,7 @@ namespace Grievancemis.Controllers
                             IsActive = true,
                             CreatedOn = DateTime.Now
                         };
+
                         // Handle file upload
                         if (grievanceModel.DocUpload != null && grievanceModel.DocUpload.ContentLength > 0)
                         {
@@ -102,6 +104,39 @@ namespace Grievancemis.Controllers
                                 db.Tbl_Grievance_Documents.Add(tbl_Grievance_Documents);
                             }
                         }
+
+
+                        //// Handle file upload
+                        //if (grievanceModel.DocUpload != null && grievanceModel.DocUpload.ContentLength > 0)
+                        //{
+                        //    string fileName = Path.GetFileName(grievanceModel.DocUpload.FileName);
+                        //    string fileExtension = Path.GetExtension(fileName).ToLower();
+
+                        //    // Check if the file extension is allowed
+                        //    if (fileExtension == ".zip" || fileExtension == ".png" || fileExtension == ".jpg" || fileExtension == ".pdf" || fileExtension == ".doc" || fileExtension == ".jpeg")
+                        //    {
+                        //        // Check if the file size is not more than 20MB
+                        //        if (grievanceModel.DocUpload.ContentLength <= 20971520)
+                        //        {
+                        //            string path = Path.Combine(Server.MapPath("~/Doc_Upload"), fileName);
+
+                        //            // Save the file
+                        //            grievanceModel.DocUpload.SaveAs(path);
+
+                        //            // Save the file path in the database
+                        //            tbl_Grievance.DocUpload = Path.Combine("Doc_Upload", fileName);
+                        //        }
+                        //        else
+                        //        {
+                        //            return Json(new { success = false, message = "File size is too large. Only files up to 20MB are allowed." });
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        return Json(new { success = false, message = "Invalid file extension. Only zip, png, jpg, pdf, doc, and jpeg files are allowed." });
+                        //    }
+                        //}
+
 
                         db.Tbl_Grievance.Add(tbl_Grievance);
                         res = db.SaveChanges();
@@ -187,144 +222,36 @@ namespace Grievancemis.Controllers
 
             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
         }
-        //public ActionResult GrievanceForm()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public ActionResult GrievanceForm(GrivanceModel grievanceModel)
-        //{
-        //    try
-        //    {
-        //        int res = 0;
-        //        if (ModelState.IsValid)
-        //        {
-        //            using (var db = new Grievance_DBEntities())
-        //            {
-        //                Tbl_Grievance tbl_Grievance = new Tbl_Grievance
-        //                {
-        //                    Id = Guid.NewGuid(),
-        //                    Email = grievanceModel.Email.Trim(),
-        //                    Name = grievanceModel.Name.Trim(),
-        //                    PhoneNo = grievanceModel.PhoneNo,
-        //                    GrievanceType = grievanceModel.GrievanceType,
-        //                    StateId = grievanceModel.StateId,
-        //                    Location = grievanceModel.Location.Trim(),
-        //                    Title = grievanceModel.Title.Trim(),
-        //                    Grievance_Message = grievanceModel.GrievanceMessage.Trim(),
-        //                    IsConsent = grievanceModel.IsConsent,
-        //                    IsActive = true,
-        //                    CreatedOn = DateTime.Now
-        //                };
-        //                db.Tbl_Grievance.Add(tbl_Grievance);
-        //                res = db.SaveChanges();
-        //            }
-        //            if (res > 0)
-        //            {
-        //                return Json(new { success = true, message = "Data saved successfully!" });
-        //            }
-        //            else
-        //            {
-        //                return Json(new { success = false, message = "Failed to save data. Please try again." });
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return Json(new { success = false, message = "Invalid input. Please check your form data." });
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { success = false, message = "An error occurred: " + ex.Message });
-        //    }
-        //}
-        //private void SendEmailToUser(string email, string code)
-        //{
-        //    var fromMail = new MailAddress("your-email@gmail.com", "Your Name");
-        //    var fromEmailpassword = "your-email-password";
-        //    var toEmail = new MailAddress(email);
-        //    var smtpClient = new SmtpClient();
-        //    smtpClient.Host = "smtp.gmail.com";
-        //    smtpClient.Port = 587;
-        //    smtpClient.EnableSsl = true;
-        //    smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-        //    smtpClient.UseDefaultCredentials = false;
-        //    smtpClient.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
-        //    var Message = new MailMessage(fromMail, toEmail);
-        //    Message.Subject = "Your Verification Code";
-        //    Message.Body = "Your verification code is: " + code;
-        //    Message.IsBodyHtml = true;
-        //    smtpClient.Send(Message);
-        //}
-
-        //public ActionResult SendCode(string email)
-        //{
-        //    try
-        //    {
-        //        // Generate a 6-digit random code
-        //        string code = new string(Enumerable.Repeat("0123456789", 6).Select(s => s[new Random().Next(s.Length)]).ToArray());
-
-        //        // Send the code to the user's email
-        //        SendEmailToUser(email, code);
-
-        //        // Store the code in the Tbl_LoginVerification table
-        //        using (var db = new Grievance_DBEntities())
-        //        {
-        //            Tbl_LoginVerification tbl_LoginVerification = new Tbl_LoginVerification
-        //            {
-        //                Email = email,
-        //                VerificationCode = code
-
-        //            };
-        //            db.Tbl_LoginVerification.Add(tbl_LoginVerification);
-        //            db.SaveChanges();
-        //        }
-
-        //        // Return a success message
-        //        return Json(new { success = true, message = "Verification code sent to your email" });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { success = false, message = "Error sending verification code: " + ex.Message });
-        //    }
-        //}
-
-        //public ActionResult VerifyCode(string email, string code)
-        //{
-        //    try
-        //    {
-        //        // Get the stored verification code from the Tbl_LoginVerification table
-        //        using (var db = new Grievance_DBEntities())
-        //        {
-        //            var storedCode = db.Tbl_LoginVerification.Where(x => x.Email == email).FirstOrDefault().VerificationCode;
-
-        //            // Compare the user-entered code with the stored code
-        //            if (code == storedCode)
-        //            {
-        //                // If the codes match, return a success message
-        //                return Json(new { success = true, message = "Verification code is correct" });
-        //            }
-        //            else
-        //            {
-        //                // If the codes do not match, return an error message
-        //                return Json(new { success = false, message = "Verification code is incorrect" });
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(new { success = false, message = "Error verifying verification code: " + ex.Message });
-        //    }
-        //}
-        //public ActionResult GetGrievances()
-        //{
-        //    DataTable dt = SP_Model.GetGrievanceList();
-        //    return PartialView("_GrievanceInput", dt);
-        //}
-        public ActionResult GetGrievances(string stateFilter, string typeFilter)
+        
+        public ActionResult GrievanceList()
         {
-            DataTable dt = SP_Model.GetGrievancefilterList(stateFilter, typeFilter);
-            return PartialView("_GrievanceInput", dt);
+            return View();
+        }
+        //public ActionResult GetGrievanceList(string stateFilter, string typeFilter)
+        //{
+        //    try
+        //    {
+        //        var items = SP_Model.GetGrievanceList(stateFilter, typeFilter);
+        //        ViewBag.task = Task;
+        //        if (items != null)
+        //        {
+        //            var data = JsonConvert.SerializeObject(items);
+        //            var html = ConvertViewToString("_GrievanceData", items);
+        //            return Json(new { IsSuccess = true, reshtml = html, res = data }, JsonRequestBehavior.AllowGet);
+        //        }
+        //        return Json(new { IsSuccess = false, res = "" }, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+
+
+        public ActionResult GetGrievanceList(string stateFilter, string typeFilter)
+        {
+            DataTable dt = SP_Model.GetGrievanceList(stateFilter, typeFilter);
+            return PartialView("_GrievanceData", dt);
         }
     }
 }

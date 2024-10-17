@@ -15,23 +15,14 @@ namespace Grievancemis.Manager
 {
     public class SP_Model
     {
-        private Grievance_DBEntities db = new Grievance_DBEntities();
-
-        public static DataTable GetGrievancefilterList(string stateFilter, string typeFilter)
+        public static DataTable GetGrievanceList(string stateFilter, string typeFilter)
         {
-            DataTable dt = new DataTable();
-            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
-            {
-                con.Open();
-                SqlCommand cmd = new SqlCommand("USP_GetGrievancefilterList", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@StateName", stateFilter);
-                cmd.Parameters.AddWithValue("@GrievanceType", typeFilter);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-            }
+            StoredProcedure sp = new StoredProcedure("USP_GetGrievancefilterList");
+            sp.Command.AddParameter("@StateName", stateFilter, DbType.String);
+            sp.Command.AddParameter("@GrievanceType", typeFilter, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-
+        
     }
 }

@@ -48,10 +48,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImageResizer, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="IronBarCode, Version=4.0.2.18638, Culture=neutral, PublicKeyToken=b971bb3971bdf306, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\IronBarCode.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\QRCoder.dll</HintPath>
     </Reference>
     <Reference Include="SubSonic.Core">
       <HintPath>E:\proj\nopCommerce_3.60_Source\Presentation\Nop.Web\bin\SubSonic.Core.dll</HintPath>
@@ -183,7 +199,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Alert.cs" />
+    <Compile Include="Helper\Healpers.cs" />
+    <Compile Include="Helper\ImageUpload.cs" />
+    <Compile Include="Helper\MyHelper.cs" />
+    <Compile Include="Manager\Alert.cs" />
+    <Compile Include="Manager\AppConstants.cs" />
     <Compile Include="Manager\CommonModel.cs" />
+    <Compile Include="Manager\Extension.cs" />
+    <Compile Include="Manager\GlobalUtilityManager.cs" />
+    <Compile Include="Manager\JsonResponseData.cs" />
     <Compile Include="Manager\SP_Model.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
@@ -344,7 +369,10 @@
     <Content Include="Views\Grievnce\GrievanceForm.cshtml" />
     <Content Include="Views\Grievnce\_GrievanceData.cshtml" />
     <Content Include="Views\Grievnce\GrievanceCaseAdd.cshtml" />
+
     <Content Include="Views\Grievnce\GrievanceList.cshtml" />
+
+    <Content Include="Views\Shared\_Alerts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

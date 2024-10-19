@@ -4,68 +4,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Grievance</title>
+    <title>@ViewBag.Title - MGrievance</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">*@
-    <style>
-     /*   .header {
-            background-image: linear-gradient(to bottom, #ff9900, #ff6600);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 5px solid #ff6600;
-        }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-        .footer {
-            background-image: linear-gradient(to bottom, #ff9900, #ff6600);
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            border-top: 5px solid #ff6600;
-        }
-
-        .navbar {
-            margin-bottom: 0;
-            background-color: #ff6600;
-            border-color: #ff6600;
-        }
-
-        .navbar-brand {
-            font-size: 24px;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .nav-link {
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .body-content {
-            padding-top: 50px;
-            background-color: #f2f2f2;
-        }
-
-        .jumbotron {
-            background-color: #ff9900;
-            color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-        }*/
-    </style>
 </head>
 <body>
-    <!-- Nav Bar Start -->
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Grievance Dashboard", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -80,26 +30,18 @@
             </div>
         </div>
     </nav>
-    <!-- Nav Bar End -->
-    <!-- Body Start -->
     <div class="container body-content">
         @RenderBody()
         <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - PCI India</p>
+            <p>Designed and Developed by <a href="#" style="color: #fff;">PCI India</a></p>
+        </footer>
     </div>
-    <!-- Body End -->
-    <!-- Footer Start -->
-    <div class="footer">
-        <p>&copy; @DateTime.Now.Year - PCI India</p>
-        <p>Designed and Developed by <a href="#" style="color: #fff;">PCI India</a></p>
-    </div>
-    <!-- Footer End -->
-
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    @*<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 </body>
 </html>

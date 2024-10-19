@@ -1,0 +1,104 @@
+﻿@model Grievancemis.Models.RegisterViewModel
+@{
+    ViewBag.Title = "List Of User Details";
+    ViewBag.TitleIcon = "fa fa-user";
+    ViewBag.SemiTitle = "User Registration";
+    ViewBag.SemiTitleLink = "/Account/Register";
+}
+
+<style>
+    #page-content {
+        padding: 0px !important;
+    }
+</style>
+
+<div id="page-content">
+    <div class="container-fluid">
+        <div class="row mt-20">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card card-box p-0">
+                    <div class="card-head">
+                        <div class="title">
+                            <i class="fa fa-list spacerright2"></i> @ViewBag.Title
+                        </div>
+                        <div class="tools">
+                            <div id="div-download"></div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                @using (Html.BeginForm("GetUserDetailData", "Master", FormMethod.Post, new { id = "submission-form" }))
+                                {
+                                    <div id="submission-data">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function () {
+            BindData();
+        });
+
+        function BindData() {
+            $('#submission-data').removeClass("text-danger");
+            var url = $('#submission-form').attr("action");
+            var formData = $('#submission-form').serialize();
+            $.ajax({
+                url: url,
+                type: "Post",
+                data: '',//{ 'District': District, 'Block': Block },
+                success: function (resp) {
+                    if (resp.IsSuccess) {
+                        $('#submission-data').html(resp.Data);
+                        if ($.fn.dataTable.isDataTable('#DataList')) {
+                            $("#DataList").dataTable().fnDestroy();
+                        }
+                        table = $('#DataList').DataTable({
+                            //scrollY: "400px",
+                            //scrollX: true,
+                            //scrollCollapse: true,
+                            //paging: false,
+                            pageLength: 100,
+                            fixedColumns: {
+                                leftColumns: 1,
+                                rightColumns: 1
+                            },
+                            buttons: [{
+                                extend: 'excel', text: '<span><i class="fa fa-download"></i>Export</span>', title: 'User Lists',//$('#IDDistrict option:selected').text() +
+                                className: 'btn btn-primary button-icon mr-3 mt-1 mb-1',
+                                filename: 'User List',
+                                exportOptions: { modifier: { page: 'all' } }
+                            }],
+                        });
+                        $('.dataTables_filter input[type="search"]').css(
+                            { 'width': '500px', 'display': 'inline-block' }
+                        );
+                        $('#div-download').empty();
+                        table.buttons().container().appendTo($('#div-download'));
+                    }
+                    else {
+                        $('#submission-data').html("Record Not Found !!");//TO DO
+                        $('#submission-data').addClass("text-danger");//TO DO
+                    }
+                },
+                error: function (req, error) {
+                    if (error === 'error') { error = req.statusText; }
+                    var errormsg = 'There was a communication error: ' + error;
+                    $('#submission-data').html(errormsg);
+                }
+            });
+        }
+
+    </script>
+}

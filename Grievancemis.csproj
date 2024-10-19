@@ -196,6 +196,7 @@
     <Compile Include="Controllers\GrievnceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -369,10 +370,10 @@
     <Content Include="Views\Grievnce\GrievanceForm.cshtml" />
     <Content Include="Views\Grievnce\_GrievanceData.cshtml" />
     <Content Include="Views\Grievnce\GrievanceCaseAdd.cshtml" />
-
     <Content Include="Views\Grievnce\GrievanceList.cshtml" />
-
     <Content Include="Views\Shared\_Alerts.cshtml" />
+    <Content Include="Views\Master\UserDetaillist.cshtml" />
+    <Content Include="Views\Master\_UserDetailData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

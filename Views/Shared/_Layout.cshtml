@@ -7,9 +7,9 @@
     <title>@ViewBag.Title - Grievance</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">*@
     <style>
         .header {
             background-image: linear-gradient(to bottom, #ff9900, #ff6600);
@@ -62,12 +62,6 @@
     </style>
 </head>
 <body>
-    <!-- Header Start -->
-    <div class="header">
-        <h1>PCI India</h1>
-        <p>A Grievance Management System</p>
-    </div>
-    <!-- Header End -->
     <!-- Nav Bar Start -->
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark">
         <div class="container">
@@ -89,10 +83,6 @@
     <!-- Nav Bar End -->
     <!-- Body Start -->
     <div class="container body-content">
-        <div class="jumbotron">
-            <h1>Welcome to PCI India Grievance Management System</h1>
-            <p>This system is designed to help you manage your grievances effectively.</p>
-        </div>
         @RenderBody()
         <hr />
     </div>
@@ -108,7 +98,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    @*<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </body>

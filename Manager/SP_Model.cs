@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Grievancemis.Manager;
 using Grievancemis.Models;
+using System.Web;
 
 
 namespace Grievancemis.Manager
@@ -23,6 +24,13 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-        
+        public static DataTable SPGetUserlist(int? RoleId)
+        {
+            StoredProcedure sp = new StoredProcedure("SPGetUserlist");
+            sp.Command.AddParameter("@RoleId", RoleId, DbType.Int32);
+            sp.Command.AddParameter("@User", HttpContext.Current.User.Identity.Name, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
     }
 }

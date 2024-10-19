@@ -151,27 +151,107 @@ namespace Grievancemis.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            Grievance_DBEntities db_ = new Grievance_DBEntities();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if (!string.IsNullOrWhiteSpace(model.Id))
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber.Trim();
+                    var tbLu = db_.AspNetUsers.Find(model.Id);
+
+                    var passwordHasher = new Microsoft.AspNet.Identity.PasswordHasher();
+                    tbLu.PasswordHash = passwordHasher.HashPassword(model.Password);
+
+                    tbLu.UserName = model.PhoneNumber.Trim();
+                    tbLu.Name = model.Name.Trim();
+                    tbLu.Email = model.Email.Trim();
+                    //tbLu.UserName = model.UserName;
+                    //tbLu.PasswordHash = model.Password;
+                    int res = db_.SaveChanges();
+
+                    var userRoles = UserManager.GetRoles(tbLu.Id);
+                    var rolename = db_.AspNetRoles.Find(model.RoleID).Name;
+                    foreach (var item in userRoles)
+                    {
+                        if (model.RoleID != item)
+                        {
+                            UserManager.RemoveFromRoles(tbLu.Id, item);
+                            UserManager.AddToRole(tbLu.Id, rolename);
+                        }
+                    }
+                    return RedirectToAction("UserDetaillist", "Master");
                 }
-                AddErrors(result);
+                else
+                {
+                    var user = new ApplicationUser { PhoneNumber = model.PhoneNumber.Trim(), UserName = model.Email.Trim(), Email = model.Email.Trim() };
+                    model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber;
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                        var rolename = db_.AspNetRoles.Find(model.RoleID).Name;
+                        var result1 = UserManager.AddToRole(user.Id, rolename);
+                        if (db_.AspNetUsers.Any(x => x.Id == user.Id.Trim()))
+                        {
+                            var tbLu = db_.AspNetUsers.Find(user.Id);
+                            tbLu.Name = model.Name.Trim();
+                            tbLu.CreatedBy = User.Identity.Name;
+                            tbLu.CreatedOn = DateTime.Now;
+                            int res = db_.SaveChanges();
+                            UserManager.AddToRole(user.Id, rolename);
+                        }
+                        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                        // return RedirectToAction("Index", "Home");
+                        return RedirectToAction("UserDetaillist", "Master");
+                    }
+                    AddErrors(result);
+                }
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ////////////////////////////////////////////
+
+            //if (ModelState.IsValid)
+            //{
+            //    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            //    var result = await UserManager.CreateAsync(user, model.Password);
+            //    if (result.Succeeded)
+            //    {
+            //        await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+            //        // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+            //        // Send an email with this link
+            //        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            //        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            //        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    AddErrors(result);
+            //}
+
+            //// If we got this far, something failed, redisplay form
+            //return View(model);
         }
 
         //

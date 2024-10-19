@@ -36,6 +36,7 @@ namespace Grievancemis.Manager
         public static DataTable GetRevartList(RevertComplaint RevertComplaint)
         {
             StoredProcedure sp = new StoredProcedure("USP__RevertCDataList");
+            //sp.Command.AddParameter("@RevertTypeId", RevertComplaint.RevertTypeId, DbType.Int32);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }

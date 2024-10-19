@@ -146,7 +146,8 @@ namespace Grievancemis.Manager
         public static List<SelectListItem> GetRevertType()
         {
             List<SelectListItem> list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Value = "1", Text = "InProgress" });
+            list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
+            list.Add(new SelectListItem { Value = "1", Text = "In Progress" });
             list.Add(new SelectListItem { Value = "2", Text = "Closed" });
             return list.OrderByDescending(x => x.Text).ToList();
         }

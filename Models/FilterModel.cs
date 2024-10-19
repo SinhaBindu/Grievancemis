@@ -43,11 +43,11 @@ namespace Grievancemis.Models
         public Guid GrievanceId_fk { get; set; }
 
         [Display(Name = "RevertType")]
-        [Required]
+        //[Required]
         public int RevertTypeId { get; set; }
 
         [Display(Name = "Grievance Message")]
-        [Required]
+        //[Required]
         public string TeamRevertMessage { get; set; }
 
 

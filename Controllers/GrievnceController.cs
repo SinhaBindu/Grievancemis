@@ -161,47 +161,45 @@ namespace Grievancemis.Controllers
             }
         }
 
-        public ActionResult RevertC()
+        public ActionResult RevertCList()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult RevertC(FilterModel filtermodel)
+        public ActionResult RevertCPost(FilterModel filterModel)
         {
             try
             {
-                if (ModelState.IsValid)
+                if (filterModel.GrievanceId_fk == Guid.Empty || filterModel.RevertTypeId == 0 && string.IsNullOrWhiteSpace(filterModel.TeamRevertMessage))
                 {
-                    using (var db = new Grievance_DBEntities())
-                    {
-                       
-                        Tbl_TeamRevertComplain teamRevertComplain = new Tbl_TeamRevertComplain
-                        {
-                            
-                            GrievanceId_fk = filtermodel.GrievanceId_fk, 
-                            RevertTypeId = filtermodel.RevertTypeId,
-                            TeamRevertMessage = filtermodel.TeamRevertMessage,
-                            IsActive = true,
-                            CreatedOn = DateTime.Now
-                        };
-
-                        
-                        db.Tbl_TeamRevertComplain.Add(teamRevertComplain);
-                        db.SaveChanges(); 
-
-                       
-                        return Json(new { success = true, message = "Revert message successfully." });
-                    }
+                    return Json(new { success = false, message = "All fileds are required." });
                 }
-                else
+                using (var db = new Grievance_DBEntities())
                 {
-                   
-                    return Json(new { success = false, message = "Validation failed." });
+                    Tbl_TeamRevertComplain teamRevertComplain = new Tbl_TeamRevertComplain
+                    {
+                        GrievanceId_fk = filterModel.GrievanceId_fk,
+                        RevertTypeId = filterModel.RevertTypeId,
+                        TeamRevertMessage = filterModel.TeamRevertMessage,
+                        IsActive = true,
+                        TeamRevert_Date = DateTime.Now.Date,
+                        CreatedBy = User.Identity.Name,
+                        CreatedOn = DateTime.Now
+                    };
+
+                    db.Tbl_TeamRevertComplain.Add(teamRevertComplain);
+                    int res = db.SaveChanges();
+                    if (res > 0)
+                    {
+                        return Json(new { success = true, message = "Record submit successfully." });
+                    }
+                    else
+                        return Json(new { success = false, message = "Record not submitted." });
                 }
             }
             catch (Exception ex)
             {
-               
+
                 return Json(new { success = false, message = "An error occurred: " + ex.Message });
             }
         }
@@ -233,7 +231,7 @@ namespace Grievancemis.Controllers
                 Grievance_DBEntities _db = new Grievance_DBEntities();
                 var vildemailid = EmailId.Trim().Split('@')[1];
                 if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
-                { 
+                {
                     var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim())?.FirstOrDefault();// && x.Date == DateTime.Now.Date
                     if (tbl != null)
                     {
@@ -244,7 +242,7 @@ namespace Grievancemis.Controllers
                         {
                             return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
                         }
-                       
+
                     }
                     else
                     {
@@ -268,7 +266,7 @@ namespace Grievancemis.Controllers
 
             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
         }
-        
+
         public ActionResult GrievanceList()
         {
             return View();
@@ -300,7 +298,7 @@ namespace Grievancemis.Controllers
             {
                 bool IsCheck = false;
                 var dt = SP_Model.GetGrievanceList(filtermodel);
-                if (dt.Rows.Count>0)
+                if (dt.Rows.Count > 0)
                 {
                     IsCheck = true;
                 }

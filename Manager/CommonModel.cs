@@ -143,6 +143,13 @@ namespace Grievancemis.Manager
                 throw;
             }
         }
+        public static List<SelectListItem> GetRevertType()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Value = "1", Text = "InProgress" });
+            list.Add(new SelectListItem { Value = "2", Text = "Closed" });
+            return list.OrderByDescending(x => x.Text).ToList();
+        }
         public static List<SelectListItem> GetRoleList(bool IsAll = false)
         {
             Grievance_DBEntities db_ = new Grievance_DBEntities();

@@ -20,6 +20,10 @@
         <AssociationConnector Association="Grievance_DBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="Grievance_DBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="Grievance_DBModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_TeamRevertComplain" Width="1.5" PointX="9.625" PointY="8.625" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_UserRevertComplain" Width="1.5" PointX="9.625" PointY="12.625" />
+        <AssociationConnector Association="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" />
+        <AssociationConnector Association="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

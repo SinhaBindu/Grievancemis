@@ -161,6 +161,52 @@ namespace Grievancemis.Controllers
             }
         }
 
+        public ActionResult RevertC()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult RevertC(FilterModel filtermodel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (var db = new Grievance_DBEntities())
+                    {
+                       
+                        Tbl_TeamRevertComplain teamRevertComplain = new Tbl_TeamRevertComplain
+                        {
+                            
+                            GrievanceId_fk = filtermodel.GrievanceId_fk, 
+                            RevertTypeId = filtermodel.RevertTypeId,
+                            TeamRevertMessage = filtermodel.TeamRevertMessage,
+                            IsActive = true,
+                            CreatedOn = DateTime.Now
+                        };
+
+                        
+                        db.Tbl_TeamRevertComplain.Add(teamRevertComplain);
+                        db.SaveChanges(); 
+
+                       
+                        return Json(new { success = true, message = "Revert message successfully." });
+                    }
+                }
+                else
+                {
+                   
+                    return Json(new { success = false, message = "Validation failed." });
+                }
+            }
+            catch (Exception ex)
+            {
+               
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+            }
+        }
+
+
         [HttpPost]
         public ActionResult OPtSendMail(string EmailId, string OPTCode)
         {
@@ -248,10 +294,41 @@ namespace Grievancemis.Controllers
         //}
 
 
-        public ActionResult GetGrievanceList(string stateFilter, string typeFilter)
+        public ActionResult GetGrievanceList(FilterModel filtermodel)
         {
-            DataTable dt = SP_Model.GetGrievanceList(stateFilter, typeFilter);
-            return PartialView("_GrievanceData", dt);
+            try
+            {
+                bool IsCheck = false;
+                var dt = SP_Model.GetGrievanceList(filtermodel);
+                if (dt.Rows.Count>0)
+                {
+                    IsCheck = true;
+                }
+                var html = ConvertViewToString("_GrievanceData", dt);
+                var res = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
+                res.MaxJsonLength = int.MaxValue;
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+
+
+
+        private string ConvertViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (StringWriter writer = new StringWriter())
+            {
+                ViewEngineResult vResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                ViewContext vContext = new ViewContext(this.ControllerContext, vResult.View, ViewData, new TempDataDictionary(), writer);
+                vResult.View.Render(vContext, writer);
+                return writer.ToString();
+            }
         }
     }
 }

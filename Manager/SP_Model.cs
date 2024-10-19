@@ -16,11 +16,11 @@ namespace Grievancemis.Manager
 {
     public class SP_Model
     {
-        public static DataTable GetGrievanceList(string stateFilter, string typeFilter)
+        public static DataTable GetGrievanceList(FilterModel filtermodel)
         {
             StoredProcedure sp = new StoredProcedure("USP_GetGrievancefilterList");
-            sp.Command.AddParameter("@StateName", stateFilter, DbType.String);
-            sp.Command.AddParameter("@GrievanceType", typeFilter, DbType.String);
+            sp.Command.AddParameter("@StateId", filtermodel.StateId, DbType.String);
+            sp.Command.AddParameter("@TypeGId", filtermodel.TypeGId, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }

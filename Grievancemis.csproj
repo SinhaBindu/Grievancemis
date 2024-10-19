@@ -242,6 +242,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\m_District_Master.cs">
@@ -254,6 +255,7 @@
     <Compile Include="Models\m_State_Master.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RevertComplaint.cs" />
     <Compile Include="Models\Tbl_ExceptionHandle.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -264,6 +266,12 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_LoginVerification.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_TeamRevertComplain.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_UserRevertComplain.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -377,6 +385,7 @@
     <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\Master\UserDetaillist.cshtml" />
     <Content Include="Views\Master\_UserDetailData.cshtml" />
+    <Content Include="Views\Grievnce\RevertC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,5 +1,5 @@
 ﻿@using Grievancemis.Manager
-@model Grievancemis.Models.GrivanceModel
+@model Grievancemis.Models.FilterModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,27 +7,30 @@
 
 <div class="grievances-list">
     <h2>Grievances List</h2>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-group">
-                @Html.LabelFor(model => model.StateName, htmlAttributes: new { @class = "control-label" })
-                <span style="color:red;">*</span>
-                @Html.DropDownListFor(model => model.StateName, CommonModel.GetState(), null, new { @class = "form-control", @id = "state-filter", @required = "required" })
-                @Html.ValidationMessageFor(model => model.StateName, "", new { @class = "text-danger" })
+    @using (Html.BeginForm("GetGrievanceList", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
+    {
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
+                    <span style="color:red;">*</span>
+                    @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypeGId, htmlAttributes: new { @class = "control-label" })
+                    <span style="color:red;">*</span>
+                    @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button id="search-button" class="btn btn-primary">Search</button>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label" })
-                <span style="color:red;">*</span>
-                @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @id = "type-filter", @required = "required" })
-                @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col-md-3">
-            <button id="search-button" class="btn btn-primary">Search</button>
-        </div>
-    </div>
+    }
 </div>
 <div id="subdata"></div>
 <div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true">
@@ -40,41 +43,143 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p id="modal-message">Loading progress details...</p>
+                <input type="hidden" name="id" id="regid" value="" />
+                <label for="cname">Name:</label>
+                <strong id="cname"></strong>
+                <br />
+                <label for="con">Create Date:</label>
+                <strong id="con"></strong>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.TeamRevertMessage, new { @class = "form-control-input" })
+                            @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <!-- Revert Option Dropdown -->
+                <div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
+                        <span style="color:red;">*</span>
+                        @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="confirm-progress">Confirm Progress</button>
+                <button type="button" class="btn btn-primary" id="confirm-progress">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
+<script>
         $(document).ready(function () {
+            bindload();
             $('#search-button').on('click', function (e) {
                 e.preventDefault();
-                var stateFilter = $('#state-filter').val();
-                var typeFilter = $('#type-filter').val();
+                bindload();
+            });
+            $('#confirm-progress').on('click', function () {
+                var filterModel = {
+                    GrievanceId_fk: $('#regid').val(),
+                    RevertTypeId: $('#RevertTypeId').val(),
+                    TeamRevertMessage: $('#TeamRevertMessage').val()
+                };
 
                 $.ajax({
                     type: "POST",
-                    url: "/Grievnce/GetGrievanceList",
-                    data: { 'stateFilter': stateFilter, 'typeFilter': typeFilter },
-                    success: function (data) {
-                        $('#subdata').html(data);
+                    url: document.baseURI + "/Grievnce/RevertC",
+                    data: filterModel,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+                            $('#progressModal').modal('hide');
+                        } else {
+                            toastr.error(response.message);
+                        }
                     },
                     error: function (xhr, status, error) {
-                        console.log("Error: " + xhr.responseText);
+                        toastr.error("An error occurred: " + error);
                     }
                 });
             });
-            // Handle progress button click
-            $(document).on('click', '.progress-button', function () {
-                $('#progressModal').modal('show');
-            });
         });
-    </script>
+            // Handle progress button click
+            //$(document).on('click', '.progress-button', function () {
+            //    $('#progressModal').modal('show');
+            //});
+       
+        function POPDisplay(id, caseid, name, CreatedOn) {
+            $('#regid').html(id);
+            $('#cname').html(name);
+            $('#con').html(CreatedOn);
+            $('#progressModal').modal('show');
+
+        }
+
+        function bindload() {
+            debugger;
+            $("#subdata").html(''); $('#div-download').empty();
+            var filtermodel = new Object();
+            filtermodel.StateId = $('#StateId').val() == '' ? '' : $('#StateId').val();
+            filtermodel.FromDt = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
+            // filtermodel.ToDt = $('#ToDt').val() == '' ? '' : $('#ToDt').val();
+            $.ajax({
+                type: "Get",
+                url: document.baseURI + "/Grievnce/GetGrievanceList",
+                data: filtermodel,
+                //cache: false,
+                success: function (res) {
+                    if (res.IsSuccess) {
+                        $("#subdata").html(res.Data);
+
+                        //if ($.fn.dataTable.isDataTable('#tbl')) {
+                        //    $("#tbl").dataTable().fnDestroy();
+                        //}
+                        //table = $('#tbl').DataTable({
+                        //    //scrollY: "400px",
+                        //    //scrollX: true,
+                        //    //scrollCollapse: true,
+                        //    paging: false,
+                        //    "dom": '<"pull-left"f><"pull-right"l>tip',
+                        //    //"ordering": false,
+                        //    // order: [[1,0, 'desc']],
+                        //    // pageLength: 100,
+                        //    fixedColumns: {
+                        //        leftColumns: 1,
+                        //        rightColumns: 1
+                        //    },
+                        //    buttons: [{
+                        //        extend: 'excel', text: '<span><i class="fa fa-download"></i> Download</span>', title: 'Participant Lists',//$('#IDDistrict option:selected').text() +
+                        //        className: 'btn btn-primary button-icon mr-3 mt-1 mb-1',
+                        //        filename: 'Participant Lists',
+                        //        exportOptions: { modifier: { page: 'all' } }
+                        //    }],
+                        //});
+                        //$('.dataTables_filter input[type="search"]').css(
+                        //    { 'width': '200px', 'display': 'inline-block' }
+                        //);
+                        //$('#div-download').empty();
+                        //table.buttons().container().appendTo($('#div-download'));
+                    }
+                    else {
+                        $("#subdata").html('<h5 class="text-danger">' + res.Data + '</h3>');
+                    }
+                },
+                error: function (req, error) {
+                    if (error === 'error') { error = req.statusText; }
+                    var errormsg = 'There was a communication error: ' + error;
+                    //Do To Message display
+                    $("#subdata").html('<h5 class="text-danger">' + errormsg + '</h3>');
+                }
+            });
+        }
+</script>
 }

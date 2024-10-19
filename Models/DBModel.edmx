@@ -156,6 +156,38 @@
           <Property Name="VerificationCodeOn" Type="datetime" />
           <Property Name="IsActive" Type="bit" />
         </EntityType>
+        <EntityType Name="Tbl_TeamRevertComplain">
+          <Key>
+            <PropertyRef Name="TeamId_pk" />
+          </Key>
+          <Property Name="TeamId_pk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GrievanceId_fk" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RevertTypeId" Type="int" />
+          <Property Name="TeamRevertMessage" Type="nvarchar(max)" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="TeamRevert_Date" Type="date" />
+          <Property Name="Status" Type="int" />
+          <Property Name="IsSent" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tbl_UserRevertComplain">
+          <Key>
+            <PropertyRef Name="UserRevertComplainId_pk" />
+          </Key>
+          <Property Name="UserRevertComplainId_pk" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamId_fk" Type="int" />
+          <Property Name="GrievanceId_fk" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RevertTypeId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="UserRevertMessage" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="IsSent" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -224,6 +256,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance">
+          <End Role="Tbl_Grievance" Type="Self.Tbl_Grievance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tbl_TeamRevertComplain" Type="Self.Tbl_TeamRevertComplain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Grievance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_TeamRevertComplain">
+              <PropertyRef Name="GrievanceId_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserRevertComplain_Tbl_Grievance">
+          <End Role="Tbl_Grievance" Type="Self.Tbl_Grievance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tbl_UserRevertComplain" Type="Self.Tbl_UserRevertComplain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Grievance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_UserRevertComplain">
+              <PropertyRef Name="GrievanceId_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Grievance_DBModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -237,6 +297,8 @@
           <EntitySet Name="Tbl_Grievance" EntityType="Self.Tbl_Grievance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Grievance_Documents" EntityType="Self.Tbl_Grievance_Documents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_LoginVerification" EntityType="Self.Tbl_LoginVerification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_TeamRevertComplain" EntityType="Self.Tbl_TeamRevertComplain" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_UserRevertComplain" EntityType="Self.Tbl_UserRevertComplain" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -256,6 +318,14 @@
           <AssociationSet Name="FK_Tbl_Grievance_Documents_Tbl_Grievance" Association="Self.FK_Tbl_Grievance_Documents_Tbl_Grievance">
             <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
             <End Role="Tbl_Grievance_Documents" EntitySet="Tbl_Grievance_Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance" Association="Self.FK_Tbl_TeamRevertComplain_Tbl_Grievance">
+            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
+            <End Role="Tbl_TeamRevertComplain" EntitySet="Tbl_TeamRevertComplain" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserRevertComplain_Tbl_Grievance" Association="Self.FK_Tbl_UserRevertComplain_Tbl_Grievance">
+            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
+            <End Role="Tbl_UserRevertComplain" EntitySet="Tbl_UserRevertComplain" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -361,6 +431,16 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Tbl_TeamRevertComplain" EntityType="Grievance_DBModel.Tbl_TeamRevertComplain" />
+          <EntitySet Name="Tbl_UserRevertComplain" EntityType="Grievance_DBModel.Tbl_UserRevertComplain" />
+          <AssociationSet Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance">
+            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
+            <End Role="Tbl_TeamRevertComplain" EntitySet="Tbl_TeamRevertComplain" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_UserRevertComplain_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance">
+            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
+            <End Role="Tbl_UserRevertComplain" EntitySet="Tbl_UserRevertComplain" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Tbl_Grievance">
           <Key>
@@ -387,6 +467,8 @@
           <Property Name="DocUpload" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CaseId" Type="Int64" />
           <NavigationProperty Name="Tbl_Grievance_Documents" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_Grievance_Documents" />
+          <NavigationProperty Name="Tbl_TeamRevertComplain" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_TeamRevertComplain" />
+          <NavigationProperty Name="Tbl_UserRevertComplain" Relationship="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_UserRevertComplain" />
         </EntityType>
         <EntityType Name="Tbl_LoginVerification">
           <Key>
@@ -485,6 +567,68 @@
         <Association Name="AspNetUserRoles">
           <End Type="Grievance_DBModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="Grievance_DBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Tbl_TeamRevertComplain">
+          <Key>
+            <PropertyRef Name="TeamId_pk" />
+          </Key>
+          <Property Name="TeamId_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GrievanceId_fk" Type="Guid" Nullable="false" />
+          <Property Name="RevertTypeId" Type="Int32" />
+          <Property Name="TeamRevertMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="TeamRevert_Date" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="IsSent" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_TeamRevertComplain" ToRole="Tbl_Grievance" />
+        </EntityType>
+        <EntityType Name="Tbl_UserRevertComplain">
+          <Key>
+            <PropertyRef Name="UserRevertComplainId_pk" />
+          </Key>
+          <Property Name="UserRevertComplainId_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamId_fk" Type="Int32" />
+          <Property Name="GrievanceId_fk" Type="Guid" Nullable="false" />
+          <Property Name="RevertTypeId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="UserRevertMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="IsSent" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance" FromRole="Tbl_UserRevertComplain" ToRole="Tbl_Grievance" />
+        </EntityType>
+        <Association Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance">
+          <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Grievance_DBModel.Tbl_TeamRevertComplain" Role="Tbl_TeamRevertComplain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Grievance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_TeamRevertComplain">
+              <PropertyRef Name="GrievanceId_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_UserRevertComplain_Tbl_Grievance">
+          <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Grievance_DBModel.Tbl_UserRevertComplain" Role="Tbl_UserRevertComplain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Grievance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_UserRevertComplain">
+              <PropertyRef Name="GrievanceId_fk" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -652,6 +796,40 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Tbl_TeamRevertComplain">
+            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_TeamRevertComplain">
+              <MappingFragment StoreEntitySet="Tbl_TeamRevertComplain">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TeamRevert_Date" ColumnName="TeamRevert_Date" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="TeamRevertMessage" ColumnName="TeamRevertMessage" />
+                <ScalarProperty Name="RevertTypeId" ColumnName="RevertTypeId" />
+                <ScalarProperty Name="GrievanceId_fk" ColumnName="GrievanceId_fk" />
+                <ScalarProperty Name="TeamId_pk" ColumnName="TeamId_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_UserRevertComplain">
+            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_UserRevertComplain">
+              <MappingFragment StoreEntitySet="Tbl_UserRevertComplain">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsSent" ColumnName="IsSent" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UserRevertMessage" ColumnName="UserRevertMessage" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RevertTypeId" ColumnName="RevertTypeId" />
+                <ScalarProperty Name="GrievanceId_fk" ColumnName="GrievanceId_fk" />
+                <ScalarProperty Name="TeamId_fk" ColumnName="TeamId_fk" />
+                <ScalarProperty Name="UserRevertComplainId_pk" ColumnName="UserRevertComplainId_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

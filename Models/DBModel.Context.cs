@@ -36,5 +36,7 @@ namespace Grievancemis.Models
         public virtual DbSet<Tbl_LoginVerification> Tbl_LoginVerification { get; set; }
         public virtual DbSet<Tbl_Grievance_Documents> Tbl_Grievance_Documents { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Tbl_TeamRevertComplain> Tbl_TeamRevertComplain { get; set; }
+        public virtual DbSet<Tbl_UserRevertComplain> Tbl_UserRevertComplain { get; set; }
     }
 }

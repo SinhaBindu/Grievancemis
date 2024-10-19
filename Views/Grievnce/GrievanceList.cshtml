@@ -37,7 +37,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="progressModalLabel">Grievance Progress</h5>
+                <h5 class="modal-title" id="progressModalLabel">Revart Process</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -50,6 +50,9 @@
                     <br />
                     <label for="con">Complain Date :</label>
                     <strong id="con"></strong>
+                    <br />
+                    <label for="CId">Case Id :</label>
+                    <strong id="CId"></strong>
                     <div class="col-md-3">
                         <div class="form-group">
                             @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
@@ -61,8 +64,9 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <span style="color:red;">*</span>
                             <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.TeamRevertMessage, new { @class = "form-control-input" })
+                                @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
                                 @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -124,6 +128,7 @@
     function POPDisplay(id, caseid, name, CreatedOn) {
             $('#GrievanceId_fk').val(id);
             $('#cname').html(name);
+        $('#CId').html(caseid);
             $('#con').html(CreatedOn);
             $('#progressModal').modal('show');
 

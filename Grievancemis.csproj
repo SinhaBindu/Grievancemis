@@ -386,6 +386,8 @@
     <Content Include="Views\Master\UserDetaillist.cshtml" />
     <Content Include="Views\Master\_UserDetailData.cshtml" />
     <Content Include="Views\Grievnce\RevertC.cshtml" />
+    <Content Include="Views\Grievnce\_ComData.cshtml" />
+    <Content Include="Views\Grievnce\RevartList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

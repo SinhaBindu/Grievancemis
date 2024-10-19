@@ -166,27 +166,6 @@ namespace Grievancemis.Controllers
         {
             return View();
         }
-        //public ActionResult GetGrievanceList(string stateFilter, string typeFilter)
-        //{
-        //    try
-        //    {
-        //        var items = SP_Model.GetGrievanceList(stateFilter, typeFilter);
-        //        ViewBag.task = Task;
-        //        if (items != null)
-        //        {
-        //            var data = JsonConvert.SerializeObject(items);
-        //            var html = ConvertViewToString("_GrievanceData", items);
-        //            return Json(new { IsSuccess = true, reshtml = html, res = data }, JsonRequestBehavior.AllowGet);
-        //        }
-        //        return Json(new { IsSuccess = false, res = "" }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return Json(new { IsSuccess = false, res = "There was a communication error." }, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
-
-
         public ActionResult GetGrievanceList(FilterModel filtermodel)
         {
             try
@@ -252,6 +231,33 @@ namespace Grievancemis.Controllers
                 return Json(new { success = false, message = "An error occurred: " + ex.Message });
             }
         }
+        public ActionResult RevartList()
+        {
+            return View();
+        }
+        public ActionResult GetRevartList(RevertComplaint RevertComplaint)
+        {
+            try
+            {
+                bool IsCheck = false;
+                var dt = SP_Model.GetRevartList(RevertComplaint);
+                if (dt.Rows.Count > 0)
+                {
+                    IsCheck = true;
+                }
+                var html = ConvertViewToString("_ComData", dt);
+                var res = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
+                res.MaxJsonLength = int.MaxValue;
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+
 
 
         [HttpPost]

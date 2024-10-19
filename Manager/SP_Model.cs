@@ -32,5 +32,12 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+
+        public static DataTable GetRevartList(RevertComplaint RevertComplaint)
+        {
+            StoredProcedure sp = new StoredProcedure("USP__RevertCDataList");
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
     }
 }

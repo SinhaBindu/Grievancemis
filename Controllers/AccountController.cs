@@ -253,7 +253,20 @@ namespace Grievancemis.Controllers
             //// If we got this far, something failed, redisplay form
             //return View(model);
         }
-
+        public ActionResult Register_Lock(RegisterViewModel model)
+        {
+            var lockoutEndDate = DateTime.Now.Date;
+            UserManager.SetLockoutEndDate(model.Id, DateTimeOffset.Now.Date);
+            UserManager.SetLockoutEnabled(model.Id, false);
+            return RedirectToLocal("~/Master/UserDetaillist");
+        }
+        public ActionResult Register_Enable(RegisterViewModel model)
+        {
+            var lockoutEndDate = DateTime.Now.Date;
+            UserManager.SetLockoutEndDate(model.Id, DateTimeOffset.Now.Date);
+            UserManager.SetLockoutEnabled(model.Id, true);
+            return RedirectToLocal("~/Master/UserDetaillist");
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

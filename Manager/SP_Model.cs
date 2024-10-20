@@ -40,5 +40,20 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable GetTeamMailID()
+        {
+            StoredProcedure sp = new StoredProcedure("GetEmailsByRoleId");
+            sp.Command.AddParameter("@RoleId", 0, DbType.Int32);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
+
+        public static DataTable GetRevartMail(string GVID)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_RevartMailSend");
+            sp.Command.AddParameter("@Id", GVID, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
     }
 }

@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet" />
+    <style>
+        body {
+            background: #9E9E9E;
+            font-family: "Poppins", sans-serif;
+        }
+        table {
+            border: 1px solid black;
+            background: #fff;
+            margin: auto;
+            width: 60%
+        }
+        th, td {
+            padding: 15px 20px;
+        }
+        .logo-email {
+            float: left;
+            width: 40px;
+            margin-left: 10px;
+            margin-right: 30px;
+            padding: 5px;
+            border-radius: 4px;
+            background: #fff;
+        }
+        h2 {
+            margin-top: 10px;
+            color: #fff;
+            font-size: 22px;
+            font-weight: normal
+        }
+            h2 span {
+                color: #FFBB00
+            }
+        @media all and (max-width: 768px) {
+            table {
+                width: 80%
+            }
+        }
+    </style>
+</head>
+<body>
+    <table cellpadding="1" cellspacing="0">
+        <tr>
+            <td style="background-color: #002B6C; ">
+                <img src="https://hunar.pcidigitals.in/Content/images/pcilogo.png" class="logo-email" />
+                <h2><span>Grievance:</span> </h2>
+            </td>
+        </tr>
+
+        <tr style="text-align:left;">
+            <td style="margin-left:5%;">
+                <strong class="font-weight-bold small" style="color: darkblue; font-size: small;"> {Dearusername},</strong>
+                <br />
+                <br />
+                <strong class="font-weight-bold small"> Email ID :<strong style="color: darkblue; font-size: small;"> {EmailID} </strong></strong>
+                <br />
+                <strong class="font-weight-bold small text-2x accordion-body tex">Grievance Id : <strong style="color: darkblue; font-size: small;">{OTPCode}</strong></strong>
+                <br />
+                <!--<strong class="font-weight-bold" style="color:forestgreen;">Name : {newusername},</strong>-->
+                <br />
+                {bodytext}
+                <br />
+                <!--<p class="font-weight-bold text-center" style="margin-left: 70px;">Please click the link below to proceed.</p>
+    <br />-->
+                <br />
+                <strong class="font-weight-bold">Thanks & Regards</strong>
+                <br />
+                <!--{newusername}-->
+                <br />
+            </td>
+        </tr>
+        <!--<tr>
+            <td align="center" style="background-color:yellow">
+                <br />
+                <br />
+                <span style="font-size:15px;text-decoration:underline">   Share your knowledge   </span>
+                <br />
+                <span style="font-size:20px;">   <i>If you have knowledge, let others light their candles in it - Margaret Fuller </i>   </span>
+                <br />
+                <br />
+            </td>
+
+        </tr>-->
+        <tfoot>
+            <tr>
+                <td style="width: 100%; font-size: medium; font-weight: bold; margin: 0% 20% 0% 20%; color: darkblue;">
+                    This email is automatically generated. It is to be used for internal project purposes only. Do not reply.
+                    © <strong class="text-purple">PCI</strong> India
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <!--<h2 style="color:#ff6a00; font-size:medium;">This email was generated automatically by PMRS website for internal use only | do not reply &#169; CARE India </h2>-->
+</body>
+</html> 

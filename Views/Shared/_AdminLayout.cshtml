@@ -1,0 +1,78 @@
+﻿
+<!doctype html>
+<html lang="en" class="preset-1" data-pc-sidebar-caption="true" data-pc-layout="vertical" data-pc-direction="ltr"
+      dir="ltr" data-pc-theme_contrast="" data-pc-theme="light">
+<head>
+    <title>Grievance</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @*<link href="~/Content/admin_assets/css/style.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="~/Content/admin_assets/css/plugins/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="~/Content/admin_assets/fonts/inter/inter.css" id="main-font-link">
+    <link rel="stylesheet" href="~/Content/admin_assets/fonts/phosphor/duotone/style.css">
+    <link rel="stylesheet" href="~/Content/admin_assets/fonts/tabler-icons.min.css">
+    <link rel="stylesheet" href="~/Content/admin_assets/fonts/feather.css">
+    <link rel="stylesheet" href="~/Content/admin_assets/fonts/fontawesome.css">
+    <link rel="stylesheet" href="~/Content/admin_assets/fonts/material.css">
+    <link rel="stylesheet" href="~/Content/admin_assets/css/style.css" id="main-style-link">
+</head>
+
+<body>
+    @Html.Partial("_Loader")
+    @Html.Partial("_AdminHeader")
+    @Html.Partial("_AdminSidebar")
+
+    <div class="pc-container">
+        <div class="pc-content">
+            @RenderBody()
+        </div>
+    </div>
+    @Html.Partial("_AdminFooter")
+    <!-- [Page Specific JS] start -->
+    @*<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>*@
+    <script src="~/Content/admin_assets/js/plugins/apexcharts.min.js"></script><!-- custom widgets js -->
+    <script src="~/Content/admin_assets/js/widgets/all-earnings-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/page-views-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/total-task-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/download-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/customer-rate-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/tasks-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/total-income-graph.js"></script>
+
+    <script src="~/Content/admin_assets/js/widgets/total-line-1-chart.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/total-line-2-chart.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/total-line-3-chart.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/cashflow-bar-chart.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/category-donut-chart.js"></script>
+
+    <script src="~/Content/admin_assets/js/widgets/new-orders-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/new-users-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/visitors-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/overview-chart.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/income-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/languages-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/overview-product-graph.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/total-earning-graph-1.js"></script>
+    <script src="~/Content/admin_assets/js/widgets/total-earning-graph-2.js"></script>
+
+    <!-- [Page Specific JS] end --><!-- Required Js -->
+    <script src="~/Content/admin_assets/js/plugins/simplebar.min.js"></script>
+    <script src="~/Content/admin_assets/js/plugins/popper.min.js"></script>
+    <script src="~/Content/admin_assets/js/icon/custom-icon.js"></script>
+    <script src="~/Content/admin_assets/js/plugins/feather.min.js"></script>
+    <script src="~/Content/admin_assets/js/component.js"></script>
+    <script src="~/Content/admin_assets/js/theme.js"></script>
+    <script src="~/Content/admin_assets/js/script.js"></script>
+
+    <script>layout_change('false');</script>
+    <script>layout_theme_contrast_change('false');</script>
+    <script>change_box_container('false');</script>
+    <script>layout_caption_change('true');</script>
+    <script>layout_rtl_change('false');</script>
+    <script>preset_change('preset-1');</script>
+    <script>main_layout_change('vertical');</script>
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

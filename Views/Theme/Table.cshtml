@@ -1,0 +1,277 @@
+﻿
+@{
+    ViewBag.Title = "Table";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="javascript: void(0)">Table</a></li>
+                    <li class="breadcrumb-item" aria-current="page">Basic table</li>
+                </ul>
+                <div class="page-header-title">
+                    <h2 class="mb-0">Basic table</h2>
+                </div>
+            </div>
+        </div><!-- [ breadcrumb ] end --><!-- [ Main Content ] start -->
+        <div class="grid grid-cols-12 gap-6">
+            <!-- [ basic-table ] start -->
+            <div class="col-span-12 md:col-span-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Basic Table</h5><span class="d-block m-t-5">
+                            use class <code class="text-danger-400 text-sm">table</code> inside table element
+                        </span>
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>fat</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- [ basic-table ] end --><!-- [ Hover-table ] start -->
+            <div class="col-span-12 md:col-span-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Hover Table</h5><span class="d-block m-t-5">
+                            use class <code class="text-danger-400 text-sm">table-hover</code> inside table element
+                        </span>
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>fat</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- [ Hover-table ] end --><!-- [ dark-table ] start -->
+            <div class="col-span-12 md:col-span-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Dark Table</h5><span class="d-block m-t-5">
+                            use class <code class="text-danger-400 text-sm">table-dark</code> inside table element
+                        </span>
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-dark">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>fat</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- [ dark-table ] end --><!-- [ stiped-table ] start -->
+            <div class="col-span-12 md:col-span-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Striped Table</h5><span class="d-block m-t-5">
+                            use class <code class="text-danger-400 text-sm">table-striped</code> inside table element
+                        </span>
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>fat</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- [ stiped-table ] end --><!-- [ Contextual-table ] start -->
+            <div class="col-span-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Contextual Classes</h5><span class="d-block m-t-5">
+                            For Make row Contextual add
+                            Contextual class like <code class="text-danger-400 text-sm">.table-success</code> in
+                            <code class="text-danger-400 text-sm">tr tag</code> and For cell add Contextual class in
+                            <code class="text-danger-400 text-sm">td or th tag</code> .
+                        </span>
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-secondary-500/20">
+                                        <td>1</td>
+                                        <td>Mark</td>
+                                        <td>Otto</td>
+                                        <td>mdo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Jacob</td>
+                                        <td>Thornton</td>
+                                        <td>fat</td>
+                                    </tr>
+                                    <tr class="bg-success-500/20">
+                                        <td>3</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                    <tr class="bg-warning-500/20">
+                                        <td>5</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                    <tr class="bg-danger-500/20">
+                                        <td>7</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                    <tr class="bg-info-500/20">
+                                        <td>9</td>
+                                        <td>Larry</td>
+                                        <td>the Bird</td>
+                                        <td>twitter</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- [ Contextual-table ] end -->
+        </div><!-- [ Main Content ] end -->
+

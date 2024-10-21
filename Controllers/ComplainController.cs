@@ -7,11 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static ImageResizer.Plugins.Basic.Image404;
 
 namespace Grievancemis.Controllers
 {
-   
+    [SessionCheckAttribute]
     public class ComplainController : Controller
     {
         // GET: Complain
@@ -132,67 +131,7 @@ namespace Grievancemis.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult OPtSendMail(string EmailId, string OPTCode)
-        {
-            var res = -1;
-            if (!string.IsNullOrWhiteSpace(EmailId) && string.IsNullOrWhiteSpace(OPTCode))
-            {
-                var vildemailid = EmailId.Trim().Split('@')[1];
-                if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
-                {
-                    res = CommonModel.SendMailForUser(EmailId);
-                    if (res == 1)
-                    {
-                        return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
-                    }
-                    return Json(new { success = false, message = "EmailId not verify.", resdata = res });
-                }
-                else
-                {
-                    return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
-                }
-            }
-            else if (!string.IsNullOrWhiteSpace(EmailId) && !string.IsNullOrWhiteSpace(OPTCode))
-            {
-                Grievance_DBEntities _db = new Grievance_DBEntities();
-                var vildemailid = EmailId.Trim().Split('@')[1];
-                if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
-                {
-                    var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim())?.FirstOrDefault();// && x.Date == DateTime.Now.Date
-                    if (tbl != null)
-                    {
-                        tbl.IsValidEmailId = true;
-                        tbl.IsActive = false;
-                        res = _db.SaveChanges();
-                        if (res == 1)
-                        {
-                            return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
-                        }
-
-                    }
-                    else
-                    {
-                        if (tbl != null)
-                        {
-                            tbl.IsValidEmailId = false;
-                            tbl.IsActive = false;
-                        }
-                    }
-                    res = _db.SaveChanges();
-                    if (res == 1)
-                    {
-                        return Json(new { success = false, message = "EmailId Invalid.", resdata = 3 });
-                    }
-                }
-                else
-                {
-                    return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
-                }
-            }
-
-            return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
-        }
+      
         private string ConvertViewToString(string viewName, object model)
         {
             ViewData.Model = model;

@@ -29,7 +29,7 @@ namespace Grievancemis.Controllers
         {
             try
             {
-                int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder();string partymail = string.Empty, Greid = string.Empty;
+                int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty;
                 if (ModelState.IsValid)
                 {
                     using (var db = new Grievance_DBEntities())
@@ -49,14 +49,14 @@ namespace Grievancemis.Controllers
                             IsActive = true,
                             CreatedOn = DateTime.Now
                         };
-                        var igtype = 0;var istype = 0;
+                        var igtype = 0; var istype = 0;
                         igtype = Convert.ToInt32(tbl_Grievance.GrievanceType);
                         istype = Convert.ToInt32(tbl_Grievance.StateId);
                         var GType = db.M_GrievanceType.Where(b => b.Id == igtype).FirstOrDefault();
                         var SType = db.m_State_Master.Where(b => b.LGD_State_Code == istype).FirstOrDefault();
                         str.Append("<table border='1'>");
                         str.Append("<tr><td>Email</td><td>Name</td><td>Phone Number</td></tr>");
-                        str.Append("<tr><td>"+ tbl_Grievance.Email+"</td><td>" + tbl_Grievance.Name + "</td><td>"+ tbl_Grievance.PhoneNo + "</td></tr>");
+                        str.Append("<tr><td>" + tbl_Grievance.Email + "</td><td>" + tbl_Grievance.Name + "</td><td>" + tbl_Grievance.PhoneNo + "</td></tr>");
                         str.Append("<tr><td>Grievance Type</td><td>State Name</td><td>Title</td></tr>");
                         str.Append("<tr><td>" + GType.GrievanceType + "</td><td>" + SType.StateName + "</td><td>" + tbl_Grievance.Title + "</td></tr>");
                         str.Append("<tr><td>Location</td><td colspan='2'>Grievance_Message</td></tr>");
@@ -125,10 +125,11 @@ namespace Grievancemis.Controllers
                     {
                         DataTable dt = new DataTable();
                         dt = SP_Model.GetTeamMailID();
-                        if (dt.Rows.Count > 0) {
+                        if (dt.Rows.Count > 0)
+                        {
 
-                            res = CommonModel.SendSucessfullMailForUser(dt.Rows[0]["EmailList"].ToString(),str.ToString(), partymail);
-                            res = CommonModel.SendMailPartUser(partymail, Greid);                            
+                            res = CommonModel.SendSucessfullMailForUser(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail);
+                            res = CommonModel.SendMailPartUser(partymail, Greid);
                         }
                         if (res > 0)
                         {
@@ -138,7 +139,7 @@ namespace Grievancemis.Controllers
                         {
                             return Json(new { success = true, message = "Data saved successfully!" });
                         }
-                        
+
                     }
                     else
                     {
@@ -156,6 +157,74 @@ namespace Grievancemis.Controllers
             }
         }
 
-    
+        [HttpPost]
+        public ActionResult OPtSendMail(string EmailId, string OPTCode)
+        {
+            var res = -1;
+            if (!string.IsNullOrWhiteSpace(EmailId) && string.IsNullOrWhiteSpace(OPTCode))
+            {
+                var vildemailid = EmailId.Trim().Split('@')[1];
+                if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
+                {
+                    res = CommonModel.SendMailForUser(EmailId);
+                    if (res == 1)
+                    {
+                        var usercheck = MvcApplication.CUser;
+                        if (usercheck != null)
+                        {
+                            return RedirectToAction("GetGrievanceList", "Complaine");
+                        }
+                        else
+                        {
+                            return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
+                        }
+                    }
+                    return Json(new { success = false, message = "EmailId not verify.", resdata = res });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(EmailId) && !string.IsNullOrWhiteSpace(OPTCode))
+            {
+                Grievance_DBEntities _db = new Grievance_DBEntities();
+                var vildemailid = EmailId.Trim().Split('@')[1];
+                if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
+                {
+                    var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim())?.FirstOrDefault();// && x.Date == DateTime.Now.Date
+                    if (tbl != null)
+                    {
+                        tbl.IsValidEmailId = true;
+                        tbl.IsActive = false;
+                        res = _db.SaveChanges();
+                        if (res == 1)
+                        {
+                            return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
+                        }
+
+                    }
+                    else
+                    {
+                        if (tbl != null)
+                        {
+                            tbl.IsValidEmailId = false;
+                            tbl.IsActive = false;
+                        }
+                    }
+                    res = _db.SaveChanges();
+                    if (res == 1)
+                    {
+                        return Json(new { success = false, message = "EmailId Invalid.", resdata = 3 });
+                    }
+                }
+                else
+                {
+                    return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
+                }
+            }
+
+            return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
+        }
     }
 }

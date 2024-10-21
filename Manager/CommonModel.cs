@@ -198,14 +198,12 @@ namespace Grievancemis.Manager
         }
         #endregion
 
-        public static int SendMailForUser(string Toemailid)
+        public static int SendMailForUser(string Toemailid, DataTable dt)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
-            int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Hi,"
-                , SenderName = "", RandomValue = "", OTPCode = "";
-            string ASDT = ""; string DurationTime = ""; string BatchName = "";
-            string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
+            //int noofsend = 0;
+            string To = "", Subject = "", Body = "", ReceiverName = "Hi," , maxID = "", RandomValue = "", OTPCode = "";
+            //string ASDT = ""; string DurationTime = ""; 
             string OtherEmailID = "sinhabinduk@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
@@ -218,31 +216,35 @@ namespace Grievancemis.Manager
             }
             try
             {
-                Random random = new Random();
-
-                // Generate a random double between 0.0 and 1.0
-                int randomNumber = random.Next(0, 1011455); // Generates a number between 0.0 and 1.0
-
-                var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
-                var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
-                tbl_v.Id = Guid.NewGuid();
-                tbl_v.EmailId = Toemailid.Trim();
-                tbl_v.VerificationCode = randomNumber.ToString();
-                tbl_v.CreatedOn = DateTime.Now;
-                tbl_v.StartTime = DateTime.Now.TimeOfDay;
-                tbl_v.EndTime = tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
-                tbl_v.Date = DateTime.Now.Date;
-                tbl_v.IsActive = true;
-                tbl_v.IsValidEmailId = false;
-                _db.Tbl_LoginVerification.Add(tbl_v);
-                _db.SaveChanges();
-
+                if (dt.Rows.Count > 0)
+                {
+                    RandomValue = dt.Rows[0]["VerificationCode"].ToString();
+                    maxID = dt.Rows[0]["MaxId"].ToString();
+                }
+                else
+                {
+                    Random random = new Random();
+                    // Generate a random double between 0.0 and 1.0
+                    int randomNumber = random.Next(0, 1011455); // Generates a number between 0.0 and 1.0
+                    var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
+                    var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
+                    tbl_v.Id = Guid.NewGuid();
+                    tbl_v.EmailId = Toemailid.Trim();
+                    tbl_v.VerificationCode = randomNumber.ToString();
+                    tbl_v.CreatedOn = DateTime.Now;
+                    tbl_v.StartTime = DateTime.Now.TimeOfDay;
+                    tbl_v.EndTime = tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
+                    tbl_v.Date = DateTime.Now.Date;
+                    tbl_v.IsActive = true;
+                    tbl_v.IsValidEmailId = false;
+                    _db.Tbl_LoginVerification.Add(tbl_v);
+                    _db.SaveChanges();
+                }
                 To = Toemailid;
-
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     .Replace("{bodytext}", "When the user submits the code for verification, check if the code was generated within the last hour. If the current time exceeds the one-hour limit, the OTP is invalid.")
                     .Replace("{EmailID}", To)
-                    .Replace("{OTPCode}", tbl_v.VerificationCode);
+                    .Replace("{OTPCode}", RandomValue);
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
                 //{
                 //    bodyTemplate = reader.ReadToEnd();
@@ -267,9 +269,13 @@ namespace Grievancemis.Manager
                 smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
-                tbl_v.Issent = true;
-                tbl_v.SentOn = DateTime.Now;
-                _db.SaveChanges();
+                if (dt.Rows.Count>0)
+                {
+                    var tbl_v = _db.Tbl_LoginVerification.Find(Guid.Parse(maxID));
+                    tbl_v.Issent = true;
+                    tbl_v.SentOn = DateTime.Now;
+                    _db.SaveChanges();
+                }
                 return 1;
 
             }
@@ -278,7 +284,7 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-        public static int SendSucessfullMailForUser(string Toemailid,string bodytext,string partymail)
+        public static int SendSucessfullMailForUser(string Toemailid, string bodytext, string partymail)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
@@ -322,7 +328,7 @@ namespace Grievancemis.Manager
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     .Replace("{bodytext}", bodytext)
                     .Replace("{EmailID}", To);
-                    //.Replace("{OTPCode}", tbl_v.VerificationCode);
+                //.Replace("{OTPCode}", tbl_v.VerificationCode);
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
                 //{
                 //    bodyTemplate = reader.ReadToEnd();
@@ -330,7 +336,7 @@ namespace Grievancemis.Manager
                 //bodyTemplate = "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n\t\t<tbody>\r\n <tr>\r\n\t\t\t<td align=\"center\"> " + bodydata + "\r\n\t\t\t\t\r\n  \t</tbody></tr>\r\n</table>";
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
-                mail.To.Add(To + "," + OtherEmailID+","+ partymail);
+                mail.To.Add(To + "," + OtherEmailID + "," + partymail);
                 mail.From = new MailAddress("kgbvjh4care@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
@@ -358,7 +364,7 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-        public static int SendMailPartUser(string Toemailid,string gvid)
+        public static int SendMailPartUser(string Toemailid, string gvid)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
@@ -439,7 +445,7 @@ namespace Grievancemis.Manager
             }
         }
 
-        public static int SendMailRevartPartUser(string Toemailid, string gvid,string name,string status)
+        public static int SendMailRevartPartUser(string Toemailid, string gvid, string name, string status)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
@@ -481,7 +487,7 @@ namespace Grievancemis.Manager
                 To = Toemailid;
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
-                    .Replace("{bodytext}", name +", Your Grievance Status has been Changed To "+ status + ".We'll Inform You on next Update.")
+                    .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To " + status + ".We'll Inform You on next Update.")
                     .Replace("{EmailID}", To)
                     .Replace("{OTPCode}", gvid)
                     .Replace("{Status}", status);

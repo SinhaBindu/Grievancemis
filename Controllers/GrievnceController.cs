@@ -166,7 +166,8 @@ namespace Grievancemis.Controllers
                 var vildemailid = EmailId.Trim().Split('@')[1];
                 if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
                 {
-                    res = CommonModel.SendMailForUser(EmailId);
+                    var dt = SP_Model.GetOTPCheckLoginMail(EmailId.Trim(), OPTCode);
+                    res = CommonModel.SendMailForUser(EmailId.Trim(),dt);
                     if (res == 1)
                     {
                         var usercheck = MvcApplication.CUser;
@@ -188,6 +189,7 @@ namespace Grievancemis.Controllers
             }
             else if (!string.IsNullOrWhiteSpace(EmailId) && !string.IsNullOrWhiteSpace(OPTCode))
             {
+                var dt = SP_Model.GetOTPCheckLoginMail(EmailId.Trim(), OPTCode);
                 Grievance_DBEntities _db = new Grievance_DBEntities();
                 var vildemailid = EmailId.Trim().Split('@')[1];
                 if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
@@ -200,9 +202,9 @@ namespace Grievancemis.Controllers
                         res = _db.SaveChanges();
                         if (res == 1)
                         {
+                            //return RedirectToAction("GetGrievanceList", "Complaine");
                             return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
                         }
-
                     }
                     else
                     {
@@ -223,7 +225,6 @@ namespace Grievancemis.Controllers
                     return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
                 }
             }
-
             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
         }
     }

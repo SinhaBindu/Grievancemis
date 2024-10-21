@@ -64,6 +64,14 @@ namespace Grievancemis.Manager
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
+        public static DataTable GetOTPCheckLoginMail(string EmailId, string OTP)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_CheckhourOtp");
+            sp.Command.AddParameter("@EmailId", EmailId, DbType.String);
+            sp.Command.AddParameter("@OTP", OTP, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
 
     }
 }

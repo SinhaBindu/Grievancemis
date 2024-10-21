@@ -1,32 +1,41 @@
 ﻿@using Grievancemis.Manager
-@model Grievancemis.Models.RevertComplaint
+@model Grievancemis.Models.FilterModel
 @{
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using (Html.BeginForm("GetGrievanceList", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
+<div>
+@using (Html.BeginForm("GetRevartList", "Complain", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
 {
-    @*<div class="row">
-            <div class="col-md-3">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
-                    <span style="color:red;">*</span>
-                    @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
-                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-                </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
+                <span style="color:red;">*</span>
+                @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
+                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TypeGId, htmlAttributes: new { @class = "control-label" })
-                    <span style="color:red;">*</span>
-                    @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
-                    @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
-                </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.TypeGId, htmlAttributes: new { @class = "control-label" })
+                <span style="color:red;">*</span>
+                @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
+                @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-3">
-                <button id="search-button" class="btn btn-primary">Search</button>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
+                <span style="color:red;">*</span>
+                @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
+                @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
+        <div class="col-md-3">
+            <button id="search-button" class="btn btn-primary">Search</button>
+        </div>
+    </div>
 }
 </div>
 <div id="subdata"></div>
@@ -39,14 +48,14 @@
         function bindload() {
             debugger;
             $("#subdata").html(''); $('#div-download').empty();
-            var RevertComplaint = new Object();
-            //filtermodel.StateId = $('#StateId').val() == '' ? '' : $('#StateId').val();
-            //filtermodel.FromDt = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
-            // filtermodel.ToDt = $('#ToDt').val() == '' ? '' : $('#ToDt').val();
+            var filtermodel = new Object();
+            filtermodel.StateId = $('#StateId').val() == '' ? '' : $('#StateId').val();
+            filtermodel.TypeGId = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
+            filtermodel.RevertTypeId = $('#RevertTypeId').val() == '' ? 0 : $('#RevertTypeId').val();
             $.ajax({
                 type: "Get",
-                url: document.baseURI + "/Grievnce/GetRevartList",
-                data: RevertComplaint,
+                url: document.baseURI + "/Complain/GetRevartList",
+                data: filtermodel,
                 //cache: false,
                 success: function (res) {
                     if (res.IsSuccess) {

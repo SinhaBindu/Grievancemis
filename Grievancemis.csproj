@@ -194,8 +194,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SessionCheckAttribute.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ComplainController.cs" />
     <Compile Include="Controllers\GrievnceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -270,6 +272,9 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_TeamRevertComplain.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_UserRegistration.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_UserRevertComplain.cs">
@@ -459,7 +464,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Layout_old.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -483,16 +488,14 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Grievnce\GrievanceForm.cshtml" />
-    <Content Include="Views\Grievnce\_GrievanceData.cshtml" />
+    <Content Include="Views\Complain\_GrievanceData.cshtml" />
     <Content Include="Views\Grievnce\GrievanceCaseAdd.cshtml" />
-    <Content Include="Views\Grievnce\GrievanceList.cshtml" />
+    <Content Include="Views\Complain\GrievanceList.cshtml" />
     <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\Master\UserDetaillist.cshtml" />
     <Content Include="Views\Master\_UserDetailData.cshtml" />
-    <Content Include="Views\Grievnce\RevertC.cshtml" />
-    <Content Include="Views\Grievnce\_ComData.cshtml" />
-    <Content Include="Views\Grievnce\RevartList.cshtml" />
+    <Content Include="Views\Complain\_ComData.cshtml" />
+    <Content Include="Views\Complain\RevartList.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_Loader.cshtml" />
     <Content Include="Views\Shared\_AdminHeader.cshtml" />

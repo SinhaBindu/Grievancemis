@@ -14,4 +14,15 @@ namespace Grievancemis.Manager
         public static string NoDocumentFilePath = "/Content/assets/images/No-Document.png";
 
     }
+    public static class RolesIdcont {
+        public static string Admin = "1";
+        public static string User = "2";
+        public static string Community = "3";
+    }
+    public static class RolesNamecont
+    {
+        public static string Admin = "Admin";
+        public static string User = "User";
+        public static string Community = "Community";
+    }
 }

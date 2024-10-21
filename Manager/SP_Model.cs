@@ -33,10 +33,12 @@ namespace Grievancemis.Manager
             return dt;
         }
 
-        public static DataTable GetRevartList(RevertComplaint RevertComplaint)
+        public static DataTable GetRevartList(FilterModel filtermodel)
         {
-            StoredProcedure sp = new StoredProcedure("USP__RevertCDataList");
-            //sp.Command.AddParameter("@RevertTypeId", RevertComplaint.RevertTypeId, DbType.Int32);
+            StoredProcedure sp = new StoredProcedure("USP_RevertCDataList");
+            sp.Command.AddParameter("@StateId", filtermodel.StateId, DbType.String);
+            sp.Command.AddParameter("@TypeGId", filtermodel.TypeGId, DbType.String);
+            sp.Command.AddParameter("@RevertTypeId", filtermodel.RevertTypeId, DbType.Int32);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
@@ -55,5 +57,13 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataSet GetLoginCheckMail(string EmailId)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_LoginCheck");
+            sp.Command.AddParameter("@EmailId", EmailId, DbType.String);
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
+        }
+
     }
 }

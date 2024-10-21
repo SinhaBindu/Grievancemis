@@ -100,7 +100,21 @@ namespace Grievancemis.Models
 
 
     }
-
+    public class UserViewModel
+    {
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+        public string Name { get; set; }
+        public string Phone { get; set; }
+        public string EmailId { get; set; }
+        public string DistrictId { get; set; }
+        public string District { get; set; }
+        public string RoleId { get; set; }
+        public string Role { get; set; }
+        public string MappedTCenterIds { get; set; }
+        public string MappedTCenters { get; set; }
+        public string LockoutEnabled { get; set; }
+    }
     public class ResetPasswordViewModel
     {
         [Required]

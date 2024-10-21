@@ -7,7 +7,7 @@
 
 <div class="grievances-list">
     <h2>Grievances List</h2>
-    @using (Html.BeginForm("GetGrievanceList", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
+    @using (Html.BeginForm("GetGrievanceList", "Complain", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
     {
         <div class="row">
             <div class="col-md-3">
@@ -117,7 +117,7 @@
 
         $.ajax({
             type: "POST",
-            url: document.baseURI + "/Grievnce/RevertCPost",
+            url: document.baseURI + "/Complain/RevertCPost",
             data: filterModel,
             success: function (response) {
                 if (response.success) {
@@ -150,7 +150,7 @@
             // filtermodel.ToDt = $('#ToDt').val() == '' ? '' : $('#ToDt').val();
             $.ajax({
                 type: "Get",
-                url: document.baseURI + "/Grievnce/GetGrievanceList",
+                url: document.baseURI + "/Complain/GetGrievanceList",
                 data: filtermodel,
                 //cache: false,
                 success: function (res) {

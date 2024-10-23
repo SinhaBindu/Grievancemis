@@ -35,7 +35,7 @@ namespace Grievancemis
                     else
                     {
                         StoredProcedure sp = new StoredProcedure("SP_LoginCheck");
-                        sp.Command.AddParameter("@UN", HttpContext.Current.User.Identity.Name, DbType.String);
+                        sp.Command.AddParameter("@EmailId",HttpContext.Current.Session["EmailId"], DbType.String);
                         DataSet ds = sp.ExecuteDataSet();
                         DataTable dt = new DataTable();
                         DataTable dtu = new DataTable();

@@ -202,7 +202,7 @@ namespace Grievancemis.Manager
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             //int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Hi," , maxID = "", RandomValue = "", OTPCode = "";
+            string To = "", Subject = "", Body = "", ReceiverName = "Hi,", maxID = "", RandomValue = "", OTPCode = "";
             //string ASDT = ""; string DurationTime = ""; 
             string OtherEmailID = "sinhabinduk@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
@@ -225,7 +225,7 @@ namespace Grievancemis.Manager
                 {
                     Random random = new Random();
                     // Generate a random double between 0.0 and 1.0
-                    int randomNumber = random.Next(0, 1011455); // Generates a number between 0.0 and 1.0
+                    int randomNumber = random.Next(0, 1011455462); // Generates a number between 0.0 and 1.0
                     var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
                     var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
                     tbl_v.Id = Guid.NewGuid();
@@ -239,6 +239,7 @@ namespace Grievancemis.Manager
                     tbl_v.IsValidEmailId = false;
                     _db.Tbl_LoginVerification.Add(tbl_v);
                     _db.SaveChanges();
+                    RandomValue = randomNumber.ToString();
                 }
                 To = Toemailid;
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
@@ -269,7 +270,7 @@ namespace Grievancemis.Manager
                 smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
-                if (dt.Rows.Count>0)
+                if (dt.Rows.Count > 0)
                 {
                     var tbl_v = _db.Tbl_LoginVerification.Find(Guid.Parse(maxID));
                     tbl_v.Issent = true;

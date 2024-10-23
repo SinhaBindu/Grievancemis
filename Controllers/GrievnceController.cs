@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 using Antlr.Runtime.Tree;
 using Grievancemis.Manager;
 using Grievancemis.Models;
+using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 
 namespace Grievancemis.Controllers
@@ -18,6 +20,44 @@ namespace Grievancemis.Controllers
     {
         private Grievance_DBEntities db = new Grievance_DBEntities();
         // GET: Grievnce
+
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+
+        public GrievnceController()
+        {
+        }
+
+        public GrievnceController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         public ActionResult Index()
         {
             return View();
@@ -167,18 +207,10 @@ namespace Grievancemis.Controllers
                 if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
                 {
                     var dt = SP_Model.GetOTPCheckLoginMail(EmailId.Trim(), OPTCode);
-                    res = CommonModel.SendMailForUser(EmailId.Trim(),dt);
+                    res = CommonModel.SendMailForUser(EmailId.Trim(), dt);
                     if (res == 1)
                     {
-                        var usercheck = MvcApplication.CUser;
-                        if (usercheck != null)
-                        {
-                            return RedirectToAction("GetGrievanceList", "Complaine");
-                        }
-                        else
-                        {
-                            return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
-                        }
+                        return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
                     }
                     return Json(new { success = false, message = "EmailId not verify.", resdata = res });
                 }
@@ -194,24 +226,57 @@ namespace Grievancemis.Controllers
                 var vildemailid = EmailId.Trim().Split('@')[1];
                 if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
                 {
-                    var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim())?.FirstOrDefault();// && x.Date == DateTime.Now.Date
+                    var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim() && DbFunctions.TruncateTime(x.Date) == DbFunctions.TruncateTime(DateTime.Now))?.FirstOrDefault();// && x.Date == DateTime.Now.Date
                     if (tbl != null)
                     {
                         tbl.IsValidEmailId = true;
-                        tbl.IsActive = false;
+                        //tbl.IsActive = false;
                         res = _db.SaveChanges();
-                        if (res == 1)
+
+                        if (res == 1 || tbl.IsValidEmailId == true)
                         {
                             //return RedirectToAction("GetGrievanceList", "Complaine");
-                            return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
+                            //return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
+
+                            var result = SignInManager.PasswordSignIn(EmailId, "Admin@1234", true, false);
+                            switch (result)
+                            {
+                                case SignInStatus.Success:
+                                    res = 1; break;
+                                case SignInStatus.LockedOut:
+                                    //return View("Lockout");
+                                    res = 1; break;
+                                case SignInStatus.RequiresVerification:
+                                    //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                                    //case SignInStatus.Failure:
+                                    //default:
+                                    //    ModelState.AddModelError("", "Invalid login attempt.");
+                                    res = 1; break;
+                            }
+
+                            Session["EmailId"] = EmailId.Trim();
+                            var usercheck = MvcApplication.CUser;
+                            if (usercheck.RoleId == "2" )//User
+                            {
+                                return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complaine/GrievanceListUser", resdata = 99, });
+                            }
+                            if (usercheck.RoleId == "3")//TeamMember
+                            {
+                                return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complaine/GrievanceList", resdata = 100 });
+                            }
+                            if (usercheck.RoleId == "1")//Admin
+                            {
+                                return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complaine/GrievanceList", resdata = 101 });
+                            }
                         }
+                        return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
                     }
                     else
                     {
                         if (tbl != null)
                         {
                             tbl.IsValidEmailId = false;
-                            tbl.IsActive = false;
+                            //tbl.IsActive = false;
                         }
                     }
                     res = _db.SaveChanges();

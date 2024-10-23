@@ -281,7 +281,6 @@
                             $('#div-vc').show();
                         }
                         if (resp.resdata == 2) {
-
                             $('#div-g').show();
                             $('#Email_Id').attr('readonly', true);
                             $('#Email').attr('readonly', true);
@@ -289,6 +288,9 @@
                             $('#div-emailid').hide();
                             $('#Email_Id').val('');
                             $('#div-evc').hide();
+                        }
+                        if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
+                            window.location.href = document.baseURI + resp.redirect;
                         }
                         toastr.success(resp.message);
                     }

@@ -79,6 +79,14 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable SP_AspnetUserCaseFirstTimeCheck(string EmailId,string AspnetUserId)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_AspnetUserCaseFirstTimeCheck");
+            sp.Command.AddParameter("@EmailId", EmailId, DbType.String);
+            sp.Command.AddParameter("@AspnetUserId", AspnetUserId, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
 
     }
 }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Antlr.Runtime.Tree;
@@ -24,7 +25,7 @@ namespace Grievancemis.Controllers
 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-       // private RoleManager _userManager;
+        // private RoleManager _userManager;
         public GrievnceController()
         {
         }
@@ -62,9 +63,11 @@ namespace Grievancemis.Controllers
         {
             return View();
         }
-        public ActionResult GrievanceCaseAdd() { return View(); }
+        public ActionResult GrievanceCaseAdd()
+        {
+            return View();
+        }
         [HttpPost]
-
         public ActionResult GrievanceCaseAdd(GrivanceModel grievanceModel)
         {
             try
@@ -198,7 +201,7 @@ namespace Grievancemis.Controllers
         }
 
         [HttpPost]
-        public ActionResult OPtSendMail(string EmailId, string OPTCode)
+        public async Task<ActionResult> OPtSendMail(string EmailId, string OPTCode)
         {
             var res = -1;
             if (!string.IsNullOrWhiteSpace(EmailId) && string.IsNullOrWhiteSpace(OPTCode))//send OTP
@@ -221,7 +224,7 @@ namespace Grievancemis.Controllers
             }
             else if (!string.IsNullOrWhiteSpace(EmailId) && !string.IsNullOrWhiteSpace(OPTCode))//EmailId Verified
             {
-                var rolid = ""; var passw = "";
+                var rolid = ""; var password = ""; var aspId = "";
                 var aspdt = SP_Model.SP_AspnetUser(EmailId.Trim());
                 Grievance_DBEntities _db = new Grievance_DBEntities();
                 var vildemailid = EmailId.Trim().Split('@')[1];
@@ -236,21 +239,25 @@ namespace Grievancemis.Controllers
                         if (aspdt.Rows.Count > 0)
                         {
                             rolid = aspdt.Rows[0]["RoleId"].ToString();
-                            passw = aspdt.Rows[0]["Passw"].ToString();
+                            password = aspdt.Rows[0]["Passw"].ToString();
+                            aspId = aspdt.Rows[0]["Id"].ToString();
                         }
                         else
                         {
-                            RegisterViewModel model = new RegisterViewModel();
-                            model.Email = EmailId.Trim();
-                            model.Password = "User@123";
-                            model.RoleName = "User";
-                            model.RoleID = "2";
-                            var resl = RegisterCust(model);
+                            RegisterViewModel model = new RegisterViewModel
+                            {
+                                Email = EmailId.Trim(),
+                                Password = "User@123",
+                                RoleName = "User",
+                                RoleID = "2"
+                            };
+                            await RegisterCust(model);
                             var aspdt1 = SP_Model.SP_AspnetUser(EmailId.Trim());
                             if (aspdt.Rows.Count > 0)
                             {
                                 rolid = aspdt.Rows[0]["RoleId"].ToString();
-                                passw = aspdt.Rows[0]["Passw"].ToString();
+                                password = aspdt.Rows[0]["Passw"].ToString();
+                                aspId = aspdt.Rows[0]["Id"].ToString();
                             }
                         }
 
@@ -259,29 +266,30 @@ namespace Grievancemis.Controllers
                             //return RedirectToAction("GetGrievanceList", "Complaine");
                             //return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
 
-                            var result = SignInManager.PasswordSignIn(EmailId, passw, true, false);
-                            switch (result)
+                            var signInResult = await SignInManager.PasswordSignInAsync(EmailId, password, isPersistent: true, shouldLockout: false);
+
+                            switch (signInResult)
                             {
                                 case SignInStatus.Success:
                                     res = 1; break;
                                 case SignInStatus.LockedOut:
-                                    //return View("Lockout");
-                                    res = 1; break;
                                 case SignInStatus.RequiresVerification:
-                                    //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                                    //case SignInStatus.Failure:
-                                    //default:
-                                    //    ModelState.AddModelError("", "Invalid login attempt.");
-                                    res = 1; break;
+                                    res = 0; break;
                             }
 
                             Session["EmailId"] = EmailId.Trim();
                             var usercheck = MvcApplication.CUser;
-                            if (usercheck != null)
+                            if (usercheck != null && res > 0)
                             {
                                 if (usercheck.RoleId == "2")//User
                                 {
-                                    return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complain/GrievanceList", resdata = 99, });
+                                    var getemail = SP_Model.SP_AspnetUserCaseFirstTimeCheck(EmailId, aspId);
+                                    if (getemail.Rows.Count > 0)
+                                    {
+                                        return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complain/GrievanceList", resdata = 99, });
+                                    }
+                                    else
+                                        return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
                                 }
                                 if (usercheck.RoleId == "3")//TeamMember
                                 {
@@ -317,112 +325,40 @@ namespace Grievancemis.Controllers
             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
         }
 
-        public string RegisterCust(RegisterViewModel model)
+        public async Task<string> RegisterCust(RegisterViewModel model)
         {
-            //Grievance_DBEntities db_ = new Grievance_DBEntities();
-            //if (ModelState.IsValid)
-            //{
-            //    if (!string.IsNullOrWhiteSpace(model.Id))
-            //    {
-
-            //        model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber.Trim();
-            //        var tbLu = db_.AspNetUsers.Find(model.Id);
-
-            //        var passwordHasher = new Microsoft.AspNet.Identity.PasswordHasher();
-            //        tbLu.PasswordHash = passwordHasher.HashPassword(model.Password);
-
-            //        tbLu.UserName = model.PhoneNumber.Trim();
-            //        tbLu.Name = model.Name.Trim();
-            //        tbLu.Email = model.Email.Trim();
-            //        //tbLu.UserName = model.UserName;
-            //        //tbLu.PasswordHash = model.Password;
-            //        int res = db_.SaveChanges();
-
-            //        var userRoles = UserManager.GetRoles(tbLu.Id);
-            //        var rolename = db_.AspNetRoles.Find(model.RoleID).Name;
-            //        foreach (var item in userRoles)
-            //        {
-            //            if (model.RoleID != item)
-            //            {
-            //                UserManager.RemoveFromRoles(tbLu.Id, item);
-            //                UserManager.AddToRole(tbLu.Id, rolename);
-            //            }
-            //        }
-            //        return RedirectToAction("UserDetaillist", "Master");
-            //    }
-            //    else
-            //    {
-            //        var user = new ApplicationUser { PhoneNumber = model.PhoneNumber.Trim(), UserName = model.Email.Trim(), Email = model.Email.Trim() };
-            //        model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber;
-            //        var result = await UserManager.CreateAsync(user, model.Password);
-            //        if (result.Succeeded)
-            //        {
-            //            //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-            //            var rolename = db_.AspNetRoles.Find(model.RoleID).Name;
-            //            var result1 = UserManager.AddToRole(user.Id, rolename);
-            //            if (db_.AspNetUsers.Any(x => x.Id == user.Id.Trim()))
-            //            {
-            //                var tbLu = db_.AspNetUsers.Find(user.Id);
-            //                tbLu.Name = model.Name.Trim();
-            //                tbLu.CreatedBy = User.Identity.Name;
-            //                tbLu.CreatedOn = DateTime.Now;
-            //                int res = db_.SaveChanges();
-            //                UserManager.AddToRole(user.Id, rolename);
-            //            }
-            //            // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-            //            // Send an email with this link
-            //            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            //            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-            //            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-            //            // return RedirectToAction("Index", "Home");
-            //            return RedirectToAction("UserDetaillist", "Master");
-            //        }
-            //        AddErrors(result);
-            //    }
-            //}
-
-            //// If we got this far, something failed, redisplay form
-            //return View(model);
-
-
-
-            ////////////////////////////////////////////
             Grievance_DBEntities db_ = new Grievance_DBEntities();
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = UserManager.CreateAsync(user, model.Password);
-                if (result.Result.Succeeded)
+                var user = new ApplicationUser { UserName = model.Email.Trim(), Email = model.Email.Trim() };//PhoneNumber = model.PhoneNumber.Trim(),
+                model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber;
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
                 {
-                    SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     var rolename = db_.AspNetRoles.Find(model.RoleID).Name;
                     var result1 = UserManager.AddToRole(user.Id, rolename);
                     if (db_.AspNetUsers.Any(x => x.Id == user.Id.Trim()))
                     {
                         var tbLu = db_.AspNetUsers.Find(user.Id);
-                        tbLu.Name = model.Name.Trim();
+                        tbLu.Name = model.Email.Trim();
                         tbLu.CreatedBy = User.Identity.Name;
                         tbLu.CreatedOn = DateTime.Now;
                         int res = db_.SaveChanges();
                         UserManager.AddToRole(user.Id, rolename);
                     }
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    // Return success (1) if user creation and role assignment succeeded
                     return "1";
                 }
-                return ("2");
+
+                // Return failure (2) if user creation failed
+                return "2";
             }
 
-            // If we got this far, something failed, redisplay form
-            return ("0");
+            // Return (0) if model state is invalid
+            return "0";
         }
 
     }

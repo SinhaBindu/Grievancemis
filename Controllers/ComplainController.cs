@@ -131,7 +131,6 @@ namespace Grievancemis.Controllers
                 return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
-
       
         private string ConvertViewToString(string viewName, object model)
         {
@@ -144,5 +143,6 @@ namespace Grievancemis.Controllers
                 return writer.ToString();
             }
         }
+
     }
 }

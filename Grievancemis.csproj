@@ -203,6 +203,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\ThemeController.cs" />
+    <Compile Include="Controllers\UserComController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -269,9 +270,6 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_LoginVerification.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Tbl_Remarks.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_TeamRevertComplain.cs">
@@ -512,6 +510,8 @@
     <Content Include="Views\Theme\FormBasic.cshtml" />
     <Content Include="Views\Theme\FormBasics.cshtml" />
     <Content Include="Views\Theme\Table.cshtml" />
+    <Content Include="Views\UserCom\UserGList.cshtml" />
+    <Content Include="Views\UserCom\_UserGData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

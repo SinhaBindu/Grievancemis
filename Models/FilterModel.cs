@@ -46,9 +46,17 @@ namespace Grievancemis.Models
         //[Required]
         public int RevertTypeId { get; set; }
 
+
         [Display(Name = "Message")]
         //[Required]
         public string TeamRevertMessage { get; set; }
+
+
+        [Display(Name = "Email")]
+        //[Required]
+        public string EmailID { get; set; }
+
+
 
 
         //[Display(Name = "Attendance Date")]

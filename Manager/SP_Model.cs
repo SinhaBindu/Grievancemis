@@ -24,6 +24,15 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable GetUserGList(FilterModel filtermodel)
+        {
+            StoredProcedure sp = new StoredProcedure("USP_GetGrievancefilterList");
+            sp.Command.AddParameter("@StateId", filtermodel.StateId, DbType.String);
+            sp.Command.AddParameter("@TypeGId", filtermodel.TypeGId, DbType.String);
+            sp.Command.AddParameter("@EmailID", filtermodel.EmailID, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
         public static DataTable SPGetUserlist(int? RoleId)
         {
             StoredProcedure sp = new StoredProcedure("SPGetUserlist");

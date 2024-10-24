@@ -2,9 +2,22 @@
 @model Grievancemis.Models.FilterModel
 
 @{
-    //Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Analytics";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="page-header">
+    <div class="page-block">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>
+            <li class="breadcrumb-item" aria-current="page">Analytics</li>
+        </ul>
+        <div class="page-header-title">
+            <h2 class="mb-0">Analytics</h2>
+        </div>
+    </div>
+</div>
 <div class="grievances-list">
     <h2>Grievances List</h2>
     @using (Html.BeginForm("GetGrievanceList", "Complain", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
@@ -44,7 +57,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    @Html.HiddenFor(x=>x.GrievanceId_fk)
+                    @Html.HiddenFor(x => x.GrievanceId_fk)
                     <label for="cname">Name:</label>
                     <strong id="cname"></strong>
                     <br />
@@ -85,7 +98,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
+    <script>
         $(document).ready(function () {
             bindload();
             $('#progressModal').modal({
@@ -103,39 +116,39 @@
                 PostData();
             });
         });
-            // Handle progress button click
-            //$(document).on('click', '.progress-button', function () {
-            //    $('#progressModal').modal('show');
-            //});
+        // Handle progress button click
+        //$(document).on('click', '.progress-button', function () {
+        //    $('#progressModal').modal('show');
+        //});
 
-    function PostData() {
-        var filterModel = {
-            GrievanceId_fk: $('#GrievanceId_fk').val(),
-            RevertTypeId: $('#RevertTypeId').val(),
-            TeamRevertMessage: $('#TeamRevertMessage').val()
-        };
+        function PostData() {
+            var filterModel = {
+                GrievanceId_fk: $('#GrievanceId_fk').val(),
+                RevertTypeId: $('#RevertTypeId').val(),
+                TeamRevertMessage: $('#TeamRevertMessage').val()
+            };
 
-        $.ajax({
-            type: "POST",
-            url: document.baseURI + "/Complain/RevertCPost",
-            data: filterModel,
-            success: function (response) {
-                if (response.success) {
-                    toastr.success(response.message);
-                    $('#progressModal').modal('hide');
-                } else {
-                    toastr.error(response.message);
+            $.ajax({
+                type: "POST",
+                url: document.baseURI + "/Complain/RevertCPost",
+                data: filterModel,
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        $('#progressModal').modal('hide');
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("An error occurred: " + error);
                 }
-            },
-            error: function (xhr, status, error) {
-                toastr.error("An error occurred: " + error);
-            }
-        });
-    }
-    function POPDisplay(id, caseid, name, CreatedOn) {
+            });
+        }
+        function POPDisplay(id, caseid, name, CreatedOn) {
             $('#GrievanceId_fk').val(id);
             $('#cname').html(name);
-        $('#CId').html(caseid);
+            $('#CId').html(caseid);
             $('#con').html(CreatedOn);
             $('#progressModal').modal('show');
 
@@ -198,5 +211,5 @@
                 }
             });
         }
-</script>
+    </script>
 }

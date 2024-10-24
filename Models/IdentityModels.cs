@@ -26,6 +26,7 @@ namespace Grievancemis.Models
         }
 
         public static ApplicationDbContext Create()
+
         {
             return new ApplicationDbContext();
         }

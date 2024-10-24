@@ -203,7 +203,11 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\ThemeController.cs" />
+
     <Compile Include="Controllers\UserComController.cs" />
+
+    <Compile Include="Controllers\UserComplainController.cs" />
+
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -517,6 +521,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\js\" />
     <Folder Include="Doc_Upload\" />
+    <Folder Include="Views\UserComplain\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

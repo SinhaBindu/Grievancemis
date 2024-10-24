@@ -285,11 +285,11 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-        public static int SendSucessfullMailForUser(string Toemailid, string bodytext, string partymail)
+        public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Hi,"
+            string To = "", Subject = "", Body = "", ReceiverName = "Dear Team"
                 , SenderName = "", RandomValue = "", OTPCode = "";
             string ASDT = ""; string DurationTime = ""; string BatchName = "";
             string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
@@ -365,11 +365,11 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-        public static int SendMailPartUser(string Toemailid, string gvid)
+        public static int SendMailPartUser(string Toemailid, string gvid,string Name)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Hi,"
+            string To = "", Subject = "", Body = "", ReceiverName = "Dear "
                 , SenderName = "", RandomValue = "", OTPCode = "";
             string ASDT = ""; string DurationTime = ""; string BatchName = "";
             string TrainerName = ""; string DistrictAgencyTrainingCenter = "";

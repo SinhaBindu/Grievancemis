@@ -102,7 +102,7 @@ namespace Grievancemis.Controllers
                         str.Append("<tr><td>" + tbl_Grievance.Email + "</td><td>" + tbl_Grievance.Name + "</td><td>" + tbl_Grievance.PhoneNo + "</td></tr>");
                         str.Append("<tr><td>Grievance Type</td><td>State Name</td><td>Title</td></tr>");
                         str.Append("<tr><td>" + GType.GrievanceType + "</td><td>" + SType.StateName + "</td><td>" + tbl_Grievance.Title + "</td></tr>");
-                        str.Append("<tr><td>Location</td><td colspan='2'>Grievance_Message</td></tr>");
+                        str.Append("<tr><td>Location</td><td colspan='2'>Message</td></tr>");
                         str.Append("<tr><td>" + tbl_Grievance.Location + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
                         str.Append("</table>");
                         partymail = tbl_Grievance.Email.Trim();
@@ -171,8 +171,8 @@ namespace Grievancemis.Controllers
                         if (dt.Rows.Count > 0)
                         {
 
-                            res = CommonModel.SendSucessfullMailForUser(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail);
-                            res = CommonModel.SendMailPartUser(partymail, Greid);
+                            res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail);
+                            res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name);
                         }
                         if (res > 0)
                         {
@@ -286,7 +286,7 @@ namespace Grievancemis.Controllers
                                     var getemail = SP_Model.SP_AspnetUserCaseFirstTimeCheck(EmailId, aspId);
                                     if (getemail.Rows.Count > 0)
                                     {
-                                        return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complain/GrievanceList", resdata = 99, });
+                                        return Json(new { success = true, message = "EmailId Verified.", redirect = "/UserCom/UserGList", resdata = 99, });
                                     }
                                     else
                                         return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });

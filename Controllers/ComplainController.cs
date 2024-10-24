@@ -11,6 +11,7 @@ using System.Web.Mvc;
 namespace Grievancemis.Controllers
 {
     [SessionCheckAttribute]
+    [Authorize]
     public class ComplainController : Controller
     {
         // GET: Complain

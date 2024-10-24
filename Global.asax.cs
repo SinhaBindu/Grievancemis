@@ -42,7 +42,7 @@ namespace Grievancemis
                         if (ds.Tables.Count>0)
                         {
                             dt = ds.Tables[0];
-                            dtu = ds.Tables[1]; 
+                            //dtu = ds.Tables[1]; 
                         }
                         if (dt.Rows.Count > 0)
                         {
@@ -58,19 +58,19 @@ namespace Grievancemis
                                 User.Role = dr["RoleName"].ToString();
                             }
                         }
-                        if (dtu.Rows.Count > 0)
-                        {
-                            foreach (DataRow dr in dtu.Rows)
-                            {
-                                User.UserId = dr["Id"].ToString();
-                                User.Name = dr["Name"].ToString();
-                                User.EmailId = dr["Email"].ToString();
-                                User.Phone = dr["PhoneNo"].ToString();
-                                User.LockoutEnabled = dr["IsActive"].ToString();
-                                User.RoleId = dr["RoleId"].ToString();
-                                User.Role = dr["RoleName"].ToString();
-                            }
-                        }
+                        //if (dtu.Rows.Count > 0)
+                        //{
+                        //    foreach (DataRow dr in dtu.Rows)
+                        //    {
+                        //        User.UserId = dr["Id"].ToString();
+                        //        User.Name = dr["Name"].ToString();
+                        //        User.EmailId = dr["Email"].ToString();
+                        //        User.Phone = dr["PhoneNo"].ToString();
+                        //        User.LockoutEnabled = dr["IsActive"].ToString();
+                        //        User.RoleId = dr["RoleId"].ToString();
+                        //        User.Role = dr["RoleName"].ToString();
+                        //    }
+                        //}
 
                         HttpContext.Current.Session["CUser"] = User;
                         return CUser;

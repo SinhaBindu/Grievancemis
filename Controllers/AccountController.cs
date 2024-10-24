@@ -253,6 +253,8 @@ namespace Grievancemis.Controllers
             //// If we got this far, something failed, redisplay form
             //return View(model);
         }
+
+       
         public ActionResult Register_Lock(RegisterViewModel model)
         {
             var lockoutEndDate = DateTime.Now.Date;

@@ -95,8 +95,8 @@ namespace Grievancemis.Controllers
                         var igtype = 0; var istype = 0;
                         igtype = Convert.ToInt32(tbl_Grievance.GrievanceType);
                         istype = Convert.ToInt32(tbl_Grievance.StateId);
-                        var GType = db.M_GrievanceType.Where(b => b.Id == igtype).FirstOrDefault();
-                        var SType = db.m_State_Master.Where(b => b.LGD_State_Code == istype).FirstOrDefault();
+                        var GType = db.M_GrievanceType.Where(b => b.Id == igtype)?.FirstOrDefault();
+                        var SType = db.m_State_Master.Where(b => b.LGD_State_Code == istype)?.FirstOrDefault();
                         str.Append("<table border='1'>");
                         str.Append("<tr><td>Email</td><td>Name</td><td>Phone Number</td></tr>");
                         str.Append("<tr><td>" + tbl_Grievance.Email + "</td><td>" + tbl_Grievance.Name + "</td><td>" + tbl_Grievance.PhoneNo + "</td></tr>");
@@ -105,7 +105,7 @@ namespace Grievancemis.Controllers
                         str.Append("<tr><td>Location</td><td colspan='2'>Grievance_Message</td></tr>");
                         str.Append("<tr><td>" + tbl_Grievance.Location + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
                         str.Append("</table>");
-                        partymail = tbl_Grievance.Email;
+                        partymail = tbl_Grievance.Email.Trim();
                         Greid = Convert.ToString(tbl_Grievance.Id);
                         // Handle file upload
                         if (grievanceModel.DocUpload != null && grievanceModel.DocUpload.ContentLength > 0)

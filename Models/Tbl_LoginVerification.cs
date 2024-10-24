@@ -15,6 +15,7 @@ namespace Grievancemis.Models
     public partial class Tbl_LoginVerification
     {
         public System.Guid Id { get; set; }
+        public int IntId { get; set; }
         public string EmailId { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string VerificationCode { get; set; }
@@ -26,6 +27,5 @@ namespace Grievancemis.Models
         public Nullable<bool> IsValidEmailId { get; set; }
         public Nullable<System.DateTime> VerificationCodeOn { get; set; }
         public Nullable<bool> IsActive { get; set; }
-        public int IntId { get; set; }
     }
 }

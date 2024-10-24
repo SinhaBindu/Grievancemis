@@ -271,6 +271,9 @@
     <Compile Include="Models\Tbl_LoginVerification.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tbl_Remarks.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tbl_TeamRevertComplain.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

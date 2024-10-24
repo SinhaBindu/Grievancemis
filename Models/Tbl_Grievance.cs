@@ -18,6 +18,7 @@ namespace Grievancemis.Models
         public Tbl_Grievance()
         {
             this.Tbl_Grievance_Documents = new HashSet<Tbl_Grievance_Documents>();
+            this.Tbl_Remarks = new HashSet<Tbl_Remarks>();
             this.Tbl_TeamRevertComplain = new HashSet<Tbl_TeamRevertComplain>();
             this.Tbl_UserRevertComplain = new HashSet<Tbl_UserRevertComplain>();
         }
@@ -47,6 +48,8 @@ namespace Grievancemis.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Grievance_Documents> Tbl_Grievance_Documents { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Remarks> Tbl_Remarks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_TeamRevertComplain> Tbl_TeamRevertComplain { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

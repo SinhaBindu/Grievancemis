@@ -10,8 +10,8 @@ using System.Web.Mvc;
 
 namespace Grievancemis.Controllers
 {
-    [SessionCheckAttribute]
-    [Authorize]
+   // [SessionCheckAttribute]
+   // [Authorize]
     public class ComplainController : Controller
     {
         // GET: Complain

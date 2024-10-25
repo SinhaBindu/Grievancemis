@@ -4,10 +4,23 @@
 
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<div>
+
+<div class="page-header">
+    <div class="page-block">
+        <div class="page-header-title">
+            <h2 class="mb-0">Revart Complain List</h2>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item" aria-current="page">Revert Complain List</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="box-design">
 @using (Html.BeginForm("GetRevartList", "Complain", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
 {
-    <div class="row">
+    <div class="flex-row">
         <div class="col-md-3">
             <div class="form-group">
                 @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
@@ -38,7 +51,11 @@
     </div>
 }
 </div>
-<div id="subdata"></div>
+<div class="table-box">
+    <div id="subdata"></div>
+</div>
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>

@@ -5067,7 +5067,7 @@ button.swal2-styled:focus{
   border-color: rgb(48 63 80 / var(--tw-border-opacity));
 }
 .table > :not(caption) > * > *{
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   padding: .7rem .75rem;
 }
 .table thead{
@@ -5084,9 +5084,9 @@ button.swal2-styled:focus{
   --tw-border-opacity: 1;
   border-top-color: rgb(231 234 238 / var(--tw-border-opacity));
   border-bottom-color: rgb(231 234 238 / var(--tw-border-opacity));
-  padding: .9rem .75rem;
+  padding: .7rem .65rem;
   vertical-align: middle;
-  font-size: 13px;
+  font-size: 11px;
   text-transform: uppercase;
 }
 .table thead th:is([data-pc-theme="dark"] *){
@@ -5100,11 +5100,14 @@ button.swal2-styled:focus{
 .table thead th:where([dir="rtl"], [dir="rtl"] *){
   text-align: right;
 }
-.table:not(:last-child)>:last-child>*{
-  border-top-width: 1px;
-  --tw-border-opacity: 1;
-  border-top-color: rgb(231 234 238 / var(--tw-border-opacity));
-}
+    .table td {
+        font-size: 12px;
+    }
+    .table:not(:last-child) > :last-child > * {
+        border-top-width: 1px;
+        --tw-border-opacity: 1;
+        border-top-color: rgb(231 234 238 / var(--tw-border-opacity));
+    }
 .table:not(:last-child)>:last-child>*:is([data-pc-theme="dark"] *){
   --tw-border-opacity: 1;
   border-top-color: rgb(48 63 80 / var(--tw-border-opacity));
@@ -13343,4 +13346,52 @@ table.\!dataTable thead tr >.dtfc-fixed-start:is([data-pc-theme="dark"] *),table
 }
 .\[\&\>\*\:nth-child\(5\)\]\:w-\[150px\]>*:nth-child(5){
   width: 150px;
+}
+
+.breadcrumb {
+    float: right !important;
+    margin-top: -28px
+}
+.box-design {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #E7EAEE;
+    margin-top: -25px
+}
+.flex-row {
+    display: flex;
+    gap: 20px
+}
+.flex-row div {
+    flex: 1;
+}
+.flex-row div label {
+    margin-bottom: 6px !important
+}
+.form-btn {
+    margin-top: 24px
+}
+.table-box {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #E7EAEE;
+    margin-top: 20px
+}
+/*table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%
+}
+
+td {
+    border: 1px solid black;
+    word-wrap: break-word;
+}*/
+.txt-break {
+    width: 120px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }

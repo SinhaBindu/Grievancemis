@@ -13,7 +13,6 @@
             <h2 class="mb-0">Grievances List</h2>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                @*<li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>*@
             <li class="breadcrumb-item" aria-current="page">@ViewBag.SubTitle</li>
             </ul>
         </div>
@@ -48,18 +47,20 @@
 </div>
 
 <div id="subdata"></div>
+
 <button type="button"
         class="btn btn-primary mr-2 mb-2" data-pc-toggle="modal"
-        data-pc-target="#bd-example-modal-lg">
+        data-pc-target="#progressModal">
     Revert Process
 </button>
-<div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog"
+
+@*<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog"
      aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title h4" id="myLargeModalLabel">Large Modal</h5>
-                <button data-pc-modal-dismiss="#bd-example-modal-lg"
+                <button data-dismiss="modal" data-pc-modal-dismiss="#progressModal"
                         class="text-lg flex items-center justify-center rounded w-7 h-7 text-secondary-500 hover:bg-danger-500/10 hover:text-danger-500">
                     <i class="ti ti-x"></i>
                 </button>
@@ -97,14 +98,15 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-pc-modal-dismiss="#bd-example-modal-lg">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-pc-modal-dismiss="#progressModal">Close</button>
                 <button type="button" class="btn btn-primary" id="confirm-progress">Submit</button>
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
-<div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog" 
+     aria-labelledby="progressModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -142,7 +144,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Revert Option Dropdown -->
+                     Revert Option Dropdown 
                 </div>
             </div>
             <div class="modal-footer">
@@ -159,8 +161,8 @@
         $(document).ready(function () {
             bindload();
             $('#progressModal').modal({
-                backdrop: 'static',  // Prevent closing when clicking outside the modal
-                keyboard: false      // Prevent closing using the escape key
+                backdrop: 'static',  
+                keyboard: false      
             });
             $('.close, .btn-secondary').on('click', function () {
                 $('#progressModal').modal('hide');
@@ -175,7 +177,7 @@
         });
         // Handle progress button click
         //$(document).on('click', '.progress-button', function () {
-        //    $('#progressModal').modal('show');
+        //    $('#progressModal').modal('show animate');
         //});
 
         function PostData() {
@@ -203,7 +205,7 @@
             });
         }
         function POPDisplay(id, caseid, name, CreatedOn) {
-            debugger;
+            //debugger;
             $('#GrievanceId_fk').val(id);
             $('#cname').html(name);
             $('#CId').html(caseid);
@@ -213,7 +215,7 @@
         }
 
         function bindload() {
-            debugger;
+            //debugger;
             $("#subdata").html(''); $('#div-download').empty();
             var filtermodel = new Object();
             filtermodel.StateId = $('#StateId').val() == '' ? '' : $('#StateId').val();

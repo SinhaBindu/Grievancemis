@@ -33,12 +33,7 @@
                         <td><div style="word-wrap: break-word; width: 150px">@row["Grievance_Message"]</div></td>
                         <td>@row["CreatedOn"]</td>
                         <td>
-                            <button type="button"
-                                    class="btn btn-primary mr-2 mb-2" data-pc-toggle="modal"
-                                    data-pc-target="#bd-example-modal-lg">
-                                Revert Process
-                            </button>
-                            @*<button class="btn btn-warning progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]');">Revart Process</button>*@
+                            <button class="btn btn-warning progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]');">Revart Process</button>
                         </td>
                     </tr>
                 }

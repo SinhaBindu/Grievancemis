@@ -591,8 +591,8 @@ h1,.h1{
   font-weight: 700;
 }
 h2,.h2{
-  font-size: 30px;
-  font-weight: 700;
+  font-size: 25px;
+  font-weight: 600;
 }
 h3,.h3{
   font-size: 24px;
@@ -1266,9 +1266,9 @@ b, strong{
   }
 }
 .pc-container .pc-content{
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-  padding-top: 1.25rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 0.55rem;
 }
 @media not all and (min-width: 640px){
   .pc-container .pc-content{

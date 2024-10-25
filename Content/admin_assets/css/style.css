@@ -4116,28 +4116,34 @@ text:is([data-pc-theme="dark"] *),.apexcharts-theme-light .apexcharts-menu-icon:
   --tw-border-opacity: 1;
   border-color: rgb(48 63 80 / var(--tw-border-opacity));
 }
-.modal-dialog{
-  position: relative;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  z-index: 1030;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-  display: flex;
-  max-width: 500px;
-  --tw-translate-y: -5rem;
+.modal-footer button {
+    margin-left: 10px
+}
+.modal-dialog {
+    position: relative;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    z-index: 1030;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    max-width: 500px;
+    /*--tw-translate-y: -5rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   align-items: flex-start;
   opacity: 0;
   transition-property: all;
   transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);*/
 }
-.modal-dialog.modal-lg{
-  max-width: 800px;
+.modal {
+    background: rgb(0 0 0 / 0.15);
+}
+.modal-dialog.modal-lg {
+    max-width: 800px;
 }
 .modal-dialog.modal-sm{
   max-width: 300px;
@@ -13396,18 +13402,22 @@ td {
     white-space: nowrap;
 }
 .modal-design {
-    padding: 10px 20px 15px;
+    display: flex;
+    gap: 10px;
     border-radius: 10px;
-    background: #E6EDFB;
-    margin-right: 10px;
     margin-bottom: 15px;
 }
     .modal-design p {
-        padding: 6px 0;
-        border-bottom: 1px solid #E7EAEE;
+        flex: 1;
+        padding: 6px 10px;
+        background: #E6EDFB;
+        border-radius: 5px
     }
     .modal-design p span {
-        float: right
+        float: right;
+        background: #fff;
+        padding: 3px 7px;
+        border-radius: 4px;
     }
 .mar-bom {
     margin-bottom: 10px
@@ -13416,4 +13426,29 @@ textarea {
     border: 1px solid #BEC8D0 !important;
     border-radius: 10px;
     width: 100% !important
+}
+.data-modal {
+    width: 100% !important;
+    height: 100% !important;
+    background: rgb(0 0 0 / 0.15);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 99999;
+    
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+.open-modal {
+    display: flex;
+}
+.mix-modal {
+    width: 768px;
+    height: 450px;
+    background: #fff;
+    border-radius: 10px;
+}
+body {
+    overflow-x: hidden
 }

@@ -6,18 +6,14 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.SubTitle = "Grievances List";
 }
-<style>
-    .modal-backdrop {
-        z-index: 1028 !important;
-    }
-</style>
+
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
             <h2 class="mb-0">Grievances List</h2>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item" aria-current="page">@ViewBag.SubTitle</li>
+                <li class="breadcrumb-item" aria-current="page">@ViewBag.SubTitle</li>
             </ul>
         </div>
     </div>
@@ -52,13 +48,15 @@
 
 <div id="subdata"></div>
 
-<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+
+<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" 
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="progressModalLabel">Revart Process</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="ti ti-x"></i>
                 </button>
             </div>
             <div class="modal-body">
@@ -78,7 +76,7 @@
                             <span><strong id="CId"></strong></span>
                         </p>
                     </div>
-                    
+
                     <div class="form-group mar-bom">
                         @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
                         @*<span style="color:red;">*</span>*@
@@ -93,7 +91,7 @@
                             @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                     @*Revert Option Dropdown*@ 
+                    @*Revert Option Dropdown*@
                 </div>
             </div>
             <div class="modal-footer">
@@ -105,13 +103,13 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval");
     <script>
         $(document).ready(function () {
             bindload();
             $('#progressModal').modal({
-                backdrop: 'static',  
-                keyboard: false      
+                backdrop: 'static',
+                keyboard: false
             });
             $('.close, .btn-secondary').on('click', function () {
                 $('#progressModal').modal('hide');
@@ -220,5 +218,9 @@
                 }
             });
         }
+
+
     </script>
+
+    
 }

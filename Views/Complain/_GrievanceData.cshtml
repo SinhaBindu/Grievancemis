@@ -30,10 +30,16 @@
                         <td>@row["StateName"]</td>
                         <td>@row["Location"]</td>
                         <td><div style="word-wrap: break-word; width: 100px">@row["Title"]</div></td>
-                        <td><div style="word-wrap: break-word; width: 150px">@row["Grievance_Message"]</div></td>
+                        <td>
+                            <div style="word-wrap: break-word; width: 150px">
+                                <span class="txtshow">@row["Grievance_Message"].ToString().Substring(0, 100)...</span>
+                                @*<span class="txthide">@row["Grievance_Message"]</span>*@
+                            </div>
+                            @*<button class="read-more">Read more</button>*@
+                        </td>
                         <td>@row["CreatedOn"]</td>
                         <td>
-                            <button class="btn btn-warning progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]');"> Revert Process</button>
+                            <button class="btn btn-warning btn-sm progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]')"> Revert Process</button>
                         </td>
                     </tr>
                 }
@@ -41,3 +47,7 @@
         </table>
     </div>
 </div>
+
+@section Script{
+   
+}

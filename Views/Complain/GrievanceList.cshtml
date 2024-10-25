@@ -48,65 +48,7 @@
 
 <div id="subdata"></div>
 
-<button type="button"
-        class="btn btn-primary mr-2 mb-2" data-pc-toggle="modal"
-        data-pc-target="#progressModal">
-    Revert Process
-</button>
-
-@*<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog"
-     aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title h4" id="myLargeModalLabel">Large Modal</h5>
-                <button data-dismiss="modal" data-pc-modal-dismiss="#progressModal"
-                        class="text-lg flex items-center justify-center rounded w-7 h-7 text-secondary-500 hover:bg-danger-500/10 hover:text-danger-500">
-                    <i class="ti ti-x"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    @Html.HiddenFor(x => x.GrievanceId_fk)
-                    <label for="cname">Name:</label>
-                    <strong id="cname"></strong>
-                    <br />
-                    <label for="con">Complain Date :</label>
-                    <strong id="con"></strong>
-                    <br />
-                    <label for="CId">Case Id :</label>
-                    <strong id="CId"></strong>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
-                            <span style="color:red;">*</span>
-                            @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <span style="color:red;">*</span>
-                            <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
-                                @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" data-pc-modal-dismiss="#progressModal">Close</button>
-                <button type="button" class="btn btn-primary" id="confirm-progress">Submit</button>
-            </div>
-        </div>
-    </div>
-</div>*@
-
-<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog" 
-     aria-labelledby="progressModalLabel" aria-hidden="true">
+<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

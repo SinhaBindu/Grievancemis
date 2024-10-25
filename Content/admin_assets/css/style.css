@@ -13395,3 +13395,25 @@ td {
     overflow: hidden;
     white-space: nowrap;
 }
+.modal-design {
+    padding: 10px 20px 15px;
+    border-radius: 10px;
+    background: #E6EDFB;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+    .modal-design p {
+        padding: 6px 0;
+        border-bottom: 1px solid #E7EAEE;
+    }
+    .modal-design p span {
+        float: right
+    }
+.mar-bom {
+    margin-bottom: 10px
+}
+textarea {
+    border: 1px solid #BEC8D0 !important;
+    border-radius: 10px;
+    width: 100% !important
+}

@@ -6,7 +6,11 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewBag.SubTitle = "Grievances List";
 }
-
+<style>
+    .modal-backdrop {
+        z-index: 1028 !important;
+    }
+</style>
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
@@ -49,7 +53,7 @@
 <div id="subdata"></div>
 
 <div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="progressModalLabel">Revart Process</h5>
@@ -60,33 +64,36 @@
             <div class="modal-body">
                 <div class="row">
                     @Html.HiddenFor(x => x.GrievanceId_fk)
-                    <label for="cname">Name:</label>
-                    <strong id="cname"></strong>
-                    <br />
-                    <label for="con">Complain Date :</label>
-                    <strong id="con"></strong>
-                    <br />
-                    <label for="CId">Case Id :</label>
-                    <strong id="CId"></strong>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
-                            <span style="color:red;">*</span>
-                            @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
+                    <div class="modal-design">
+                        <p>
+                            Name:
+                            <span><strong id="cname"></strong></span>
+                        </p>
+                        <p>
+                            Complain Date :
+                            <span><strong id="con"></strong></span>
+                        </p>
+                        <p>
+                            Case Id :
+                            <span><strong id="CId"></strong></span>
+                        </p>
+                    </div>
+                    
+                    <div class="form-group mar-bom">
+                        @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
+                        @*<span style="color:red;">*</span>*@
+                        @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group mar-bom">
+                        @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @*<span style="color:red;">*</span>*@
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
+                            @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <span style="color:red;">*</span>
-                            <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
-                                @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                     Revert Option Dropdown 
+                     @*Revert Option Dropdown*@ 
                 </div>
             </div>
             <div class="modal-footer">

@@ -4,15 +4,17 @@
 @{
     ViewBag.Title = "Analytics";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.SubTitle = "Grievances List";
 }
 
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
-            <h2 class="mb-0">User Grievances List</h2>
+            <h2 class="mb-0">Grievances List</h2>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item" aria-current="page">User Grievances List</li>
+                @*<li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>*@
+            <li class="breadcrumb-item" aria-current="page">@ViewBag.SubTitle</li>
             </ul>
         </div>
     </div>
@@ -45,7 +47,7 @@
             </div>
         }
     </div>
-    
+
 </div>
 <div class="table-box">
     <div id="subdata"></div>

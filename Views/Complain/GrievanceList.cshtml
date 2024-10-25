@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Analytics";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.SubTitle = "Grievances List";
 }
 
 <div class="page-header">
@@ -13,7 +14,7 @@
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 @*<li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>*@
-                <li class="breadcrumb-item" aria-current="page">Grievances List</li>
+            <li class="breadcrumb-item" aria-current="page">@ViewBag.SubTitle</li>
             </ul>
         </div>
     </div>
@@ -202,6 +203,7 @@
             });
         }
         function POPDisplay(id, caseid, name, CreatedOn) {
+            debugger;
             $('#GrievanceId_fk').val(id);
             $('#cname').html(name);
             $('#CId').html(caseid);

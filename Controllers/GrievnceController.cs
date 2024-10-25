@@ -106,7 +106,7 @@ namespace Grievancemis.Controllers
                         str.Append("<tr><td>" + tbl_Grievance.Location + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
                         str.Append("</table>");
                         partymail = tbl_Grievance.Email.Trim();
-                        Greid = Convert.ToString(tbl_Grievance.Id);
+                        Greid = Convert.ToString(tbl_Grievance.CaseId);
                         // Handle file upload
                         if (grievanceModel.DocUpload != null && grievanceModel.DocUpload.ContentLength > 0)
                         {

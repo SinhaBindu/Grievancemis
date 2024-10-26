@@ -57,6 +57,7 @@ namespace Grievancemis.Controllers
         {
             try
             {
+                string Greid = string.Empty;
                 if (filterModel.GrievanceId_fk == Guid.Empty || filterModel.RevertTypeId == 0 && string.IsNullOrWhiteSpace(filterModel.TeamRevertMessage))
                 {
                     return Json(new { success = false, message = "All fileds are required." });
@@ -82,7 +83,11 @@ namespace Grievancemis.Controllers
                         dt = SP_Model.GetRevartMail(teamRevertComplain.GrievanceId_fk.ToString());
                         if (dt.Rows.Count > 0)
                         {
-                            res = CommonModel.SendMailRevartPartUser(dt.Rows[0]["Email"].ToString(), dt.Rows[0]["GrievanceId_fk"].ToString(), dt.Rows[0]["Name"].ToString(), dt.Rows[0]["RevertStatus"].ToString());
+                            if (Greid.Length <= 0)
+                            {
+                                Greid = SP_Model.Usp_GetCIdRevart(dt.Rows[0]["GrievanceId_fk"].ToString()).Rows[0]["CaseId"].ToString();
+                            }
+                            res = CommonModel.SendMailRevartPartUser(dt.Rows[0]["Email"].ToString(), Greid, dt.Rows[0]["Name"].ToString(), dt.Rows[0]["TeamRevertMessage"].ToString(), dt.Rows[0]["RevertStatus"].ToString());
                         }
                         if (res > 0)
                         {

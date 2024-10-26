@@ -285,7 +285,7 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-        public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail)
+        public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail,string Greid)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
@@ -323,12 +323,12 @@ namespace Grievancemis.Manager
                 tbl_v.IsValidEmailId = false;
                 _db.Tbl_LoginVerification.Add(tbl_v);
                 _db.SaveChanges();
-
-                To = Toemailid;
+                string[] tokens = Toemailid.Split(',');
+                To = tokens[0];
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     .Replace("{bodytext}", bodytext)
-                    .Replace("{EmailID}", To);
+                    .Replace("{EmailID}", Greid);
                 //.Replace("{OTPCode}", tbl_v.VerificationCode);
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
                 //{
@@ -337,7 +337,16 @@ namespace Grievancemis.Manager
                 //bodyTemplate = "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n\t\t<tbody>\r\n <tr>\r\n\t\t\t<td align=\"center\"> " + bodydata + "\r\n\t\t\t\t\r\n  \t</tbody></tr>\r\n</table>";
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
-                mail.To.Add(To + "," + OtherEmailID + "," + partymail);
+                //mail.To.Add(To + "," + OtherEmailID + "," + partymail);
+                string stcc = string.Empty;
+                for (int i = 1; i < tokens.Length; i++)
+                {
+                    stcc = tokens[i] + ",";
+                }
+                stcc = stcc.Substring(0, stcc.Length-1);
+                mail.To.Add(To);
+                mail.CC.Add(stcc);
+                mail.Bcc.Add(OtherEmailID);
                 mail.From = new MailAddress("kgbvjh4care@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
@@ -407,7 +416,7 @@ namespace Grievancemis.Manager
                 To = Toemailid;
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
-                    .Replace("{bodytext}", "Thank's For Your Co-Operation. Your Grievance has been sucessfully Registered with Us.We'll Reach to You as soon as possible.")
+                    .Replace("{bodytext}", "Thank's For Your Co-Operation. Your Grievance has been sucessfully Registered with Us.We'll Reach out to You as soon as possible.")
                     .Replace("{EmailID}", To)
                     .Replace("{OTPCode}", gvid);
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
@@ -417,7 +426,8 @@ namespace Grievancemis.Manager
                 //bodyTemplate = "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n\t\t<tbody>\r\n <tr>\r\n\t\t\t<td align=\"center\"> " + bodydata + "\r\n\t\t\t\t\r\n  \t</tbody></tr>\r\n</table>";
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
-                mail.To.Add(To + "," + OtherEmailID);
+                mail.To.Add(To);
+                mail.Bcc.Add(OtherEmailID);
                 mail.From = new MailAddress("kgbvjh4care@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
@@ -446,7 +456,7 @@ namespace Grievancemis.Manager
             }
         }
 
-        public static int SendMailRevartPartUser(string Toemailid, string gvid, string name, string status)
+        public static int SendMailRevartPartUser(string Toemailid, string gvid, string name, string status,string TeamRevertMessage)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
@@ -491,7 +501,9 @@ namespace Grievancemis.Manager
                     .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To " + status + ".We'll Inform You on next Update.")
                     .Replace("{EmailID}", To)
                     .Replace("{OTPCode}", gvid)
-                    .Replace("{Status}", status);
+                    .Replace("{Status}", TeamRevertMessage)
+                    .Replace("{message}", status);
+
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
                 //{
                 //    bodyTemplate = reader.ReadToEnd();

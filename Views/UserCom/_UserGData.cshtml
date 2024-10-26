@@ -6,7 +6,6 @@
     <table class="table table-bordered table-hover dt-responsive display tbl" id="tbl" width="100%">
         <thead>
             <tr>
-                @*<th>Id</th>*@
                 <th>Case Id</th>
                 <th>Email</th>
                 <th>Name</th>
@@ -16,27 +15,32 @@
                 <th>Title</th>
                 <th>Message</th>
                 <th>Complain</th>
-                @*<th>Action</th>*@
+                <th>Image Download</th>
             </tr>
         </thead>
         <tbody>
             @foreach (DataRow row in Model.Rows)
             {
-                <tr>
-                    @*<td>@row["Id"]</td>*@
-                    <td>@row["CaseId"]</td>
-                    <td>@row["Email"]</td>
-                    <td>@row["Name"]</td>
-                    <td>@row["GrievanceType"]</td>
-                    <td>@row["StateName"]</td>
-                    <td>@row["Location"]</td>
-                    <td>@row["Title"]</td>
-                    <td style="word-wrap:break-word;">@row["Grievance_Message"]</td>
-                    <td>@row["CreatedOn"]</td>
-                    @*<td>
-                            <button class="btn btn-info progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]');">Revart Process</button>
-                        </td>*@
-                </tr>
+            <tr>
+                @*<td>@row["Id"]</td>*@
+                <td>@row["CaseId"]</td>
+                <td>@row["Email"]</td>
+                <td>@row["Name"]</td>
+                <td>@row["GrievanceType"]</td>
+                <td>@row["StateName"]</td>
+                <td>@row["Location"]</td>
+                <td>@row["Title"]</td>
+                <td style="word-wrap:break-word;">@row["Grievance_Message"]</td>
+                <td>@row["CreatedOn"]</td>
+                <td class="text-center tbltd tdtextwrp">
+                    <a href="@Url.Action("GetDownGImgDocZip", "UserCom", new { grievanceId = (Guid)row["Id"] })" target="_blank">
+                        <strong><i class="fa fa-download"></i></strong>
+                    </a>
+                </td>
+                @*<td>
+            <button class="btn btn-info progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]');">Revart Process</button>
+        </td>*@
+            </tr>
             }
         </tbody>
     </table>

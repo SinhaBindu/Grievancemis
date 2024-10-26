@@ -36,11 +36,11 @@
                     @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
                     @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     @Html.LabelFor(model => model.EmailID, htmlAttributes: new { @class = "control-label" })
                     @Html.TextBoxFor(model => model.EmailID, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
-                </div>
+                </div>*@
                 <div class="form-btn">
                     <button id="search-button" class="btn btn-primary">Search</button>
                 </div>
@@ -115,10 +115,10 @@
             //$('.close, .btn-secondary').on('click', function () {
             //    $('#progressModal').modal('hide');
             //});
-            //$('#search-button').on('click', function (e) {
-            //    e.preventDefault();
-            //    bindload();
-            //});
+            $('#search-button').on('click', function (e) {
+                e.preventDefault();
+                bindload();
+            });
             //$('#confirm-progress').on('click', function () {
             //    PostData();
             //});
@@ -166,10 +166,7 @@
             $("#subdata").html(''); $('#div-download').empty();
             var filtermodel = new Object();
             filtermodel.StateId = $('#StateId').val() == '' ? '' : $('#StateId').val();
-            filtermodel.FromDt = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
-            //filtermodel.EmailID = $('#EmailID').val() == '' ? '' : $('#EmailID').val();
-            
-            // filtermodel.ToDt = $('#ToDt').val() == '' ? '' : $('#ToDt').val();
+            filtermodel.TypeGId = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
             $.ajax({
                 type: "Get",
                 url: document.baseURI + "/UserCom/GetUserGList",

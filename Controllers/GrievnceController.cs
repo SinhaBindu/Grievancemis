@@ -72,7 +72,7 @@ namespace Grievancemis.Controllers
         {
             try
             {
-                int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty;
+                int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty,stGuid = string.Empty;
                 if (ModelState.IsValid)
                 {
                     using (var db = new Grievance_DBEntities())
@@ -107,6 +107,7 @@ namespace Grievancemis.Controllers
                         str.Append("</table>");
                         partymail = tbl_Grievance.Email.Trim();
                         Greid = Convert.ToString(tbl_Grievance.CaseId);
+                        stGuid = Convert.ToString(tbl_Grievance.Id);
                         // Handle file upload
                         if (grievanceModel.DocUpload != null && grievanceModel.DocUpload.ContentLength > 0)
                         {
@@ -163,6 +164,10 @@ namespace Grievancemis.Controllers
                         }
                         db.Tbl_Grievance.Add(tbl_Grievance);
                         res = db.SaveChanges();
+                        if (Greid.Length <= 0)
+                        {
+                            Greid = SP_Model.Usp_GetCaseIDwithguid(stGuid).Rows[0]["CaseId"].ToString();
+                        }
                     }
                     if (res > 0)
                     {
@@ -171,7 +176,7 @@ namespace Grievancemis.Controllers
                         if (dt.Rows.Count > 0)
                         {
 
-                            res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail);
+                            res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail, Greid);
                             res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name);
                         }
                         if (res > 0)

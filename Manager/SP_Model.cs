@@ -26,13 +26,20 @@ namespace Grievancemis.Manager
         }
         public static DataTable GetUserGList(FilterModel filtermodel)
         {
-            StoredProcedure sp = new StoredProcedure("USP_GetGrievancefilterList");
+            StoredProcedure sp = new StoredProcedure("USP_UserGrievanceList");
             sp.Command.AddParameter("@StateId", filtermodel.StateId, DbType.String);
             sp.Command.AddParameter("@TypeGId", filtermodel.TypeGId, DbType.String);
-            sp.Command.AddParameter("@EmailID", filtermodel.EmailID, DbType.String);
+            sp.Command.AddParameter("@EmailID", MvcApplication.CUser.EmailId, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        //public static DataTable GetGrievanceDocuments(string grievanceId)
+        //{
+        //    StoredProcedure sp = new StoredProcedure("USP_GetGrievanceDocuments");
+        //    sp.Command.AddParameter("@GrievanceId", grievanceId, DbType.String);
+        //    DataTable dt = sp.ExecuteDataSet().Tables[0];
+        //    return dt;
+        //}
         public static DataTable SPGetUserlist(int? RoleId)
         {
             StoredProcedure sp = new StoredProcedure("SPGetUserlist");
@@ -96,6 +103,19 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-
+        public static DataTable Usp_GetCaseIDwithguid(string guid)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_GetCaseIDwithguid");
+            sp.Command.AddParameter("@guid", guid, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
+        public static DataTable Usp_GetCIdRevart(string guid)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_GetCIdRevart");
+            sp.Command.AddParameter("@guid", guid, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
     }
 }

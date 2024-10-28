@@ -133,8 +133,10 @@ namespace Grievancemis.Manager
                 //}
                 if (IsAll)
                 {
-                    items.Insert(0, new SelectListItem { Value = "", Text = "Select", Selected = true });
+                    //items.Insert(0, new SelectListItem { Value = "", Text = "Select", Selected = true });
+                    items.Insert(0, new SelectListItem { Value = "0", Text = "All" });
                 }
+                items.Insert(0, new SelectListItem { Value = "", Text = "Please select" }); // Add "Please select" item
                 return items;
             }
             catch (Exception)

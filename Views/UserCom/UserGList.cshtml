@@ -4,17 +4,17 @@
 @{
     ViewBag.Title = "Analytics";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewBag.SubTitle = "Grievances List";
+    ViewBag.SubTitle = "User Grievances List";
 }
 
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
-            <h2 class="mb-0">Grievances List</h2>
+            <h2 class="mb-0">User Grievances List</h2>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 @*<li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>*@
-            <li class="breadcrumb-item" aria-current="page">@ViewBag.SubTitle</li>
+                <li class="breadcrumb-item" aria-current="page">@ViewBag.SubTitle</li>
             </ul>
         </div>
     </div>
@@ -37,10 +37,10 @@
                     @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
                 </div>
                 @*<div class="form-group">
-                    @Html.LabelFor(model => model.EmailID, htmlAttributes: new { @class = "control-label" })
-                    @Html.TextBoxFor(model => model.EmailID, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
-                </div>*@
+                        @Html.LabelFor(model => model.EmailID, htmlAttributes: new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.EmailID, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
+                    </div>*@
                 <div class="form-btn">
                     <button id="search-button" class="btn btn-primary">Search</button>
                 </div>
@@ -49,50 +49,61 @@
     </div>
 
 </div>
-<div class="table-box">
-    <div id="subdata"></div>
-</div>
+<div id="subdata"></div>
 
-@*<div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" role="document">
+<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="progressModalLabel">Revart Process</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i class="ti ti-x"></i>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="row">
                     @Html.HiddenFor(x => x.GrievanceId_fk)
-                    <label for="cname">Name:</label>
-                    <strong id="cname"></strong>
-                    <br />
-                    <label for="con">Complain Date :</label>
-                    <strong id="con"></strong>
-                    <br />
-                    <label for="CId">Case Id :</label>
-                    <strong id="CId"></strong>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
-                            <span style="color:red;">*</span>
-                            @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
+                    <div class="modal-design">
+                        <p>
+                            Name:
+                            <span><strong id="cname"></strong></span>
+                        </p>
+                        <p>
+                            Complain Date :
+                            <span><strong id="con"></strong></span>
+                        </p>
+                        <p>
+                            Case Id :
+                            <span><strong id="CId"></strong></span>
+                        </p>
+                    </div>
+
+                    <div class="form-group mar-bom">
+                        @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
+                        @*<span style="color:red;">*</span>*@
+                        @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group mar-bom">
+                        @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @*<span style="color:red;">*</span>*@
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
+                            @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <span style="color:red;">*</span>
-                            <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
-                                @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
-                            </div>
+                    <div class="form-group mar-bom">
+                        @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <span style="color:red;">*</span>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple", @id = "DocUpload", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
                         </div>
-                    </div>*@
-                    <!-- Revert Option Dropdown -->
-                @*</div>
+                    </div>
+
+                    @*Revert Option Dropdown*@
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -100,73 +111,86 @@
             </div>
         </div>
     </div>
-</div>*@
-
+</div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval");
     <script>
         $(document).ready(function () {
             bindload();
-            //$('#progressModal').modal({
-            //    backdrop: 'static',  // Prevent closing when clicking outside the modal
-            //    keyboard: false      // Prevent closing using the escape key
-            //});
-            //$('.close, .btn-secondary').on('click', function () {
-            //    $('#progressModal').modal('hide');
-            //});
+            $('#progressModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $('.close, .btn-secondary').on('click', function () {
+                $('#progressModal').modal('hide');
+            });
             $('#search-button').on('click', function (e) {
                 e.preventDefault();
                 bindload();
             });
-            //$('#confirm-progress').on('click', function () {
-            //    PostData();
-            //});
+            $('#confirm-progress').on('click', function () {
+                PostData();
+            });
         });
-        // Handle progress button click
-        //$(document).on('click', '.progress-button', function () {
-        //    $('#progressModal').modal('show');
-        //});
+       
 
-        //function PostData() {
-        //    var filterModel = {
-        //        GrievanceId_fk: $('#GrievanceId_fk').val(),
-        //        RevertTypeId: $('#RevertTypeId').val(),
-        //        TeamRevertMessage: $('#TeamRevertMessage').val()
-        //    };
+        function PostData() {
+            var formData = new FormData(); // Create a FormData object
+            formData.append('GrievanceId_fk', $('#GrievanceId_fk').val());
+            formData.append('RevertTypeId', $('#RevertTypeId').val());
+            formData.append('TeamRevertMessage', $('#TeamRevertMessage').val());
 
-        //    $.ajax({
-        //        type: "POST",
-        //        url: document.baseURI + "/Complain/RevertCPost",
-        //        data: filterModel,
-        //        success: function (response) {
-        //            if (response.success) {
-        //                toastr.success(response.message);
-        //                $('#progressModal').modal('hide');
-        //            } else {
-        //                toastr.error(response.message);
-        //            }
-        //        },
-        //        error: function (xhr, status, error) {
-        //            toastr.error("An error occurred: " + error);
-        //        }
-        //    });
-        //}
-        //function POPDisplay(id, caseid, name, CreatedOn) {
-        //    $('#GrievanceId_fk').val(id);
-        //    $('#cname').html(name);
-        //    $('#CId').html(caseid);
-        //    $('#con').html(CreatedOn);
-        //    $('#progressModal').modal('show');
+            // Get the files from the file input
+            var files = $('#DocUpload')[0].files;
+            for (var i = 0; i < files.length; i++) {
+                formData.append('DocUpload', files[i]); // Append each file
+            }
 
-        //}
+            $.ajax({
+                type: "POST",
+                url: document.baseURI + "/UserCom/UserRevertCPost",
+                data: formData,
+                contentType: false, // Important for file uploads
+                processData: false, // Important for file uploads
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        $('#progressModal').modal('hide');
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("An error occurred: " + error);
+                }
+            });
+        }
+        
+        $(document).on('click', '.progress-button', function () {
+            var id = $(this).data('id');
+            var caseid = $(this).data('caseid');
+            var name = $(this).data('name');
+            var createdOn = $(this).data('createdon');
+
+            POPDisplay(id, caseid, name, createdOn);
+        });
+
+        function POPDisplay(id, caseid, name, CreatedOn) {
+            $('#GrievanceId_fk').val(id);
+            $('#cname').html(name);
+            $('#CId').html(caseid);
+            $('#con').html(CreatedOn);
+            $('#progressModal').modal('show'); // Ensure this line is present
+        }
 
         function bindload() {
-            debugger;
+            //debugger;
             $("#subdata").html(''); $('#div-download').empty();
             var filtermodel = new Object();
             filtermodel.StateId = $('#StateId').val() == '' ? '' : $('#StateId').val();
-            filtermodel.TypeGId = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
+            filtermodel.FromDt = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
+            // filtermodel.ToDt = $('#ToDt').val() == '' ? '' : $('#ToDt').val();
             $.ajax({
                 type: "Get",
                 url: document.baseURI + "/UserCom/GetUserGList",
@@ -217,5 +241,9 @@
                 }
             });
         }
+
+
     </script>
+
+
 }

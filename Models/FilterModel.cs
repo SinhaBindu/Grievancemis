@@ -9,7 +9,7 @@ namespace Grievancemis.Models
 {
     public class FilterModel
     {
-        [Display(Name = "Type")]
+        [Display(Name = "Grevance Type")]
         public string TypeGId { get; set; }
         [Display(Name = "Type")]
         public string StateId { get; set; }
@@ -55,6 +55,10 @@ namespace Grievancemis.Models
         [Display(Name = "Email")]
         //[Required]
         public string EmailID { get; set; }
+
+
+        [Display(Name = "Document Upload")]
+        public HttpPostedFileBase DocUpload { get; set; }
 
 
 

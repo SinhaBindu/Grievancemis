@@ -16,6 +16,7 @@
                 <th>Message</th>
                 <th>Complain</th>
                 <th>Image Download</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -37,8 +38,17 @@
                         <strong><i class="fa fa-download"></i></strong>
                     </a>
                 </td>
+                <td>
+                    <button class="btn btn-info progress-button"
+                            data-id="@row["Id"]"
+                            data-caseid="@row["CaseId"]"
+                            data-name="@row["Name"]"
+                            data-createdon="@row["CreatedOn"]">
+                        Revert Process
+                    </button>
+                </td>
                 @*<td>
-            <button class="btn btn-info progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]');">Revart Process</button>
+            <button class="btn btn-info progress-button" data-id="@row["id"]" onclick="popdisplay('@row["id"]','@row["caseid"]','@row["name"]','@row["createdon"]');">revart process</button>
         </td>*@
             </tr>
             }

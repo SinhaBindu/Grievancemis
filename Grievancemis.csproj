@@ -519,6 +519,9 @@
     <Content Include="Views\Theme\Table.cshtml" />
     <Content Include="Views\UserCom\UserGList.cshtml" />
     <Content Include="Views\UserCom\_UserGData.cshtml" />
+    <Content Include="Views\UserCom\URevartList.cshtml" />
+    <Content Include="Views\UserCom\_UComData.cshtml" />
+    <Content Include="Views\UserCom\DetailsCId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

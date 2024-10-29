@@ -170,6 +170,44 @@ namespace Grievancemis.Controllers
                 return Json(new { success = false, message = "An error occurred: " + ex.Message });
             }
         }
+        public ActionResult URevartList()
+        {
+            return View();
+        }
+        public ActionResult GetURevartList(FilterModel filtermodel)
+        {
+            try
+            {
+                bool IsCheck = false;
+                var dt = SP_Model.GetRevartList(filtermodel);
+                if (dt.Rows.Count > 0)
+                {
+                    IsCheck = true;
+                }
+                var html = ConvertViewToString("_UComData", dt);
+                var res = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
+                res.MaxJsonLength = int.MaxValue;
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
+        public ActionResult DetailsCId()
+        {
+            // Fetch the details based on the CaseId (id)
+            //var details = SP_Model.GetDetailsByCaseId(id); // Implement this method in your SP_Model
+
+            //if (details == null)
+            //{
+            //    return HttpNotFound("Details not found.");
+            //}
+
+            return View(); // Return a view that displays the details
+        }
 
 
 

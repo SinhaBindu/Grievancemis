@@ -16,6 +16,7 @@ namespace Grievancemis
 {
     public class EmailService : IIdentityMessageService
     {
+
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
@@ -87,7 +88,7 @@ namespace Grievancemis
             return manager;
         }
     }
-
+  
     // Configure the application sign-in manager which is used in this application.
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
@@ -106,4 +107,5 @@ namespace Grievancemis
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
+
 }

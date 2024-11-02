@@ -166,7 +166,7 @@
             $("#subdata").html(''); $('#div-download').empty();
             var filtermodel = new Object();
             filtermodel.StateId = $('#StateId').val() == '' ? '' : $('#StateId').val();
-            filtermodel.FromDt = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
+            filtermodel.TypeGId = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
             // filtermodel.ToDt = $('#ToDt').val() == '' ? '' : $('#ToDt').val();
             $.ajax({
                 type: "Get",

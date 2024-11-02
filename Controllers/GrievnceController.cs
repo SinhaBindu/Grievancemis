@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -15,6 +16,7 @@ using Grievancemis.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.Cookies;
 using Newtonsoft.Json;
 
 namespace Grievancemis.Controllers
@@ -24,6 +26,8 @@ namespace Grievancemis.Controllers
     {
         private Grievance_DBEntities db = new Grievance_DBEntities();
         // GET: Grievnce
+
+        private const string XsrfKey = "XsrfId";
 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -68,6 +72,7 @@ namespace Grievancemis.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
+
         public ActionResult Index()
         {
             return View();
@@ -286,11 +291,35 @@ namespace Grievancemis.Controllers
                             switch (signInResult)
                             {
                                 case SignInStatus.Success:
-                                    res = 1; break;
+                                    res = 1;
+
+                                    // Retrieve the user’s current claims identity
+                                    var identity = (ClaimsIdentity)User.Identity;
+
+                                    // Remove the existing Name claim if it exists
+                                    var nameClaim = identity.FindFirst(ClaimTypes.Name);
+                                    if (nameClaim != null)
+                                    {
+                                        identity.RemoveClaim(nameClaim);
+                                    }
+
+                                    // Add a new Name claim with the updated name
+                                    identity.AddClaim(new Claim(ClaimTypes.Name, "NewUserNameHere"));
+
+                                    // Update the authentication cookie with the new claims
+                                     HttpContext.GetOwinContext().Authentication.SignIn(
+                                        new AuthenticationProperties { IsPersistent = true }, // Make cookie persistent if needed
+                                        identity // Use the updated identity directly
+                                    );
+                                   var g= identity.Name;
+                                    break;
+
                                 case SignInStatus.LockedOut:
                                 case SignInStatus.RequiresVerification:
-                                    res = 0; break;
+                                    res = 0;
+                                    break;
                             }
+                            var f =User.Identity.Name;
 
                             Session["EmailId"] = EmailId.Trim();
                             var usercheck = MvcApplication.CUser;
@@ -374,6 +403,36 @@ namespace Grievancemis.Controllers
 
             // Return (0) if model state is invalid
             return "0";
+        }
+       
+
+        internal class ChallengeResult : HttpUnauthorizedResult
+        {
+            public ChallengeResult(string provider, string redirectUri)
+                : this(provider, redirectUri, null)
+            {
+            }
+
+            public ChallengeResult(string provider, string redirectUri, string userId)
+            {
+                LoginProvider = provider;
+                RedirectUri = redirectUri;
+                UserId = userId;
+            }
+
+            public string LoginProvider { get; set; }
+            public string RedirectUri { get; set; }
+            public string UserId { get; set; }
+
+            public override void ExecuteResult(ControllerContext context)
+            {
+                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
+                if (UserId != null)
+                {
+                    properties.Dictionary[XsrfKey] = UserId;
+                }
+                context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
+            }
         }
 
     }

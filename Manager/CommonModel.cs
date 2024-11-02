@@ -149,10 +149,21 @@ namespace Grievancemis.Manager
         {
             List<SelectListItem> list = new List<SelectListItem>();
             list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
-            list.Add(new SelectListItem { Value = "1", Text = "In Progress" });
+            list.Add(new SelectListItem { Value = "1", Text = "Clarification" });
             list.Add(new SelectListItem { Value = "2", Text = "Closed" });
-            return list.OrderByDescending(x => x.Text).ToList();
+
+            // Sort items based on a custom order
+            var order = new List<string> { "0", "1", "2" }; // Define the desired order by Value
+            return list.OrderBy(x => order.IndexOf(x.Value)).ToList(); // Sort according to the custom order
         }
+        //public static List<SelectListItem> GetRevertType()
+        //{
+        //    List<SelectListItem> list = new List<SelectListItem>();
+        //    list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
+        //    list.Add(new SelectListItem { Value = "1", Text = "Clarification" });
+        //    list.Add(new SelectListItem { Value = "2", Text = "Closed" });
+        //    return list.OrderByDescending(x => x.Text).ToList();
+        //}
         public static List<SelectListItem> GetRoleList(bool IsAll = false)
         {
             Grievance_DBEntities db_ = new Grievance_DBEntities();

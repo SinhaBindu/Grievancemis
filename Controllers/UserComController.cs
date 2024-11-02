@@ -44,59 +44,48 @@ namespace Grievancemis.Controllers
                 return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
-        public ActionResult GetDownGImgDocZip(FilterModel filtermodel)
+        public ActionResult GetDownGImgDocZip(Guid grievanceId)
         {
-            DataTable dt = new DataTable();
-            dt = SP_Model.GetUserGList(filtermodel);
-            if (dt.Rows.Count > 0)
+            DataTable dt = SP_Model.GetUserGList(new FilterModel { Id = grievanceId.ToString() });
+            if (dt.Rows.Count == 0)
             {
                 return HttpNotFound("No documents found for the specified grievance.");
             }
-            // Define the folder path where images and PDFs are stored
-            string folderPath = Server.MapPath("~/Doc_Upload"); // Example path, change as needed
-            var random = new Random();
-            int month = random.Next(1, 1200);
-            // Define the path for the temporary zip file
-            string zipFileName = $"{filtermodel}.zip";
+
+            string folderPath = Server.MapPath("~/Doc_Upload");
+            string zipFileName = $"{grievanceId}.zip";
             string zipPath = Path.Combine(folderPath, zipFileName);
 
-            // Make sure the TempZips directory exists, if not, create it
             if (!Directory.Exists(Server.MapPath("~/Doc_Upload/ImageZip")))
             {
                 Directory.CreateDirectory(Server.MapPath("~/Doc_Upload/ImageZip"));
             }
-            byte[] fileBytes;
-            // Create the zip file
+
+            // Use a HashSet to track added file names
+            HashSet<string> addedFiles = new HashSet<string>();
+
             using (var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
             {
-                // Get all image and PDF files from the folder
-                //var files = Directory.GetFiles(folderPath, ".");
-                // .Where(f => f.EndsWith(".jpg") || f.EndsWith(".jpeg") || f.EndsWith(".png") || f.EndsWith(".pdf") || f.EndsWith(".pdf"));
-
                 foreach (DataRow dr in dt.Rows)
                 {
                     string filePath = dr["DocumentPath"].ToString();
-                    string fileName = Path.GetFileName(filePath);
-                    // Add the file to the zip
-                    //var file = Directory.GetFiles(filePath, ".");
-                    string filePathc = Path.Combine(folderPath, fileName);
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        string fileName = Path.GetFileName(filePath);
+                        string filePathc = Path.Combine(folderPath, fileName);
 
-                    zip.CreateEntryFromFile(filePathc, fileName);
+                        // Check if the file has already been added
+                        if (!addedFiles.Contains(fileName) && System.IO.File.Exists(filePathc))
+                        {
+                            zip.CreateEntryFromFile(filePathc, fileName);
+                            addedFiles.Add(fileName); // Mark this file as added
+                        }
+                    }
                 }
-                // Loop through each file and add it to the zip
-                //foreach (var file in files)
-                //{
-                //    // Get the file name from the full path
-                //    string fileName = Path.GetFileName(file);
-                //    // Add the file to the zip
-                //    zip.CreateEntryFromFile(file, fileName);
-                //}
             }
 
-            // Return the zip file as a download
-            fileBytes = System.IO.File.ReadAllBytes(zipPath);
-            if (System.IO.File.Exists(zipPath))
-                System.IO.File.Delete(zipPath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(zipPath);
+            System.IO.File.Delete(zipPath); // Clean up the zip file after download
 
             return File(fileBytes, "application/zip", zipFileName);
         }

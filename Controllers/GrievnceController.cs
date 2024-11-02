@@ -14,10 +14,12 @@ using Grievancemis.Manager;
 using Grievancemis.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using Newtonsoft.Json;
 
 namespace Grievancemis.Controllers
 {
+   
     public class GrievnceController : Controller
     {
         private Grievance_DBEntities db = new Grievance_DBEntities();
@@ -59,12 +61,20 @@ namespace Grievancemis.Controllers
                 _userManager = value;
             }
         }
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
         public ActionResult Index()
         {
             return View();
         }
         public ActionResult GrievanceCaseAdd()
         {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return View();
         }
         [HttpPost]

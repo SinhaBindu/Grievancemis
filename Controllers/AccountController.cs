@@ -60,7 +60,7 @@ namespace Grievancemis.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return RedirectToAction("GrievanceCaseAdd", "Grievnce");
         }
 
         //
@@ -489,7 +489,7 @@ namespace Grievancemis.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("GrievanceCaseAdd", "Grievnce");
         }
 
         //

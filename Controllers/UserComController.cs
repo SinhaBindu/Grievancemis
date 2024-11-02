@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 namespace Grievancemis.Controllers
 {
+    [Authorize]
     public class UserComController : Controller
     {
         // GET: UserCom
@@ -47,7 +48,7 @@ namespace Grievancemis.Controllers
         {
             DataTable dt = new DataTable();
             dt = SP_Model.GetUserGList(filtermodel);
-            if (dt == null || dt.Rows.Count == 0)
+            if (dt.Rows.Count > 0)
             {
                 return HttpNotFound("No documents found for the specified grievance.");
             }

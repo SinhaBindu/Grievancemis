@@ -193,8 +193,8 @@ namespace Grievancemis.Controllers
                     {
                         RevertTypeId = row["RevertTypeId"] != DBNull.Value ? (int)row["RevertTypeId"] : 0,
                         TeamRevertMessage = row["TeamRevertMessage"].ToString(),
-                        TeamRevert_Date = row["TeamRevert_Date"] != DBNull.Value ? (DateTime)row["TeamRevert_Date"] : DateTime.MinValue
-                        RoleId = row["RoleId"] != DBNull.Value ? (int)row["RoleId"] : 0 // Ensure RoleId is assigned
+                        TeamRevert_Date = row["TeamRevert_Date"] != DBNull.Value ? (DateTime)row["TeamRevert_Date"] : DateTime.MinValue,
+                        RoleId = row["RoleId"] != DBNull.Value ? (int)row["RoleId"] : 0
                     });
                 }
 

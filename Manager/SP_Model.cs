@@ -117,5 +117,19 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable GetTeamRevertDetailsByCID(string id)
+        {
+            StoredProcedure sp = new StoredProcedure("GetTeamRevertDetailsByCID");
+            sp.Command.AddParameter("@CaseId", id, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
+        public static DataTable GetRevertCounts()
+        {
+            StoredProcedure sp = new StoredProcedure("GetRevertCounts");
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+
+        }
     }
 }

@@ -62,6 +62,10 @@ namespace Grievancemis.Models
 
         public string Id { get; set; }
 
+        public List<RevertComplaint> Reverts { get; set; }
+        //public int MaxRevertTypeId { get; set; }
+
+
 
         //[Display(Name = "Attendance Date")]
         //public DateTime AttendanceDt { get; set; }

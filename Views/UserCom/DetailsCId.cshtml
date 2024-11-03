@@ -1,5 +1,38 @@
-﻿@{
+﻿@model Grievancemis.Models.FilterModel
+
+@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<h2>Grievance Details</h2>
 
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Revert Type</th>
+            <th>Revert Message</th>
+            <th>Revert Date</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Reverts != null && Model.Reverts.Any())
+        {
+        foreach (var revert in Model.Reverts)
+        {
+        <tr>
+            <td>@revert.RevertTypeId</td>
+            <td>@revert.TeamRevertMessage</td>
+            <td>@revert.TeamRevert_Date.ToString("yyyy-MM-dd")</td>
+            <td>@revert.RoleId</td>
+        </tr>
+        }
+        }
+        else
+        {
+        <tr>
+            <td colspan="3">No reverts available.</td>
+        </tr>
+        }
+    </tbody>
+</table>

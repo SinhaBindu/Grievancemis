@@ -7,6 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+
+
 
 namespace Grievancemis.Controllers
 {
@@ -57,8 +60,12 @@ namespace Grievancemis.Controllers
         {
             try
             {
+                if (MvcApplication.CUser==null)
+                {
+                    return Json(new { success = false, message = "All fileds are required." });
+                }
                 string Greid = string.Empty;
-                if (filterModel.GrievanceId_fk == Guid.Empty || filterModel.RevertTypeId == 0 && string.IsNullOrWhiteSpace(filterModel.TeamRevertMessage))
+                if (filterModel.GrievanceId_fk == Guid.Empty || filterModel.RevertTypeId == 0 || string.IsNullOrWhiteSpace(filterModel.TeamRevertMessage))
                 {
                     return Json(new { success = false, message = "All fileds are required." });
                 }
@@ -69,6 +76,7 @@ namespace Grievancemis.Controllers
                         GrievanceId_fk = filterModel.GrievanceId_fk,
                         RevertTypeId = filterModel.RevertTypeId,
                         TeamRevertMessage = filterModel.TeamRevertMessage,
+                        RoleId =Convert.ToInt32(MvcApplication.CUser.RoleId),
                         IsActive = true,
                         TeamRevert_Date = DateTime.Now.Date,
                         CreatedBy = User.Identity.Name,

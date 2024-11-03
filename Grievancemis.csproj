@@ -209,6 +209,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ThemeController.cs" />
     <Compile Include="Controllers\UserComController.cs" />
     <Compile Include="Global.asax.cs">
@@ -522,6 +523,7 @@
     <Content Include="Views\UserCom\URevartList.cshtml" />
     <Content Include="Views\UserCom\_UComData.cshtml" />
     <Content Include="Views\UserCom\DetailsCId.cshtml" />
+    <Content Include="Views\Report\RevertCount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

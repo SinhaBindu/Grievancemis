@@ -89,7 +89,6 @@ namespace Grievancemis.Controllers
 
             return File(fileBytes, "application/zip", zipFileName);
         }
-
         public ActionResult UserRevertCPost(FilterModel filterModel)
         {
             try
@@ -107,6 +106,7 @@ namespace Grievancemis.Controllers
                         GrievanceId_fk = filterModel.GrievanceId_fk,
                         RevertTypeId = filterModel.RevertTypeId,
                         TeamRevertMessage = filterModel.TeamRevertMessage,
+                        RoleId = Convert.ToInt32(MvcApplication.CUser.RoleId),
                         IsActive = true,
                         TeamRevert_Date = DateTime.Now.Date,
                         CreatedBy = User.Identity.Name,
@@ -116,40 +116,23 @@ namespace Grievancemis.Controllers
                     db.Tbl_TeamRevertComplain.Add(teamRevertComplain);
                     db.SaveChanges(); // Save changes to get the GrievanceId_fk
 
-                    // Handle file uploads
-                    var files = Request.Files;
-                    if (files.Count > 0)
+                    // Handle email sending
+                    DataTable dt = SP_Model.GetRevartMail(teamRevertComplain.GrievanceId_fk.ToString());
+                    if (dt.Rows.Count > 0)
                     {
-                        string uploadFolderPath = Server.MapPath("~/Doc_Upload/User Upload Images"); // Path to save uploaded files
+                        string grievanceId = dt.Rows[0]["GrievanceId_fk"].ToString();
+                        string email = dt.Rows[0]["Email"].ToString();
+                        string name = dt.Rows[0]["Name"].ToString();
+                        string revertMessage = dt.Rows[0]["TeamRevertMessage"].ToString();
+                        string revertStatus = dt.Rows[0]["RevertStatus"].ToString();
 
-                        if (!Directory.Exists(uploadFolderPath))
+                        // Send email notification
+                        int emailResult = CommonModel.SendMailRevartPartUser(email, grievanceId, name, revertMessage, revertStatus);
+
+                        if (emailResult > 0)
                         {
-                            Directory.CreateDirectory(uploadFolderPath); // Create directory if it doesn't exist
+                            return Json(new { success = true, message = "Data saved and email sent successfully!" });
                         }
-
-                        foreach (string fileKey in files)
-                        {
-                            HttpPostedFileBase file = files[fileKey];
-                            if (file != null && file.ContentLength > 0)
-                            {
-                                string fileName = Path.GetFileName(file.FileName);
-                                string filePath = Path.Combine(uploadFolderPath, fileName);
-                                file.SaveAs(filePath); // Save the file
-
-                                // Save the file path in Tbl_Grievance_Documents
-                                Tbl_Grievance_Documents grievanceDocument = new Tbl_Grievance_Documents
-                                {
-                                    GrievanceId = filterModel.GrievanceId_fk,
-                                    DocumentPath = filePath,
-                                    IsActive = true,
-                                    CreatedBy = User.Identity.Name,
-                                    CreatedOn = DateTime.Now
-                                };
-
-                                db.Tbl_Grievance_Documents.Add(grievanceDocument);
-                            }
-                        }
-                        db.SaveChanges(); // Save changes for documents
                     }
 
                     return Json(new { success = true, message = "Data saved successfully!" });
@@ -160,10 +143,12 @@ namespace Grievancemis.Controllers
                 return Json(new { success = false, message = "An error occurred: " + ex.Message });
             }
         }
+        
         public ActionResult URevartList()
         {
             return View();
         }
+
         public ActionResult GetURevartList(FilterModel filtermodel)
         {
             try
@@ -186,17 +171,41 @@ namespace Grievancemis.Controllers
                 return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
-        public ActionResult DetailsCId()
+        public ActionResult DetailsCId(string id)
         {
-            // Fetch the details based on the CaseId (id)
-            //var details = SP_Model.GetDetailsByCaseId(id); // Implement this method in your SP_Model
+            try
+            {
+                var dt = SP_Model.GetTeamRevertDetailsByCID(id.ToString());
 
-            //if (details == null)
-            //{
-            //    return HttpNotFound("Details not found.");
-            //}
+                if (dt.Rows.Count == 0)
+                {
+                    return HttpNotFound("Details not found.");
+                }
 
-            return View(); // Return a view that displays the details
+                var model = new FilterModel
+                {
+                    Reverts = new List<RevertComplaint>()
+                };
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    model.Reverts.Add(new RevertComplaint
+                    {
+                        RevertTypeId = row["RevertTypeId"] != DBNull.Value ? (int)row["RevertTypeId"] : 0,
+                        TeamRevertMessage = row["TeamRevertMessage"].ToString(),
+                        TeamRevert_Date = row["TeamRevert_Date"] != DBNull.Value ? (DateTime)row["TeamRevert_Date"] : DateTime.MinValue
+                        RoleId = row["RoleId"] != DBNull.Value ? (int)row["RoleId"] : 0 // Ensure RoleId is assigned
+                    });
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details for debugging
+                string errorMessage = $"Error: {ex.Message}, StackTrace: {ex.StackTrace}";
+                return View("Error", new HandleErrorInfo(ex, "UserCom", "DetailsCId"));
+            }
         }
 
 

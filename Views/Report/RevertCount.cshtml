@@ -7,7 +7,7 @@
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
-            <h2 class="mb-0">Grievances List</h2>
+            <h2 class="mb-0">Report Count List</h2>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item">@ViewBag.Title</li>
             </ul>
@@ -19,48 +19,49 @@
     <div class="box-design">
         <div class="row">
             <div class="col-md-6">
-                <canvas id="myPieChart" width="400" height="300"></canvas>
+                <div id="myPieChart" style="width: 600px; height: 400px;"></div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 <script>
-    var ctx = document.getElementById('myPieChart').getContext('2d');
-    ctx.width = 400;
-    ctx.height = 300;
-    var myPieChart = new Chart(ctx, {
-        type: 'pie',
-        width : 400,
-        height :300,
-        data: {
-            labels: ['Clarifications', 'Closed'],
-            datasets: [{
-                label: 'Revert Counts',
-                data: [@ViewBag.NoofClarificationData, @ViewBag.NoOfClosedData],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Revert Counts'
+    document.addEventListener('DOMContentLoaded', function () {
+        var chart = Highcharts.chart('myPieChart', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Revert Total Counts'
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Revert Counts',
+                colorByPoint: true,
+                data: [{
+                    name: 'Clarifications',
+                    y: @ViewBag.NoofClarificationData
+                }, {
+                    name: 'Closed',
+                    y: @ViewBag.NoOfClosedData
+                }]
+            }],
+            tooltip: {
+                pointFormat: '<b>{point.y}</b> ({point.percentage:.1f}%)'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
                 }
             }
-        }
+        });
     });
 </script>

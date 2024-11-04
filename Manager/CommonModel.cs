@@ -318,24 +318,7 @@ namespace Grievancemis.Manager
             }
             try
             {
-                Random random = new Random();
-
-                // Generate a random double between 0.0 and 1.0
-                int randomNumber = random.Next(0, 1011455); // Generates a number between 0.0 and 1.0
-
-                var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
-                var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
-                tbl_v.Id = Guid.NewGuid();
-                tbl_v.EmailId = Toemailid.Trim();
-                tbl_v.VerificationCode = randomNumber.ToString();
-                tbl_v.CreatedOn = DateTime.Now;
-                tbl_v.StartTime = DateTime.Now.TimeOfDay;
-                tbl_v.EndTime = tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
-                tbl_v.Date = DateTime.Now.Date;
-                tbl_v.IsActive = true;
-                tbl_v.IsValidEmailId = false;
-                _db.Tbl_LoginVerification.Add(tbl_v);
-                _db.SaveChanges();
+               
                 string[] tokens = Toemailid.Split(',');
                 To = tokens[0];
 
@@ -376,8 +359,11 @@ namespace Grievancemis.Manager
                 smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
-                tbl_v.Issent = true;
-                tbl_v.SentOn = DateTime.Now;
+                var tblu = _db.Tbl_Grievance.Where(x => x.CaseId == Convert.ToInt32(Greid))?.FirstOrDefault();
+                tblu.Issent = true;
+                tblu.UpdatedOn = DateTime.Now;
+                db_.SaveChanges();
+             
                 _db.SaveChanges();
                 return 1;
 
@@ -407,31 +393,14 @@ namespace Grievancemis.Manager
             }
             try
             {
-                Random random = new Random();
-
-                // Generate a random double between 0.0 and 1.0
-                int randomNumber = random.Next(0, 1011455); // Generates a number between 0.0 and 1.0
-
-                var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
-                var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
-                tbl_v.Id = Guid.NewGuid();
-                tbl_v.EmailId = Toemailid.Trim();
-                tbl_v.VerificationCode = randomNumber.ToString();
-                tbl_v.CreatedOn = DateTime.Now;
-                tbl_v.StartTime = DateTime.Now.TimeOfDay;
-                tbl_v.EndTime = tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
-                tbl_v.Date = DateTime.Now.Date;
-                tbl_v.IsActive = true;
-                tbl_v.IsValidEmailId = false;
-                _db.Tbl_LoginVerification.Add(tbl_v);
-                _db.SaveChanges();
 
                 To = Toemailid;
 
-                bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
+                bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName + Name)
                     .Replace("{bodytext}", "Thank's For Your Co-Operation. Your Grievance has been sucessfully Registered with Us.We'll Reach out to You as soon as possible.")
                     .Replace("{EmailID}", To)
-                    .Replace("{OTPCode}", gvid);
+                    .Replace("{newusername}", Name)
+                    .Replace("{gvid}", gvid);
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
                 //{
                 //    bodyTemplate = reader.ReadToEnd();
@@ -457,9 +426,11 @@ namespace Grievancemis.Manager
                 smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
-                tbl_v.Issent = true;
-                tbl_v.SentOn = DateTime.Now;
-                _db.SaveChanges();
+
+                //var tblu = _db.Tbl_Grievance.Where(x => x.CaseId == Convert.ToInt32(gvid))?.FirstOrDefault();
+                //tblu.Issent = true;
+                //tblu.UpdatedOn = DateTime.Now;
+                db_.SaveChanges();
                 return 1;
 
             }

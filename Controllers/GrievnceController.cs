@@ -292,26 +292,27 @@ namespace Grievancemis.Controllers
                             {
                                 case SignInStatus.Success:
                                     res = 1;
-
                                     // Retrieve the user’s current claims identity
                                     var identity = (ClaimsIdentity)User.Identity;
 
-                                    // Remove the existing Name claim if it exists
-                                    var nameClaim = identity.FindFirst(ClaimTypes.Name);
-                                    if (nameClaim != null)
-                                    {
-                                        identity.RemoveClaim(nameClaim);
-                                    }
+                                    //// Remove the existing Name claim if it exists
+                                    //var nameClaim = identity.FindFirst(ClaimTypes.Name);
+                                    //if (nameClaim != null)
+                                    //{
+                                    //    identity.RemoveClaim(nameClaim);
+                                    //}
 
-                                    // Add a new Name claim with the updated name
-                                    identity.AddClaim(new Claim(ClaimTypes.Name, "NewUserNameHere"));
+                                    //// Add a new Name claim with the updated name
+                                    //identity.AddClaim(new Claim(ClaimTypes.Name, "NewUserNameHere"));
 
                                     // Update the authentication cookie with the new claims
-                                     HttpContext.GetOwinContext().Authentication.SignIn(
-                                        new AuthenticationProperties { IsPersistent = true }, // Make cookie persistent if needed
-                                        identity // Use the updated identity directly
-                                    );
-                                   var g= identity.Name;
+                                    //await HttpContext.GetOwinContext().Authentication.SignIn(
+                                    //    new AuthenticationProperties { IsPersistent = true }, // Make cookie persistent if needed
+                                    //    identity // Use the updated identity directly
+                                    //);
+                                    await SignInUser(identity, true) ;
+
+                                     var g= identity.Name;
                                     break;
 
                                 case SignInStatus.LockedOut:
@@ -369,6 +370,16 @@ namespace Grievancemis.Controllers
             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
         }
 
+        public async Task SignInUser(ClaimsIdentity identity, bool isPersistent)
+        {
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = isPersistent
+            };
+
+            // Perform the sign-in operation with the specified identity and properties
+            HttpContext.GetOwinContext().Authentication.SignIn(authProperties, identity);
+        }
         public async Task<string> RegisterCust(RegisterViewModel model)
         {
             Grievance_DBEntities db_ = new Grievance_DBEntities();

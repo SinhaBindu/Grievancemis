@@ -10,15 +10,18 @@
             background: #9E9E9E;
             font-family: "Poppins", sans-serif;
         }
+
         table {
             border: 1px solid black;
             background: #fff;
             margin: auto;
             width: 60%
         }
+
         th, td {
             padding: 15px 20px;
         }
+
         .logo-email {
             float: left;
             width: 40px;
@@ -28,15 +31,18 @@
             border-radius: 4px;
             background: #fff;
         }
+
         h2 {
             margin-top: 10px;
             color: #fff;
             font-size: 22px;
             font-weight: normal
         }
+
             h2 span {
                 color: #FFBB00
             }
+
         @media all and (max-width: 768px) {
             table {
                 width: 80%
@@ -58,20 +64,20 @@
                 <strong class="font-weight-bold small" style="color: darkblue; font-size: small;"> {Dearusername},</strong>
                 <br />
                 <br />
-                <strong class="font-weight-bold small"> Email ID :<strong style="color: darkblue; font-size: small;"> {EmailID} </strong></strong>
+                <!--<strong class="font-weight-bold small"> Email ID :<strong style="color: darkblue; font-size: small;"> {EmailID} </strong></strong>-->
                 <br />
-                <strong class="font-weight-bold small text-2x accordion-body tex">Case-ID : <strong style="color: darkblue; font-size: small;">{OTPCode}</strong></strong>
+                <strong class="font-weight-bold small text-2x accordion-body tex">Case-ID : <strong style="color: darkblue; font-size: small;">{gvid}</strong></strong>
                 <br />
                 <!--<strong class="font-weight-bold" style="color:forestgreen;">Name : {newusername},</strong>-->
                 <br />
                 {bodytext}
                 <br />
                 <!--<p class="font-weight-bold text-center" style="margin-left: 70px;">Please click the link below to proceed.</p>
-    <br />-->
+                <br />-->
                 <br />
                 <strong class="font-weight-bold">Thanks & Regards</strong>
                 <br />
-                <!--{newusername}-->
+                {newusername}
                 <br />
             </td>
         </tr>

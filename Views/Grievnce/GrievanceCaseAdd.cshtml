@@ -171,9 +171,9 @@
 
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md- 2" })
-                                        <span style="color:red;">*</span>
+                                        @*<span style="color:red;">*</span>*@
                                         <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple", @required = "required" })
+                                            @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple"})
                                             @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -255,7 +255,7 @@
                     toastr.error('Enter the Grievance Type.');
                     return false;
                 }
-                if ($('#State').val() == '') {
+                if ($('#State').val() == '' || $('#State').val() == '0') {
                     toastr.error('Enter the State.');
                     return false;
                 }
@@ -268,7 +268,7 @@
                     return false;
                 }
                 if ($('#GrievanceMessage').val() == '') {
-                    toastr.error('Enter the GrievanceMessage.');
+                    toastr.error('Enter the Message.');
                     return false;
                 }
 
@@ -312,7 +312,8 @@
             var optc = $('#OptCode').val();
             $.ajax({
                 type: "POST",
-                url: "/Grievnce/OPtSendMail",
+                //url: "/Grievnce/OPtSendMail",
+                url: "/Account/Login",
                 data: { 'EmailId': $('#Email_Id').val(), 'OPTCode': $('#OptCode').val() },
                 success: function (resp) {
                     $('#OptCode').val('');

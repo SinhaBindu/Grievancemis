@@ -120,14 +120,15 @@ namespace Grievancemis.Controllers
                     DataTable dt = SP_Model.GetRevartMail(teamRevertComplain.GrievanceId_fk.ToString());
                     if (dt.Rows.Count > 0)
                     {
-                        string grievanceId = dt.Rows[0]["GrievanceId_fk"].ToString();
+                        string CaseId = dt.Rows[0]["CaseId"].ToString();
                         string email = dt.Rows[0]["Email"].ToString();
                         string name = dt.Rows[0]["Name"].ToString();
                         string revertMessage = dt.Rows[0]["TeamRevertMessage"].ToString();
-                        string revertStatus = dt.Rows[0]["RevertStatus"].ToString();
+                        string revertStatus = (filterModel.RevertTypeId == 1) ? "Clarification" : "Closed";
+                        //string revertStatus = dt.Rows[0]["RevertStatus"].ToString();
 
                         // Send email notification
-                        int emailResult = CommonModel.SendMailRevartPartUser(email, grievanceId, name, revertMessage, revertStatus);
+                        int emailResult = CommonModel.SendMailRevartPartUser(email, CaseId, name, revertMessage, revertStatus);
 
                         if (emailResult > 0)
                         {

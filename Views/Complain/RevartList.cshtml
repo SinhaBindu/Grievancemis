@@ -25,7 +25,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
                 <span style="color:red;">*</span>
-                @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
+                @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -33,7 +33,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.TypeGId, htmlAttributes: new { @class = "control-label" })
                 <span style="color:red;">*</span>
-                @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
+                @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
                 <span style="color:red;">*</span>
-                @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
+                @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
             </div>
         </div>

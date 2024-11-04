@@ -10,5 +10,6 @@ namespace Grievancemis
         {
             ConfigureAuth(app);
         }
+
     }
 }

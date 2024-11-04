@@ -13,7 +13,7 @@ namespace Grievancemis
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        Grievance_DBEntities db=new Grievance_DBEntities();
+        Grievance_DBEntities db = new Grievance_DBEntities();
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -25,7 +25,7 @@ namespace Grievancemis
         {
             get
             {
-                if (HttpContext.Current.User.Identity.IsAuthenticated)
+                if (HttpContext.Current.User.Identity.IsAuthenticated || HttpContext.Current.Session["EmailId"] != null)
                 {
                     var User = new UserViewModel();
                     if (HttpContext.Current.Session["CUser"] != null)
@@ -35,11 +35,11 @@ namespace Grievancemis
                     else
                     {
                         StoredProcedure sp = new StoredProcedure("SP_LoginCheck");
-                        sp.Command.AddParameter("@EmailId",HttpContext.Current.Session["EmailId"], DbType.String);
+                        sp.Command.AddParameter("@EmailId", HttpContext.Current.Session["EmailId"], DbType.String);
                         DataSet ds = sp.ExecuteDataSet();
                         DataTable dt = new DataTable();
                         DataTable dtu = new DataTable();
-                        if (ds.Tables.Count>0)
+                        if (ds.Tables.Count > 0)
                         {
                             dt = ds.Tables[0];
                             //dtu = ds.Tables[1]; 

@@ -312,8 +312,8 @@
             var optc = $('#OptCode').val();
             $.ajax({
                 type: "POST",
-                //url: "/Grievnce/OPtSendMail",
-                url: "/Account/Login",
+                url: "/Grievnce/OPtSendMail",
+                //url: "/Account/Login_Grievance",
                 data: { 'EmailId': $('#Email_Id').val(), 'OPTCode': $('#OptCode').val() },
                 success: function (resp) {
                     $('#OptCode').val('');

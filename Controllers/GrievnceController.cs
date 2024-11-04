@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 
 namespace Grievancemis.Controllers
 {
-   
+
     public class GrievnceController : Controller
     {
         private Grievance_DBEntities db = new Grievance_DBEntities();
@@ -87,7 +87,7 @@ namespace Grievancemis.Controllers
         {
             try
             {
-                int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty,stGuid = string.Empty;
+                int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty, stGuid = string.Empty;
                 if (ModelState.IsValid)
                 {
                     using (var db = new Grievance_DBEntities())
@@ -310,9 +310,9 @@ namespace Grievancemis.Controllers
                                     //    new AuthenticationProperties { IsPersistent = true }, // Make cookie persistent if needed
                                     //    identity // Use the updated identity directly
                                     //);
-                                    await SignInUser(identity, true) ;
+                                    await SignInUser(identity, true);
 
-                                     var g= identity.Name;
+                                    var g = identity.Name;
                                     break;
 
                                 case SignInStatus.LockedOut:
@@ -320,7 +320,7 @@ namespace Grievancemis.Controllers
                                     res = 0;
                                     break;
                             }
-                            var f =User.Identity.Name;
+                            var f = User.Identity.Name;
 
                             Session["EmailId"] = EmailId.Trim();
                             var usercheck = MvcApplication.CUser;
@@ -415,7 +415,7 @@ namespace Grievancemis.Controllers
             // Return (0) if model state is invalid
             return "0";
         }
-       
+
 
         internal class ChallengeResult : HttpUnauthorizedResult
         {

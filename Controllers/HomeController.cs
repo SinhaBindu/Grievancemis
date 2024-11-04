@@ -10,6 +10,7 @@ namespace Grievancemis.Controllers
     {
         public ActionResult Index()
         {
+            var d= HttpContext.User.Identity.Name;
             return View();
         }
 

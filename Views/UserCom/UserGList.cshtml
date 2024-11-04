@@ -79,7 +79,7 @@
                         </p>
                     </div>
 
-                    <div class="form-group mar-bom">
+                    <div class="form-group mar-bom" style="display:none;">
                         @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
                         @*<span style="color:red;">*</span>*@
                         @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
@@ -87,7 +87,7 @@
                     </div>
                     <div class="form-group mar-bom">
                         @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @*<span style="color:red;">*</span>*@
+                        <span style="color:red;">*</span>
                         <div class="col-md-10">
                             @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
                             @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
@@ -95,9 +95,9 @@
                     </div>
                     <div class="form-group mar-bom">
                         @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <span style="color:red;">*</span>
+                        @*<span style="color:red;">*</span>*@
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple", @id = "DocUpload", @required = "required" })
+                            @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple", @id = "DocUpload" })
                             @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -136,6 +136,11 @@
        
 
         function PostData() {
+            if ($('#TeamRevertMessage').val()=='') {
+                toastr.error('Enter the Message');
+                return false;
+            }
+
             var formData = new FormData(); // Create a FormData object
             formData.append('GrievanceId_fk', $('#GrievanceId_fk').val());
             formData.append('RevertTypeId', $('#RevertTypeId').val());

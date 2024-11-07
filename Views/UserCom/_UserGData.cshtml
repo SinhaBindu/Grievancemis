@@ -2,69 +2,84 @@
 @using System.Data
 
 <div class="grievances-list">
-    <h2>User Grievances List</h2>
-    <table class="table table-bordered table-hover dt-responsive display tbl" id="tbl" width="100%">
-        <thead>
-            <tr>
-                <th>Case Id</th>
-                <th>Complain Date</th>
-                <th>Email</th>
-                <th>Name</th>
-                <th>Grievance Type</th>
-                <th>State</th>
-                <th>Location</th>
-                <th>Title</th>
-                <th>Message</th>
-                <th>File Download</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                if (Model.Rows.Count > 0)
-                {
-                    foreach (DataRow row in Model.Rows)
+    @*<h2>User Grievances List</h2>*@
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover dt-responsive display tbl" id="tbl" width="100%">
+            <thead>
+                <tr>
+                    <th>Case Id</th>
+                    <th>Complain<br /> Date</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Grievance Type</th>
+                    <th>State</th>
+                    <th>Location</th>
+                    <th>Title</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>File Download</th>
+                    <th>Action</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in Model.Rows)
+                        {
+                            <tr>
+                                @*<td>@row["Id"]</td>*@
+                                <td>@row["CaseId"]</td>
+                                <td>@row["CreatedOn"]</td>
+                                <td><div style="word-wrap: break-word; width: 90px">@row["Email"]</div></td>
+                                <td>@row["Name"]</td>
+                                <td>@row["GrievanceType"]</td>
+                                <td>@row["StateName"]</td>
+                                <td>@row["Location"]</td>
+                                <td>@row["Title"]</td>
+                                <td style="word-wrap:break-word;">@row["Grievance_Message"]</td>
+                                <td>@row["RevertTypeText"]</td>
+                                <td class="text-center tbltd tdtextwrp">
+                                    <a href="@Url.Action("GetDownGImgDocZip", "UserCom", new { grievanceId = (Guid)row["Id"] })" target="_blank">
+                                        <strong><i class="fa fa-download"></i></strong>
+                                    </a>
+                                </td>
+                                @if (row["RevertType_Id"].ToString() == "1" || string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
+                                {
+                                    <td>
+                                        <button class="btn btn-info progress-button"
+                                                data-id="@row["Id"]"
+                                                data-caseid="@row["CaseId"]"
+                                                data-name="@row["Name"]"
+                                                data-revertid="@row["MaxRevertID"]"
+                                                data-createdon="@row["CreatedOn"]">
+
+                                            Revert Process
+                                        </button>
+                                    </td>
+                                }
+                                @if (!string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
+                                {
+                                    <td>
+                                        <a href="~/UserCom/URevartList?GId=@row["Id"].ToString()" class="btn btn-primary btn-sm progress-button"><i class="fa fa-street-view"></i></a>
+                                    </td>
+                                }
+                                @*<td>
+                                        <button class="btn btn-info progress-button" data-id="@row["id"]" onclick="popdisplay('@row["id"]','@row["caseid"]','@row["name"]','@row["createdon"]');">revart process</button>
+                                    </td>*@
+                            </tr>
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            @*<td>@row["Id"]</td>*@
-                            <td>@row["CaseId"]</td>
-                            <td>@row["CreatedOn"]</td>
-                            <td>@row["Email"]</td>
-                            <td>@row["Name"]</td>
-                            <td>@row["GrievanceType"]</td>
-                            <td>@row["StateName"]</td>
-                            <td>@row["Location"]</td>
-                            <td>@row["Title"]</td>
-                            <td style="word-wrap:break-word;">@row["Grievance_Message"]</td>
-
-                            <td class="text-center tbltd tdtextwrp">
-                                <a href="@Url.Action("GetDownGImgDocZip", "UserCom", new { grievanceId = (Guid)row["Id"] })" target="_blank">
-                                    <strong><i class="fa fa-download"></i></strong>
-                                </a>
-                            </td>
-                            <td>
-                                <button class="btn btn-info progress-button"
-                                        data-id="@row["Id"]"
-                                        data-caseid="@row["CaseId"]"
-                                        data-name="@row["Name"]"
-                                        data-createdon="@row["CreatedOn"]">
-                                    Revert Process
-                                </button>
-                            </td>
-                            @*<td>
-            <button class="btn btn-info progress-button" data-id="@row["id"]" onclick="popdisplay('@row["id"]','@row["caseid"]','@row["name"]','@row["createdon"]');">revart process</button>
-        </td>*@
+                            <td colspan="10" class="text-danger">Record is not found </td>
                         </tr>
                     }
                 }
-else
-            {
-        <tr>
-            <td colspan="10" class="text-danger">Record is not found </td>
-        </tr>
-            }
-            }
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>

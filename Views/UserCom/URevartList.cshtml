@@ -10,7 +10,7 @@
         <div class="page-header-title">
             <h2 class="mb-0">Revert Complain List</h2>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="~/UserCom/UserGList">Complain List</a></li>
             <li class="breadcrumb-item" aria-current="page">Revert Complain List</li>
             </ul>
         </div>
@@ -18,38 +18,39 @@
 </div>
 
 <div class="box-design">
-@using (Html.BeginForm("GetURevartList", "UserCom", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
-{
-    <div class="flex-row">
-        <div class="col-md-3">
-            <div class="form-group">
-                @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
-                <span style="color:red;">*</span>
-                @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
-                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+    @using (Html.BeginForm("GetURevartList", "UserCom", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
+    {
+        @Html.HiddenFor(x => x.GrievanceId)
+        <div class="flex-row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
+                    <span style="color:red;">*</span>
+                    @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypeGId, htmlAttributes: new { @class = "control-label" })
+                    <span style="color:red;">*</span>
+                    @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="col-md-3">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
+                        <span style="color:red;">*</span>
+                        @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            <div class="form-btn">
+                <button id="search-button" class="btn btn-primary">Search</button>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                @Html.LabelFor(model => model.TypeGId, htmlAttributes: new { @class = "control-label" })
-                <span style="color:red;">*</span>
-                @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
-                @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @*<div class="col-md-3">
-            <div class="form-group">
-                @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
-                <span style="color:red;">*</span>
-                @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control", @required = "required" })
-                @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-        <div class="form-btn">
-            <button id="search-button" class="btn btn-primary">Search</button>
-        </div>
-    </div>
-}
+    }
 </div>
 <div class="table-box">
     <div id="subdata"></div>
@@ -61,6 +62,10 @@
     <script>
         $(document).ready(function () {
             bindload();
+            $('#search-button').on('click', function (e) {
+                e.preventDefault();
+                bindload();
+            });
         });
         function bindload() {
             debugger;
@@ -69,6 +74,7 @@
             filtermodel.StateId = $('#StateId').val() == '' ? '' : $('#StateId').val();
             filtermodel.TypeGId = $('#TypeGId').val() == '' ? '' : $('#TypeGId').val();
             filtermodel.RevertTypeId = $('#RevertTypeId').val() == '' ? 0 : $('#RevertTypeId').val();
+            filtermodel.GrievanceId = $('#GrievanceId').val() == '' ? '' : $('#GrievanceId').val();
             $.ajax({
                 type: "Get",
                 url: document.baseURI + "/UserCom/GetURevartList",

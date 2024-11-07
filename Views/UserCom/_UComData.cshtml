@@ -2,18 +2,20 @@
 @using System.Data
 
 <div class="grievances-list">
-    <h2>Revert Complain List</h2>
+    @*<h2>Revert Complain List</h2>*@
     <table class="table table-bordered table-hover dt-responsive display tbl" id="tbl" width="100%">
         <thead>
             <tr>
                 <th>Serial No</th> <!-- Added Serial No column -->
                 <th>Case Id</th>
                 <th>Name</th>
-                <th>Complaint Date</th>
-                <th>Revert Type</th>
-                <th>Revert Date</th>
-                <th>Message</th>
-                <th>View Details</th>
+                <th>Complain<br /> Date</th>
+                <th>Status</th>
+                <th>Query Date</th>
+                <th>Query Message</th>
+                <th>Response Date</th>
+                <th>Response Message</th>
+                @*<th>View Details</th>*@
             </tr>
         </thead>
         <tbody>
@@ -30,10 +32,11 @@
                 <td>@row["RevertStatus"]</td>
                 <td>@row["RevartDate"]</td>
                 <td>@row["TeamRevertMessage"]</td>
-                
-                <td>
+                <td>@row["UserRevartDate"]</td>
+                <td>@row["UserRevertMessage"]</td>
+                @*<td>
                     <a href="@Url.Action("DetailsCId", "UserCom", new { id = row["CaseId"] })" class="btn btn-info">View Details</a>
-                </td>
+                </td>*@
             </tr>
                 serialNo++; // Increment the serial number
             }

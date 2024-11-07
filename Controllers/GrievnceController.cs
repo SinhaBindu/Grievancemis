@@ -186,7 +186,10 @@ namespace Grievancemis.Controllers
                     }
                     if (res > 0)
                     {
-                        DataTable dt = new DataTable();
+                        var asp = db.AspNetUsers.Where(x=>x.Email == grievanceModel.Email)?.FirstOrDefault();
+                        asp.Name = grievanceModel.Name.Trim();
+                        db.SaveChanges();
+                       DataTable dt = new DataTable();
                         dt = SP_Model.GetTeamMailID();
                         if (dt.Rows.Count > 0)
                         {
@@ -321,9 +324,10 @@ namespace Grievancemis.Controllers
                                     break;
                             }
                             var f = User.Identity.Name;
-
+                            Session["CUser"] = null;
                             Session["EmailId"] = EmailId.Trim();
                             var usercheck = MvcApplication.CUser;
+                            
                             if (usercheck != null && res > 0)
                             {
                                 if (usercheck.RoleId == "2")//User

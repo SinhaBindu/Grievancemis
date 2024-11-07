@@ -80,5 +80,8 @@ namespace Grievancemis.Models
 
         [Display(Name = "Gender")]
         public string Gender { get; set; }
+
+        public int RevertId { get; set; }
+        public string GrievanceId { get; set; }
     }
 }

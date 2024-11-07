@@ -55,6 +55,7 @@ namespace Grievancemis.Manager
             sp.Command.AddParameter("@StateId", filtermodel.StateId, DbType.String);
             sp.Command.AddParameter("@TypeGId", filtermodel.TypeGId, DbType.String);
             sp.Command.AddParameter("@RevertTypeId", filtermodel.RevertTypeId, DbType.Int32);
+            sp.Command.AddParameter("@GId", filtermodel.GrievanceId, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
@@ -66,10 +67,11 @@ namespace Grievancemis.Manager
             return dt;
         }
 
-        public static DataTable GetRevartMail(string GVID)
+        public static DataTable GetRevartMail(string GVID,string RevertId)
         {
             StoredProcedure sp = new StoredProcedure("Usp_RevartMailSend");
             sp.Command.AddParameter("@Id", GVID, DbType.String);
+            sp.Command.AddParameter("@RevertId", RevertId, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }

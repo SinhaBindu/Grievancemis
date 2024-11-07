@@ -20,9 +20,11 @@ namespace Grievancemis.Controllers
             DataTable dt = SP_Model.GetRevertCounts();
             int noOfClarificationData = dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["NoofClarificationData"]) : 0;
             int noOfClosedData = dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["NoOfClosedData"]) : 0;
+            int TotalComplain = dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0]["TotalComplain"]) : 0;
 
             ViewBag.NoofClarificationData = noOfClarificationData;
             ViewBag.NoOfClosedData = noOfClosedData;
+            ViewBag.TotalComplain = TotalComplain;
 
             return View();
         }

@@ -2,36 +2,56 @@
 @using System.Data
 
 <div class="grievances-list">
-    <h2>Revert Complain List</h2>
+    @*<h2>Revert Complain List</h2>*@
     <table class="table table-bordered table-hover dt-responsive display tbl" id="tbl" width="100%">
         <thead>
             <tr>
                 <th>Serial No</th> <!-- Added Serial No column -->
                 <th>Case Id</th>
+                <th>Complain<br /> Date</th>
                 <th>Name</th>
-                <th>Complaint Date</th>
-                <th>Revert Type</th>
+                <th>Status</th>
                 <th>Revert Date</th>
-                <th>Message</th>
+                <th>Team Message</th>
+                <th>Team <br />Reported By</th>
+                <th>User Revert<br /> Date</th>
+                <th>User Revert<br /> Message</th>
+
+
             </tr>
         </thead>
         <tbody>
             @{
-                int serialNo = 1; // Initialize the serial number
+                if (Model.Rows.Count > 0)
+                {
+                    int serialNo = 1; // Initialize the serial number
+                    foreach (DataRow row in Model.Rows)
+                    {
+                        <tr>
+                            <td>@serialNo</td> <!-- Display the serial number -->
+                            <td>@row["CaseId"]</td>
+                            <td style="word-wrap:break-word;">@row["ComDate"]</td>
+                            <td>@row["Name"]</td>
+                            <td>@row["RevertStatus"]</td>
+                            <td>@row["RevartDate"]</td>
+                            <td>@row["TeamRevertMessage"]</td>
+                            <td>@row["TeamReportedByName"]</td>
+                            <td>@row["UserRevartDate"]</td>
+                            <td>@row["UserRevertMessage"]</td>
+                        </tr>
+                        serialNo++; // Increment the serial number
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="10" class="text-danger">Record is not found </td>
+                    </tr>
+                }
+
             }
-            @foreach (DataRow row in Model.Rows)
-            {
-                <tr>
-                    <td>@serialNo</td> <!-- Display the serial number -->
-                    <td>@row["CaseId"]</td>
-                    <td>@row["Name"]</td>
-                    <td style="word-wrap:break-word;">@row["ComDate"]</td>
-                    <td>@row["RevertStatus"]</td>
-                    <td>@row["RevartDate"]</td>
-                    <td>@row["TeamRevertMessage"]</td>
-                </tr>
-                serialNo++; // Increment the serial number
-            }
+
+
         </tbody>
     </table>
 </div>

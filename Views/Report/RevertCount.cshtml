@@ -7,7 +7,7 @@
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
-            <h2 class="mb-0">Report Count List</h2>
+            <h2 class="mb-0">Dashboard</h2>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item">@ViewBag.Title</li>
             </ul>
@@ -33,7 +33,10 @@
                 type: 'pie'
             },
             title: {
-                text: 'Revert Total Counts'
+                text: 'Complain Status'
+            },
+            subtitle: {
+                text: 'Total Complain : '+@ViewBag.TotalComplain
             },
             credits: {
                 enabled: false

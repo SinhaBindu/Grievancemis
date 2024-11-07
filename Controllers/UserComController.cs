@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
 namespace Grievancemis.Controllers
@@ -93,61 +94,77 @@ namespace Grievancemis.Controllers
         {
             try
             {
-                if (filterModel.GrievanceId_fk == Guid.Empty || filterModel.RevertTypeId == 0 || string.IsNullOrWhiteSpace(filterModel.TeamRevertMessage))
+                if (MvcApplication.CUser == null)
                 {
-                    return Json(new { success = false, message = "All fields are required." });
+                    return Json(new { success = false, message = "All fileds are required.", Data = 201 });
+                }
+                if (MvcApplication.CUser.RoleId == "0" || string.IsNullOrWhiteSpace(MvcApplication.CUser.RoleId))
+                {
+                    return Json(new { success = false, message = "All fileds are required.", Data = 201 });
+                }
+                if (filterModel.GrievanceId_fk == Guid.Empty || string.IsNullOrWhiteSpace(filterModel.TeamRevertMessage))
+                {
+                    return Json(new { success = false, message = "All fields are required.", Data = 0 });
+                }
+                if (filterModel.RevertId == 0)
+                {
+                    return Json(new { success = false, message = "All fields are required.", Data = 0 });
                 }
 
-                using (var db = new Grievance_DBEntities())
+                using (var db_ = new Grievance_DBEntities())
                 {
                     // Create a new record in Tbl_TeamRevertComplain
-                    Tbl_TeamRevertComplain teamRevertComplain = new Tbl_TeamRevertComplain
+                    Tbl_TeamRevertComplain teamRevertComplain = db_.Tbl_TeamRevertComplain.Find(filterModel.RevertId);
+                    if (teamRevertComplain != null)
                     {
-                        GrievanceId_fk = filterModel.GrievanceId_fk,
-                        RevertTypeId = filterModel.RevertTypeId,
-                        TeamRevertMessage = filterModel.TeamRevertMessage,
-                        RoleId = Convert.ToInt32(MvcApplication.CUser.RoleId),
-                        IsActive = true,
-                        TeamRevert_Date = DateTime.Now.Date,
-                        CreatedBy = User.Identity.Name,
-                        CreatedOn = DateTime.Now
-                    };
+                        teamRevertComplain.GrievanceId_fk = filterModel.GrievanceId_fk;
+                        ////teamRevertComplain.RevertTypeId = filterModel.RevertTypeId;
+                        teamRevertComplain.UserRevertMessage = filterModel.TeamRevertMessage;
+                        teamRevertComplain.UserRoleId = Convert.ToInt32(MvcApplication.CUser.RoleId);
+                        teamRevertComplain.UserRevert_Date = DateTime.Now.Date;
+                        teamRevertComplain.UpdatedBy = MvcApplication.CUser.UserId;
+                        teamRevertComplain.UpdatedOn = DateTime.Now;
+                        //db.Tbl_TeamRevertComplain.Add(teamRevertComplain);
+                        db_.SaveChanges(); // Save changes to get the GrievanceId_fk
 
-                    db.Tbl_TeamRevertComplain.Add(teamRevertComplain);
-                    db.SaveChanges(); // Save changes to get the GrievanceId_fk
-
-                    // Handle email sending
-                    DataTable dt = SP_Model.GetRevartMail(teamRevertComplain.GrievanceId_fk.ToString());
-                    if (dt.Rows.Count > 0)
-                    {
-                        string CaseId = dt.Rows[0]["CaseId"].ToString();
-                        string email = dt.Rows[0]["Email"].ToString();
-                        string name = dt.Rows[0]["Name"].ToString();
-                        string revertMessage = dt.Rows[0]["TeamRevertMessage"].ToString();
-                        string revertStatus = (filterModel.RevertTypeId == 1) ? "Clarification" : "Closed";
-                        //string revertStatus = dt.Rows[0]["RevertStatus"].ToString();
-
-                        // Send email notification
-                        int emailResult = CommonModel.SendMailRevartPartUser(email, CaseId, name, revertMessage, revertStatus);
-
-                        if (emailResult > 0)
+                        // Handle email sending
+                        DataTable dt = SP_Model.GetRevartMail(teamRevertComplain.GrievanceId_fk.ToString(), filterModel.RevertId.ToString());
+                        if (dt.Rows.Count > 0)
                         {
-                            return Json(new { success = true, message = "Data saved and email sent successfully!" });
-                        }
-                    }
+                            string CaseId = dt.Rows[0]["CaseId"].ToString();
+                            string email = dt.Rows[0]["Email"].ToString();
+                            string name = dt.Rows[0]["Name"].ToString();
+                            string revertMessage = dt.Rows[0]["TeamRevertMessage"].ToString();
+                            string revertStatus = (filterModel.RevertTypeId == 1) ? "Clarification" : "Closed";
+                            //string revertStatus = dt.Rows[0]["RevertStatus"].ToString();
 
-                    return Json(new { success = true, message = "Data saved successfully!" });
+                            // Send email notification
+                            int emailResult = CommonModel.SendMailRevartPartUser(email, CaseId, name, revertMessage, revertStatus);
+
+                            if (emailResult > 0)
+                            {
+                                teamRevertComplain.UserIsSent = true;
+                                db_.SaveChanges();
+                                return Json(new { success = true, message = "Data saved and email sent successfully!", Data = 0 });
+                            }
+                        }
+
+                        return Json(new { success = true, message = "Data saved successfully!", Data = 0 });
+                    }
+                    return Json(new { success = false, message = "An error occurred:", Data = 0 });
                 }
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "An error occurred: " + ex.Message });
+                return Json(new { success = false, message = "An error occurred: " + ex.Message, Data = 0 });
             }
         }
-        
-        public ActionResult URevartList()
+
+        public ActionResult URevartList(string GId)
         {
-            return View();
+            FilterModel model = new FilterModel();
+            model.GrievanceId = GId;
+            return View(model);
         }
 
         public ActionResult GetURevartList(FilterModel filtermodel)
@@ -208,9 +225,6 @@ namespace Grievancemis.Controllers
                 return View("Error", new HandleErrorInfo(ex, "UserCom", "DetailsCId"));
             }
         }
-
-
-
 
 
         private string ConvertViewToString(string viewName, object model)

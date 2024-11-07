@@ -4,13 +4,13 @@
 @{
     ViewBag.Title = "Analytics";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    ViewBag.SubTitle = "User Grievances List";
+    ViewBag.SubTitle = "Complain List";
 }
 
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
-            <h2 class="mb-0">User Grievances List</h2>
+            <h2 class="mb-0">@ViewBag.SubTitle</h2>
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
                 @*<li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>*@
@@ -64,6 +64,7 @@
             <div class="modal-body">
                 <div class="row">
                     @Html.HiddenFor(x => x.GrievanceId_fk)
+                    @Html.HiddenFor(x => x.RevertId)
                     <div class="modal-design">
                         <p>
                             Name:
@@ -97,7 +98,8 @@
                         @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md-2" })
                         @*<span style="color:red;">*</span>*@
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple", @id = "DocUpload" })
+                            @*, multiple = "multiple"*@
+                            @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", @id = "DocUpload" })
                             @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -133,18 +135,19 @@
                 PostData();
             });
         });
-       
+
 
         function PostData() {
-            if ($('#TeamRevertMessage').val()=='') {
+            if ($('#TeamRevertMessage').val() == '') {
                 toastr.error('Enter the Message');
                 return false;
             }
 
             var formData = new FormData(); // Create a FormData object
             formData.append('GrievanceId_fk', $('#GrievanceId_fk').val());
-            formData.append('RevertTypeId', $('#RevertTypeId').val());
+            //formData.append('RevertTypeId', $('#RevertTypeId').val());
             formData.append('TeamRevertMessage', $('#TeamRevertMessage').val());
+            formData.append('RevertId', $('#RevertId').val());
 
             // Get the files from the file input
             var files = $('#DocUpload')[0].files;
@@ -164,6 +167,9 @@
                         $('#progressModal').modal('hide');
                     } else {
                         toastr.error(response.message);
+                        if (response.Data == 201) {
+                            window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
+                        }
                     }
                 },
                 error: function (xhr, status, error) {
@@ -171,22 +177,33 @@
                 }
             });
         }
-        
+
         $(document).on('click', '.progress-button', function () {
             var id = $(this).data('id');
             var caseid = $(this).data('caseid');
             var name = $(this).data('name');
             var createdOn = $(this).data('createdon');
+            var revertid = $(this).data('revertid');
 
-            POPDisplay(id, caseid, name, createdOn);
+            POPDisplay(id, caseid, name, createdOn, revertid);
         });
 
-        function POPDisplay(id, caseid, name, CreatedOn) {
-            $('#GrievanceId_fk').val(id);
-            $('#cname').html(name);
-            $('#CId').html(caseid);
-            $('#con').html(CreatedOn);
-            $('#progressModal').modal('show'); // Ensure this line is present
+        function POPDisplay(id, caseid, name, CreatedOn, revertid) {
+            $('#GrievanceId_fk').val('');
+            $('#RevertId').val('');
+            $('#TeamRevertMessage').val('');
+            if (id != null && id != '') {
+                $('#GrievanceId_fk').val(id);
+                $('#RevertId').val(revertid);
+                $('#cname').html(name);
+                $('#CId').html(caseid);
+                $('#con').html(CreatedOn);
+                $('#progressModal').modal('show'); // Ensure this line is present
+            }
+            else {
+                window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
+            }
+           
         }
 
         function bindload() {

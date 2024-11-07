@@ -18,13 +18,19 @@ namespace Grievancemis.Models
         public System.Guid GrievanceId_fk { get; set; }
         public Nullable<int> RevertTypeId { get; set; }
         public string TeamRevertMessage { get; set; }
-        public Nullable<int> RoleId { get; set; }
+        public Nullable<int> TeamRoleId { get; set; }
         public Nullable<System.DateTime> TeamRevert_Date { get; set; }
         public Nullable<int> Status { get; set; }
-        public Nullable<bool> IsSent { get; set; }
+        public Nullable<bool> TeamIsSent { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }
-        public System.DateTime CreatedOn { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public string UserRevertMessage { get; set; }
+        public Nullable<int> UserRoleId { get; set; }
+        public Nullable<System.DateTime> UserRevert_Date { get; set; }
+        public string UpdatedBy { get; set; }
+        public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public Nullable<bool> UserIsSent { get; set; }
     
         public virtual Tbl_Grievance Tbl_Grievance { get; set; }
     }

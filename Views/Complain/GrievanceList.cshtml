@@ -48,7 +48,7 @@
 
 <div id="subdata"></div>
 
-<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" 
+<div class="modal fade animate" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
      data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -61,6 +61,7 @@
             <div class="modal-body">
                 <div class="row">
                     @Html.HiddenFor(x => x.GrievanceId_fk)
+                    @Html.HiddenFor(x => x.RevertId)
                     <div class="modal-design">
                         <p>
                             Name:
@@ -127,6 +128,15 @@
         //});
 
         function PostData() {
+            if ($('#RevertTypeId').val() == '' || $('#RevertTypeId').val() == '0' || $('#RevertTypeId').val() == null) {
+                toastr.error('Please Select Revert Type');
+                return false;
+            }
+            if ($('#TeamRevertMessage').val() == '' || $('#TeamRevertMessage').val() == null) {
+                toastr.error('Enter the Message');
+                return false;
+            }
+
             var filterModel = {
                 GrievanceId_fk: $('#GrievanceId_fk').val(),
                 RevertTypeId: $('#RevertTypeId').val(),
@@ -143,6 +153,9 @@
                         $('#progressModal').modal('hide');
                     } else {
                         toastr.error(response.message);
+                        if (response.Data == 201) {
+                            window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
+                        }
                     }
                 },
                 error: function (xhr, status, error) {
@@ -150,14 +163,21 @@
                 }
             });
         }
-        function POPDisplay(id, caseid, name, CreatedOn) {
+        function POPDisplay(id, caseid, name, CreatedOn, RevertId) {
             //debugger;
-            $('#GrievanceId_fk').val(id);
-            $('#cname').html(name);
-            $('#CId').html(caseid);
-            $('#con').html(CreatedOn);
-            $('#progressModal').modal('show');
-
+            $('#GrievanceId_fk').val(''); $('#RevertId').val('');
+            $('#RevertTypeId').val(''); $('#TeamRevertMessage').val('');
+            if (id != null && id != '') {
+                $('#GrievanceId_fk').val(id);
+                $('#RevertId').val(RevertId);
+                $('#cname').html(name);
+                $('#CId').html(caseid);
+                $('#con').html(CreatedOn);
+                $('#progressModal').modal('show');
+            }
+            else {
+                window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
+            }
         }
 
         function bindload() {
@@ -221,5 +241,5 @@
 
     </script>
 
-    
+
 }

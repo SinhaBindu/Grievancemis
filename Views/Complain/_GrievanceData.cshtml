@@ -56,11 +56,19 @@
                                 <button class="btn btn-warning btn-sm progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]','@row["MaxRevertID"]')"> Revert Process</button>
                             </td>
                         }
+                        else
+                        {
+                            <td></td>
+                        }
                         @if (!string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
                         {
                             <td>
                                 <a href="~/Complain/RevartList?GId=@row["Id"].ToString()" class="btn btn-primary btn-sm progress-button"><i class="fa fa-street-view"></i></a>
                             </td>
+                        }
+                        else
+                        {
+                            <td></td>
                         }
 
                     </tr>

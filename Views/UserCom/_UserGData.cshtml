@@ -59,11 +59,19 @@
                                         </button>
                                     </td>
                                 }
+                                else
+                                {
+                                    <td></td>
+                                }
                                 @if (!string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
                                 {
                                     <td>
                                         <a href="~/UserCom/URevartList?GId=@row["Id"].ToString()" class="btn btn-primary btn-sm progress-button"><i class="fa fa-street-view"></i></a>
                                     </td>
+                                }
+                                else
+                                {
+                                    <td></td>
                                 }
                                 @*<td>
                                         <button class="btn btn-info progress-button" data-id="@row["id"]" onclick="popdisplay('@row["id"]','@row["caseid"]','@row["name"]','@row["createdon"]');">revart process</button>

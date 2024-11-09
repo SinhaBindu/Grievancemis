@@ -1,13 +1,13 @@
 ﻿body {
     background: #EEEDE8 !important;
-    background: #FBF9EA !important;
+    background: #EDF1FB !important;
 }
 img {
     width: 100%;
     height: auto;
 }
 .main-header {
-    padding: 10px 20px 5px;
+    padding: 7px 20px 3px;
     background: #fff;
 }
 .header {
@@ -17,6 +17,9 @@ img {
     justify-content: space-between;
     align-items: center;
 }
+.header img {
+    width: 120px
+}
 .header-middle {
     width: 160px;
     text-align: center;
@@ -25,7 +28,7 @@ img {
     font-weight: bold;
 }
     .header-middle span {
-        padding: 10px 15px;
+        padding: 7px 15px;
         background: #F3987A;
         border-radius: 5px;
         cursor: pointer;
@@ -71,45 +74,56 @@ img {
         line-height: 26px;
         padding-right: 60px
     }
-.grievance-message {
+.grievance-box {
     margin: auto;
-    padding: 13px 0px;
-    margin-top: 0px;
-    max-width: 1024px;
-    border-radius: 12px;
+    max-width: 1000px;
+    padding: 55px 20px 70px;
+    /*background: #EDF1FB;*/
     display: flex;
-    align-items: center;
 }
-    .grievance-message span {
-        padding-top: 25px;
-        width: 130px !important;
-        height: 105px;
+.grievance-border {
+    max-width: 400px;
+    margin-left: -50px;
+    margin-top: 80px;
+    border: 2px solid #F3987A;
+    padding: 10px;
+    border-radius: 20px;
+    position: relative;
+}
+    .grievance-border h2 {
+        font-size: 40px;
+        margin-top: -80px;
+        margin-left: 65px
+    }
+    .grievance-content {
+        padding: 30px;
+        background: #fff;
+        border-radius: 20px;
+    }
+    .grievance-content p {
         font-size: 20px;
-        background: #5B2C54;
-        border: 5px solid #fff;
-        color: #fff;
-        text-align: center;
-        border-radius: 100%;
-        position: relative;
-        z-index: 1
+        line-height: 28px;
     }
-    .grievance-message i {
-        color: #FBC882;
-        margin-right: 10px;
-        font-size: 32px;
-        margin-top: 2px
-    }
+.grievance-register {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 30px
+}
+.grievance-message {
+    background: #B9D5FA;
+    padding: 20px 50px 30px 20px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    max-width: 550px;
+    border-radius: 12px;
+    height: 155px
+}
     .grievance-message p {
-        flex: 120px;
         color: #000;
-        background: #FCCE83;
-        font-size: 32px;
         padding: 10px 20px;
-        font-size: 14px;
-        margin: 0 0 0 -10px;
-        text-align: justify;
-        line-height: 21px;
-        border-radius: 10px;
+        font-size: 16px;
+        margin: 0 0 0 10px;
+        line-height: 24px;
     }
 .grievance-form {
     margin: auto;
@@ -118,7 +132,7 @@ img {
     box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.03);
     margin-top: 0px;
     margin-bottom: 20px;
-    border-radius: 15px
+    border-radius: 15px;
 }
     .grievance-form h2 {
         font-size: 21px;
@@ -133,27 +147,36 @@ img {
 .sub-form {
     padding: 20px;
     display: flex;
-    gap: 40px;
+    gap: 80px;
     align-items: center;
 }
-.right-box, .left-box {
+.right-box, .manage-grieve-form {
     flex: 1
 }
-    
-        .right-box {
-            background: #F2F4F8;
-            padding: 20px;
-            border-radius: 10px
+    .manage-grieve-form h3, .manage-grieve-form p {
+        text-align: center;
+        color:  #fff;
+    }
+        .manage-grieve-form h3 {
+            font-size: 30px;
+            margin-bottom: 12px;
+            margin-top: 0px
         }
+    .manage-grieve-form p{ 
+        margin-top: 4px;
+    }
+    .right-box {
+        border-radius: 10px
+    }
 .right-box img {
     width: 80%;
     margin-left: 10%;
 }
 .form-control-input {
     border-radius: 5px !important;
-    border: 1px solid #F2F2F2 !important;
+    border: 1px solid #9E9E9E !important;
     padding: 17px 12px !important;
-    margin-top: 2px !important;
+    margin-top: 6px !important;
     margin-bottom: 12px !important;
 }
     .form-control-input:hover {
@@ -174,9 +197,10 @@ img {
     background: #5B2C54
 }
 .main-footer {
-    background: #F2F4F8 !important;
+    background: #FBC982 !important;
     text-align: center !important;
-    color: #000 !important
+    color: #000 !important;
+    margin-top: 30px
 }
 .flex-form {
     display: flex;
@@ -186,3 +210,14 @@ img {
     flex: 1;
 }
 
+.main-banner {
+    background: #5C5EA7;
+    padding: 30px 0
+}
+.banner-manage {
+    display: flex;
+    align-items: center;
+    gap: 90px;
+    margin: auto;
+    max-width: 1024px;
+}

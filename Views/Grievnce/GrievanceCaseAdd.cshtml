@@ -30,192 +30,144 @@
             <div class="header-middle">
                 <span class=""><i class="fa fa-phone"></i>139</span>Call Us
             </div>
-            @*<a href="#" class="login-btn">Login</a>*@
         </div>
     </div>
-    <!-- Banner -->
-    <div class="page-banner">
-        <div class="banner-content">
-            @*<h3>Brief description of the <br /><span>purpose of the portal</span></h3>*@
-            <h3>Grievance <br /><span></span></h3>
-            <p>
-                PCI is a safe, healthy and happy workplace where each person is respected and valued.
-                If you have any form of complaint, this is the space to write in for a fast, fair and
-                transparent process of redressal. Your concerns will be taken up by a committee / person
-                authorised by the organisation to hear you and find an appropriate solution.
-            </p>
-        </div>
-    </div>
-    <!-- Content -->
-    <div class="grievance-message">
-        <span>
-            <i class="fa fa-info-circle"></i>
-            <br />
-            Grievance
-        </span>
-        <p>
-            A grievance typically refers to a formal complaint or concern raised by an individual or
-            group, often in the context of a workplace or academic setting. It usually involves
-            perceived unfair treatment, violation of rights, or dissatisfaction with policies,
-            procedures, or decisions. The grievance process usually provides a structured way to
-            address and resolve such concerns.
-        </p>
-    </div>
-    <!-- Grievance Form -->
-    <div class="grievance-form">
-        <h2><i class="fa-solid fa-layer-group"></i>Register Grievance</h2>
-        <div class="sub-form">
-            <div class="left-box">
-                <div class="col-md-12" id="div-evc" style="display:block;">
-                    <label>
-                        Email ID :
-                    </label>
-                    <div class="form-group" id="div-emailid" style="display:block">
-                        <input id="Email_Id" name="Email_Id" class="form-control-input" maxlength="100" placeholder="Enter the email" required>
-                    </div>
-                    <div class="form-group" id="div-vc" style="display:none">
+    <!-- New Banner -->
+    <div class="main-banner">
+        <div class="banner-manage">
+            <div class="manage-grieve-form">
+                <h3>Your Grievances, Our Redressal</h3>
+                <p>We are here to solve your grievances</p>
+                <div class="left-box">
+                    <div class="col-md-12" id="div-evc" style="display:block;">
                         <label>
-                            OTP
+                            Email ID :
                         </label>
-                        <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Opt Code" required>
-                    </div>
-                    <div class="col-md-offset-2 col-md-10" style="margin-bottom:10px;">
-                        <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyEamilMailSendPost()"> Proceed</button>
-                        @*<input type="submit" id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick=" VerifyEamilMailSendPost()" />*@
-                    </div>
-                </div>
-                <div class="row" id="div-g" style="display:none;">
-                    <div class="col-md-12">
-                        <div class="card">
-                            @using (Html.BeginForm("GrievanceCaseAdd", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
-                            {
-                                @Html.AntiForgeryToken()
-
-                                <div class="form-horizontal">
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        @*<span style="color:red;">*</span>*@
-                                        <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control-input", @required = "required" })
-                                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="flex-form">
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
-                                            <span style="color:red;">*</span>
-                                            <div class="col-md-10">
-                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control-input", @required = "required" })
-                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <span style="color:red;">*</span>
-                                            <div class="col-md-10">
-                                                @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input", @required = "required",@maxlength = "10" })
-                                                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="flex-form">
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <span style="color:red;">*</span>
-                                            <div class="col-md-10">
-                                                @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control-input", @required = "required" })
-                                                @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <span style="color:red;">*</span>
-                                            <div class="col-md-10">
-                                                @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control-input", @required = "required" })
-                                                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex-form">
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <span style="color:red;">*</span>
-                                            <div class="col-md-10">
-                                                @Html.TextBoxFor(model => model.Location, new { @class = "form-control-input", @required = "required" })
-                                                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <span style="color:red;">*</span>
-                                            <div class="col-md-10">
-                                                @Html.TextBoxFor(model => model.Title, new { @class = "form-control-input", @required = "required" })
-                                                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <span style="color:red;">*</span>
-                                        <div class="col-md-10">
-                                            @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
-                                            @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md- 2" })
-                                        @*<span style="color:red;">*</span>*@
-                                        <div class="col-md-10">
-                                            @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple"})
-                                            @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    @*<div class="form-group">
-                                            @Html.LabelFor(model => model.IsConsent, htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <span style="color:red;">*</span>
-                                            <div class="col-md-10">
-                                                @Html.CheckBoxFor(model => model.IsConsent)
-                                                @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additonal document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
-                                                @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>*@
-                                    <div class="form-group">
-                                        <span style="color:red;">*</span>
-                                        <div class="col-md-10">
-                                            @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox" })
-                                            @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
-                                            @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <input type="submit" value="Submit" class="btn-submit" />
-                                        </div>
-                                    </div>
-                                    @*<div class="form-group">
-                                            <div class="col-md-offset-2 col-md-10">
-                                                <input type="submit" id="submitButton" value="Submit" class="btn-submit" disabled />
-                                            </div>
-                                        </div>*@
-                                </div>
-                            }
-                            @*<div id="grievances-list" class="form-horizontal">
-                                    @{Html.RenderAction("GetGrievances", "Grievnce");}
-                                </div>*@
+                        <div class="form-group" id="div-emailid" style="display:block">
+                            <input id="Email_Id" name="Email_Id" class="form-control-input" maxlength="100" placeholder="Enter the email" required>
+                        </div>
+                        <div class="form-group" id="div-vc" style="display:none">
+                            <label>
+                                OTP
+                            </label>
+                            <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Opt Code" required>
+                        </div>
+                        <div class="col-md-offset-2 col-md-10" style="margin-bottom:10px;">
+                            <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyEamilMailSendPost()"> Proceed</button>
                         </div>
                     </div>
+                    <div class="row" id="div-g" style="display:none;">
+                        <div class="col-md-12">
+                            <div class="card">
+                                @using (Html.BeginForm("GrievanceCaseAdd", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
+                                {
+                                    @Html.AntiForgeryToken()
 
+                                    <div class="form-horizontal">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control-input", @required = "required" })
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="flex-form">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input", @required = "required", @maxlength = "10" })
+                                                    @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex-form">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-form">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Location, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <span style="color:red;">*</span>
+                                            <div class="col-md-10">
+                                                @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
+                                                @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md- 2" })
+
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple" })
+                                                @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <span style="color:red;">*</span>
+                                            <div class="col-md-10">
+                                                @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox" })
+                                                @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
+                                                @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input type="submit" value="Submit" class="btn-submit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
             <div class="right-box">
@@ -223,6 +175,202 @@
             </div>
         </div>
     </div>
+    <!-- Grievance -->
+    <div class="grievance-box">
+        <div class="grievance-message">
+            <p>
+                A grievance typically refers to a formal complaint or concern raised by an individual or
+                group, often in the context of a workplace or academic setting. It usually involves
+                perceived unfair treatment, violation of rights, or dissatisfaction with policies,
+                procedures, or decisions. The grievance process usually provides a structured way to
+                address and resolve such concerns.
+            </p>
+            <img src="~/Content/assets/images/grievance-register.png" alt="" class="grievance-register" />
+        </div>
+        <div class="grievance-border">
+            <h2>Grievance</h2>
+            <div class="grievance-content">
+                <p>
+                    PCI is a safe, healthy and happy workplace where each person is respected and valued.
+                    If you have any form of complaint, this is the space to write in for a fast, fair and
+                    transparent process of redressal. Your concerns will be taken up by a committee / person
+                    authorised by the organisation to hear you and find an appropriate solution.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Banner -->
+    <!--<div class="page-banner">
+        <div class="banner-content">-->
+            @*<h3>Brief description of the <br /><span>purpose of the portal</span></h3>*@
+            <!--<h3>Grievance <br /><span></span></h3>
+            <p>
+                PCI is a safe, healthy and happy workplace where each person is respected and valued.
+                If you have any form of complaint, this is the space to write in for a fast, fair and
+                transparent process of redressal. Your concerns will be taken up by a committee / person
+                authorised by the organisation to hear you and find an appropriate solution.
+            </p>
+        </div>
+    </div>-->
+    <!-- Content -->
+    @*<div class="grievance-message">
+            <span>
+                <i class="fa fa-info-circle"></i>
+                <br />
+                Grievance
+            </span>
+            <p>
+                A grievance typically refers to a formal complaint or concern raised by an individual or
+                group, often in the context of a workplace or academic setting. It usually involves
+                perceived unfair treatment, violation of rights, or dissatisfaction with policies,
+                procedures, or decisions. The grievance process usually provides a structured way to
+                address and resolve such concerns.
+            </p>
+        </div>*@
+    <!-- Grievance Form -->
+    @*<div class="grievance-form">
+            <h2><i class="fa-solid fa-layer-group"></i>Register Grievance</h2>
+            <div class="sub-form">
+                <div class="left-box">
+                        <div class="col-md-12" id="div-evc" style="display:block;">
+                            <label>
+                                Email ID :
+                            </label>
+                            <div class="form-group" id="div-emailid" style="display:block">
+                                <input id="Email_Id" name="Email_Id" class="form-control-input" maxlength="100" placeholder="Enter the email" required>
+                            </div>
+                            <div class="form-group" id="div-vc" style="display:none">
+                                <label>
+                                    OTP
+                                </label>
+                                <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Opt Code" required>
+                            </div>
+                            <div class="col-md-offset-2 col-md-10" style="margin-bottom:10px;">
+                                <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyEamilMailSendPost()"> Proceed</button>
+                            </div>
+                        </div>
+                        <div class="row" id="div-g" style="display:none;">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    @using (Html.BeginForm("GrievanceCaseAdd", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+
+                                        <div class="form-horizontal">
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="flex-form">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+                                                    <span style="color:red;">*</span>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control-input", @required = "required" })
+                                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <span style="color:red;">*</span>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input", @required = "required",@maxlength = "10" })
+                                                        @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex-form">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <span style="color:red;">*</span>
+                                                    <div class="col-md-10">
+                                                        @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control-input", @required = "required" })
+                                                        @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <span style="color:red;">*</span>
+                                                    <div class="col-md-10">
+                                                        @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control-input", @required = "required" })
+                                                        @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flex-form">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <span style="color:red;">*</span>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(model => model.Location, new { @class = "form-control-input", @required = "required" })
+                                                        @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <span style="color:red;">*</span>
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control-input", @required = "required" })
+                                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
+                                                    @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md- 2" })
+
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple"})
+                                                    @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox" })
+                                                    @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
+                                                    @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-10">
+                                                    <input type="submit" value="Submit" class="btn-submit" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                <div class="right-box">
+                    <img src="~/Content/assets/images/grievance.png" alt="grievance" />
+                </div>
+            </div>
+        </div>*@
     <!-- Footer -->
     <footer class="main-footer">
         <div class="footer-copyright">

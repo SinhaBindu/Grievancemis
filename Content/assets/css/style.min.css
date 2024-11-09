@@ -230,9 +230,10 @@ a {
     align-items: center;
 }
 .left-box{
-    padding:20px;
-    max-width:600px;
-    background:#fff;
+    padding: 20px;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 10px;
 }
 @media (min-width: 1200px) {
 }

@@ -28,7 +28,7 @@
                     {
                         foreach (DataRow row in Model.Rows)
                         {
-                            <tr>
+                            <tr style="background-color:@row["RevertStatusBgColor"]">
                                 @*<td>@row["Id"]</td>*@
                                 <td>@row["CaseId"]</td>
                                 <td>@row["CreatedOn"]</td>
@@ -45,7 +45,7 @@
                                         <strong><i class="fa fa-download"></i></strong>
                                     </a>
                                 </td>
-                                @if (row["RevertType_Id"].ToString() == "1" || string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
+                                @if (row["RevertType_Id"].ToString() == "1")//|| string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString())
                                 {
                                     <td>
                                         <button class="btn btn-info progress-button"
@@ -54,7 +54,6 @@
                                                 data-name="@row["Name"]"
                                                 data-revertid="@row["MaxRevertID"]"
                                                 data-createdon="@row["CreatedOn"]">
-
                                             Revert Process
                                         </button>
                                     </td>

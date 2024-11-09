@@ -1,17 +1,18 @@
 ﻿@using Grievancemis.Manager
 @model Grievancemis.Models.FilterModel
 @{
-
+    ViewBag.Title = "Conversation Details";
+    ViewBag.SubTitle = "Grievances List";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
-            <h2 class="mb-0">Revert Complain List</h2>
+            <h2 class="mb-0">@ViewBag.Title</h2>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="~/Complain/GrievanceList">Grievance List</a></li>
-            <li class="breadcrumb-item" aria-current="page">Revert Complain List</li>
+                <li class="breadcrumb-item"><a href="~/Complain/GrievanceList">@ViewBag.SubTitle</a></li>
+                <li class="breadcrumb-item" aria-current="page">@ViewBag.Title</li>
             </ul>
         </div>
     </div>

@@ -101,7 +101,8 @@ namespace Grievancemis.Controllers
                             {
                                 Greid = SP_Model.Usp_GetCIdRevart(dt.Rows[0]["GrievanceId_fk"].ToString()).Rows[0]["CaseId"].ToString();
                             }
-                            res = CommonModel.SendMailRevartPartUser(dt.Rows[0]["Email"].ToString(), Greid, dt.Rows[0]["Name"].ToString(), dt.Rows[0]["TeamRevertMessage"].ToString(), dt.Rows[0]["RevertStatus"].ToString());
+                            DataTable dtteamemails = SP_Model.GetTeamMailID();//RolesIdcont.Community
+                            res = CommonModel.SendMailRevartPartUser(dtteamemails.Rows[0]["EmailList"].ToString(), dt.Rows[0]["Email"].ToString(), Greid, dt.Rows[0]["Name"].ToString(), dt.Rows[0]["TeamRevertMessage"].ToString(), dt.Rows[0]["RevertStatus"].ToString());
                         }
                         if (res > 0)
                         {

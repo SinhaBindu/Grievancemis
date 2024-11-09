@@ -199,11 +199,11 @@ namespace Grievancemis.Controllers
                         }
                         if (res > 0)
                         {
-                            return Json(new { success = true, message = "Data saved and mail sended successfully!" });
+                            return Json(new { success = true, message = "Your request is registered with Grievance reference id : "+ Greid + "<br />"+ "Mail sended successfully!" });//Data saved and mail sended successfully!
                         }
                         else
                         {
-                            return Json(new { success = true, message = "Data saved successfully!" });
+                            return Json(new { success = true, message = "Your request is registered with Grievance reference id :"+ Greid });//Data saved successfully!
                         }
 
                     }

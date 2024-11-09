@@ -298,11 +298,11 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-        public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail,string Greid)
+        public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail, string Greid)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Dear Team"
+            string To = "", Subject = "", Body = "", ReceiverName = "Dear Panel Member"
                 , SenderName = "", RandomValue = "", OTPCode = "";
             string ASDT = ""; string DurationTime = ""; string BatchName = "";
             string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
@@ -318,7 +318,7 @@ namespace Grievancemis.Manager
             }
             try
             {
-               
+
                 string[] tokens = Toemailid.Split(',');
                 To = tokens[0];
 
@@ -339,7 +339,7 @@ namespace Grievancemis.Manager
                 {
                     stcc = tokens[i] + ",";
                 }
-                stcc = stcc.Substring(0, stcc.Length-1);
+                stcc = stcc.Substring(0, stcc.Length - 1);
                 mail.To.Add(To);
                 mail.CC.Add(stcc);
                 mail.Bcc.Add(OtherEmailID);
@@ -363,7 +363,7 @@ namespace Grievancemis.Manager
                 tblu.Issent = true;
                 tblu.UpdatedOn = DateTime.Now;
                 db_.SaveChanges();
-             
+
                 _db.SaveChanges();
                 return 1;
 
@@ -373,11 +373,11 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-        public static int SendMailPartUser(string Toemailid, string gvid,string Name)
+        public static int SendMailPartUser(string Toemailid, string gvid, string Name)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Dear "
+            string To = "", Subject = "", Body = "", ReceiverName = "Dear User"
                 , SenderName = "", RandomValue = "", OTPCode = "";
             string ASDT = ""; string DurationTime = ""; string BatchName = "";
             string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
@@ -440,11 +440,11 @@ namespace Grievancemis.Manager
             }
         }
 
-        public static int SendMailRevartPartUser(string Toemailid, string gvid, string name, string status,string TeamRevertMessage)
+        public static int SendMailRevartPartUser(string ToTeamemailids, string Toemailid, string gvid, string name, string TeamRevertMessage, string status)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Hi,"
+            string To = "", Subject = "", Body = "", ReceiverName = ""
                 , SenderName = "", RandomValue = "", OTPCode = "";
             string ASDT = ""; string DurationTime = ""; string BatchName = "";
             string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
@@ -460,6 +460,10 @@ namespace Grievancemis.Manager
             }
             try
             {
+                if (MvcApplication.CUser != null)
+                {
+                    ReceiverName = MvcApplication.CUser.RoleId == "3" ? "Dear User" : "Dear Panel Member";
+                }
                 Random random = new Random();
 
                 // Generate a random double between 0.0 and 1.0
@@ -482,11 +486,11 @@ namespace Grievancemis.Manager
                 To = Toemailid;
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
-                    .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To " + status + ".We'll Inform You on next Update.")
+                    .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To <b>" + status + "</b>.We'll Inform You on next Update.")
                     .Replace("{EmailID}", To)
                     .Replace("{OTPCode}", gvid)
-                    .Replace("{Status}", TeamRevertMessage)
-                    .Replace("{message}", status);
+                    .Replace("{Status}", status)
+                    .Replace("{message}", TeamRevertMessage);
 
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
                 //{
@@ -496,6 +500,7 @@ namespace Grievancemis.Manager
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
                 mail.To.Add(To + "," + OtherEmailID);
+                mail.Bcc.Add(ToTeamemailids + "," + OtherEmailID);
                 mail.From = new MailAddress("kgbvjh4care@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
@@ -523,5 +528,7 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
+
+
     }
 }

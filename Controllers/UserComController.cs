@@ -45,7 +45,7 @@ namespace Grievancemis.Controllers
                 return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
-        public ActionResult GetDownGImgDocZip(Guid grievanceId)
+        public ActionResult GetDownGImgDocZip(Guid? grievanceId)
         {
             DataTable dt = SP_Model.GetUserGList(new FilterModel { Id = grievanceId.ToString() });
             if (dt.Rows.Count == 0)
@@ -134,12 +134,14 @@ namespace Grievancemis.Controllers
                             string CaseId = dt.Rows[0]["CaseId"].ToString();
                             string email = dt.Rows[0]["Email"].ToString();
                             string name = dt.Rows[0]["Name"].ToString();
-                            string revertMessage = dt.Rows[0]["TeamRevertMessage"].ToString();
-                            string revertStatus = (filterModel.RevertTypeId == 1) ? "Clarification" : "Closed";
-                            //string revertStatus = dt.Rows[0]["RevertStatus"].ToString();
+                            string revertMessage = dt.Rows[0]["UserRevertMessage"].ToString();
+                            //string revertStatus = //(filterModel.RevertTypeId == 1) ? "Clarification" : "Closed";
+                            string revertStatus = dt.Rows[0]["RevertStatus"].ToString();
+
+                            DataTable dtteamemails = SP_Model.GetTeamMailID();//RolesIdcont.Community
 
                             // Send email notification
-                            int emailResult = CommonModel.SendMailRevartPartUser(email, CaseId, name, revertMessage, revertStatus);
+                            int emailResult = CommonModel.SendMailRevartPartUser(dtteamemails.Rows[0]["EmailList"].ToString(), email, CaseId, name, revertMessage, revertStatus);
 
                             if (emailResult > 0)
                             {

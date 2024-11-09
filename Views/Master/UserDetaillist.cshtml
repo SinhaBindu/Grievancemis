@@ -11,20 +11,31 @@
         padding: 0px !important;
     }
 </style>
-
-<div id="page-content">
+<div class="page-header">
+    <div class="page-block">
+        <div class="page-header-title">
+            <h2 class="mb-0">@ViewBag.Title</h2>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                @*<li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>*@
+                <li class="breadcrumb-item" aria-current="page">@ViewBag.title</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="page-content" class="mr-up">
     <div class="container-fluid">
         <div class="row mt-20">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="card card-box p-0">
-                    <div class="card-head">
+                    @*<div class="card-head">
                         <div class="title">
                             <i class="fa fa-list spacerright2"></i> @ViewBag.Title
                         </div>
                         <div class="tools">
                             <div id="div-download"></div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-xs-12 col-md-12">

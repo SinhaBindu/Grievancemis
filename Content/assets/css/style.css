@@ -200,7 +200,6 @@ img {
     background: #FBC982 !important;
     text-align: center !important;
     color: #000 !important;
-    margin-top: 30px
 }
 .flex-form {
     display: flex;
@@ -220,4 +219,43 @@ img {
     gap: 90px;
     margin: auto;
     max-width: 1024px;
+}
+.grievance-process {
+    padding: 45px 20px;
+    background: #FFF7EC;
+    margin-top: 40px;
+    text-align: center;
+}
+    .grievance-process h2 {
+        font-size: 33px;
+        margin-top: 5px;
+        margin-bottom: 40px;
+    }
+    .process-box {
+        margin: auto;
+        max-width: 700px;
+    }
+.step-list {
+    display: flex;
+    gap: 20px;
+}
+.step {
+    flex: 1;
+}
+.grievance-handling {
+    width: 500px
+}
+.step1-img {
+    width: 155px;
+    margin-top: 60px
+}
+.step2-img {
+    width: 125px
+}
+.step3-img {
+    width: 120px
+}
+.step4-img {
+    width: 140px;
+    margin-top: 60px
 }

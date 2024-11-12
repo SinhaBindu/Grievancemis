@@ -1308,7 +1308,7 @@ b, strong{
 }
 @media (min-width: 1024px){
   .pc-footer:where([dir="ltr"], [dir="ltr"] *){
-    margin-left: 280px;
+    margin-left: 250px;
   }
   .pc-footer:where([dir="rtl"], [dir="rtl"] *){
     margin-right: 280px;
@@ -9200,7 +9200,7 @@ table.\!dataTable thead tr >.dtfc-fixed-start:is([data-pc-theme="dark"] *),table
   padding-right: 23px;
 }
 .px-\[25px\]{
-  padding-left: 25px;
+  padding-left: 5px;
   padding-right: 25px;
 }
 .px-\[50px\]{

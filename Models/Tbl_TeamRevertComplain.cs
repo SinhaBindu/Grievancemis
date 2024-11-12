@@ -22,6 +22,7 @@ namespace Grievancemis.Models
         public Nullable<System.DateTime> TeamRevert_Date { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<bool> TeamIsSent { get; set; }
+        public Nullable<System.DateTime> TeamIsSentDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
@@ -30,6 +31,7 @@ namespace Grievancemis.Models
         public Nullable<System.DateTime> UserRevert_Date { get; set; }
         public string UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public Nullable<System.DateTime> UserIsSentDate { get; set; }
         public Nullable<bool> UserIsSent { get; set; }
     
         public virtual Tbl_Grievance Tbl_Grievance { get; set; }

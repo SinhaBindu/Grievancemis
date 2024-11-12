@@ -55,7 +55,7 @@
                         @if (row["RevertType_Id"].ToString() == "1" || string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
                         {
                             <td>
-                                <button class="btn btn-warning btn-sm progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]','@row["MaxRevertID"]')"> Revert Process</button>
+                                <button class="btn btn-warning btn-sm progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]','@row["MaxRevertID"]')">Revert</button>
                             </td>
                         }
                         else

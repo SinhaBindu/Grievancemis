@@ -45,6 +45,8 @@ namespace Grievancemis.Models
         public Nullable<int> RoleId { get; set; }
         public string UserRegId { get; set; }
         public Nullable<int> RevertType_Id { get; set; }
+        public Nullable<System.DateTime> RevertTypeDate { get; set; }
+        public string Gender { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Grievance_Documents> Tbl_Grievance_Documents { get; set; }

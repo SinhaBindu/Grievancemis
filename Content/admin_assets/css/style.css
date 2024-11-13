@@ -13471,3 +13471,57 @@ body {
 .blue-bg {
     color: #DBF1FF
 }
+.data-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    margin-top: -25px;
+    width: 100%
+}
+
+.datas {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    color: #fff;
+    border: 3px solid #fff;
+    position: relative
+}
+    .datas h3 {
+        font-size: 30px
+    }
+    .datas p {
+        font-size: 15px;
+    }
+    .bgr-1 {
+        background: #FFBEAF;
+    }
+.bgr-2 {
+    background: #C4FFDD
+}
+.bgr-3 {
+    background: #704368
+}
+.bgr-4 {
+    background: #FF9A72;
+}
+.bgr-5 {
+    background: #53B7E8;
+}
+.bgr-6 {
+    background: #FFC276;
+}
+.data-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px
+}
+    .data-icon i {
+        font-size: 33px;
+        color: rgba(255,255,255, 0.6);
+        transition: 200ms linear 50ms;
+    }
+.datas:hover i {
+    font-size: 38px
+}

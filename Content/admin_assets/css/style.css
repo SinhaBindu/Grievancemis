@@ -823,7 +823,7 @@ b, strong{
 }
 @media (min-width: 1024px){
   .pc-header:where([dir="ltr"], [dir="ltr"] *){
-    left: 250px;
+    left: 230px;
   }
 }
 .pc-header:where([dir="rtl"], [dir="rtl"] *){
@@ -971,7 +971,7 @@ b, strong{
   top: 0px;
   bottom: 0px;
   z-index: 1026;
-  width: 250px;
+  width: 230px;
   overflow: hidden;
   border-style: dashed;
   --tw-border-opacity: 1;
@@ -1000,7 +1000,7 @@ b, strong{
   border-left-width: 1px;
 }
 .pc-sidebar .navbar-wrapper{
-  width: 250px;
+  width: 230px;
   background-color: inherit;
 }
 .pc-sidebar .navbar-content{
@@ -1261,7 +1261,7 @@ b, strong{
 }
 @media (min-width: 1024px){
   .pc-container:where([dir="ltr"], [dir="ltr"] *){
-    margin-left: 250px;
+    margin-left: 230px;
   }
   .pc-container:where([dir="rtl"], [dir="rtl"] *){
     margin-right: 280px;
@@ -1308,7 +1308,7 @@ b, strong{
 }
 @media (min-width: 1024px){
   .pc-footer:where([dir="ltr"], [dir="ltr"] *){
-    margin-left: 250px;
+    margin-left: 230px;
   }
   .pc-footer:where([dir="rtl"], [dir="rtl"] *){
     margin-right: 280px;

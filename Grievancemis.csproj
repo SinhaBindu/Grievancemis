@@ -530,6 +530,7 @@
     <Content Include="Views\UserCom\_UComData.cshtml" />
     <Content Include="Views\UserCom\DetailsCId.cshtml" />
     <Content Include="Views\Report\RevertCount.cshtml" />
+    <Content Include="Views\UserCom\AddNGrievance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

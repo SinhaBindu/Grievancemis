@@ -1,0 +1,300 @@
+﻿@model Grievancemis.Models.GrivanceModel
+@using Grievancemis.Manager
+@{
+    ViewBag.Title = "Grievance";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Marc2Web works on “Client Comes First” philosophy, and provides comprehensive IT Services using cutting edge latest technology.">
+    <meta name="author" content="">
+    <title>Grievance</title>
+    <link rel="icon" href="~/Content/assets/images/favicon.ico" />
+    <link rel="stylesheet" href="~/Content/assets/css/style.min.css" />
+    <link href="~/Content/assets/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+    <!-- Header -->
+    <div class="main-header">
+        <div class="header">
+            <a href="/">
+                <img src="~/Content/assets/images/pci_logo.png" alt="PCI logo" />
+            </a>
+            <div class="header-middle">
+                <span class=""><i class="fa fa-phone"></i>139</span>Call Us
+            </div>
+        </div>
+    </div>
+    <!-- New Banner -->
+    <div class="main-banner">
+        <div class="banner-manage">
+            <div class="manage-grieve-form">
+                <h3>Your Grievances, Our Redressal</h3>
+                <p>We are here to solve your grievances</p>
+                <div class="left-box">
+                    <div class="row" id="div-g" style="display:block;">
+                        <!-- Changed to display:block -->
+                        <div class="col-md-12">
+                            <div class="card">
+                                @using (Html.BeginForm("AddNGrievance", "UserCom", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="form-horizontal">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control-input", @required = "required" })
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="flex-form">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input", @required = "required", @maxlength = "10" })
+                                                    @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex-form">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-form">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Location, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <span style="color:red;">*</span>
+                                            <div class="col-md-10">
+                                                @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
+                                                @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                                            <div class="col-md-10">
+                                                @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", multiple = "multiple" })
+                                                @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <span style="color:red;">*</span>
+                                            <div class="col-md-10">
+                                                @Html.RadioButtonFor(model => model.Gender, "Male", new { id = "GenderMale" }) Male
+                                                @Html.RadioButtonFor(model => model.Gender, "Female", new { id = "GenderFemale" }) Female
+                                                @*@Html.RadioButtonFor(model => model.Gender, "Other", new { id = "GenderOther" }) Other*@
+                                                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <span style="color:red;">*</span>
+                                            <div class="col-md-10">
+                                                @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox" })
+                                                @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
+                                                @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input type="submit" value="Submit" class="btn-submit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-box">
+                <img src="~/Content/assets/images/grievance.png" alt="grievance" />
+            </div>
+        </div>
+    </div>
+    <!-- Grievance -->
+    <div class="grievance-box">
+        <div class="grievance-message">
+            <p>
+                A grievance typically refers to a formal complaint or concern raised by an individual or
+                group, often in the context of a workplace or academic setting. It usually involves
+                perceived unfair treatment, violation of rights, or dissatisfaction with policies,
+                procedures, or decisions. The grievance process usually provides a structured way to
+                address and resolve such concerns.
+            </p>
+            <img src="~/Content/assets/images/grievance-register.png" alt="" class="grievance-register" />
+        </div>
+        <div class="grievance-border">
+            <h2>Grievance</h2>
+            <div class="grievance-content">
+                <p>
+                    PCI is a safe, healthy and happy workplace where each person is respected and valued.
+                    If you have any form of complaint, this is the space to write in for a fast, fair and
+                    transparent process of redressal. Your concerns will be taken up by a committee / person
+                    authorised by the organisation to hear you and find an appropriate solution.
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Grievance Handling -->
+    <div class="grievance-process">
+        <div class="process-box">
+            <h2>Grievance Handling Procedure</h2>
+            <div class="step-list">
+                <div class="step">
+                    <img src="~/Content/assets/images/fairness.png" alt="Fairness" class="step1-img" />
+                </div>
+                <div class="step">
+                    <img src="~/Content/assets/images/facilities.png" alt="Fairness" class="step2-img" />
+                </div>
+                <div class="step">
+                    <img src="~/Content/assets/images/steps.png" alt="Fairness" class="step3-img" />
+                </div>
+                <div class="step">
+                    <img src="~/Content/assets/images/promptness.png" alt="Fairness" class="step4-img" />
+                </div>
+            </div>
+            <img src="~/Content/assets/images/grievance-handling.png" alt="Grievance Handling" class="grievance-handling" />
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-copyright">
+            2024 PCI India, All rights reserved.
+        </div>
+    </footer>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".menu-btn").click(function () {
+                $(".menu-btn").toggleClass("open");
+                $(".nav").toggleClass("show");
+            });
+
+            $('#formid').submit(function (e) {
+                if ($('#Email').val() == '') {
+                    toastr.error('Enter the EmailID.');
+                    return false;
+                }
+                if ($('#Name').val() == '') {
+                    toastr.error('Enter the Name.');
+                    return false;
+                }
+                if ($('#PhoneNo').val() == '') {
+                    toastr.error('Enter the PhoneNo.');
+                    return false;
+                }
+                if ($('#GrievanceType').val() == '' || $('#GrievanceType').val() == '0') {
+                    toastr.error('Enter the Grievance Type.');
+                    return false;
+                }
+                if ($('#State').val() == '' || $('#State').val() == '0') {
+                    toastr.error('Enter the State.');
+                    return false;
+                }
+                if ($('#Location').val() == '') {
+                    toastr.error('Enter the Location.');
+                    return false;
+                }
+                if ($('#Title').val() == '') {
+                    toastr.error('Enter the Title.');
+                    return false;
+                }
+                if ($('#GrievanceMessage').val() == '') {
+                    toastr.error('Enter the Message.');
+                    return false;
+                }
+                if ($('input[name="Gender"]:checked').length == 0) {
+                    toastr.error('Select your Gender.');
+                    return false;
+                }
+
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    type: "POST",
+                    url: "/UserCom/AddNGrievance",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        if (data.success) {
+                            toastr.success(data.message);
+                            $('#formid')[0].reset();
+                            $('#div-evc').show();
+                            $('#div-vc').hide();
+                            $('#div-g').hide();
+                            $('#div-emailid').show();
+                            $('#Email_Id').val('');
+                            $('#OptCode').val('');
+                        }
+                        else {
+                            toastr.error(data.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("Error: " + xhr.status + " - " + error);
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

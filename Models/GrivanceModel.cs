@@ -85,6 +85,9 @@ namespace Grievancemis.Models
         [Display(Name = "Case ID")]
         public long? CaseId { get; set; }
 
+        [Display(Name = "Gender")]
+        [Required]
+        public string Gender { get; set; }  
 
         //[Display(Name = "GrievanceType")]
         //public string GrievanceType { get; set; }

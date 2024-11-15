@@ -1,11 +1,13 @@
 ﻿using Grievancemis.Manager;
 using Grievancemis.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
@@ -14,6 +16,7 @@ namespace Grievancemis.Controllers
     [Authorize]
     public class UserComController : Controller
     {
+        private Grievance_DBEntities db = new Grievance_DBEntities();
         // GET: UserCom
         public ActionResult Index()
         {
@@ -225,6 +228,153 @@ namespace Grievancemis.Controllers
                 // Log the exception details for debugging
                 string errorMessage = $"Error: {ex.Message}, StackTrace: {ex.StackTrace}";
                 return View("Error", new HandleErrorInfo(ex, "UserCom", "DetailsCId"));
+            }
+        }
+
+        public ActionResult AddNGrievance()
+        {
+            //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddNGrievance(GrivanceModel grievanceModel)
+        {
+            try
+            {
+                int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty, stGuid = string.Empty;
+                if (ModelState.IsValid)
+                {
+                    using (var db = new Grievance_DBEntities())
+                    {
+                        Tbl_Grievance tbl_Grievance = new Tbl_Grievance
+                        {
+                            Id = Guid.NewGuid(),
+                            Email = grievanceModel.Email,
+                            Name = grievanceModel.Name,
+                            PhoneNo = grievanceModel.PhoneNo,
+                            Gender = grievanceModel.Gender,
+                            GrievanceType = grievanceModel.GrievanceType,
+                            StateId = grievanceModel.StateId,
+                            Location = grievanceModel.Location,
+                            Title = grievanceModel.Title,
+                            Grievance_Message = grievanceModel.GrievanceMessage,
+                            IsConsent = grievanceModel.IsConsent,
+                            IsActive = true,
+                            CreatedOn = DateTime.Now
+                        };
+                        var igtype = 0; var istype = 0;
+                        igtype = Convert.ToInt32(tbl_Grievance.GrievanceType);
+                        istype = Convert.ToInt32(tbl_Grievance.StateId);
+                        var GType = db.M_GrievanceType.Where(b => b.Id == igtype)?.FirstOrDefault();
+                        var SType = db.m_State_Master.Where(b => b.LGD_State_Code == istype)?.FirstOrDefault();
+                        str.Append("<table border='1'>");
+                        str.Append("<tr><td>Email</td><td>Name</td><td>Phone Number</td><td>Gender</td></tr>");
+                        str.Append("<tr><td>" + tbl_Grievance.Email + "</td><td>" + tbl_Grievance.Name + "</td><td>" + tbl_Grievance.PhoneNo + "</td><td>" + tbl_Grievance.Gender + "</td></tr>");
+                        str.Append("<tr><td>Grievance Type</td><td>State Name</td><td>Title</td></tr>");
+                        str.Append("<tr><td>" + GType.GrievanceType + "</td><td>" + SType.StateName + "</td><td>" + tbl_Grievance.Title + "</td></tr>");
+                        str.Append("<tr><td>Location</td><td colspan='2'>Message</td></tr>");
+                        str.Append("<tr><td>" + tbl_Grievance.Location + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
+                        str.Append("</table>");
+                        partymail = tbl_Grievance.Email.Trim();
+                        Greid = Convert.ToString(tbl_Grievance.CaseId);
+                        stGuid = Convert.ToString(tbl_Grievance.Id);
+                        // Handle file upload
+                        if (grievanceModel.DocUpload != null && grievanceModel.DocUpload.ContentLength > 0)
+                        {
+                            string[] fileNames = grievanceModel.DocUpload.FileName.Split(',');
+                            string[] fileExtensions = new string[fileNames.Length];
+                            string[] filePaths = new string[fileNames.Length];
+
+                            for (int i = 0; i < fileNames.Length; i++)
+                            {
+                                string fileName = Path.GetFileName(fileNames[i]);
+                                string fileExtension = Path.GetExtension(fileName).ToLower();
+
+                                // Check if the file extension is allowed
+                                if (fileExtension == ".zip" || fileExtension == ".png" || fileExtension == ".jpg" || fileExtension == ".pdf" || fileExtension == ".doc" || fileExtension == ".jpeg")
+                                {
+                                    // Check if the file size is not more than 20MB
+                                    if (grievanceModel.DocUpload.ContentLength <= 20971520)
+                                    {
+                                        string path = Path.Combine(Server.MapPath("~/Doc_Upload"), fileName);
+
+                                        // Save the file
+                                        grievanceModel.DocUpload.SaveAs(path);
+
+                                        // Save the file path in the database
+                                        filePaths[i] = Path.Combine("Doc_Upload", fileName);
+                                        fileExtensions[i] = fileExtension;
+                                    }
+                                    else
+                                    {
+                                        return Json(new { success = false, message = "File size is too large. Only files up to 20MB are allowed." });
+                                    }
+                                }
+                                else
+                                {
+                                    return Json(new { success = false, message = "Invalid file extension. Only zip, png, jpg, pdf, doc, and jpeg files are allowed." });
+                                }
+                            }
+
+                            // Save the file paths in the Tbl_Grievance table
+                            tbl_Grievance.DocUpload = string.Join(",", filePaths);
+
+                            // Save the file paths in the Tbl_Grievance_Documents table
+                            for (int i = 0; i < filePaths.Length; i++)
+                            {
+                                Tbl_Grievance_Documents tbl_Grievance_Documents = new Tbl_Grievance_Documents
+                                {
+                                    GrievanceId = tbl_Grievance.Id,
+                                    DocumentPath = filePaths[i],
+                                    IsActive = true,
+                                    CreatedOn = DateTime.Now
+                                };
+                                db.Tbl_Grievance_Documents.Add(tbl_Grievance_Documents);
+                            }
+                        }
+                        db.Tbl_Grievance.Add(tbl_Grievance);
+                        res = db.SaveChanges();
+                        if (Greid.Length <= 0)
+                        {
+                            Greid = SP_Model.Usp_GetCaseIDwithguid(stGuid).Rows[0]["CaseId"].ToString();
+                        }
+                    }
+                    if (res > 0)
+                    {
+                        var asp = db.AspNetUsers.Where(x => x.Email == grievanceModel.Email)?.FirstOrDefault();
+                        asp.Name = grievanceModel.Name.Trim();
+                        db.SaveChanges();
+                        DataTable dt = new DataTable();
+                        dt = SP_Model.GetTeamMailID();
+                        if (dt.Rows.Count > 0)
+                        {
+
+                            res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail, Greid);
+                            res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name);
+                        }
+                        if (res > 0)
+                        {
+                            return Json(new { success = true, message = "Your request is registered with Grievance reference id : " + Greid + "<br />" + "Mail sended successfully!" });//Data saved and mail sended successfully!
+                        }
+                        else
+                        {
+                            return Json(new { success = true, message = "Your request is registered with Grievance reference id :" + Greid });//Data saved successfully!
+                        }
+
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Failed to save data. Please try again." });
+                    }
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Invalid input. Please check your form data." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An error occurred: " + ex.Message });
             }
         }
 

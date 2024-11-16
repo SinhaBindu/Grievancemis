@@ -68,8 +68,8 @@ namespace Grievancemis.Controllers
                 {
                     return Json(new { success = false, message = "All fileds are required.", Data = 201 });
                 }
-                DataTable dt = SP_Model.GetSPCheckRevertAlready();
-                if (dt.Rows.Count > 0)
+                DataTable dtcheck = SP_Model.GetSPCheckRevertAlready();
+                if (dtcheck.Rows.Count > 0)
                 {
                     return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
                 }

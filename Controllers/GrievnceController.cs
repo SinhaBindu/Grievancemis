@@ -87,8 +87,8 @@ namespace Grievancemis.Controllers
         {
             try
             {
-                DataTable dt = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
-                if (dt.Rows.Count > 0)
+                DataTable dtcheck = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
+                if (dtcheck.Rows.Count > 0)
                 {
                     return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
                 }

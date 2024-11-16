@@ -113,8 +113,8 @@ namespace Grievancemis.Controllers
                 {
                     return Json(new { success = false, message = "All fields are required.", Data = 0 });
                 }
-                DataTable dt = SP_Model.GetSPCheckRevertAlready();
-                if (dt.Rows.Count > 0)
+                DataTable dtcheck = SP_Model.GetSPCheckRevertAlready();
+                if (dtcheck.Rows.Count > 0)
                 {
                     return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
                 }
@@ -246,8 +246,8 @@ namespace Grievancemis.Controllers
         {
             try
             {
-                DataTable dt = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
-                if (dt.Rows.Count > 0)
+                DataTable dtcheck = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
+                if (dtcheck.Rows.Count > 0)
                 {
                     return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
                 }

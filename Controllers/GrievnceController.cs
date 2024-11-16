@@ -98,6 +98,7 @@ namespace Grievancemis.Controllers
                 {
                     using (var db = new Grievance_DBEntities())
                     {
+
                         Tbl_Grievance tbl_Grievance = new Tbl_Grievance
                         {
                             Id = Guid.NewGuid(),
@@ -109,6 +110,7 @@ namespace Grievancemis.Controllers
                             StateId = grievanceModel.StateId,
                             Location = grievanceModel.Location,
                             Title = grievanceModel.Title,
+                            ComplainRegDate = DateTime.Now.Date,
                             Grievance_Message = grievanceModel.GrievanceMessage,
                             IsConsent = grievanceModel.IsConsent,
                             IsActive = true,

@@ -264,6 +264,7 @@ namespace Grievancemis.Controllers
                             Name = grievanceModel.Name,
                             PhoneNo = grievanceModel.PhoneNo,
                             Gender = grievanceModel.Gender,
+                            ComplainRegDate = DateTime.Now.Date,
                             GrievanceType = grievanceModel.GrievanceType,
                             StateId = grievanceModel.StateId,
                             Location = grievanceModel.Location,

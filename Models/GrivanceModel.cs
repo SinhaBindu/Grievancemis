@@ -92,6 +92,8 @@ namespace Grievancemis.Models
         //[Display(Name = "GrievanceType")]
         //public string GrievanceType { get; set; }
 
+        
+
 
 
         public List<GrivanceModel> Grievances { get; set; }

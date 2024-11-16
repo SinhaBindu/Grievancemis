@@ -137,32 +137,36 @@
                 toastr.error('Enter the Message');
                 return false;
             }
+            if (confirm("Are you sure you want to Revert Submitted this?")) {
+                var filterModel = {
+                    GrievanceId_fk: $('#GrievanceId_fk').val(),
+                    RevertTypeId: $('#RevertTypeId').val(),
+                    TeamRevertMessage: $('#TeamRevertMessage').val()
+                };
 
-            var filterModel = {
-                GrievanceId_fk: $('#GrievanceId_fk').val(),
-                RevertTypeId: $('#RevertTypeId').val(),
-                TeamRevertMessage: $('#TeamRevertMessage').val()
-            };
-
-            $.ajax({
-                type: "POST",
-                url: document.baseURI + "/Complain/RevertCPost",
-                data: filterModel,
-                success: function (response) {
-                    if (response.success) {
-                        toastr.success(response.message);
-                        $('#progressModal').modal('hide');
-                    } else {
-                        toastr.error(response.message);
-                        if (response.Data == 201) {
-                            window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
+                $.ajax({
+                    type: "POST",
+                    url: document.baseURI + "/Complain/RevertCPost",
+                    data: filterModel,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+                            $('#progressModal').modal('hide');
+                        } else {
+                            toastr.error(response.message);
+                            if (response.Data == 201) {
+                                window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
+                            }
                         }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("An error occurred: " + error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    toastr.error("An error occurred: " + error);
-                }
-            });
+                });
+            }
+            else {
+                return false;
+            }
         }
         function POPDisplay(id, caseid, name, CreatedOn, RevertId) {
             //debugger;

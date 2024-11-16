@@ -143,40 +143,45 @@
                 toastr.error('Enter the Message');
                 return false;
             }
+            if (confirm("Are you sure you want to Revert Submitted this?")) {
 
-            var formData = new FormData(); // Create a FormData object
-            formData.append('GrievanceId_fk', $('#GrievanceId_fk').val());
-            //formData.append('RevertTypeId', $('#RevertTypeId').val());
-            formData.append('TeamRevertMessage', $('#TeamRevertMessage').val());
-            formData.append('RevertId', $('#RevertId').val());
+                var formData = new FormData(); // Create a FormData object
+                formData.append('GrievanceId_fk', $('#GrievanceId_fk').val());
+                //formData.append('RevertTypeId', $('#RevertTypeId').val());
+                formData.append('TeamRevertMessage', $('#TeamRevertMessage').val());
+                formData.append('RevertId', $('#RevertId').val());
 
-            // Get the files from the file input
-            var files = $('#DocUpload')[0].files;
-            for (var i = 0; i < files.length; i++) {
-                formData.append('DocUpload', files[i]); // Append each file
-            }
-
-            $.ajax({
-                type: "POST",
-                url: document.baseURI + "/UserCom/UserRevertCPost",
-                data: formData,
-                contentType: false, // Important for file uploads
-                processData: false, // Important for file uploads
-                success: function (response) {
-                    if (response.success) {
-                        toastr.success(response.message);
-                        $('#progressModal').modal('hide');
-                    } else {
-                        toastr.error(response.message);
-                        if (response.Data == 201) {
-                            window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
-                        }
-                    }
-                },
-                error: function (xhr, status, error) {
-                    toastr.error("An error occurred: " + error);
+                // Get the files from the file input
+                var files = $('#DocUpload')[0].files;
+                for (var i = 0; i < files.length; i++) {
+                    formData.append('DocUpload', files[i]); // Append each file
                 }
-            });
+
+                $.ajax({
+                    type: "POST",
+                    url: document.baseURI + "/UserCom/UserRevertCPost",
+                    data: formData,
+                    contentType: false, // Important for file uploads
+                    processData: false, // Important for file uploads
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+                            $('#progressModal').modal('hide');
+                        } else {
+                            toastr.error(response.message);
+                            if (response.Data == 201) {
+                                window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
+                            }
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("An error occurred: " + error);
+                    }
+                });
+            }
+            else {
+                return false;
+            }
         }
 
         $(document).on('click', '.progress-button', function () {

@@ -24,20 +24,20 @@
             }
             @foreach (DataRow row in Model.Rows)
             {
-            <tr>
-                <td>@serialNo</td> <!-- Display the serial number -->
-                <td>@row["CaseId"]</td>
-                <td>@row["Name"]</td>
-                <td style="word-wrap:break-word;">@row["ComDate"]</td>
-                <td>@row["RevertStatus"]</td>
-                <td>@row["RevartDate"]</td>
-                <td>@row["TeamRevertMessage"]</td>
-                <td>@row["UserRevartDate"]</td>
-                <td>@row["UserRevertMessage"]</td>
-                @*<td>
+                <tr style="background-color:@row["RevertStatusBgColor"]">
+                    <td>@serialNo</td> <!-- Display the serial number -->
+                    <td>@row["CaseId"]</td>
+                    <td>@row["Name"]</td>
+                    <td style="word-wrap:break-word;">@row["ComDate"]</td>
+                    <td>@row["RevertStatus"]</td>
+                    <td>@row["RevartDate"]</td>
+                    <td>@row["TeamRevertMessage"]</td>
+                    <td>@row["UserRevartDate"]</td>
+                    <td>@row["UserRevertMessage"]</td>
+                    @*<td>
                     <a href="@Url.Action("DetailsCId", "UserCom", new { id = row["CaseId"] })" class="btn btn-info">View Details</a>
                 </td>*@
-            </tr>
+                </tr>
                 serialNo++; // Increment the serial number
             }
         </tbody>

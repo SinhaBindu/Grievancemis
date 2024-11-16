@@ -23,7 +23,10 @@ namespace Grievancemis.Models
         }
     
         public System.Guid Id { get; set; }
+        public Nullable<long> CaseId { get; set; }
+        public string Gender { get; set; }
         public string Email { get; set; }
+        public Nullable<System.DateTime> ComplainRegDate { get; set; }
         public string Name { get; set; }
         public string PhoneNo { get; set; }
         public Nullable<int> GrievanceType { get; set; }
@@ -41,12 +44,13 @@ namespace Grievancemis.Models
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> IsDeletedOn { get; set; }
         public string DocUpload { get; set; }
-        public Nullable<long> CaseId { get; set; }
         public Nullable<int> RoleId { get; set; }
         public string UserRegId { get; set; }
         public Nullable<int> RevertType_Id { get; set; }
         public Nullable<System.DateTime> RevertTypeDate { get; set; }
-        public string Gender { get; set; }
+        public Nullable<int> Duration { get; set; }
+        public Nullable<bool> IsSentMailDuration { get; set; }
+        public Nullable<System.DateTime> SentMailDurationDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Grievance_Documents> Tbl_Grievance_Documents { get; set; }

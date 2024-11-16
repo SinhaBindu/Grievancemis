@@ -87,6 +87,12 @@ namespace Grievancemis.Controllers
         {
             try
             {
+                DataTable dt = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
+                if (dt.Rows.Count > 0)
+                {
+                    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
+                }
+
                 int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty, stGuid = string.Empty;
                 if (ModelState.IsValid)
                 {
@@ -187,24 +193,23 @@ namespace Grievancemis.Controllers
                     }
                     if (res > 0)
                     {
-                        var asp = db.AspNetUsers.Where(x=>x.Email == grievanceModel.Email)?.FirstOrDefault();
+                        var asp = db.AspNetUsers.Where(x => x.Email == grievanceModel.Email)?.FirstOrDefault();
                         asp.Name = grievanceModel.Name.Trim();
                         db.SaveChanges();
-                       DataTable dt = new DataTable();
+                        DataTable dt = new DataTable();
                         dt = SP_Model.GetTeamMailID();
                         if (dt.Rows.Count > 0)
                         {
-
                             res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail, Greid);
                             res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name);
                         }
                         if (res > 0)
                         {
-                            return Json(new { success = true, message = "Your request is registered with Grievance reference id : "+ Greid + "<br />"+ "Mail sended successfully!" });//Data saved and mail sended successfully!
+                            return Json(new { success = true, message = "Your request is registered with Grievance reference id : " + Greid + "<br />" + "Mail sended successfully!" });//Data saved and mail sended successfully!
                         }
                         else
                         {
-                            return Json(new { success = true, message = "Your request is registered with Grievance reference id :"+ Greid });//Data saved successfully!
+                            return Json(new { success = true, message = "Your request is registered with Grievance reference id :" + Greid });//Data saved successfully!
                         }
 
                     }
@@ -215,7 +220,7 @@ namespace Grievancemis.Controllers
                 }
                 else
                 {
-                    return Json(new { success = false, message = "Invalid input. Please check your form data." });
+                    return Json(new { success = false, message = "Invalid input. Please check your form data, All Fileds requied." });
                 }
             }
             catch (Exception ex)
@@ -328,7 +333,7 @@ namespace Grievancemis.Controllers
                             Session["CUser"] = null;
                             Session["EmailId"] = EmailId.Trim();
                             var usercheck = MvcApplication.CUser;
-                            
+
                             if (usercheck != null && res > 0)
                             {
                                 if (usercheck.RoleId == "2")//User

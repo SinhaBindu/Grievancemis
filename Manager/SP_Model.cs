@@ -133,5 +133,23 @@ namespace Grievancemis.Manager
             return dt;
 
         }
+        public static DataTable GetSPCheckGrievanceAlready(string EmailId,string RegDate)
+        {
+            StoredProcedure sp = new StoredProcedure("SP_CheckGrievanceAlready");
+            sp.Command.AddParameter("@EmailId", EmailId, DbType.String);
+            sp.Command.AddParameter("@RegDate", RegDate, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+
+        }
+        public static DataTable GetSPCheckRevertAlready()
+        {
+            StoredProcedure sp = new StoredProcedure("SP_CheckRevertAlready");
+            sp.Command.AddParameter("@UserId", MvcApplication.CUser.UserId, DbType.String);
+            sp.Command.AddParameter("@Date", DateTime.Now.Date.ToDateTimeyyyyMMdd(), DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+
+        }
     }
 }

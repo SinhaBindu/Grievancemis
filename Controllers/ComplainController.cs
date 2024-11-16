@@ -68,6 +68,11 @@ namespace Grievancemis.Controllers
                 {
                     return Json(new { success = false, message = "All fileds are required.", Data = 201 });
                 }
+                DataTable dt = SP_Model.GetSPCheckRevertAlready();
+                if (dt.Rows.Count > 0)
+                {
+                    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
+                }
                 string Greid = string.Empty;
                 if (filterModel.GrievanceId_fk == Guid.Empty || filterModel.RevertTypeId == 0 || string.IsNullOrWhiteSpace(filterModel.TeamRevertMessage))
                 {
@@ -143,7 +148,7 @@ namespace Grievancemis.Controllers
                 {
                     IsCheck = true;
                 }
-                var html = ConvertViewToString("_ComData", dt);
+                var html = ConvertViewToString("_RevertData", dt);
                 var res = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
                 res.MaxJsonLength = int.MaxValue;
                 return res;

@@ -113,6 +113,11 @@ namespace Grievancemis.Controllers
                 {
                     return Json(new { success = false, message = "All fields are required.", Data = 0 });
                 }
+                DataTable dt = SP_Model.GetSPCheckRevertAlready();
+                if (dt.Rows.Count > 0)
+                {
+                    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
+                }
 
                 using (var db_ = new Grievance_DBEntities())
                 {
@@ -182,7 +187,7 @@ namespace Grievancemis.Controllers
                 {
                     IsCheck = true;
                 }
-                var html = ConvertViewToString("_UComData", dt);
+                var html = ConvertViewToString("_URevertData", dt);
                 var res = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
                 res.MaxJsonLength = int.MaxValue;
                 return res;
@@ -241,6 +246,12 @@ namespace Grievancemis.Controllers
         {
             try
             {
+                DataTable dt = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
+                if (dt.Rows.Count > 0)
+                {
+                    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
+                }
+
                 int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty, stGuid = string.Empty;
                 if (ModelState.IsValid)
                 {
@@ -369,7 +380,7 @@ namespace Grievancemis.Controllers
                 }
                 else
                 {
-                    return Json(new { success = false, message = "Invalid input. Please check your form data." });
+                    return Json(new { success = false, message = "Invalid input. Please check your form data. All Fileds requied" });
                 }
             }
             catch (Exception ex)

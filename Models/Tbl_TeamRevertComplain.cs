@@ -33,6 +33,9 @@ namespace Grievancemis.Models
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public Nullable<System.DateTime> UserIsSentDate { get; set; }
         public Nullable<bool> UserIsSent { get; set; }
+        public Nullable<int> RevertDuration { get; set; }
+        public Nullable<bool> IsSentMailRevertDuration { get; set; }
+        public Nullable<System.DateTime> SentMailRevertDuration { get; set; }
     
         public virtual Tbl_Grievance Tbl_Grievance { get; set; }
     }

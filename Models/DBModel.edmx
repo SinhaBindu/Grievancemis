@@ -108,14 +108,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CaseId" Type="bigint" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" />
           <Property Name="Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="ComplainRegDate" Type="date" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" />
           <Property Name="PhoneNo" Type="nvarchar" MaxLength="20" />
           <Property Name="GrievanceType" Type="int" />
           <Property Name="StateId" Type="int" />
-          <Property Name="Location" Type="nvarchar" MaxLength="250" />
+          <Property Name="Location" Type="nvarchar" MaxLength="500" />
           <Property Name="Issent" Type="bit" />
-          <Property Name="Title" Type="nvarchar" MaxLength="500" />
+          <Property Name="Title" Type="nvarchar" MaxLength="1200" />
           <Property Name="Grievance_Message" Type="nvarchar(max)" />
           <Property Name="IsConsent" Type="bit" />
           <Property Name="IsActive" Type="bit" />
@@ -126,12 +129,13 @@
           <Property Name="IsDeleted" Type="bit" />
           <Property Name="IsDeletedOn" Type="datetime" />
           <Property Name="DocUpload" Type="varchar(max)" />
-          <Property Name="CaseId" Type="bigint" />
           <Property Name="RoleId" Type="int" />
           <Property Name="UserRegId" Type="nvarchar" MaxLength="200" />
           <Property Name="RevertType_Id" Type="int" />
           <Property Name="RevertTypeDate" Type="date" />
-          <Property Name="Gender" Type="nvarchar" MaxLength="20" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="IsSentMailDuration" Type="bit" />
+          <Property Name="SentMailDurationDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Tbl_Grievance_Documents">
           <Key>
@@ -185,6 +189,9 @@
           <Property Name="UpdatedOn" Type="datetime" />
           <Property Name="UserIsSentDate" Type="datetime" />
           <Property Name="UserIsSent" Type="bit" />
+          <Property Name="RevertDuration" Type="int" />
+          <Property Name="IsSentMailRevertDuration" Type="bit" />
+          <Property Name="SentMailRevertDuration" Type="datetime" />
         </EntityType>
         <EntityType Name="tbl_UserRegistration">
           <Key>
@@ -589,14 +596,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="CaseId" Type="Int64" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ComplainRegDate" Type="DateTime" Precision="0" />
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="GrievanceType" Type="Int32" />
           <Property Name="StateId" Type="Int32" />
-          <Property Name="Location" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Location" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Issent" Type="Boolean" />
-          <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="1200" FixedLength="false" Unicode="true" />
           <Property Name="Grievance_Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsConsent" Type="Boolean" />
           <Property Name="IsActive" Type="Boolean" />
@@ -607,12 +617,13 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="IsDeletedOn" Type="DateTime" Precision="3" />
           <Property Name="DocUpload" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CaseId" Type="Int64" />
           <Property Name="RoleId" Type="Int32" />
           <Property Name="UserRegId" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RevertType_Id" Type="Int32" />
           <Property Name="RevertTypeDate" Type="DateTime" Precision="0" />
-          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="IsSentMailDuration" Type="Boolean" />
+          <Property Name="SentMailDurationDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_Grievance_Documents" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_Grievance_Documents" />
           <NavigationProperty Name="Tbl_TeamRevertComplain" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_TeamRevertComplain" />
           <NavigationProperty Name="Tbl_UserRevertComplain" Relationship="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_UserRevertComplain" />
@@ -640,6 +651,9 @@
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
           <Property Name="UserIsSentDate" Type="DateTime" Precision="3" />
           <Property Name="UserIsSent" Type="Boolean" />
+          <Property Name="RevertDuration" Type="Int32" />
+          <Property Name="IsSentMailRevertDuration" Type="Boolean" />
+          <Property Name="SentMailRevertDuration" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_TeamRevertComplain" ToRole="Tbl_Grievance" />
         </EntityType>
         <Association Name="FK_Tbl_Grievance_Documents_Tbl_Grievance">
@@ -855,12 +869,13 @@
           <EntitySetMapping Name="Tbl_Grievance">
             <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_Grievance">
               <MappingFragment StoreEntitySet="Tbl_Grievance">
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="SentMailDurationDate" ColumnName="SentMailDurationDate" />
+                <ScalarProperty Name="IsSentMailDuration" ColumnName="IsSentMailDuration" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="RevertTypeDate" ColumnName="RevertTypeDate" />
                 <ScalarProperty Name="RevertType_Id" ColumnName="RevertType_Id" />
                 <ScalarProperty Name="UserRegId" ColumnName="UserRegId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="CaseId" ColumnName="CaseId" />
                 <ScalarProperty Name="DocUpload" ColumnName="DocUpload" />
                 <ScalarProperty Name="IsDeletedOn" ColumnName="IsDeletedOn" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -878,7 +893,10 @@
                 <ScalarProperty Name="GrievanceType" ColumnName="GrievanceType" />
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ComplainRegDate" ColumnName="ComplainRegDate" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CaseId" ColumnName="CaseId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -886,6 +904,9 @@
           <EntitySetMapping Name="Tbl_TeamRevertComplain">
             <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_TeamRevertComplain">
               <MappingFragment StoreEntitySet="Tbl_TeamRevertComplain">
+                <ScalarProperty Name="SentMailRevertDuration" ColumnName="SentMailRevertDuration" />
+                <ScalarProperty Name="IsSentMailRevertDuration" ColumnName="IsSentMailRevertDuration" />
+                <ScalarProperty Name="RevertDuration" ColumnName="RevertDuration" />
                 <ScalarProperty Name="UserIsSent" ColumnName="UserIsSent" />
                 <ScalarProperty Name="UserIsSentDate" ColumnName="UserIsSentDate" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />

@@ -509,7 +509,7 @@
     <Content Include="Views\Shared\_Alerts.cshtml" />
     <Content Include="Views\Master\UserDetaillist.cshtml" />
     <Content Include="Views\Master\_UserDetailData.cshtml" />
-    <Content Include="Views\Complain\_ComData.cshtml" />
+    <Content Include="Views\Complain\_RevertData.cshtml" />
     <Content Include="Views\Complain\RevartList.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_Loader.cshtml" />
@@ -527,7 +527,7 @@
     <Content Include="Views\UserCom\UserGList.cshtml" />
     <Content Include="Views\UserCom\_UserGData.cshtml" />
     <Content Include="Views\UserCom\URevartList.cshtml" />
-    <Content Include="Views\UserCom\_UComData.cshtml" />
+    <Content Include="Views\UserCom\_URevertData.cshtml" />
     <Content Include="Views\UserCom\DetailsCId.cshtml" />
     <Content Include="Views\Report\RevertCount.cshtml" />
     <Content Include="Views\UserCom\AddNGrievance.cshtml" />

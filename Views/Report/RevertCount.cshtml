@@ -16,25 +16,25 @@
 </div>
 
 <div class="data-box">
-    <div class="datas bgr-3">
-        <span class="data-icon"><i class="fa fa-paperclip"></i></span>
-        <h3>105</h3>
-        <p>Active Grievance</p>
-    </div>
-    <div class="datas bgr-4">
-        <span class="data-icon"><i class="fa fa-heart"></i></span>
-        <h3>211</h3>
-        <p>Solved Grievance</p>
-    </div>
     <div class="datas bgr-5">
         <span class="data-icon"><i class="fa fa-comment"></i></span>
-        <h3>316</h3>
+        <h3>@ViewBag.TotalComplain</h3>
         <p>Total Grievance</p>
     </div>
     <div class="datas bgr-6">
         <span class="data-icon"><i class="fa fa-mug-hot"></i></span>
-        <h3>55</h3>
-        <p>Solutions</p>
+        <h3>@ViewBag.NoOfnewData</h3>
+        <p>New Grievance</p>
+    </div>
+    <div class="datas bgr-3">
+        <span class="data-icon"><i class="fa fa-paperclip"></i></span>
+        <h3>@ViewBag.NoofClarificationData</h3>
+        <p>Clarification Grievance</p>
+    </div>
+    <div class="datas bgr-4">
+        <span class="data-icon"><i class="fa fa-heart"></i></span>
+        <h3>@ViewBag.NoOfClosedData</h3>
+        <p>Closed Grievance</p>
     </div>
 </div>
 
@@ -59,7 +59,7 @@
                 text: 'Complain Status'
             },
             subtitle: {
-                text: 'Total Complain : '+@ViewBag.TotalComplain
+                text: 'Total Complain: ' + @ViewBag.TotalComplain
             },
             credits: {
                 enabled: false
@@ -73,10 +73,13 @@
                 }, {
                     name: 'Closed',
                     y: @ViewBag.NoOfClosedData
+                }, {
+                    name: 'New',
+                    y: @ViewBag.NoOfnewData
                 }]
             }],
             tooltip: {
-                pointFormat: '<b>{point.y}</b> ({point.percentage:.1f}%)'
+                pointFormat: '<b>{point.y }</b> ({point.percentage:.1f}%)'
             },
             plotOptions: {
                 pie: {

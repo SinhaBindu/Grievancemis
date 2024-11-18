@@ -126,11 +126,18 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-        public static DataTable GetRevertCounts()
+        //public static DataTable GetRevertCounts()
+        //{
+        //    StoredProcedure sp = new StoredProcedure("GetRevertCounts");
+        //    DataTable dt = sp.ExecuteDataSet().Tables[0];
+        //    return dt;
+
+        //}
+        public static DataSet GetDashboard()
         {
-            StoredProcedure sp = new StoredProcedure("GetRevertCounts");
-            DataTable dt = sp.ExecuteDataSet().Tables[0];
-            return dt;
+            StoredProcedure sp = new StoredProcedure("Usp_Dashboard");
+            DataSet ds = sp.ExecuteDataSet();
+            return ds;
 
         }
         public static DataTable GetSPCheckGrievanceAlready(string EmailId,string RegDate)

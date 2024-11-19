@@ -13,8 +13,8 @@ using Microsoft.AspNet.Identity;
 
 namespace Grievancemis.Controllers
 {
-    [SessionCheckAttribute]
     [Authorize]
+    [SessionCheckAttribute]
     public class ComplainController : Controller
     {
         // GET: Complain

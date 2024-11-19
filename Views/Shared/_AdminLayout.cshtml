@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="~/Content/admin_assets/fonts/material.css">
     <link rel="stylesheet" href="~/Content/admin_assets/css/style.css" id="main-style-link">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <style>
+        .fnsz {
+            font-size: 1.20em !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,7 +45,7 @@
 
     <!-- [Page Specific JS] start -->
     @*<script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>*@
-        @*<script src="~/Content/admin_assets/js/plugins/apexcharts.min.js"></script>
+    @*<script src="~/Content/admin_assets/js/plugins/apexcharts.min.js"></script>
         <script src="~/Content/admin_assets/js/widgets/all-earnings-graph.js"></script>
         <script src="~/Content/admin_assets/js/widgets/page-views-graph.js"></script>
         <script src="~/Content/admin_assets/js/widgets/total-task-graph.js"></script>
@@ -71,16 +77,25 @@
     <script src="~/Content/admin_assets/js/component.js"></script>
     <script src="~/Content/admin_assets/js/theme.js"></script>
     <script src="~/Content/admin_assets/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>layout_change('false');</script>
-        <script>layout_theme_contrast_change('false');</script>
-        <script>change_box_container('false');</script>
-        <script>layout_caption_change('true');</script>
-        <script>layout_rtl_change('false');</script>
-        <script>preset_change('preset-1');</script>
-        <script>main_layout_change('vertical');</script>
+    <script>layout_theme_contrast_change('false');</script>
+    <script>change_box_container('false');</script>
+    <script>layout_caption_change('true');</script>
+    <script>layout_rtl_change('false');</script>
+    <script>preset_change('preset-1');</script>
+    <script>main_layout_change('vertical');</script>
+    @if (MvcApplication.CUser == null)
+    {
+        <script>
+            $(document).ready(function () {
+                window.location.href = document.baseURI +"Grievnce/GrievanceCaseAdd";
+            }
+        </script>
+    }
+
 </body>
 
 </html>

@@ -6,12 +6,15 @@ using System.Web.Mvc;
 
 namespace Grievancemis.Controllers
 {
+    [Authorize]
+    [SessionCheckAttribute]
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
             var d= HttpContext.User.Identity.Name;
-            return View();
+            return RedirectToAction("Index", "Report");
+            //return View();
         }
 
         public ActionResult About()

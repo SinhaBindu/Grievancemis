@@ -31,7 +31,7 @@
                     <div class="mb-4">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @required = "required" })
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @required = "required",@readonly= "readonly" })
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -131,7 +131,7 @@
 
                     <div class="mb-4 form-check">
                         <span style="color:red;">*</span>
-                        @Html.CheckBoxFor(model => model.IsConsent, new { @class = "form-check-input", id = "IsConsentCheckbox" })
+                        @Html.CheckBoxFor(model => model.IsConsent, new { @class = "form-check-input", id = "IsConsentCheckbox", @required = "required" })
                         <label for="IsConsentCheckbox">All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence</label>
                         @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
                         @*<div class="col-md-10">
@@ -162,6 +162,7 @@
             });
 
             $('#formid').submit(function (e) {
+
 
                 if ($('#Email').val() == '') {
                     toastr.error('Enter the EmailID.');
@@ -197,6 +198,13 @@
                 }
                 if ($('input[name="Gender"]:checked').length == 0) {
                     toastr.error('Select your Gender.');
+                    return false;
+                }
+                if ($("#IsConsentCheckbox").is(':checked')) {
+                    // Code in the case checkbox is checked.
+                } else {
+                    // Code in the case checkbox is NOT checked.
+                    toastr.error('Check the All information given is accurate to the best of my knowledge.');
                     return false;
                 }
 

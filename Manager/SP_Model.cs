@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Grievancemis.Manager;
 using Grievancemis.Models;
 using System.Web;
+using Grievancemis.Helpers;
 
 
 namespace Grievancemis.Manager
@@ -136,6 +137,8 @@ namespace Grievancemis.Manager
         public static DataSet GetDashboard()
         {
             StoredProcedure sp = new StoredProcedure("Usp_Dashboard");
+            sp.Command.AddParameter("@RoleId", MvcApplication.CUser.RoleId, DbType.String);
+            sp.Command.AddParameter("@UserId", MvcApplication.CUser.UserId, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
 

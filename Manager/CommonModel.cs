@@ -223,6 +223,7 @@ namespace Grievancemis.Manager
         }
         #endregion
 
+        //OTP mail method
         public static int SendMailForUser(string Toemailid, DataTable dt)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
@@ -279,7 +280,7 @@ namespace Grievancemis.Manager
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
                 mail.To.Add(To + "," + OtherEmailID);
-                mail.From = new MailAddress("kgbvjh4care@gmail.com", "Grievance Query");
+                mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
 
@@ -292,7 +293,8 @@ namespace Grievancemis.Manager
                 smtp.UseDefaultCredentials = false;
                 //smtp.Credentials = new System.Net.NetworkCredential("hunarmis2024@gmail.com", "Hunar@2024");//Pasw-Care@321 // Enter seders User name and password       
                 //smtp.Credentials = new System.Net.NetworkCredential("careindiabtsp@gmail.com", "gupczsbvzinhivzw");//Pasw-Care@321 // Enter seders User name and password       
-                smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                //smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password  - App passwords google     
+                smtp.Credentials = new System.Net.NetworkCredential("pci4tech@gmail.com", "tylodouomqitatre");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password   - App passwords google
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
                 if (dt.Rows.Count > 0)
@@ -309,7 +311,7 @@ namespace Grievancemis.Manager
             {
                 return 0;
             }
-        }
+        }// end OTP
         public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail, string Greid)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
@@ -353,9 +355,9 @@ namespace Grievancemis.Manager
                 }
                 stcc = stcc.Substring(0, stcc.Length - 1);
                 mail.To.Add(To);
-                mail.CC.Add(stcc);
-                mail.Bcc.Add(OtherEmailID);
-                mail.From = new MailAddress("kgbvjh4care@gmail.com", "Grievance Query");
+                //mail.CC.Add(stcc);
+                mail.Bcc.Add(stcc +","+ OtherEmailID);
+                mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
 
@@ -368,7 +370,8 @@ namespace Grievancemis.Manager
                 smtp.UseDefaultCredentials = false;
                 //smtp.Credentials = new System.Net.NetworkCredential("hunarmis2024@gmail.com", "Hunar@2024");//Pasw-Care@321 // Enter seders User name and password       
                 //smtp.Credentials = new System.Net.NetworkCredential("careindiabtsp@gmail.com", "gupczsbvzinhivzw");//Pasw-Care@321 // Enter seders User name and password       
-                smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                //smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                smtp.Credentials = new System.Net.NetworkCredential("pci4tech@gmail.com", "tylodouomqitatre");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
                 var tblu = _db.Tbl_Grievance.Where(x => x.CaseId == Convert.ToInt32(Greid))?.FirstOrDefault();
@@ -393,7 +396,7 @@ namespace Grievancemis.Manager
                 , SenderName = "", RandomValue = "", OTPCode = "";
             string ASDT = ""; string DurationTime = ""; string BatchName = "";
             string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
-            string OtherEmailID = "sinhaharshit829@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
+            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -422,7 +425,7 @@ namespace Grievancemis.Manager
                 //mail.To.Add("bindu@careindia.org");
                 mail.To.Add(To);
                 mail.Bcc.Add(OtherEmailID);
-                mail.From = new MailAddress("kgbvjh4care@gmail.com", "Grievance Query");
+                mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
 
@@ -435,7 +438,8 @@ namespace Grievancemis.Manager
                 smtp.UseDefaultCredentials = false;
                 //smtp.Credentials = new System.Net.NetworkCredential("hunarmis2024@gmail.com", "Hunar@2024");//Pasw-Care@321 // Enter seders User name and password       
                 //smtp.Credentials = new System.Net.NetworkCredential("careindiabtsp@gmail.com", "gupczsbvzinhivzw");//Pasw-Care@321 // Enter seders User name and password       
-                smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                //smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                smtp.Credentials = new System.Net.NetworkCredential("pci4tech@gmail.com", "tylodouomqitatre");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
 
@@ -451,7 +455,6 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-
         public static int SendMailRevartPartUser(string ToTeamemailids, string Toemailid, string gvid, string name, string TeamRevertMessage, string status)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
@@ -460,7 +463,7 @@ namespace Grievancemis.Manager
                 , SenderName = "", RandomValue = "", OTPCode = "";
             string ASDT = ""; string DurationTime = ""; string BatchName = "";
             string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
-            string OtherEmailID = "sinhaharshit829@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
+            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -511,9 +514,9 @@ namespace Grievancemis.Manager
                 //bodyTemplate = "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n\t\t<tbody>\r\n <tr>\r\n\t\t\t<td align=\"center\"> " + bodydata + "\r\n\t\t\t\t\r\n  \t</tbody></tr>\r\n</table>";
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
-                mail.To.Add(To + "," + OtherEmailID);
+                mail.To.Add(To);// + "," + OtherEmailID
                 mail.Bcc.Add(ToTeamemailids + "," + OtherEmailID);
-                mail.From = new MailAddress("kgbvjh4care@gmail.com", "Grievance Query");
+                mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
 
@@ -526,7 +529,8 @@ namespace Grievancemis.Manager
                 smtp.UseDefaultCredentials = false;
                 //smtp.Credentials = new System.Net.NetworkCredential("hunarmis2024@gmail.com", "Hunar@2024");//Pasw-Care@321 // Enter seders User name and password       
                 //smtp.Credentials = new System.Net.NetworkCredential("careindiabtsp@gmail.com", "gupczsbvzinhivzw");//Pasw-Care@321 // Enter seders User name and password       
-                smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                //smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                smtp.Credentials = new System.Net.NetworkCredential("pci4tech@gmail.com", "tylodouomqitatre");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
                 tbl_v.Issent = true;
@@ -540,7 +544,5 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-
-
     }
 }

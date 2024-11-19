@@ -12,9 +12,9 @@
                 <th>Name</th>
                 <th>Gender</th>
                 <th>Status</th>
-                <th>Revert Date</th>
-                <th>Team Message</th>
-                <th>Team <br />Reported By</th>
+                <th>Query Date</th>
+                <th>Query Message</th>
+                <th>Query <br />Reported By</th>
                 <th>User Revert<br /> Date</th>
                 <th>User Revert<br /> Message</th>
             </tr>
@@ -29,14 +29,14 @@
                         <tr>
                             <td>@serialNo</td> <!-- Display the serial number -->
                             <td>@row["CaseId"]</td>
-                            <td style="word-wrap:break-word;">@row["ComDate"]</td>
-                            <td>@row["Name"]</td>
+                            <td><strong class="badge bg-warning-500/10 fnsz"> @row["ComDate"]</strong></td>
+                            <td style="word-wrap:break-word;">@row["Name"]</td>
                             <td>@row["Gender"]</td>
-                            <td>@row["RevertStatus"]</td>
-                            <td>@row["RevartDate"]</td>
+                            <td style="background:@row["RevertStatusBgColor"]"><strong>@row["RevertStatus"]</strong></td>
+                            <td><strong class="badge bg-warning-500/10 fnsz">@row["RevartDate"]</strong></td>
                             <td>@row["TeamRevertMessage"]</td>
                             <td>@row["TeamReportedByName"]</td>
-                            <td>@row["UserRevartDate"]</td>
+                            <td><strong class="badge bg-warning-500/10 fnsz">@row["UserRevartDate"]</strong></td>
                             <td>@row["UserRevertMessage"]</td>
                         </tr>
                         serialNo++; // Increment the serial number

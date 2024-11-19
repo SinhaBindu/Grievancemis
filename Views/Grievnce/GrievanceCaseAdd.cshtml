@@ -147,7 +147,7 @@
                                         @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <span style="color:red;">*</span>
                                         <div class="col-md-10">
-                                            @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
+                                            @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5, @required = "required" })
                                             @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -165,7 +165,7 @@
                                     <div class="form-group">
                                         <span style="color:red;">*</span>
                                         <div class="col-md-10">
-                                            @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox" })
+                                            @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox", @required = "required" })
                                             @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
                                             @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
                                         </div>
@@ -454,6 +454,13 @@
                 }
                 if ($('#Gender').val() == '') {
                     toastr.error('Enter the Gender.');
+                    return false;
+                }
+                if ($("#IsConsentCheckbox").is(':checked')) {
+                    // Code in the case checkbox is checked.
+                } else {
+                    // Code in the case checkbox is NOT checked.
+                    toastr.error('Check the All information given is accurate to the best of my knowledge.');
                     return false;
                 }
 

@@ -17,7 +17,7 @@
                 <th>Email</th>
                 <th>Phone No</th>
                 <th>Role</th>
-                <th>Modify</th>
+                @*<th>Modify</th>*@
                 <th>Status</th>
             </tr>
         </thead>
@@ -33,10 +33,10 @@
                             <td class="text-left">@dr["Name"]</td>
                             <td class="text-left">@dr["Email"]</td>
                             <td class="text-left">@dr["PhoneNumber"]</td>
-                            <td class="text-left">@dr["Role"]</td>
-                            <td title="Edit">
+                            <td class="text-left"><strong class="badge bg-warning-500/10 fnsz">@dr["Role"]</strong></td>
+                            @*<td title="Edit">
                                 <a href="~/Account/Register?id=@dr["Id"]" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                            </td>
+                            </td>*@
                             @if (dr["LockoutEnabled"].ToString() == "False")
                             {
                                 <td title="Disable">

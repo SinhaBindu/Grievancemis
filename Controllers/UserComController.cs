@@ -14,6 +14,7 @@ using System.Web.Mvc;
 namespace Grievancemis.Controllers
 {
     [Authorize]
+    [SessionCheckAttribute]
     public class UserComController : Controller
     {
         private Grievance_DBEntities db = new Grievance_DBEntities();
@@ -239,7 +240,11 @@ namespace Grievancemis.Controllers
         public ActionResult AddNGrievance()
         {
             //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return View();
+            GrivanceModel model = new GrivanceModel();
+            model.Email=MvcApplication.CUser.EmailId.Trim();
+            model.Name=MvcApplication.CUser.Name.Trim();
+            model.PhoneNo=MvcApplication.CUser.Phone.Trim();
+            return View(model);
         }
         [HttpPost]
         public ActionResult AddNGrievance(GrivanceModel grievanceModel)

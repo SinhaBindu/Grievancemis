@@ -34,7 +34,7 @@
                                 <td>@row["CaseId"]</td>
                                 <td>@row["CreatedOn"]</td>
                                 <td><div style="word-wrap: break-word; width: 90px">@row["Email"]</div></td>
-                                <td>@row["Name"]</td>
+                                <td><div style="word-wrap: break-word;">@row["Name"]</div></td>
                                 <td>@row["Gender"]</td>
                                 <td>@row["GrievanceType"]</td>
                                 <td>@row["StateName"]</td>
@@ -56,7 +56,7 @@
                                                 data-name="@row["Name"]"
                                                 data-revertid="@row["MaxRevertID"]"
                                                 data-createdon="@row["CreatedOn"]">
-                                            Revert Process
+                                            Revert 
                                         </button>
                                     </td>
                                 }
@@ -67,7 +67,7 @@
                                 @if (!string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
                                 {
                                     <td>
-                                        <a href="~/UserCom/URevartList?GId=@row["Id"].ToString()" class="btn btn-primary btn-sm progress-button"><i class="fa fa-street-view"></i></a>
+                                        <a href="~/UserCom/URevartList?GId=@row["Id"].ToString()" class="btn btn-primary btn-sm progress-button"><i class="ti ti-star text-lg leading-none"></i></a>
                                     </td>
                                 }
                                 else

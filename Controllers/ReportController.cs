@@ -8,14 +8,16 @@ using Grievancemis.Manager;
 
 namespace Grievancemis.Controllers
 {
+    [Authorize]
+    [SessionCheckAttribute]
     public class ReportController : Controller
     {
         // GET: Report
+        //public ActionResult Dashboard()
+        //{
+        //    return View();
+        //}
         public ActionResult Index()
-        {
-            return View();
-        }
-        public ActionResult RevertCount()
         {
             
             DataSet ds = SP_Model.GetDashboard();
@@ -23,8 +25,6 @@ namespace Grievancemis.Controllers
             if (ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
                 DataRow row = ds.Tables[0].Rows[0];
-
-                
                 ViewBag.TotalComplain = row["TotalCount"];
                 ViewBag.NoofClarificationData = row["ClarificationSub"];
                 ViewBag.NoOfClosedData = row["ClosedSub"];
@@ -32,12 +32,10 @@ namespace Grievancemis.Controllers
             }
             else
             {
-                
                 ViewBag.TotalComplain = 0;
                 ViewBag.NoofClarificationData = 0;
                 ViewBag.NoOfClosedData = 0;
                 ViewBag.NoOfnewData = 0;
-                
             }
 
             return View();

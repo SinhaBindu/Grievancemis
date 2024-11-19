@@ -529,7 +529,7 @@
     <Content Include="Views\UserCom\URevartList.cshtml" />
     <Content Include="Views\UserCom\_URevertData.cshtml" />
     <Content Include="Views\UserCom\DetailsCId.cshtml" />
-    <Content Include="Views\Report\RevertCount.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\UserCom\AddNGrievance.cshtml" />
   </ItemGroup>
   <ItemGroup>

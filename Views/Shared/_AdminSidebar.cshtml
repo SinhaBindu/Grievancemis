@@ -50,9 +50,8 @@
                 </div>
             </div>
             <ul class="pc-navbar">
-                <li class="pc-item pc-caption"><label>Navigation</label></li>
                 <li class="pc-item pc-hasmenu">
-                    <a href="~/Report/RevertCount" class="pc-link">
+                    <a href="~/Report/Index" class="pc-link">
                         <span class="pc-micon">
                             <svg class="pc-icon">
                                 <use xlink:href="#custom-status-up"></use>
@@ -124,7 +123,8 @@
                                class="pc-link">
                                 <span class="pc-micon">
                                     <svg class="pc-icon">
-                                        <use xlink:href="#custom-fatrows"></use>
+                                        @*<use xlink:href="#custom-fatrows"></use>*@
+                                        <use xlink:href="#custom-layer"></use>
                                     </svg>
                                 </span><span class="pc-mtext">Conversation Details</span>
                             </a>
@@ -134,12 +134,12 @@
                                class="pc-link">
                                 <span class="pc-micon">
                                     <svg class="pc-icon">
-                                        <use xlink:href="#custom-fatrows"></use>
+                                        @*<use xlink:href="#custom-layer"></use>*@
+                                        <use xlink:href="#custom-user"></use>
                                     </svg>
                                 </span><span class="pc-mtext">User Details</span>
                             </a>
                         </li>
-
                     }
                     if (MvcApplication.CUser.RoleId == "2")
                     {
@@ -149,22 +149,15 @@
                             </svg>
                         </li>
                         <li class="pc-item">
-                            <a href="~/UserCom/UserGList"
-                               class="pc-link">
+                            <a href="~/UserCom/UserGList" class="pc-link">
                                 <span class="pc-micon">
-                                    <svg class="pc-icon">
-                                        <use xlink:href="#custom-story"></use>
-                                    </svg>
+                                    <svg class="pc-icon"><use xlink:href="#custom-story"></use></svg>
                                 </span><span class="pc-mtext">Complain List</span>
                             </a>
                         </li>
                         <li class="pc-item">
-                            <a href="~/UserCom/AddNGrievance"
-                               class="pc-link">
-                                <span class="pc-micon">
-                                    <svg class="pc-icon">
-                                        <use xlink:href="#custom-story"></use>
-                                    </svg>
+                            <a href="~/UserCom/AddNGrievance" class="pc-link">
+                                <span class="pc-micon"><svg class="pc-icon"><use xlink:href="#custom-element-plus"></use></svg>
                                 </span><span class="pc-mtext">Complain Register</span>
                             </a>
                         </li>

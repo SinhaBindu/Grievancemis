@@ -53,7 +53,7 @@ namespace Grievancemis.Controllers
         }
         public ActionResult GetDownGImgDocZip(Guid? grievanceId)
         {
-            DataTable dt = SP_Model.GetGrievanceList(new FilterModel { Id = grievanceId.ToString() });
+            DataTable dt = SP_Model.GetGrievanceDoc(new FilterModel { Id = grievanceId.ToString() });
             if (dt.Rows.Count == 0)
             {
                 return HttpNotFound("No documents found for the specified grievance.");

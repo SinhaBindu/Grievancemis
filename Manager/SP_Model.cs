@@ -22,6 +22,13 @@ namespace Grievancemis.Manager
             StoredProcedure sp = new StoredProcedure("USP_GetGrievancefilterList");
             sp.Command.AddParameter("@StateId", filtermodel.StateId, DbType.String);
             sp.Command.AddParameter("@TypeGId", filtermodel.TypeGId, DbType.String);
+            //sp.Command.AddParameter("@GrievanceId", filtermodel.GrievanceId, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
+        public static DataTable GetGrievanceDoc(FilterModel filtermodel)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_GrievanceImage");
             sp.Command.AddParameter("@GrievanceId", filtermodel.GrievanceId, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;

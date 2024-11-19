@@ -15,6 +15,14 @@ public class SessionCheckAttribute : ActionFilterAttribute
                     { "action", "GrievanceCaseAdd" }
                 });
         }
+        if (HttpContext.Current.Session["CUser"] == null || (string.IsNullOrWhiteSpace(users)) || users == null)
+        {
+            filterContext.Result = new RedirectToRouteResult(
+                new System.Web.Routing.RouteValueDictionary {
+                    { "controller", "Grievnce" },
+                    { "action", "GrievanceCaseAdd" }
+                });
+        }
         //else if (HttpContext.Current.Session["PartUserId"] !=null)
         //{
         //    filterContext.Result = new RedirectToRouteResult(

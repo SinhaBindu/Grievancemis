@@ -13,7 +13,6 @@
         <EntityTypeShape EntityType="Grievance_DBModel.M_GrievanceType" Width="1.5" PointX="7.75" PointY="6.75" />
         <EntityTypeShape EntityType="Grievance_DBModel.m_State_Master" Width="1.5" PointX="5.75" PointY="9.75" />
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_ExceptionHandle" Width="1.5" PointX="9.75" PointY="6.75" />
-        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Grievance_Documents" Width="1.5" PointX="3" PointY="12.75" />
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_LoginVerification" Width="1.5" PointX="7.75" PointY="10.75" />
         <EntityTypeShape EntityType="Grievance_DBModel.tbl_UserRegistration" Width="1.5" PointX="9.75" PointY="10.75" />
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_UserRevertComplain" Width="1.5" PointX="3" PointY="1.5" />
@@ -22,9 +21,10 @@
         <AssociationConnector Association="Grievance_DBModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Grievance" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_TeamRevertComplain" Width="1.5" PointX="3" PointY="5.625" />
-        <AssociationConnector Association="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" />
         <AssociationConnector Association="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" />
         <AssociationConnector Association="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Grievance_Documents" Width="1.5" PointX="3" PointY="12" />
+        <AssociationConnector Association="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

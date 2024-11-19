@@ -53,7 +53,7 @@ namespace Grievancemis.Controllers
         }
         public ActionResult GetDownGImgDocZip(Guid? grievanceId)
         {
-            DataTable dt = SP_Model.GetGrievanceDoc(new FilterModel { Id = grievanceId.ToString() });
+            DataTable dt = SP_Model.GetGrievanceDoc(new FilterModel { GrievanceId = grievanceId.ToString() });
             if (dt.Rows.Count == 0)
             {
                 return HttpNotFound("No documents found for the specified grievance.");
@@ -61,7 +61,7 @@ namespace Grievancemis.Controllers
 
             string folderPath = Server.MapPath("~/Doc_Upload");
             string zipFileName = $"{grievanceId}.zip";
-            string zipPath = Path.Combine(folderPath, zipFileName);
+            //string zipPath = Path.Combine(folderPath, zipFileName);
 
             if (!Directory.Exists(Server.MapPath("~/Doc_Upload/ImageZip")))
             {
@@ -70,6 +70,10 @@ namespace Grievancemis.Controllers
 
             // Use a HashSet to track added file names
             HashSet<string> addedFiles = new HashSet<string>();
+            var random = new Random();
+            int month = random.Next(1, 1200);
+            // Define the path for the temporary zip file
+            string zipPath = Server.MapPath("~/Doc_Upload/CombinedFilesZip" + month + DateTime.Now.ToDateTimeDDMMYYYY() + ".zip");
 
             using (var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
             {
@@ -78,15 +82,21 @@ namespace Grievancemis.Controllers
                     string filePath = dr["DocumentPath"].ToString();
                     if (!string.IsNullOrEmpty(filePath))
                     {
-                        string fileName = Path.GetFileName(filePath);
-                        string filePathc = Path.Combine(folderPath, fileName);
+                        //string fileName = Path.GetFileName(filePath);
+                        //string filePathc = Path.Combine(folderPath, fileName);
 
-                        // Check if the file has already been added
-                        if (!addedFiles.Contains(fileName) && System.IO.File.Exists(filePathc))
-                        {
-                            zip.CreateEntryFromFile(filePathc, fileName);
-                            addedFiles.Add(fileName); // Mark this file as added
-                        }
+                        //// Check if the file has already been added
+                        //if (!addedFiles.Contains(fileName) && System.IO.File.Exists(filePathc))
+                        //{
+                        //    zip.CreateEntryFromFile(filePathc, fileName);
+                        //    addedFiles.Add(fileName); // Mark this file as added
+                        //}
+                        string fileName = Path.GetFileName(filePath);
+                        // Add the file to the zip
+                        //var file = Directory.GetFiles(filePath, "*.*");
+                        string filePathc = Path.Combine(folderPath + "/GID" + grievanceId, fileName);
+
+                        zip.CreateEntryFromFile(filePathc, fileName);
                     }
                 }
             }

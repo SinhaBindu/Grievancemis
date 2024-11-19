@@ -4,6 +4,11 @@
     ViewBag.SubTitle = "Dashboard";
 }
 
+<style>
+    .card {
+        margin-bottom: 0 !important;
+    }
+</style>
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
@@ -16,81 +21,498 @@
 </div>
 
 <div class="data-box">
-    <div class="datas bgr-5">
-        <span class="data-icon"><i class="fa fa-comment"></i></span>
-        <h3>@ViewBag.TotalComplain</h3>
+    <div class="datas bgrbule-7">
+        <span class="data-icon"><i class="fa fa-cloud"></i></span>
+        <h3 id="dv-total"></h3>
         <p>Total Grievance</p>
     </div>
-    <div class="datas bgr-6">
-        <span class="data-icon"><i class="fa fa-mug-hot"></i></span>
-        <h3>@ViewBag.NoOfnewData</h3>
+    <div class="datas bgr-4">
+        <span class="data-icon"><i class="fa fa-star"></i></span>
+        <h3 id="dv-new"></h3>
         <p>New Grievance</p>
     </div>
-    <div class="datas bgr-3">
-        <span class="data-icon"><i class="fa fa-paperclip"></i></span>
-        <h3>@ViewBag.NoofClarificationData</h3>
+    <div class="datas bgr-5">
+        <span class="data-icon"><i class="fa fa-clipboard"></i></span>
+        <h3 id="dv-clarification"></h3>
         <p>Clarification Grievance</p>
     </div>
-    <div class="datas bgr-4">
-        <span class="data-icon"><i class="fa fa-heart"></i></span>
-        <h3>@ViewBag.NoOfClosedData</h3>
+    <div class="datas bgrSuccess-2">
+        <span class="data-icon"><i class="fa fa-check"></i></span>
+        <h3 id="dv-close"></h3>
         <p>Closed Grievance</p>
     </div>
 </div>
 
-<div class="grievances-list">
-    <div class="box-design">
-        <div class="row">
-            <div class="col-md-6">
-                <div id="myPieChart" style="width: 600px; height: 400px;"></div>
+@*<div class="grievances-list">
+        <div class="box-design">
+            <div class="row">
+                <div class="col-span-12 xl:col-span-3 md:col-span-6">
+
+                </div>
+                <div class="col-span-12 xl:col-span-3 md:col-span-6">
+                    <div class="card card-box p-0">
+                        <div class="card-head">
+                            <div class="title">Grievance Intervention Areas</div>
+                            <div class="tools">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <figure class="highcharts-figure">
+                                <div id="parent-container">
+                                    <div id="containermap"></div>
+                                </div>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </div>*@
+<div class="grid grid-cols-12 gap-x-6">
+    <div class="col-span-12 xl:col-span-3 md:col-span-6">
+        <div id="myPieChart" style="width: 500px; height: 400px;"></div>
     </div>
+    <div class="col-span-12 xl:col-span-3 md:col-span-6">
+        <div class="card">
+            <div class="card-head">
+                <div class="title">Grievance Intervention Areas</div>
+                <div class="tools">
+                </div>
+            </div>
+        </div>
+        <figure class="highcharts-figure">
+            <div id="parent-container">
+                <div id="containermap"></div>
+            </div>
+        </figure>
+    </div>
+        <div class="col-span-12 xl:col-span-3 md:col-span-6">
+            <div id="gtypechart" style="width: 500px; height: 400px;"></div>
+        </div>
+        <div class="col-span-12 xl:col-span-3 md:col-span-6">
+            <div id="genderchart" style="width: 500px; height: 400px;"></div>
+        </div>
+
 </div>
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var chart = Highcharts.chart('myPieChart', {
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval");
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="~/Scripts/JS/india_st.js"></script>
+
+    <script>
+    var Dlist1 = [], DlistMap = [],DGender=[],DGType=[];
+        $(document).ready(function () {
+            debugger;
+            LoadData();
+        });
+        function LoadData() {
+
+            $.ajax({
+                url: '@Url.Action("GetDashboard", "Report")',
+                //data: {},
+                async: false,
+                success: function (result) {
+                    if (result.IsSuccess) {
+                        debugger;
+                        Dlist1 = []; DlistMap = [];
+                        var datamain = JSON.parse(result.Data);
+                        Dlist1 = datamain.Table;
+                        DlistMap = datamain.Table1;
+                        DGender = datamain.Table2;
+                        DGType = datamain.Table3;
+                        $('#dv-total').html(Dlist1[0].TotalCount); $('#dv-new').html(Dlist1[0].Newsub);
+                        $('#dv-clarification').html(Dlist1[0].ClarificationSub); $('#dv-close').html(Dlist1[0].ClosedSub);
+                        BindComplainStatus(Dlist1); Load_DistrictMap(DlistMap);
+                        BindGender(DGender); BindGrievanceType(DGType);
+                    }
+                    else {
+                        toastr.error(result.Data);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response
+                    console.error("AJAX Error:", error);
+                    toastr.error('@Grievancemis.Manager.Enums.GetEnumDescription(Grievancemis.Manager.Enums.eReturnReg.ExceptionError)');
+                    return false;
+                }
+            });
+        }
+        function BindComplainStatus(RData) {
+            if (RData) {
+                var DataTitle = 0; var datanboj = [];
+                for (var i = 0; i < RData.length; i++) {
+                    DataTitle = RData[i].TotalCount;
+                    datanboj.push({ name: 'New Case', y: RData[i].Newsub, color: '#f0ad92' });
+                    datanboj.push({ name: 'Clarifications', y: RData[i].ClarificationSub, color:'#85c1e9' });
+                    datanboj.push({ name: 'Closed', y: RData[i].ClosedSub, color:'#82e0aa' });
+                }
+                Highcharts.chart('myPieChart', {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Complain Status'
+                    },
+                    subtitle: {
+                        text: 'Total Complains: ' + DataTitle
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: 'Complain Status',
+                        colorByPoint: true,
+                        data: datanboj
+                    }],
+                    tooltip: {
+                        pointFormat: '<b>{point.y }</b> ({point.percentage:.1f}%)'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function Load_DistrictMap(DlistMap) {
+
+        var jsonObject = DlistMap;
+        console.log(jsonObject);
+        var reportMapDivWidth = $("#containermapp").width();
+        var MapHeight = reportMapDivWidth > 620 ? 620 : null;
+        colors = ['#4443a0', '#ae77b8', '#9be0ba', '#4194ac', '#44449e', '#47a372', '#3466ab', '#8a3b99'];
+        for (var i = 0; i < jsonObject.length; i++) {
+            //jsonObject[i].color = colors[i % colors.length];
+            jsonObject[i].showInLegend = true;
+        }
+
+        //var jsonObjectMumbai = jsonObject.find(x => x.DistrictName == "Mumbai");
+
+        //var obj = JSON.parse(JSON.stringify(jsonObjectMumbai));
+        //obj.DistrictName = "Thane";
+        //jsonObject.push(obj);
+
+        //obj = JSON.parse(JSON.stringify(jsonObjectMumbai));
+        //obj.DistrictName = "Raigarh";
+        //jsonObject.push(obj);
+
+        //obj = JSON.parse(JSON.stringify(jsonObjectMumbai));
+        //obj.DistrictName = "Palghar";
+        //jsonObject.push(obj);
+
+        //obj = JSON.parse(JSON.stringify(jsonObjectMumbai));
+        //obj.DistrictName = "Mumbai Suburban";
+        //jsonObject.push(obj);
+
+        //obj = JSON.parse(JSON.stringify(jsonObjectMumbai));
+        //obj.DistrictName = "Mumbai City";
+        //jsonObject.push(obj);
+
+        Highcharts.mapChart('containermap', {
+
             chart: {
-                type: 'pie'
+                borderWidth: 1,
+                borderColor: '#00000',
+                height: MapHeight,
+                //  map: topology
             },
             title: {
-                text: 'Complain Status'
-            },
-            subtitle: {
-                text: 'Total Complain: ' + @ViewBag.TotalComplain
+                text:''
             },
             credits: {
                 enabled: false
             },
-            series: [{
-                name: 'Revert Counts',
-                colorByPoint: true,
-                data: [{
-                    name: 'Clarifications',
-                    y: @ViewBag.NoofClarificationData
-                }, {
-                    name: 'Closed',
-                    y: @ViewBag.NoOfClosedData
-                }, {
-                    name: 'New',
-                    y: @ViewBag.NoOfnewData
-                }]
-            }],
-            tooltip: {
-                pointFormat: '<b>{point.y }</b> ({point.percentage:.1f}%)'
+            //legend: {
+            //    layout: 'vertical',
+            //    align: 'right',
+            //    verticalAlign: 'middle',
+            //    itemMarginBottom: 10,
+            //    symbolHeight: 18,
+            //    title: {
+            //        text: 'Districts'
+            //    }
+            //},
+            mapNavigation: {
+                enabled: true,
+                buttonOptions: {
+                    verticalAlign: 'bottom'
+                }
             },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
+            tooltip: {
+                shared: true
+            },
+            //colors: colors,
+            series: [
+                {
+                    showInLegend: false,
+                    borderColor: 'black',
+                    borderWidth: 0.2,
+                    name: 'India',
+                    mapData: Highcharts.maps['custom/StatesIndia'],
+                    data: jsonObject,
+                    joinBy: ['STATE', 'STATE'],
                     dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        enabled: false,
+                        color: '#000000',
+                        format: '{point.STATE}',
+                        style: {
+                            fontSize: 9,
+                            fontWeight: 700
+                        },
+                    },
+                    tooltip: {
+                        pointFormat: '<b> {point.STATE} : {point.Total} / ( {point.Percentage} % ) </b>'
                     }
                 }
-            }
+                //,
+                //{
+                //    showInLegend: false,
+                //    borderColor: 'green',
+                //    color: '#13e5138f',
+                //    borderWidth: 1,
+                //    mapData: Highcharts.maps['custom/Maharashtra'],
+                //    data: jsonObject,
+                //    name: 'Maharashtra',
+                //    joinBy: ['STATE', 'STATE'],
+                //    dataLabels: {
+                //        enabled: false,
+                //        color: '#000000',
+                //        format: '{point.STATE}',
+                //        style: {
+                //            fontSize: 9,
+                //            fontWeight: 700
+                //        },
+                //    },
+                //    tooltip: {
+                //        pointFormat: '<b> {point.STATE} : {point.Total} / ( {point.Percentage} % ) </b>'
+                //    }
+                //}
+                //,
+                //{
+                //    showInLegend: false,
+                //    borderColor: '#0d47a1',
+                //    color: '#5c5bf1',
+                //    borderWidth: 1,
+                //    mapData: Highcharts.maps['custom/West_Bengal'],
+                //    data: jsonObject,
+                //    name: 'West Bengal',
+                //    joinBy: ['STATE', 'STATE'],
+                //    dataLabels: {
+                //        enabled: false,
+                //        color: '#000000',
+                //        format: '{point.STATE}',
+                //        style: {
+                //            fontSize: 9,
+                //            fontWeight: 700
+                //        },
+                //    },
+                //    tooltip: {
+                //        pointFormat: '<b> {point.DistrictName} : {point.Total} / ( {point.Percentage} % ) </b>'
+                //    }
+                //}
+            ]
         });
+
+        }
+
+        function BindGender(RData) {
+            if (RData) {
+                Highcharts.setOptions({
+                    colors: ['#76d7c4','#bb8fce']
+                });
+                var sumtotal = 0; var datanboj = [];
+                for (var i = 0; i < RData.length; i++) {
+                    sumtotal = RData[i].Total;
+                    datanboj.push({ name: RData[i].Gender, y: RData[i].Total });
+                }
+                Highcharts.chart('genderchart', {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Gender Status'
+                    },
+                    subtitle: {
+                        text: 'Total no of data : ' + sumtotal
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: 'Gender Status',
+                        colorByPoint: true,
+                        data: datanboj
+                    }],
+                    tooltip: {
+                        pointFormat: '<b>{point.y }</b> ({point.percentage:.1f}%)'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    }
+                });
+            }
+
+        }
+
+        function BindGrievanceType(RData) {
+            if (RData) {
+                debugger;
+                var sumtotal = 0; var obj = {}; var datanboj = [];
+                for (var i = 0; i < RData.length; i++) {
+                    sumtotal += RData[i].Total;
+                    obj = [RData[i].GrievanceType, RData[i].Total];
+                    datanboj.push(obj);
+                }
+                Highcharts.chart('gtypechart', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Grievance Type Status'
+                    },
+                    subtitle: {
+                        text: 'Total no of data : ' + sumtotal
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    xAxis: {
+                        type: 'category',
+                        labels: {
+                            autoRotation: [-45, -90],
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'No of values'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        pointFormat: 'Grievance Type : <b>{point.y}</b>'
+                    },
+                    series: [{
+                        name: 'Grievance Type',
+                        colors: ['#c39bd3'],
+                        //colors: [
+                        //    '#9b20d9', '#9215ac', '#861ec9', '#7a17e6', '#7010f9', '#691af3',
+                        //    '#6225ed', '#5b30e7', '#533be1', '#4c46db', '#4551d5', '#3e5ccf',
+                        //    '#3667c9', '#2f72c3', '#277dbd', '#1f88b7', '#1693b1', '#0a9eaa',
+                        //    '#03c69b', '#00f194'
+                        //],
+                        colorByPoint: true,
+                        groupPadding: 0,
+                        data: datanboj,
+                        //data: [
+                        //    ['Tokyo', 37.33],
+                        //    ['Delhi', 31.18],
+                        //    ['Shanghai', 27.79],
+                        //    ['Sao Paulo', 22.23],
+                        //    ['Mexico City', 21.91],
+                        //    ['Dhaka', 21.74],
+                        //    ['Cairo', 21.32],
+                        //    ['Beijing', 20.89],
+                        //    ['Mumbai', 20.67],
+                        //    ['Osaka', 19.11],
+                        //    ['Karachi', 16.45],
+                        //    ['Chongqing', 16.38],
+                        //    ['Istanbul', 15.41],
+                        //    ['Buenos Aires', 15.25],
+                        //    ['Kolkata', 14.974],
+                        //    ['Kinshasa', 14.970],
+                        //    ['Lagos', 14.86],
+                        //    ['Manila', 14.16],
+                        //    ['Tianjin', 13.79],
+                        //    ['Guangzhou', 13.64]
+                        //],
+                        dataLabels: {
+                            enabled: true,
+                            rotation: -90,
+                            color: '#FFFFFF',
+                            inside: true,
+                            verticalAlign: 'top',
+                            format: '{point.y}', // one decimal
+                            y: 10, // 10 pixels down from the top
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    }]
+                });
+            }
+        }
+
+      @*document.addEventListener('DOMContentLoaded', function () {
+    var chart = Highcharts.chart('myPieChart', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Complain Status'
+        },
+        subtitle: {
+            text: 'Total Complain: ' + '@ViewBag.TotalComplain'
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Complain Status',
+            colorByPoint: true,
+            data: [{
+                name: 'Clarifications',
+                y: '@ViewBag.NoofClarificationData'
+            }, {
+                name: 'Closed',
+                y: '@ViewBag.NoOfClosedData'
+            }, {
+                name: 'New',
+                y: '@ViewBag.NoOfnewData'
+            }]
+        }],
+        tooltip: {
+            pointFormat: '<b>{point.y }</b> ({point.percentage:.1f}%)'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        }
     });
-</script>
+});*@
+    </script>
+}

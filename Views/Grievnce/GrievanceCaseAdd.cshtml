@@ -27,9 +27,9 @@
             <a href="/">
                 <img src="~/Content/assets/images/pci_logo.png" alt="PCI logo" />
             </a>
-            <div class="header-middle">
+            @*<div class="header-middle">
                 <span class=""><i class="fa fa-phone"></i>139</span>Call Us
-            </div>
+            </div>*@
         </div>
     </div>
     <!-- New Banner -->
@@ -475,6 +475,9 @@
                     success: function (data) {
                         if (data.success) {
                             toastr.success(data.message);
+                            if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
+                                window.location.href = resp.redirect;//document.baseURI +
+                            }
                             $('#formid')[0].reset();
                             $('#div-evc').show();
                             $('#div-vc').hide();

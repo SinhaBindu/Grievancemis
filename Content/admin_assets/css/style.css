@@ -13496,6 +13496,9 @@ body {
     .bgr-1 {
         background: #FFBEAF;
     }
+.bgrSuccess-2 {
+    background: #257f4b
+}
 .bgr-2 {
     background: #C4FFDD
 }
@@ -13511,6 +13514,13 @@ body {
 .bgr-6 {
     background: #FFC276;
 }
+.bgrbule-7 {
+    background: #324ab2;
+}
+bgrlight-7 {
+    background: #0047ab;
+}
+
 .data-icon {
     position: absolute;
     top: 20px;

@@ -17,9 +17,9 @@ namespace Grievancemis.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Grievance()
         {
-            this.Tbl_Grievance_Documents = new HashSet<Tbl_Grievance_Documents>();
             this.Tbl_TeamRevertComplain = new HashSet<Tbl_TeamRevertComplain>();
             this.Tbl_UserRevertComplain = new HashSet<Tbl_UserRevertComplain>();
+            this.Tbl_Grievance_Documents = new HashSet<Tbl_Grievance_Documents>();
         }
     
         public System.Guid Id { get; set; }
@@ -53,10 +53,10 @@ namespace Grievancemis.Models
         public Nullable<System.DateTime> SentMailDurationDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tbl_Grievance_Documents> Tbl_Grievance_Documents { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_TeamRevertComplain> Tbl_TeamRevertComplain { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_UserRevertComplain> Tbl_UserRevertComplain { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Grievance_Documents> Tbl_Grievance_Documents { get; set; }
     }
 }

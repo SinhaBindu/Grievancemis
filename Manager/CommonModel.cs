@@ -1,4 +1,5 @@
 ﻿using Grievancemis.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 //using SubSonic.Schema;
@@ -20,6 +21,7 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using static Grievancemis.Manager.CommonModel;
 
 namespace Grievancemis.Manager
 {
@@ -222,6 +224,81 @@ namespace Grievancemis.Manager
             }
         }
         #endregion
+        public static bool ValidateImageSizeDocoument(HttpPostedFileBase file)
+        {
+            byte[] image = new byte[file.ContentLength];
+            file.InputStream.Read(image, 0, image.Length);
+            // Convert MB to bytes (1 MB = 1024 * 1024 bytes)
+            //int maxSizeInBytes = 5242880;//maxMB * 1024 * 1024;
+            int maxSizeInBytes = 20971520;//maxMB * 1024 * 1024;/20mb
+
+            // Check if the image size is less than or equal to the specified limit
+            if (image.Length <= maxSizeInBytes)
+            {
+                return true; // Valid size
+            }
+
+            return false; // Invalid size
+        }
+        public static FileModel saveFile(HttpPostedFileBase item, string Fldpath, string FileName)
+        {
+            FileModel fileModel = new FileModel();
+            if (ValidateImageSizeDocoument(item))
+            {
+                string URL = "";
+                string filepath = string.Empty;
+                if (item != null && item.ContentLength > 0)
+                {
+                    if (Fldpath != URL)
+                    {
+                        URL = Fldpath;
+                    }
+                     URL = "/Doc_Upload/" + Fldpath + "/"; 
+                    string folderPath = HttpContext.Current.Server.MapPath("~" + URL);
+
+                    var supportedTypes = new[] { "pdf", "xls", "xlsx", "jpeg", "png", "jpg" };
+
+                    var fileName = Path.GetFileName(item.FileName);
+                    // var rondom = Guid.NewGuid() + fileName;
+
+                    // var fileExt = System.IO.Path.GetExtension(rondom).Substring(1).ToLower();
+
+                    //if (!supportedTypes.Contains(fileExt.ToLower()))
+                    //{
+                    //   // Danger("File Extension Is InValid - Upload Only PDF/EXCEL/JPEG/PNG/JPG File");
+                    //   // return RedirectToAction("VendorDetails", new { id = d.guid });
+                    //}
+
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
+
+                    // string Document = Path.Combine("~/Uploads/VendorDoc/" + rondom);
+
+                    item.SaveAs(folderPath + fileName);
+                    filepath = URL + fileName;
+                    fileModel.FolderPath = URL;
+                }
+                fileModel.IsvalidFile = true;
+                fileModel.FilePathFull = filepath;
+                return fileModel;
+            }
+            else
+            {
+                fileModel.IsvalidFile = false;
+                return fileModel;
+            }
+
+        }
+
+        public class FileModel
+        {
+            public string FilePathFull { get; set; }
+            public string FolderPath { get; set; }
+            public bool IsvalidFile { get; set; }
+        }
+
 
         //OTP mail method
         public static int SendMailForUser(string Toemailid, DataTable dt)

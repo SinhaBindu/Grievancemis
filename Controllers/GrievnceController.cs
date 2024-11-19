@@ -6,11 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Antlr.Runtime.Tree;
+using Grievancemis.Helpers;
 using Grievancemis.Manager;
 using Grievancemis.Models;
 using Microsoft.AspNet.Identity;
@@ -18,6 +20,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Newtonsoft.Json;
+using static Grievancemis.Manager.CommonModel;
 
 namespace Grievancemis.Controllers
 {
@@ -133,62 +136,46 @@ namespace Grievancemis.Controllers
                         Greid = Convert.ToString(tbl_Grievance.CaseId);
                         stGuid = Convert.ToString(tbl_Grievance.Id);
                         // Handle file upload
+                        var URLPath = string.Empty;
                         if (grievanceModel.DocUpload != null && grievanceModel.DocUpload.ContentLength > 0)
                         {
-                            string[] fileNames = grievanceModel.DocUpload.FileName.Split(',');
-                            string[] fileExtensions = new string[fileNames.Length];
-                            string[] filePaths = new string[fileNames.Length];
+                            FileModel modelfile = CommonModel.saveFile(grievanceModel.DocUpload, "GID" + stGuid, tbl_Grievance.CaseId.ToString() + DateTime.Now.Date.ToDateTimeDDMMYYYY());
+                            string fileExtension = Path.GetExtension(grievanceModel.DocUpload.FileName).ToLower();
 
-                            for (int i = 0; i < fileNames.Length; i++)
+                            // Check if the file extension is allowed
+                            if (fileExtension == ".zip" || fileExtension == ".png" || fileExtension == ".jpg" || fileExtension == ".pdf" || fileExtension == ".doc" || fileExtension == ".jpeg")
                             {
-                                string fileName = Path.GetFileName(fileNames[i]);
-                                string fileExtension = Path.GetExtension(fileName).ToLower();
-
-                                // Check if the file extension is allowed
-                                if (fileExtension == ".zip" || fileExtension == ".png" || fileExtension == ".jpg" || fileExtension == ".pdf" || fileExtension == ".doc" || fileExtension == ".jpeg")
+                                if (modelfile.IsvalidFile)
                                 {
-                                    // Check if the file size is not more than 20MB
-                                    if (grievanceModel.DocUpload.ContentLength <= 20971520)
-                                    {
-                                        string path = Path.Combine(Server.MapPath("~/Doc_Upload"), fileName);
-
-                                        // Save the file
-                                        grievanceModel.DocUpload.SaveAs(path);
-
-                                        // Save the file path in the database
-                                        filePaths[i] = Path.Combine("Doc_Upload", fileName);
-                                        fileExtensions[i] = fileExtension;
-                                    }
-                                    else
-                                    {
-                                        return Json(new { success = false, message = "File size is too large. Only files up to 20MB are allowed." });
-                                    }
+                                    URLPath = modelfile.FilePathFull;
                                 }
                                 else
                                 {
-                                    return Json(new { success = false, message = "Invalid file extension. Only zip, png, jpg, pdf, doc, and jpeg files are allowed." });
+                                    return Json(new { success = false, message = "File size is too large. Only files up to 20MB are allowed." });
                                 }
+                            }
+                            else
+                            {
+                                return Json(new { success = false, message = "Invalid file extension. Only zip, png, jpg, pdf, doc, and jpeg files are allowed." });
                             }
 
                             // Save the file paths in the Tbl_Grievance table
-                            tbl_Grievance.DocUpload = string.Join(",", filePaths);
+                            tbl_Grievance.DocUpload = URLPath;
 
                             // Save the file paths in the Tbl_Grievance_Documents table
-                            for (int i = 0; i < filePaths.Length; i++)
+                            Tbl_Grievance_Documents tbl_Grievance_Documents = new Tbl_Grievance_Documents
                             {
-                                Tbl_Grievance_Documents tbl_Grievance_Documents = new Tbl_Grievance_Documents
-                                {
-                                    GrievanceId = tbl_Grievance.Id,
-                                    DocumentPath = filePaths[i],
-                                    IsActive = true,
-                                    CreatedOn = DateTime.Now
-                                };
-                                db.Tbl_Grievance_Documents.Add(tbl_Grievance_Documents);
-                            }
+                                GrievanceId = tbl_Grievance.Id,
+                                DocumentPath = URLPath,
+                                IsActive = true,
+                                CreatedOn = DateTime.Now
+                            };
+                            db.Tbl_Grievance_Documents.Add(tbl_Grievance_Documents);
+
+                            db.Tbl_Grievance.Add(tbl_Grievance);
+                            res = db.SaveChanges();
                         }
-                        db.Tbl_Grievance.Add(tbl_Grievance);
-                        res = db.SaveChanges();
-                        if (Greid.Length <= 0)
+                        if (!string.IsNullOrWhiteSpace(Greid))
                         {
                             Greid = SP_Model.Usp_GetCaseIDwithguid(stGuid).Rows[0]["CaseId"].ToString();
                         }
@@ -207,11 +194,11 @@ namespace Grievancemis.Controllers
                         }
                         if (res > 0)
                         {
-                            return Json(new { success = true, message = "Your request is registered with Grievance reference id : " + Greid + "<br />" + "Mail sended successfully!" });//Data saved and mail sended successfully!
+                            return Json(new { success = true, message = "Your request is registered with Grievance reference id : " + Greid + "<br />" + "Mail sended successfully!" , res = 1 });//Data saved and mail sended successfully!
                         }
                         else
                         {
-                            return Json(new { success = true, message = "Your request is registered with Grievance reference id :" + Greid });//Data saved successfully!
+                            return Json(new { success = true, message = "Your request is registered with Grievance reference id :" + Greid ,res=1});//Data saved successfully!
                         }
 
                     }
@@ -343,18 +330,18 @@ namespace Grievancemis.Controllers
                                     var getemail = SP_Model.SP_AspnetUserCaseFirstTimeCheck(EmailId, aspId);
                                     if (getemail.Rows.Count > 0)
                                     {
-                                        return Json(new { success = true, message = "EmailId Verified.", redirect = "/UserCom/UserGList", resdata = 99, });
+                                        return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 99, });
                                     }
                                     else
                                         return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
                                 }
                                 if (usercheck.RoleId == "3")//TeamMember
                                 {
-                                    return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complain/GrievanceList", resdata = 100 });
+                                    return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 100 });
                                 }
                                 if (usercheck.RoleId == "1")//Admin
                                 {
-                                    return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complain/GrievanceList", resdata = 101 });
+                                    return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 101 });
                                 }
                             }
                         }

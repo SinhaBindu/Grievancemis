@@ -14,8 +14,8 @@
                     <th>Gender</th>
                     <th>Grievance Type</th>
                     @*<th>State</th>
-                    <th>Location</th>*@
-                    <th>Duration</th>
+                        <th>Location</th>*@
+                    <th>Duration In Days</th>
                     <th>Title</th>
                     <th>Message</th>
                     <th>Status</th>
@@ -28,62 +28,66 @@
             <tbody>
                 @foreach (DataRow row in Model.Rows)
                 {
-                <tr style="background-color:@row["RevertStatusBgColor"]">
-                    <td>@row["CaseId"]</td>
-                    <td>@row["CreatedOn"]</td>
-                    <td><div style="word-wrap: break-word; width: 90px">@row["Email"]</div></td>
-                    <td>@row["Name"]</td>
-                    <td>@row["Gender"]</td>
+                    <tr style="background-color:@row["RevertStatusBgColor"]">
+                        <td>@row["CaseId"]</td>
+                        <td>@row["CreatedOn"]</td>
+                        <td><div style="word-wrap: break-word; width: 90px">@row["Email"]</div></td>
+                        <td>@row["Name"]</td>
+                        <td>@row["Gender"]</td>
 
-                    <td>@row["GrievanceType"]</td>
-                    @*<td>@row["StateName"]</td>
-        <td>@row["Location"]</td>*@
-                    <td>@row["DateDiff"]</td>
-                    <td><div style="word-wrap: break-word; width: 100px">@row["Title"]</div></td>
-                    <td>
-                        <div style="word-wrap: break-word; width: 150px">
-                            @if (row["Grievance_Message"].ToString().Length <= 100)
-                            {
-                                <span class="txtshow">@row["Grievance_Message"].ToString()</span>
-                            }
-                            else
-                            {
-                                <span class="txtshow">@row["Grievance_Message"].ToString().Substring(0, 100)...</span>
-                            }
-                            @*<span class="txthide">@row["Grievance_Message"]</span>*@
-                        </div>
-                        @*<button class="read-more">Read more</button>*@
-                    </td>
-
-                    <td>@row["RevertTypeText"]</td>
-                    @if (row["RevertType_Id"].ToString() == "1" || string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
-                    {
+                        <td>@row["GrievanceType"]</td>
+                        @*<td>@row["StateName"]</td>
+                            <td>@row["Location"]</td>*@
+                        <td>@row["DateDiff"]</td>
+                        <td><div style="word-wrap: break-word; width: 100px">@row["Title"]</div></td>
                         <td>
-                            <button class="btn btn-warning btn-sm progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]','@row["MaxRevertID"]')">Revert</button>
+                            <div style="word-wrap: break-word; width: 150px">
+                                @if (row["Grievance_Message"].ToString().Length <= 100)
+                                {
+                                    <span class="txtshow">@row["Grievance_Message"].ToString()</span>
+                                }
+                                else
+                                {
+                                    <span class="txtshow">@row["Grievance_Message"].ToString().Substring(0, 100)...</span>
+                                }
+                                @*<span class="txthide">@row["Grievance_Message"]</span>*@
+                            </div>
+                            @*<button class="read-more">Read more</button>*@
                         </td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
-                    {
-                        <td>
-                            <a href="~/Complain/RevartList?GId=@row["Id"].ToString()" class="btn btn-primary btn-sm progress-button"><i class="ti ti-star text-lg leading-none"></i></a>
+
+                        <td>@row["RevertTypeText"]</td>
+                        @if (row["RevertType_Id"].ToString() == "1" || string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
+                        {
+                            <td>
+                                <button class="btn btn-warning btn-sm progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]','@row["MaxRevertID"]')">Revert</button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
+                        {
+                            <td>
+                                <a href="~/Complain/RevartList?GId=@row["Id"].ToString()" class="btn btn-primary btn-sm progress-button"><i class="ti ti-star text-lg leading-none"></i></a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+
+                        <td class="text-center tbltd tdtextwrp">
+                            @if (!string.IsNullOrWhiteSpace(row["DocGId"].ToString()))
+                            {
+                                <a href="@Url.Action("GetDownGImgDocZip", "Complain", new { grievanceId = (Guid)row["Id"] })" target="_blank">
+                                    <strong><i class="fa fa-download"></i></strong>
+                                </a>
+                            }
                         </td>
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                    <td class="text-center tbltd tdtextwrp">
-                        <a href="@Url.Action("GetDownGImgDocZip", "Complain", new { grievanceId = (Guid)row["Id"] })" target="_blank">
-                            <strong><i class="fa fa-download"></i></strong>
-                        </a>
-                    </td>
 
 
-                </tr>
+                    </tr>
                 }
             </tbody>
         </table>

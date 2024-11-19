@@ -16,6 +16,7 @@ namespace Grievancemis.Models
     {
         public int Id { get; set; }
         public System.Guid GrievanceId { get; set; }
+        public Nullable<int> RevertId { get; set; }
         public string DocumentPath { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }

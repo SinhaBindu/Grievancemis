@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlTypes;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -11,6 +12,8 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using static Grievancemis.Manager.CommonModel;
+using static ImageResizer.Plugins.Basic.Image404;
 namespace Grievancemis.Controllers
 {
     [Authorize]
@@ -51,15 +54,15 @@ namespace Grievancemis.Controllers
         }
         public ActionResult GetDownGImgDocZip(Guid? grievanceId)
         {
-            DataTable dt = SP_Model.GetUserGList(new FilterModel { Id = grievanceId.ToString() });
-            if (dt.Rows.Count == 0)
+            DataTable dt = SP_Model.GetGrievanceDoc(new FilterModel { GrievanceId = grievanceId.ToString() });
+            if (dt.Rows.Count== 0)
             {
                 return HttpNotFound("No documents found for the specified grievance.");
             }
 
             string folderPath = Server.MapPath("~/Doc_Upload");
             string zipFileName = $"{grievanceId}.zip";
-            string zipPath = Path.Combine(folderPath, zipFileName);
+            //string zipPath = Path.Combine(folderPath, zipFileName);
 
             if (!Directory.Exists(Server.MapPath("~/Doc_Upload/ImageZip")))
             {
@@ -68,6 +71,10 @@ namespace Grievancemis.Controllers
 
             // Use a HashSet to track added file names
             HashSet<string> addedFiles = new HashSet<string>();
+            var random = new Random();
+            int month = random.Next(1, 1200);
+            // Define the path for the temporary zip file
+            string zipPath = Server.MapPath("~/Doc_Upload/CombinedFilesZip" + month+DateTime.Now.ToDateTimeDDMMYYYY() + ".zip");
 
             using (var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
             {
@@ -76,15 +83,21 @@ namespace Grievancemis.Controllers
                     string filePath = dr["DocumentPath"].ToString();
                     if (!string.IsNullOrEmpty(filePath))
                     {
-                        string fileName = Path.GetFileName(filePath);
-                        string filePathc = Path.Combine(folderPath, fileName);
+                        //string fileName = Path.GetFileName(filePath);
+                        //string filePathc = Path.Combine(folderPath, fileName);
 
-                        // Check if the file has already been added
-                        if (!addedFiles.Contains(fileName) && System.IO.File.Exists(filePathc))
-                        {
-                            zip.CreateEntryFromFile(filePathc, fileName);
-                            addedFiles.Add(fileName); // Mark this file as added
-                        }
+                        //// Check if the file has already been added
+                        //if (!addedFiles.Contains(fileName) && System.IO.File.Exists(filePathc))
+                        //{
+                        //    zip.CreateEntryFromFile(filePathc, fileName);
+                        //    addedFiles.Add(fileName); // Mark this file as added
+                        //}
+                        string fileName = Path.GetFileName(filePath);
+                        // Add the file to the zip
+                        //var file = Directory.GetFiles(filePath, "*.*");
+                        string filePathc = Path.Combine(folderPath+"/GID" + grievanceId, fileName);
+
+                        zip.CreateEntryFromFile(filePathc, fileName);
                     }
                 }
             }
@@ -133,6 +146,43 @@ namespace Grievancemis.Controllers
                         teamRevertComplain.UserRevert_Date = DateTime.Now.Date;
                         teamRevertComplain.UpdatedBy = MvcApplication.CUser.UserId;
                         teamRevertComplain.UpdatedOn = DateTime.Now;
+
+                        var URLPath = string.Empty;
+                        if (filterModel.DocUpload != null && filterModel.DocUpload.ContentLength > 0)
+                        {
+                            FileModel modelfile = CommonModel.saveFile(filterModel.DocUpload, "GID" + teamRevertComplain.GrievanceId_fk, filterModel.RevertId.ToString() + DateTime.Now.Date.ToDateTimeDDMMYYYY());
+                            string fileExtension = Path.GetExtension(filterModel.DocUpload.FileName).ToLower();
+
+                            // Check if the file extension is allowed
+                            if (fileExtension == ".zip" || fileExtension == ".png" || fileExtension == ".jpg" || fileExtension == ".pdf" || fileExtension == ".doc" || fileExtension == ".jpeg")
+                            {
+                                if (modelfile.IsvalidFile)
+                                {
+                                    URLPath = modelfile.FilePathFull;
+                                }
+                                else
+                                {
+                                    return Json(new { success = false, message = "File size is too large. Only files up to 20MB are allowed." });
+                                }
+                            }
+                            else
+                            {
+                                return Json(new { success = false, message = "Invalid file extension. Only zip, png, jpg, pdf, doc, and jpeg files are allowed." });
+                            }
+
+                            // Save the file paths in the Tbl_Grievance_Documents table
+                            Tbl_Grievance_Documents tbl_Grievance_Documents = new Tbl_Grievance_Documents
+                            {
+                                GrievanceId = teamRevertComplain.GrievanceId_fk,
+                                RevertId = filterModel.RevertId,
+                                DocumentPath = URLPath,
+                                IsActive = true,
+                                CreatedOn = DateTime.Now
+                            };
+                            db.Tbl_Grievance_Documents.Add(tbl_Grievance_Documents);
+                            db.SaveChanges();
+                        }
+
                         //db.Tbl_TeamRevertComplain.Add(teamRevertComplain);
                         db_.SaveChanges(); // Save changes to get the GrievanceId_fk
 
@@ -170,14 +220,12 @@ namespace Grievancemis.Controllers
                 return Json(new { success = false, message = "An error occurred: " + ex.Message, Data = 0 });
             }
         }
-
         public ActionResult URevartList(string GId)
         {
             FilterModel model = new FilterModel();
             model.GrievanceId = GId;
             return View(model);
         }
-
         public ActionResult GetURevartList(FilterModel filtermodel)
         {
             try
@@ -236,14 +284,13 @@ namespace Grievancemis.Controllers
                 return View("Error", new HandleErrorInfo(ex, "UserCom", "DetailsCId"));
             }
         }
-
         public ActionResult AddNGrievance()
         {
             //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             GrivanceModel model = new GrivanceModel();
-            model.Email=MvcApplication.CUser.EmailId.Trim();
-            model.Name=MvcApplication.CUser.Name.Trim();
-            model.PhoneNo=MvcApplication.CUser.Phone.Trim();
+            model.Email = MvcApplication.CUser.EmailId.Trim();
+            model.Name = MvcApplication.CUser.Name.Trim();
+            model.PhoneNo = MvcApplication.CUser.Phone.Trim();
             return View(model);
         }
         [HttpPost]
@@ -296,76 +343,61 @@ namespace Grievancemis.Controllers
                         Greid = Convert.ToString(tbl_Grievance.CaseId);
                         stGuid = Convert.ToString(tbl_Grievance.Id);
                         // Handle file upload
+                        var URLPath = string.Empty;
                         if (grievanceModel.DocUpload != null && grievanceModel.DocUpload.ContentLength > 0)
                         {
-                            string[] fileNames = grievanceModel.DocUpload.FileName.Split(',');
-                            string[] fileExtensions = new string[fileNames.Length];
-                            string[] filePaths = new string[fileNames.Length];
+                            FileModel modelfile = CommonModel.saveFile(grievanceModel.DocUpload, "GID" + stGuid, tbl_Grievance.CaseId.ToString() + DateTime.Now.Date.ToDateTimeDDMMYYYY());
+                            string fileExtension = Path.GetExtension(grievanceModel.DocUpload.FileName).ToLower();
 
-                            for (int i = 0; i < fileNames.Length; i++)
+                            // Check if the file extension is allowed
+                            if (fileExtension == ".zip" || fileExtension == ".png" || fileExtension == ".jpg" || fileExtension == ".pdf" || fileExtension == ".doc" || fileExtension == ".jpeg")
                             {
-                                string fileName = Path.GetFileName(fileNames[i]);
-                                string fileExtension = Path.GetExtension(fileName).ToLower();
-
-                                // Check if the file extension is allowed
-                                if (fileExtension == ".zip" || fileExtension == ".png" || fileExtension == ".jpg" || fileExtension == ".pdf" || fileExtension == ".doc" || fileExtension == ".jpeg")
+                                if (modelfile.IsvalidFile)
                                 {
-                                    // Check if the file size is not more than 20MB
-                                    if (grievanceModel.DocUpload.ContentLength <= 20971520)
-                                    {
-                                        string path = Path.Combine(Server.MapPath("~/Doc_Upload"), fileName);
-
-                                        // Save the file
-                                        grievanceModel.DocUpload.SaveAs(path);
-
-                                        // Save the file path in the database
-                                        filePaths[i] = Path.Combine("Doc_Upload", fileName);
-                                        fileExtensions[i] = fileExtension;
-                                    }
-                                    else
-                                    {
-                                        return Json(new { success = false, message = "File size is too large. Only files up to 20MB are allowed." });
-                                    }
+                                    URLPath = modelfile.FilePathFull;
                                 }
                                 else
                                 {
-                                    return Json(new { success = false, message = "Invalid file extension. Only zip, png, jpg, pdf, doc, and jpeg files are allowed." });
+                                    return Json(new { success = false, message = "File size is too large. Only files up to 20MB are allowed." });
                                 }
+                            }
+                            else
+                            {
+                                return Json(new { success = false, message = "Invalid file extension. Only zip, png, jpg, pdf, doc, and jpeg files are allowed." });
                             }
 
                             // Save the file paths in the Tbl_Grievance table
-                            tbl_Grievance.DocUpload = string.Join(",", filePaths);
+                            tbl_Grievance.DocUpload = URLPath;
 
                             // Save the file paths in the Tbl_Grievance_Documents table
-                            for (int i = 0; i < filePaths.Length; i++)
+                            Tbl_Grievance_Documents tbl_Grievance_Documents = new Tbl_Grievance_Documents
                             {
-                                Tbl_Grievance_Documents tbl_Grievance_Documents = new Tbl_Grievance_Documents
-                                {
-                                    GrievanceId = tbl_Grievance.Id,
-                                    DocumentPath = filePaths[i],
-                                    IsActive = true,
-                                    CreatedOn = DateTime.Now
-                                };
-                                db.Tbl_Grievance_Documents.Add(tbl_Grievance_Documents);
-                            }
+                                GrievanceId = tbl_Grievance.Id,
+                                DocumentPath = URLPath,
+                                IsActive = true,
+                                CreatedOn = DateTime.Now
+                            };
+                            db.Tbl_Grievance_Documents.Add(tbl_Grievance_Documents);
+
+                            db.Tbl_Grievance.Add(tbl_Grievance);
+                            res = db.SaveChanges();
                         }
-                        db.Tbl_Grievance.Add(tbl_Grievance);
-                        res = db.SaveChanges();
-                        if (Greid.Length <= 0)
+
+                        if (!string.IsNullOrWhiteSpace(Greid))
                         {
                             Greid = SP_Model.Usp_GetCaseIDwithguid(stGuid).Rows[0]["CaseId"].ToString();
                         }
                     }
                     if (res > 0)
                     {
-                        var asp = db.AspNetUsers.Where(x => x.Email == grievanceModel.Email)?.FirstOrDefault();
+                        var asp = db.AspNetUsers.Where(x => x.Email == grievanceModel.Email.Trim())?.FirstOrDefault();
                         asp.Name = grievanceModel.Name.Trim();
+                        asp.PhoneNumber = grievanceModel.PhoneNo.Trim();
                         db.SaveChanges();
                         DataTable dt = new DataTable();
                         dt = SP_Model.GetTeamMailID();
                         if (dt.Rows.Count > 0)
                         {
-
                             res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail, Greid);
                             res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name);
                         }
@@ -394,7 +426,6 @@ namespace Grievancemis.Controllers
                 return Json(new { success = false, message = "An error occurred: " + ex.Message });
             }
         }
-
 
         private string ConvertViewToString(string viewName, object model)
         {

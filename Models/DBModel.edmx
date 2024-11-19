@@ -143,6 +143,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GrievanceId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RevertId" Type="int" />
           <Property Name="DocumentPath" Type="varchar(max)" />
           <Property Name="IsActive" Type="bit" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
@@ -374,7 +375,6 @@
           <EntitySet Name="M_GrievanceType" EntityType="Grievance_DBModel.M_GrievanceType" />
           <EntitySet Name="m_State_Master" EntityType="Grievance_DBModel.m_State_Master" />
           <EntitySet Name="Tbl_ExceptionHandle" EntityType="Grievance_DBModel.Tbl_ExceptionHandle" />
-          <EntitySet Name="Tbl_Grievance_Documents" EntityType="Grievance_DBModel.Tbl_Grievance_Documents" />
           <EntitySet Name="Tbl_LoginVerification" EntityType="Grievance_DBModel.Tbl_LoginVerification" />
           <EntitySet Name="tbl_UserRegistration" EntityType="Grievance_DBModel.tbl_UserRegistration" />
           <EntitySet Name="Tbl_UserRevertComplain" EntityType="Grievance_DBModel.Tbl_UserRevertComplain" />
@@ -392,10 +392,6 @@
           </AssociationSet>
           <EntitySet Name="Tbl_Grievance" EntityType="Grievance_DBModel.Tbl_Grievance" />
           <EntitySet Name="Tbl_TeamRevertComplain" EntityType="Grievance_DBModel.Tbl_TeamRevertComplain" />
-          <AssociationSet Name="FK_Tbl_Grievance_Documents_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance">
-            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
-            <End Role="Tbl_Grievance_Documents" EntitySet="Tbl_Grievance_Documents" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance">
             <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
             <End Role="Tbl_TeamRevertComplain" EntitySet="Tbl_TeamRevertComplain" />
@@ -403,6 +399,11 @@
           <AssociationSet Name="FK_Tbl_UserRevertComplain_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance">
             <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
             <End Role="Tbl_UserRevertComplain" EntitySet="Tbl_UserRevertComplain" />
+          </AssociationSet>
+          <EntitySet Name="Tbl_Grievance_Documents" EntityType="Grievance_DBModel.Tbl_Grievance_Documents" />
+          <AssociationSet Name="FK_Tbl_Grievance_Documents_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance">
+            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
+            <End Role="Tbl_Grievance_Documents" EntitySet="Tbl_Grievance_Documents" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -500,18 +501,6 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Tbl_Grievance_Documents">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GrievanceId" Type="Guid" Nullable="false" />
-          <Property Name="DocumentPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance_Documents" ToRole="Tbl_Grievance" />
         </EntityType>
         <EntityType Name="Tbl_LoginVerification">
           <Key>
@@ -624,9 +613,9 @@
           <Property Name="Duration" Type="Int32" />
           <Property Name="IsSentMailDuration" Type="Boolean" />
           <Property Name="SentMailDurationDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tbl_Grievance_Documents" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_Grievance_Documents" />
           <NavigationProperty Name="Tbl_TeamRevertComplain" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_TeamRevertComplain" />
           <NavigationProperty Name="Tbl_UserRevertComplain" Relationship="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_UserRevertComplain" />
+          <NavigationProperty Name="Tbl_Grievance_Documents" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_Grievance_Documents" />
         </EntityType>
         <EntityType Name="Tbl_TeamRevertComplain">
           <Key>
@@ -656,18 +645,6 @@
           <Property Name="SentMailRevertDuration" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_TeamRevertComplain" ToRole="Tbl_Grievance" />
         </EntityType>
-        <Association Name="FK_Tbl_Grievance_Documents_Tbl_Grievance">
-          <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1" />
-          <End Type="Grievance_DBModel.Tbl_Grievance_Documents" Role="Tbl_Grievance_Documents" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Grievance">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tbl_Grievance_Documents">
-              <PropertyRef Name="GrievanceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance">
           <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -693,6 +670,31 @@
             </Principal>
             <Dependent Role="Tbl_UserRevertComplain">
               <PropertyRef Name="GrievanceId_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tbl_Grievance_Documents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GrievanceId" Type="Guid" Nullable="false" />
+          <Property Name="RevertId" Type="Int32" />
+          <Property Name="DocumentPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance_Documents" ToRole="Tbl_Grievance" />
+        </EntityType>
+        <Association Name="FK_Tbl_Grievance_Documents_Tbl_Grievance">
+          <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1" />
+          <End Type="Grievance_DBModel.Tbl_Grievance_Documents" Role="Tbl_Grievance_Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Grievance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_Grievance_Documents">
+              <PropertyRef Name="GrievanceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -795,18 +797,6 @@
                 <ScalarProperty Name="Controller" ColumnName="Controller" />
                 <ScalarProperty Name="Table" ColumnName="Table" />
                 <ScalarProperty Name="Id_pk" ColumnName="Id_pk" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_Grievance_Documents">
-            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_Grievance_Documents">
-              <MappingFragment StoreEntitySet="Tbl_Grievance_Documents">
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DocumentPath" ColumnName="DocumentPath" />
-                <ScalarProperty Name="GrievanceId" ColumnName="GrievanceId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -926,6 +916,19 @@
                 <ScalarProperty Name="RevertTypeId" ColumnName="RevertTypeId" />
                 <ScalarProperty Name="GrievanceId_fk" ColumnName="GrievanceId_fk" />
                 <ScalarProperty Name="TeamId_pk" ColumnName="TeamId_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Grievance_Documents">
+            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_Grievance_Documents">
+              <MappingFragment StoreEntitySet="Tbl_Grievance_Documents">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DocumentPath" ColumnName="DocumentPath" />
+                <ScalarProperty Name="RevertId" ColumnName="RevertId" />
+                <ScalarProperty Name="GrievanceId" ColumnName="GrievanceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

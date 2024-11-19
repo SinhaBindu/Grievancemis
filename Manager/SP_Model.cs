@@ -76,7 +76,7 @@ namespace Grievancemis.Manager
             return dt;
         }
 
-        public static DataTable GetRevartMail(string GVID,string RevertId)
+        public static DataTable GetRevartMail(string GVID, string RevertId)
         {
             StoredProcedure sp = new StoredProcedure("Usp_RevartMailSend");
             sp.Command.AddParameter("@Id", GVID, DbType.String);
@@ -106,7 +106,7 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-        public static DataTable SP_AspnetUserCaseFirstTimeCheck(string EmailId,string AspnetUserId)
+        public static DataTable SP_AspnetUserCaseFirstTimeCheck(string EmailId, string AspnetUserId)
         {
             StoredProcedure sp = new StoredProcedure("SP_AspnetUserCaseFirstTimeCheck");
             sp.Command.AddParameter("@EmailId", EmailId, DbType.String);
@@ -135,17 +135,22 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-        
+
         public static DataSet GetDashboard()
         {
+            string userid = string.Empty;
+            if (MvcApplication.CUser.RoleId == "2")
+            {
+                userid = MvcApplication.CUser.UserId;
+            }
             StoredProcedure sp = new StoredProcedure("Usp_Dashboard");
             sp.Command.AddParameter("@RoleId", MvcApplication.CUser.RoleId, DbType.String);
-            sp.Command.AddParameter("@UserId", MvcApplication.CUser.UserId, DbType.String);
+            sp.Command.AddParameter("@UserId", userid, DbType.String);
             DataSet ds = sp.ExecuteDataSet();
             return ds;
 
         }
-        public static DataTable GetSPCheckGrievanceAlready(string EmailId,string RegDate)
+        public static DataTable GetSPCheckGrievanceAlready(string EmailId, string RegDate)
         {
             StoredProcedure sp = new StoredProcedure("SP_CheckGrievanceAlready");
             sp.Command.AddParameter("@EmailId", EmailId, DbType.String);

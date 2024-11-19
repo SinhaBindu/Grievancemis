@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -49,6 +50,51 @@ namespace Grievancemis.Controllers
                 string er = ex.Message;
                 return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
             }
+        }
+        public ActionResult GetDownGImgDocZip(Guid? grievanceId)
+        {
+            DataTable dt = SP_Model.GetGrievanceList(new FilterModel { Id = grievanceId.ToString() });
+            if (dt.Rows.Count == 0)
+            {
+                return HttpNotFound("No documents found for the specified grievance.");
+            }
+
+            string folderPath = Server.MapPath("~/Doc_Upload");
+            string zipFileName = $"{grievanceId}.zip";
+            string zipPath = Path.Combine(folderPath, zipFileName);
+
+            if (!Directory.Exists(Server.MapPath("~/Doc_Upload/ImageZip")))
+            {
+                Directory.CreateDirectory(Server.MapPath("~/Doc_Upload/ImageZip"));
+            }
+
+            // Use a HashSet to track added file names
+            HashSet<string> addedFiles = new HashSet<string>();
+
+            using (var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string filePath = dr["DocumentPath"].ToString();
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        string fileName = Path.GetFileName(filePath);
+                        string filePathc = Path.Combine(folderPath, fileName);
+
+                        // Check if the file has already been added
+                        if (!addedFiles.Contains(fileName) && System.IO.File.Exists(filePathc))
+                        {
+                            zip.CreateEntryFromFile(filePathc, fileName);
+                            addedFiles.Add(fileName); // Mark this file as added
+                        }
+                    }
+                }
+            }
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(zipPath);
+            System.IO.File.Delete(zipPath); // Clean up the zip file after download
+
+            return File(fileBytes, "application/zip", zipFileName);
         }
 
         public ActionResult RevertCList()

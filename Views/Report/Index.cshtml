@@ -43,58 +43,50 @@
     </div>
 </div>
 
-@*<div class="grievances-list">
-        <div class="box-design">
-            <div class="row">
-                <div class="col-span-12 xl:col-span-3 md:col-span-6">
-
-                </div>
-                <div class="col-span-12 xl:col-span-3 md:col-span-6">
-                    <div class="card card-box p-0">
-                        <div class="card-head">
-                            <div class="title">Grievance Intervention Areas</div>
-                            <div class="tools">
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <figure class="highcharts-figure">
-                                <div id="parent-container">
-                                    <div id="containermap"></div>
-                                </div>
-                            </figure>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>*@
 <div class="grid grid-cols-12 gap-x-6">
-    <div class="col-span-12 xl:col-span-3 md:col-span-6">
-        <div id="myPieChart" style="width: 500px; height: 400px;"></div>
-    </div>
-    <div class="col-span-12 xl:col-span-3 md:col-span-6">
+    <div class="col-span-12 lg:col-span-6">
         <div class="card">
-            <div class="card-head">
-                <div class="title">Grievance Intervention Areas</div>
-                <div class="tools">
-                </div>
+            <div class="card-body">
+                <div id="myPieChart" style="width: 470px; height: 430px;"></div>
             </div>
         </div>
-        <figure class="highcharts-figure">
-            <div id="parent-container">
-                <div id="containermap"></div>
-            </div>
-        </figure>
     </div>
-        <div class="col-span-12 xl:col-span-3 md:col-span-6">
-            <div id="gtypechart" style="width: 500px; height: 400px;"></div>
+    <div class="col-span-12 lg:col-span-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="text-center">
+                    Grievance Intervention Areas
+                </h4>
+                <figure class="highcharts-figure">
+                    <div id="parent-container">
+                        <div id="containermap"></div>
+                    </div>
+                </figure>
+            </div>
         </div>
-        <div class="col-span-12 xl:col-span-3 md:col-span-6">
-            <div id="genderchart" style="width: 500px; height: 400px;"></div>
+    </div>
+    
+    <div class="col-span-12 lg:col-span-6">
+        <div class="card">            
+            <div class="card-body">
+                <div id="gtypechart" style="width: 470px; height: 400px;"></div>
+            </div>
         </div>
-
+    </div>
+    <div class="col-span-12 lg:col-span-6">
+        <div class="card">
+            <div class="card-body">
+                <figure class="highcharts-figure">
+                    <div id="parent-container">
+                        <div id="genderchart" style="width: 470px; height: 400px;"></div>
+                    </div>
+                </figure>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval");

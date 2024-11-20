@@ -331,14 +331,7 @@ namespace Grievancemis.Controllers
                         istype = Convert.ToInt32(tbl_Grievance.StateId);
                         var GType = db.M_GrievanceType.Where(b => b.Id == igtype)?.FirstOrDefault();
                         var SType = db.m_State_Master.Where(b => b.LGD_State_Code == istype)?.FirstOrDefault();
-                        str.Append("<table border='1'>");
-                        str.Append("<tr><td>Email</td><td>Name</td><td>Phone Number</td><td>Gender</td></tr>");
-                        str.Append("<tr><td>" + tbl_Grievance.Email + "</td><td>" + tbl_Grievance.Name + "</td><td>" + tbl_Grievance.PhoneNo + "</td><td>" + tbl_Grievance.Gender + "</td></tr>");
-                        str.Append("<tr><td>Grievance Type</td><td>State Name</td><td>Title</td></tr>");
-                        str.Append("<tr><td>" + GType.GrievanceType + "</td><td>" + SType.StateName + "</td><td>" + tbl_Grievance.Title + "</td></tr>");
-                        str.Append("<tr><td>Location</td><td colspan='2'>Message</td></tr>");
-                        str.Append("<tr><td>" + tbl_Grievance.Location + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
-                        str.Append("</table>");
+                       
                         partymail = tbl_Grievance.Email.Trim();
                         Greid = Convert.ToString(tbl_Grievance.CaseId);
                         stGuid = Convert.ToString(tbl_Grievance.Id);
@@ -346,7 +339,7 @@ namespace Grievancemis.Controllers
                         var URLPath = string.Empty;
                         if (grievanceModel.DocUpload != null && grievanceModel.DocUpload.ContentLength > 0)
                         {
-                            FileModel modelfile = CommonModel.saveFile(grievanceModel.DocUpload, "GID" + stGuid, tbl_Grievance.CaseId.ToString() + DateTime.Now.Date.ToDateTimeDDMMYYYY());
+                            FileModel modelfile = CommonModel.saveFile(grievanceModel.DocUpload, "GID" + stGuid, tbl_Grievance.Id.ToString() + DateTime.Now.Date.ToDateTimeDDMMYYYY());
                             string fileExtension = Path.GetExtension(grievanceModel.DocUpload.FileName).ToLower();
 
                             // Check if the file extension is allowed
@@ -381,12 +374,25 @@ namespace Grievancemis.Controllers
 
                             db.Tbl_Grievance.Add(tbl_Grievance);
                             res = db.SaveChanges();
+
+                            partymail = tbl_Grievance.Email.Trim();
+                            Greid = Convert.ToString(tbl_Grievance.CaseId);
+                            if (!string.IsNullOrWhiteSpace(stGuid))
+                            {
+                                Greid = SP_Model.Usp_GetCaseIDwithguid(stGuid).Rows[0]["CaseId"].ToString();
+                            }
+                            str.Append("<table border='1'>");
+                            str.Append("<tr><td>Gender</td><td>" + tbl_Grievance.Gender + "</td></tr>");
+                            str.Append("<tr><td>Email</td><td>Name</td><td>Phone Number</td></tr>");
+                            str.Append("<tr><td>" + tbl_Grievance.Email + "</td><td>" + tbl_Grievance.Name + "</td><td>" + tbl_Grievance.PhoneNo + "</td></tr>");
+                            str.Append("<tr><td>Grievance Type</td><td>State Name</td><td>Title</td></tr>");
+                            str.Append("<tr><td>" + GType.GrievanceType + "</td><td>" + SType.StateName + "</td><td>" + tbl_Grievance.Title + "</td></tr>");
+                            str.Append("<tr><td>Location</td><td colspan='2'>Message</td></tr>");
+                            str.Append("<tr><td>" + tbl_Grievance.Location + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
+                            str.Append("</table>");
+
                         }
 
-                        if (!string.IsNullOrWhiteSpace(Greid))
-                        {
-                            Greid = SP_Model.Usp_GetCaseIDwithguid(stGuid).Rows[0]["CaseId"].ToString();
-                        }
                     }
                     if (res > 0)
                     {

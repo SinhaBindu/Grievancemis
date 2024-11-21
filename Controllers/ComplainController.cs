@@ -124,11 +124,11 @@ namespace Grievancemis.Controllers
                 {
                     return Json(new { success = false, message = "All fileds are required.", Data = 201 });
                 }
-                DataTable dtcheck = SP_Model.GetSPCheckRevertAlready();
-                if (dtcheck.Rows.Count > 0)
-                {
-                    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
-                }
+                //DataTable dtcheck = SP_Model.GetSPCheckRevertAlready();
+                //if (dtcheck.Rows.Count > 0)
+                //{
+                //    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
+                //}
                 string Greid = string.Empty;
                 if (filterModel.GrievanceId_fk == Guid.Empty || filterModel.RevertTypeId == 0 || string.IsNullOrWhiteSpace(filterModel.TeamRevertMessage))
                 {
@@ -151,6 +151,7 @@ namespace Grievancemis.Controllers
                     int res = db.SaveChanges();
                     var tblgrive = db.Tbl_Grievance.Find(filterModel.GrievanceId_fk);
                     tblgrive.RevertType_Id = filterModel.RevertTypeId;
+                    tblgrive.RevertTypeDate = DateTime.Now.Date;
                     db.SaveChanges();
                     if (res > 0)
                     {

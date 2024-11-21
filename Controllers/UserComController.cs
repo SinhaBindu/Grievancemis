@@ -55,7 +55,7 @@ namespace Grievancemis.Controllers
         public ActionResult GetDownGImgDocZip(Guid? grievanceId)
         {
             DataTable dt = SP_Model.GetGrievanceDoc(new FilterModel { GrievanceId = grievanceId.ToString() });
-            if (dt.Rows.Count== 0)
+            if (dt.Rows.Count == 0)
             {
                 return HttpNotFound("No documents found for the specified grievance.");
             }
@@ -74,7 +74,7 @@ namespace Grievancemis.Controllers
             var random = new Random();
             int month = random.Next(1, 1200);
             // Define the path for the temporary zip file
-            string zipPath = Server.MapPath("~/Doc_Upload/CombinedFilesZip" + month+DateTime.Now.ToDateTimeDDMMYYYY() + ".zip");
+            string zipPath = Server.MapPath("~/Doc_Upload/CombinedFilesZip" + month + DateTime.Now.ToDateTimeDDMMYYYY() + ".zip");
 
             using (var zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
             {
@@ -95,7 +95,7 @@ namespace Grievancemis.Controllers
                         string fileName = Path.GetFileName(filePath);
                         // Add the file to the zip
                         //var file = Directory.GetFiles(filePath, "*.*");
-                        string filePathc = Path.Combine(folderPath+"/GID" + grievanceId, fileName);
+                        string filePathc = Path.Combine(folderPath + "/GID" + grievanceId, fileName);
 
                         zip.CreateEntryFromFile(filePathc, fileName);
                     }
@@ -127,11 +127,11 @@ namespace Grievancemis.Controllers
                 {
                     return Json(new { success = false, message = "All fields are required.", Data = 0 });
                 }
-                DataTable dtcheck = SP_Model.GetSPCheckRevertAlready();
-                if (dtcheck.Rows.Count > 0)
-                {
-                    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
-                }
+                //DataTable dtcheck = SP_Model.GetSPCheckRevertAlready();
+                //if (dtcheck.Rows.Count > 0)
+                //{
+                //    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
+                //}
 
                 using (var db_ = new Grievance_DBEntities())
                 {
@@ -298,11 +298,11 @@ namespace Grievancemis.Controllers
         {
             try
             {
-                DataTable dtcheck = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
-                if (dtcheck.Rows.Count > 0)
-                {
-                    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
-                }
+                //DataTable dtcheck = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
+                //if (dtcheck.Rows.Count > 0)
+                //{
+                //    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
+                //}
 
                 int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty, stGuid = string.Empty;
                 if (ModelState.IsValid)
@@ -331,7 +331,7 @@ namespace Grievancemis.Controllers
                         istype = Convert.ToInt32(tbl_Grievance.StateId);
                         var GType = db.M_GrievanceType.Where(b => b.Id == igtype)?.FirstOrDefault();
                         var SType = db.m_State_Master.Where(b => b.LGD_State_Code == istype)?.FirstOrDefault();
-                       
+
                         partymail = tbl_Grievance.Email.Trim();
                         Greid = Convert.ToString(tbl_Grievance.CaseId);
                         stGuid = Convert.ToString(tbl_Grievance.Id);
@@ -371,29 +371,29 @@ namespace Grievancemis.Controllers
                                 CreatedOn = DateTime.Now
                             };
                             db.Tbl_Grievance_Documents.Add(tbl_Grievance_Documents);
-
-                            db.Tbl_Grievance.Add(tbl_Grievance);
-                            res = db.SaveChanges();
-
-                            partymail = tbl_Grievance.Email.Trim();
-                            Greid = Convert.ToString(tbl_Grievance.CaseId);
-                            if (!string.IsNullOrWhiteSpace(stGuid))
-                            {
-                                Greid = SP_Model.Usp_GetCaseIDwithguid(stGuid).Rows[0]["CaseId"].ToString();
-                            }
-                            str.Append("<table border='1'>");
-                            str.Append("<tr><td>Gender</td><td>" + tbl_Grievance.Gender + "</td></tr>");
-                            str.Append("<tr><td>Email</td><td>Name</td><td>Phone Number</td></tr>");
-                            str.Append("<tr><td>" + tbl_Grievance.Email + "</td><td>" + tbl_Grievance.Name + "</td><td>" + tbl_Grievance.PhoneNo + "</td></tr>");
-                            str.Append("<tr><td>Grievance Type</td><td>State Name</td><td>Title</td></tr>");
-                            str.Append("<tr><td>" + GType.GrievanceType + "</td><td>" + SType.StateName + "</td><td>" + tbl_Grievance.Title + "</td></tr>");
-                            str.Append("<tr><td>Location</td><td colspan='2'>Message</td></tr>");
-                            str.Append("<tr><td>" + tbl_Grievance.Location + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
-                            str.Append("</table>");
-
                         }
+                        db.Tbl_Grievance.Add(tbl_Grievance);
+                        res = db.SaveChanges();
+
+                        partymail = tbl_Grievance.Email.Trim();
+                        Greid = Convert.ToString(tbl_Grievance.CaseId);
+                        if (!string.IsNullOrWhiteSpace(stGuid))
+                        {
+                            Greid = SP_Model.Usp_GetCaseIDwithguid(stGuid).Rows[0]["CaseId"].ToString();
+                        }
+                        str.Append("<table border='1'>");
+                        str.Append("<tr><td>Gender</td><td>" + tbl_Grievance.Gender + "</td></tr>");
+                        str.Append("<tr><td>Email</td><td>Name</td><td>Phone Number</td></tr>");
+                        str.Append("<tr><td>" + tbl_Grievance.Email + "</td><td>" + tbl_Grievance.Name + "</td><td>" + tbl_Grievance.PhoneNo + "</td></tr>");
+                        str.Append("<tr><td>Grievance Type</td><td>State Name</td><td>Title</td></tr>");
+                        str.Append("<tr><td>" + GType.GrievanceType + "</td><td>" + SType.StateName + "</td><td>" + tbl_Grievance.Title + "</td></tr>");
+                        str.Append("<tr><td>Location</td><td colspan='2'>Message</td></tr>");
+                        str.Append("<tr><td>" + tbl_Grievance.Location + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
+                        str.Append("</table>");
 
                     }
+
+
                     if (res > 0)
                     {
                         var asp = db.AspNetUsers.Where(x => x.Email == grievanceModel.Email.Trim())?.FirstOrDefault();

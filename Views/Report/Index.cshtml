@@ -24,22 +24,22 @@
     <div class="datas bgrbule-7">
         <span class="data-icon"><i class="fa fa-cloud"></i></span>
         <h3 id="dv-total"></h3>
-        <p>Total Grievance</p>
+        <p><strong>Total</strong></p>
     </div>
     <div class="datas bgr-4">
         <span class="data-icon"><i class="fa fa-star"></i></span>
         <h3 id="dv-new"></h3>
-        <p>New Grievance</p>
+        <p>New Cases</p>
     </div>
     <div class="datas bgr-5">
         <span class="data-icon"><i class="fa fa-clipboard"></i></span>
         <h3 id="dv-clarification"></h3>
-        <p>Clarification Grievance</p>
+        <p>Clarification</p>
     </div>
     <div class="datas bgrSuccess-2">
         <span class="data-icon"><i class="fa fa-check"></i></span>
         <h3 id="dv-close"></h3>
-        <p>Closed Grievance</p>
+        <p>Closed</p>
     </div>
 </div>
 
@@ -55,7 +55,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="text-center">
-                    Grievance Intervention Areas
+                    Statewise Grievance Distribution
                 </h4>
                 <figure class="highcharts-figure">
                     <div id="parent-container">
@@ -96,7 +96,7 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://code.highcharts.com/stock/modules/drilldown.js"></script>
     <script src="https://code.highcharts.com/maps/modules/map.js"></script>
-    <script src="~/Scripts/JS/india_st.js"></script>
+    <script src="~/Scripts/JS/India_State_Boundary.js"></script>
 
     <script>
     var Dlist1 = [], DlistMap = [],DGender=[],DGType=[];
@@ -141,7 +141,7 @@
                 var DataTitle = 0; var datanboj = [];
                 for (var i = 0; i < RData.length; i++) {
                     DataTitle = RData[i].TotalCount;
-                    datanboj.push({ name: 'New Case', y: RData[i].Newsub, color: '#f0ad92' });
+                    datanboj.push({ name: 'New Cases', y: RData[i].Newsub, color: '#f0ad92' });
                     datanboj.push({ name: 'Clarifications', y: RData[i].ClarificationSub, color:'#85c1e9' });
                     datanboj.push({ name: 'Closed', y: RData[i].ClosedSub, color:'#82e0aa' });
                 }
@@ -150,10 +150,10 @@
                         type: 'pie'
                     },
                     title: {
-                        text: 'Complain Status'
+                        text: 'Grievance Status'
                     },
                     subtitle: {
-                        text: 'Total Complains: ' + DataTitle
+                        text: 'Total Grievances : ' + DataTitle
                     },
                     credits: {
                         enabled: false
@@ -339,7 +339,7 @@
                         text: 'Gender Status'
                     },
                     subtitle: {
-                        text: 'Total no of data : ' + sumtotal
+                        text: 'Total Cases Status : ' + sumtotal
                     },
                     credits: {
                         enabled: false
@@ -384,7 +384,7 @@
                         text: 'Grievance Type Status'
                     },
                     subtitle: {
-                        text: 'Total no of data : ' + sumtotal
+                        text: 'Total Cases Status : ' + sumtotal
                     },
                     credits: {
                         enabled: false

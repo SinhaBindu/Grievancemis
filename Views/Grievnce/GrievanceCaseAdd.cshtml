@@ -50,7 +50,7 @@
                             <label>
                                 OTP
                             </label>
-                            <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Opt Code" required>
+                            <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Otp Code" required>
                         </div>
                         <div class="col-md-offset-2 col-md-10" style="margin-bottom:10px;">
                             <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyEamilMailSendPost()"> Proceed</button>
@@ -475,15 +475,17 @@
                     success: function (data) {
                         if (data.success) {
                             toastr.success(data.message);
-                            if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
-                                window.location.href = resp.redirect;//document.baseURI +
-                            }
+                            //if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
+                            //    window.location.href = resp.redirect;//document.baseURI +
+                            //}
+                            //window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
                             $('#formid')[0].reset();
                             $('#div-evc').show();
                             $('#div-vc').hide();
                             $('#div-g').hide();
                             $('#div-emailid').show();
                             $('#Email_Id').val('');
+                            $('#Email_Id').removeAttr('readonly');
                             $('#OptCode').val('');
                         }
                         else {

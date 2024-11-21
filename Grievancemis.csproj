@@ -463,7 +463,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\JS\india_st.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\Shared\RevartMail.html" />
     <Content Include="Views\Shared\UserTemplate.html" />
@@ -533,6 +532,8 @@
     <Content Include="Views\UserCom\DetailsCId.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\UserCom\AddNGrievance.cshtml" />
+    <Content Include="Scripts\JS\India_State_Boundary.json" />
+    <Content Include="Scripts\JS\India_State_Boundary.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -305,7 +305,7 @@ namespace Grievancemis.Manager
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             //int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Hi,", maxID = "", RandomValue = "", OTPCode = "";
+            string To = "", Subject = "", Body = "", ReceiverName = "Hi", maxID = "", RandomValue = "", OTPCode = "";
             //string ASDT = ""; string DurationTime = ""; 
             string OtherEmailID = "sinhabinduk@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
@@ -469,7 +469,7 @@ namespace Grievancemis.Manager
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Dear User"
+            string To = "", Subject = "", Body = "", ReceiverName = "Dear"
                 , SenderName = "", RandomValue = "", OTPCode = "";
             string ASDT = ""; string DurationTime = ""; string BatchName = "";
             string TrainerName = ""; string DistrictAgencyTrainingCenter = "";

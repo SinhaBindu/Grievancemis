@@ -90,7 +90,7 @@ namespace Grievancemis.Models
         public string Gender { get; set; }
 
         [Display(Name = "Other")]
-        //[Required]
+        [Required]
         public string Other { get; set; }
 
         //[Display(Name = "GrievanceType")]

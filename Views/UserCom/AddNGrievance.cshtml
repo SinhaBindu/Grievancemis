@@ -85,7 +85,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4" >
                         @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
                         <span style="color:red;">*</span>
                         <div class="col-md-10">
@@ -93,7 +93,7 @@
                             @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-4" id="dv_Other" style="display:none">
                         @Html.LabelFor(model => model.Other, htmlAttributes: new { @class = "control-label col-md-2" })
                         <span style="color:red;">*</span>
                         <div class="col-md-10">
@@ -159,6 +159,15 @@
             $(".menu-btn").click(function () {
                 $(".menu-btn").toggleClass("open");
                 $(".nav").toggleClass("show");
+            });
+            $('#GrievanceType').change(function () {
+                var selectedValue = $(this).val();
+                if (selectedValue == '12') { // Assuming the value for "Other" is 12
+                    $('#dv_Other').show(); // Show the Other textbox
+                } else {
+                    $('#dv_Other').hide(); // Hide the Other textbox
+                    $('#Other').val(''); // Clear the Other textbox
+                }
             });
 
             $('#formid').submit(function (e) {

@@ -124,7 +124,7 @@
                                         </div>
                                     </div>
                                     <div class="flex-form">
-                                        <div class="form-group">
+                                        <div class="form-group" id="dv_Other" style="display:none">
                                             @Html.LabelFor(model => model.Other, htmlAttributes: new { @class = "control-label col-md-2" })
                                             <span style="color:red;">*</span>
                                             <div class="col-md-10">
@@ -418,6 +418,15 @@
                 $(".menu-btn").toggleClass("open");
                 $(".nav").toggleClass("show");
             });
+            $('#GrievanceType').change(function () {
+                var selectedValue = $(this).val();
+                if (selectedValue == '12') { // Assuming the value for "Other" is 12
+                    $('#dv_Other').show(); // Show the Other textbox
+                } else {
+                    $('#dv_Other').hide(); // Hide the Other textbox
+                    $('#Other').val(''); // Clear the Other textbox
+                }
+            });
 
             $('#formid').submit(function (e) {
                 if ($('#Email').val() == '') {
@@ -440,10 +449,10 @@
                     toastr.error('Enter the State.');
                     return false;
                 }
-                //if ($('#Location').val() == '') {
-                //    toastr.error('Enter the Location.');
-                //    return false;
-                //}
+                if ($('#Other').val() == '') {
+                    toastr.error('Enter the Other.');
+                    return false;
+                }
                 if ($('#Title').val() == '') {
                     toastr.error('Enter the Title.');
                     return false;

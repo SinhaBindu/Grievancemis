@@ -125,11 +125,11 @@
                                     </div>
                                     <div class="flex-form">
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            @Html.LabelFor(model => model.Other, htmlAttributes: new { @class = "control-label col-md-2" })
                                             <span style="color:red;">*</span>
                                             <div class="col-md-10">
-                                                @Html.TextBoxFor(model => model.Location, new { @class = "form-control-input", @required = "required" })
-                                                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                                                @Html.TextBoxFor(model => model.Other, new { @class = "form-control-input", @required = "required" })
+                                                @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
 
@@ -440,10 +440,10 @@
                     toastr.error('Enter the State.');
                     return false;
                 }
-                if ($('#Location').val() == '') {
-                    toastr.error('Enter the Location.');
-                    return false;
-                }
+                //if ($('#Location').val() == '') {
+                //    toastr.error('Enter the Location.');
+                //    return false;
+                //}
                 if ($('#Title').val() == '') {
                     toastr.error('Enter the Title.');
                     return false;

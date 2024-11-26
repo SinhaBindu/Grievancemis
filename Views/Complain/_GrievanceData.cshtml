@@ -23,6 +23,7 @@
                     <th>Action</th>
                     <th>View</th>
                     <th>Image Download</th>
+                    <th>Work Assign</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,11 +35,7 @@
                         <td><div style="word-wrap: break-word; width: 90px">@row["Email"]</div></td>
                         <td>@row["Name"]</td>
                         <td>@row["Gender"]</td>
-
                         <td>@row["GrievanceType"]</td>
-                        @*<td>@row["StateName"]</td>
-                            <td>@row["Location"]</td>*@
-                        @*<td>@row["DateDiff"]</td>*@
                         <td><div style="word-wrap: break-word; width: 100px">@row["Title"]</div></td>
                         <td>
                             <div style="word-wrap: break-word; width: 150px">
@@ -50,9 +47,8 @@
                                 {
                                     <span class="txtshow">@row["Grievance_Message"].ToString().Substring(0, 100)...</span>
                                 }
-                                @*<span class="txthide">@row["Grievance_Message"]</span>*@
                             </div>
-                            @*<button class="read-more">Read more</button>*@
+
                         </td>
 
                         <td>@row["RevertTypeText"]</td>
@@ -85,6 +81,9 @@
                                 </a>
                             }
                         </td>
+                        <td>
+                            <button class="btn btn-success btn-sm assign-button" onclick="openWorkAssignPopup('@row["Id"]', '@row["CaseId"]', '@row["Name"]', '@row["CreatedOn"]')">Work Assign</button>
+                        </td>
 
 
                     </tr>
@@ -94,6 +93,7 @@
     </div>
 </div>
 
-@section Script{
 
+@section Script{
+ 
 }

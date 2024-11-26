@@ -34,9 +34,9 @@ namespace Grievancemis.Models
         [Required]
         public int StateId { get; set; }
 
-        [Display(Name = "Location")]
-        [Required]
-        public string Location { get; set; }
+        //[Display(Name = "Location")]
+        //[Required]
+        //public string Location { get; set; }
 
         [Display(Name = "Is Sent")]
         public bool IsSent { get; set; }
@@ -87,12 +87,17 @@ namespace Grievancemis.Models
 
         [Display(Name = "Gender")]
         [Required]
-        public string Gender { get; set; }  
+        public string Gender { get; set; }
+
+        [Display(Name = "Other")]
+        //[Required]
+        public string Other { get; set; }
 
         //[Display(Name = "GrievanceType")]
         //public string GrievanceType { get; set; }
-
         
+
+
 
 
 

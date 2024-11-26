@@ -268,7 +268,11 @@
     <Compile Include="Models\m_State_Master.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssignTo.cs" />
     <Compile Include="Models\RevertComplaint.cs" />
+    <Compile Include="Models\tbl_AssignCase.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tbl_ExceptionHandle.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

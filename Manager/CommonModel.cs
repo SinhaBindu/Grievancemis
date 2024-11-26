@@ -2,6 +2,7 @@
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using SubSonic.Schema;
 //using SubSonic.Schema;
 using System;
 using System.Collections.Generic;
@@ -204,6 +205,7 @@ namespace Grievancemis.Manager
                 throw;
             }
         }
+
         public static List<SelectListItem> GetState(bool IsAll = false)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
@@ -223,6 +225,54 @@ namespace Grievancemis.Manager
                 throw;
             }
         }
+        public static List<SelectListItem> GetpanelList(bool includeSelectOption = false)
+        {
+            StoredProcedure sp = new StoredProcedure("GetUsersByRole");
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+
+            // Convert DataTable to a list of SelectListItem
+            List<SelectListItem> roleList = new List<SelectListItem>();
+
+            if (includeSelectOption)
+            {
+                roleList.Add(new SelectListItem { Text = "--Select--", Value = "" });
+            }
+
+            foreach (DataRow row in dt.Rows)
+            {
+                roleList.Add(new SelectListItem
+                {
+                    Text = row["Name"].ToString(),
+                    Value = row["Id"].ToString()
+                });
+            }
+
+            return roleList;
+        }
+        //public static SelectList GetpanelList(bool includeSelectOption = false)
+        //{
+        //    StoredProcedure sp = new StoredProcedure("GetUsersByRole");
+        //    DataTable dt = sp.ExecuteDataSet().Tables[0];
+
+        //    // Convert DataTable to a list of SelectListItem
+        //    List<SelectListItem> roleList = new List<SelectListItem>();
+
+        //    if (includeSelectOption)
+        //    {
+        //        roleList.Add(new SelectListItem { Text = "--Select--", Value = "" });
+        //    }
+
+        //    foreach (DataRow row in dt.Rows)
+        //    {
+        //        roleList.Add(new SelectListItem
+        //        {
+        //            Text = row["Name"].ToString(),
+        //            Value = row["Id"].ToString()
+        //        });
+        //    }
+
+        //    return new SelectList(roleList, "Value", "Text");
+        //}
         #endregion
         public static bool ValidateImageSizeDocoument(HttpPostedFileBase file)
         {

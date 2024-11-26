@@ -111,7 +111,8 @@ namespace Grievancemis.Controllers
                             Gender = grievanceModel.Gender,
                             GrievanceType = grievanceModel.GrievanceType,
                             StateId = grievanceModel.StateId,
-                            Location = grievanceModel.Location,
+                            //Location = grievanceModel.Location,
+                            Other = grievanceModel.Other,
                             Title = grievanceModel.Title,
                             ComplainRegDate = DateTime.Now.Date,
                             Grievance_Message = grievanceModel.GrievanceMessage,
@@ -179,8 +180,8 @@ namespace Grievancemis.Controllers
                         str.Append("<tr><td>" + tbl_Grievance.Email + "</td><td>" + tbl_Grievance.Name + "</td><td>" + tbl_Grievance.PhoneNo + "</td></tr>");
                         str.Append("<tr><td>Grievance Type</td><td>State Name</td><td>Title</td></tr>");
                         str.Append("<tr><td>" + GType.GrievanceType + "</td><td>" + SType.StateName + "</td><td>" + tbl_Grievance.Title + "</td></tr>");
-                        str.Append("<tr><td>Location</td><td colspan='2'>Message</td></tr>");
-                        str.Append("<tr><td>" + tbl_Grievance.Location + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
+                        str.Append("<tr><td>Other</td><td colspan='2'>Message</td></tr>");
+                        str.Append("<tr><td>" + tbl_Grievance.Other + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
                         str.Append("</table>");
                     }
 

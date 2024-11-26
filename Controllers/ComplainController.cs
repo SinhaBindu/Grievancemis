@@ -51,6 +51,7 @@ namespace Grievancemis.Controllers
                 return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
             }
         }
+
         public ActionResult GetDownGImgDocZip(Guid? grievanceId)
         {
             DataTable dt = SP_Model.GetGrievanceDoc(new FilterModel { GrievanceId = grievanceId.ToString() });
@@ -187,6 +188,43 @@ namespace Grievancemis.Controllers
             {
 
                 return Json(new { success = false, message = "An error occurred: " + ex.Message, Data = 0 });
+            }
+        }
+        [HttpPost]
+        public ActionResult AssignWork(List<AssignTo> assignCases)
+        {
+            if (assignCases == null || !assignCases.Any())
+            {
+                return Json(new { success = false, message = "No roles selected." });
+            }
+
+            try
+            {
+                using (var db = new Grievance_DBEntities())
+                {
+                    foreach (var assignCase in assignCases)
+                    {
+                        var newAssignCase = new tbl_AssignCase
+                        {
+                            Grievance_Idfk = assignCase.Grievance_Idfk,
+                            Role_Idfk = assignCase.Role_Idfk,
+                            /*AspUser _Idfk = MvcApplication.CUser.UserId,*/ // Ensure you set this correctly
+                            IsActive = true,
+                            CreatedBy = MvcApplication.CUser.UserId, // Ensure you set this correctly
+                            CreatedOn = DateTime.Now,
+                        };
+
+                        db.tbl_AssignCase.Add(newAssignCase);
+                    }
+
+                    db.SaveChanges();
+                }
+
+                return Json(new { success = true, message = "Work assigned successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error: " + ex.Message });
             }
         }
         public ActionResult RevartList(string GId)

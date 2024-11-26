@@ -103,8 +103,59 @@
     </div>
 </div>
 
+@*------------Work Assign Model popup---------------------*@
+
+<div class="modal fade animate" id="workAssignModal" tabindex="-1" role="dialog" aria-labelledby="workAssignModalLabel" aria-hidden="true"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="workAssignModalLabel">Work Assign</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="ti ti-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @Html.HiddenFor(x => x.GrievanceId_fk)
+                    <div class="modal-design">
+                        <p>
+                            Case Id:
+                            <span><strong id="assignCaseId"></strong></span>
+                        </p>
+                        <p>
+                            Name:
+                            <span><strong id="assignName"></strong></span>
+                        </p>
+                        <p>
+                            Complain Date:
+                            <span><strong id="assignCreatedOn"></strong></span>
+                        </p>
+                    </div>
+                    <div class="form-group mar-bom">
+                        @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "control-label" })
+                        <span style="color:red;">*</span>
+                        @Html.DropDownListFor(model => model.Roles, CommonModel.GetpanelList(true), new { @class = "form-control", @multiple = "multiple", @required = "required", @name = "Roles" })
+                        @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="confirmWorkAssign" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval");
+    @*<script src="~/Scripts/JS/Master.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">*@
     <script>
         $(document).ready(function () {
             bindload();
@@ -121,6 +172,44 @@
             });
             $('#confirm-progress').on('click', function () {
                 PostData();
+            });
+
+            $('#confirmWorkAssign').on('click', function () {
+                debugger;
+                var grievanceId = $('#GrievanceId_fk').val(); // Get the grievance ID
+                var roleIds = $('#Roles').val(); // Get selected roles
+
+                // Validation
+                if (!roleIds || roleIds.length === 0) {
+                    toastr.error('Please select at least one role');
+                    return false;
+                }
+
+                // Prepare data for the AJAX request
+                var requests = roleIds.map(function (roleId) {
+                    return {
+                        Grievance_Idfk: grievanceId,
+                        Role_Idfk: roleId,
+                    };
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: document.baseURI + "/Complain/AssignWork",
+                    data: JSON.stringify(requests), // Send as JSON
+                    contentType: "application/json; charset=utf-8", // Set content type
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+                            $('#workAssignModal').modal('hide');
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("An error occurred: " + error);
+                    }
+                });
             });
         });
         // Handle progress button click
@@ -168,6 +257,30 @@
                 return false;
             }
         }
+        function openWorkAssignPopup(id, caseId, name, createdOn) {
+            $('#assignCaseId').html('');
+            $('#assignName').html('');
+            $('#assignCreatedOn').html('');
+            $('#Roles').val('');
+
+
+
+            $('#GrievanceId_fk').val(id);
+            $('#assignCaseId').html(caseId);
+            $('#assignName').html(name);
+            $('#assignCreatedOn').html(createdOn);
+
+            $('#workAssignModal').modal('show');
+        }
+        $('.close, .btn-secondary').on('click', function () {
+            $('#workAssignModal').modal('hide');
+        });
+        $('#Roles').multiselect({
+            includeSelectAllOption: true,
+        });
+
+
+
         function POPDisplay(id, caseid, name, CreatedOn, RevertId) {
             //debugger;
             $('#GrievanceId_fk').val(''); $('#RevertId').val('');

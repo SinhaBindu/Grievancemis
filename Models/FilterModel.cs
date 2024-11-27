@@ -83,5 +83,20 @@ namespace Grievancemis.Models
 
         public int RevertId { get; set; }
         public string GrievanceId { get; set; }
+
+        public int AssignCase_Idpk { get; set; }
+
+        public Guid AspUser_Idfk { get; set; }
+
+        [Display(Name = "Panel Member")]
+        public int Role_Idfk { get; set; }
+
+        public Guid Grievance_Idfk { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public string CreatedBy { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

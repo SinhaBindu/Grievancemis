@@ -191,9 +191,10 @@ namespace Grievancemis.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AssignWork(List<AssignTo> assignCases)
+        public ActionResult AssignWork(List<FilterModel> filterModels)
         {
-            if (assignCases == null || !assignCases.Any())
+            // Check if the list is null or empty
+            if (filterModels == null || !filterModels.Any())
             {
                 return Json(new { success = false, message = "No roles selected." });
             }
@@ -202,21 +203,21 @@ namespace Grievancemis.Controllers
             {
                 using (var db = new Grievance_DBEntities())
                 {
-                    foreach (var assignCase in assignCases)
+                    // Prepare the list of new assignments to be added
+                    var newAssignments = filterModels.Select(assignCase => new tbl_AssignCase
                     {
-                        var newAssignCase = new tbl_AssignCase
-                        {
-                            Grievance_Idfk = assignCase.Grievance_Idfk,
-                            Role_Idfk = assignCase.Role_Idfk,
-                            /*AspUser _Idfk = MvcApplication.CUser.UserId,*/ // Ensure you set this correctly
-                            IsActive = true,
-                            CreatedBy = MvcApplication.CUser.UserId, // Ensure you set this correctly
-                            CreatedOn = DateTime.Now,
-                        };
+                        Grievance_Idfk = assignCase.Grievance_Idfk,
+                        Role_Idfk = assignCase.Role_Idfk,
+                       /* AspUser_Idfk = MvcApplication.CUser.UserId,*/ // Ensure this is set correctly
+                        IsActive = true,
+                        CreatedBy = MvcApplication.CUser.UserId,
+                        CreatedOn = DateTime.Now,
+                    }).ToList();
 
-                        db.tbl_AssignCase.Add(newAssignCase);
-                    }
+                    // Add all new assignments to the context at once
+                    db.tbl_AssignCase.AddRange(newAssignments);
 
+                    // Save changes to the database
                     db.SaveChanges();
                 }
 
@@ -224,9 +225,47 @@ namespace Grievancemis.Controllers
             }
             catch (Exception ex)
             {
+                // Handle general exceptions
                 return Json(new { success = false, message = "Error: " + ex.Message });
             }
         }
+        //[HttpPost]
+        //public ActionResult AssignWork(List<FilterModel> filterModels)
+        //{
+        //    if (filterModels == null || !filterModels.Any())
+        //    {
+        //        return Json(new { success = false, message = "No roles selected." });
+        //    }
+
+        //    try
+        //    {
+        //        using (var db = new Grievance_DBEntities())
+        //        {
+        //            foreach (var assignCase in filterModels)
+        //            {
+        //                var newAssignCase = new tbl_AssignCase
+        //                {
+        //                    Grievance_Idfk = assignCase.Grievance_Idfk,
+        //                    Role_Idfk = assignCase.Role_Idfk,
+        //                    /*AspUser _Idfk = MvcApplication.CUser.UserId,*/ // Ensure you set this correctly
+        //                    IsActive = true,
+        //                    CreatedBy = MvcApplication.CUser.UserId, // Ensure you set this correctly
+        //                    CreatedOn = DateTime.Now,
+        //                };
+
+        //                db.tbl_AssignCase.Add(newAssignCase);
+        //            }
+
+        //            db.SaveChanges();
+        //        }
+
+        //        return Json(new { success = true, message = "Work assigned successfully." });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new { success = false, message = "Error: " + ex.Message });
+        //    }
+        //}
         public ActionResult RevartList(string GId)
         {
             FilterModel model = new FilterModel();

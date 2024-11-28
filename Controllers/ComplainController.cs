@@ -207,10 +207,10 @@ namespace Grievancemis.Controllers
                     var newAssignments = filterModels.Select(assignCase => new tbl_AssignCase
                     {
                         Grievance_Idfk = assignCase.Grievance_Idfk,
-                        Role_Idfk = assignCase.Role_Idfk,
-                       /* AspUser_Idfk = MvcApplication.CUser.UserId,*/ // Ensure this is set correctly
+                        Role_Idfk = Convert.ToInt32(MvcApplication.CUser.RoleId),
+                        //AspUser_Idfk = MvcApplication.CUser.UserId.ToString(), 
                         IsActive = true,
-                        CreatedBy = MvcApplication.CUser.UserId,
+                        CreatedBy = User.Identity.Name,
                         CreatedOn = DateTime.Now,
                     }).ToList();
 

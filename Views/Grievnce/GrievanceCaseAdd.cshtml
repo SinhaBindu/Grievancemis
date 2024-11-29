@@ -87,10 +87,10 @@
 
                                     <div class="flex-form">
                                         <div class="form-group">
-                                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2", @required = "required" })
+                                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" @*@required = "required"*@ })
                                             <span style="color:red;">*</span>
                                             <div class="col-md-10">
-                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control-input", @required = "required" })
+                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control-input" @*@required = "required"*@ })
                                                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -98,7 +98,7 @@
                                             @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
                                             <span style="color:red;">*</span>
                                             <div class="col-md-10">
-                                                @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input", @required = "required", @maxlength = "10" })
+                                                @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input" @*@required = "required"*@, @maxlength = "10" })
                                                 @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -433,14 +433,14 @@
                     toastr.error('Enter the EmailID.');
                     return false;
                 }
-                if ($('#Name').val() == '') {
-                    toastr.error('Enter the Name.');
-                    return false;
-                }
-                if ($('#PhoneNo').val() == '') {
-                    toastr.error('Enter the PhoneNo.');
-                    return false;
-                }
+                //if ($('#Name').val() == '') {
+                //    toastr.error('Enter the Name.');
+                //    return false;
+                //}
+                //if ($('#PhoneNo').val() == '') {
+                //    toastr.error('Enter the PhoneNo.');
+                //    return false;
+                //}
                 if ($('#GrievanceType').val() == '' || $('#GrievanceType').val() == '0') {
                     toastr.error('Enter the Grievance Type.');
                     return false;

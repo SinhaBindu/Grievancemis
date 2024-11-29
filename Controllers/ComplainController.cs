@@ -208,7 +208,7 @@ namespace Grievancemis.Controllers
                     {
                         Grievance_Idfk = assignCase.Grievance_Idfk,
                         Role_Idfk = Convert.ToInt32(MvcApplication.CUser.RoleId),
-                        //AspUser_Idfk = MvcApplication.CUser.UserId.ToString(), 
+                        //AspUser_Idfk = MvcApplication.CUser.UserId.to // Ensure this is set correctly
                         IsActive = true,
                         CreatedBy = User.Identity.Name,
                         CreatedOn = DateTime.Now,

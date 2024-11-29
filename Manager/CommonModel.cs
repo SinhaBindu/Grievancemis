@@ -159,7 +159,17 @@ namespace Grievancemis.Manager
             var order = new List<string> { "0", "1", "2" }; // Define the desired order by Value
             return list.OrderBy(x => order.IndexOf(x.Value)).ToList(); // Sort according to the custom order
         }
+        public static List<SelectListItem> GetUserRevertType()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
+            //list.Add(new SelectListItem { Value = "1", Text = "Clarification" });
+            list.Add(new SelectListItem { Value = "1", Text = "Closed" });
 
+            // Sort items based on a custom order
+            var order = new List<string> { "0", "1" }; // Define the desired order by Value
+            return list.OrderBy(x => order.IndexOf(x.Value)).ToList(); // Sort according to the custom order
+        }
         //public static List<SelectListItem> GetGenderType()
         //{
         //    List<SelectListItem> list = new List<SelectListItem>();

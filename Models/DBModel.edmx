@@ -208,6 +208,7 @@
           <Property Name="RevertDuration" Type="int" />
           <Property Name="IsSentMailRevertDuration" Type="bit" />
           <Property Name="SentMailRevertDuration" Type="datetime" />
+          <Property Name="UserRevertId" Type="int" />
         </EntityType>
         <EntityType Name="tbl_UserRegistration">
           <Key>
@@ -406,7 +407,6 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="Tbl_TeamRevertComplain" EntityType="Grievance_DBModel.Tbl_TeamRevertComplain" />
           <EntitySet Name="Tbl_Grievance_Documents" EntityType="Grievance_DBModel.Tbl_Grievance_Documents" />
           <EntitySet Name="tbl_AssignCase" EntityType="Grievance_DBModel.tbl_AssignCase" />
           <EntitySet Name="Tbl_Grievance" EntityType="Grievance_DBModel.Tbl_Grievance" />
@@ -414,13 +414,14 @@
             <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
             <End Role="Tbl_Grievance_Documents" EntitySet="Tbl_Grievance_Documents" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance">
-            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
-            <End Role="Tbl_TeamRevertComplain" EntitySet="Tbl_TeamRevertComplain" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_UserRevertComplain_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance">
             <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
             <End Role="Tbl_UserRevertComplain" EntitySet="Tbl_UserRevertComplain" />
+          </AssociationSet>
+          <EntitySet Name="Tbl_TeamRevertComplain" EntityType="Grievance_DBModel.Tbl_TeamRevertComplain" />
+          <AssociationSet Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance">
+            <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
+            <End Role="Tbl_TeamRevertComplain" EntitySet="Tbl_TeamRevertComplain" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -597,34 +598,6 @@
           <End Type="Grievance_DBModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="Grievance_DBModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityType Name="Tbl_TeamRevertComplain">
-          <Key>
-            <PropertyRef Name="TeamId_pk" />
-          </Key>
-          <Property Name="TeamId_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GrievanceId_fk" Type="Guid" Nullable="false" />
-          <Property Name="RevertTypeId" Type="Int32" />
-          <Property Name="TeamRevertMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TeamRoleId" Type="Int32" />
-          <Property Name="TeamRevert_Date" Type="DateTime" Precision="0" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="TeamIsSent" Type="Boolean" />
-          <Property Name="TeamIsSentDate" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="UserRevertMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UserRoleId" Type="Int32" />
-          <Property Name="UserRevert_Date" Type="DateTime" Precision="0" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="UserIsSentDate" Type="DateTime" Precision="3" />
-          <Property Name="UserIsSent" Type="Boolean" />
-          <Property Name="RevertDuration" Type="Int32" />
-          <Property Name="IsSentMailRevertDuration" Type="Boolean" />
-          <Property Name="SentMailRevertDuration" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_TeamRevertComplain" ToRole="Tbl_Grievance" />
-        </EntityType>
         <EntityType Name="Tbl_Grievance_Documents">
           <Key>
             <PropertyRef Name="Id" />
@@ -687,8 +660,8 @@
           <Property Name="IsSentMailDuration" Type="Boolean" />
           <Property Name="SentMailDurationDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_Grievance_Documents" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_Grievance_Documents" />
-          <NavigationProperty Name="Tbl_TeamRevertComplain" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_TeamRevertComplain" />
           <NavigationProperty Name="Tbl_UserRevertComplain" Relationship="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_UserRevertComplain" />
+          <NavigationProperty Name="Tbl_TeamRevertComplain" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_Grievance" ToRole="Tbl_TeamRevertComplain" />
         </EntityType>
         <Association Name="FK_Tbl_Grievance_Documents_Tbl_Grievance">
           <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1" />
@@ -702,20 +675,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance">
-          <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Grievance_DBModel.Tbl_TeamRevertComplain" Role="Tbl_TeamRevertComplain" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Grievance">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Tbl_TeamRevertComplain">
-              <PropertyRef Name="GrievanceId_fk" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_UserRevertComplain_Tbl_Grievance">
           <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -726,6 +685,49 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Tbl_UserRevertComplain">
+              <PropertyRef Name="GrievanceId_fk" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tbl_TeamRevertComplain">
+          <Key>
+            <PropertyRef Name="TeamId_pk" />
+          </Key>
+          <Property Name="TeamId_pk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GrievanceId_fk" Type="Guid" Nullable="false" />
+          <Property Name="RevertTypeId" Type="Int32" />
+          <Property Name="TeamRevertMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TeamRoleId" Type="Int32" />
+          <Property Name="TeamRevert_Date" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="TeamIsSent" Type="Boolean" />
+          <Property Name="TeamIsSentDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UserRevertMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserRoleId" Type="Int32" />
+          <Property Name="UserRevert_Date" Type="DateTime" Precision="0" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UserIsSentDate" Type="DateTime" Precision="3" />
+          <Property Name="UserIsSent" Type="Boolean" />
+          <Property Name="RevertDuration" Type="Int32" />
+          <Property Name="IsSentMailRevertDuration" Type="Boolean" />
+          <Property Name="SentMailRevertDuration" Type="DateTime" Precision="3" />
+          <Property Name="UserRevertId" Type="Int32" />
+          <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_TeamRevertComplain" ToRole="Tbl_Grievance" />
+        </EntityType>
+        <Association Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance">
+          <End Type="Grievance_DBModel.Tbl_Grievance" Role="Tbl_Grievance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Grievance_DBModel.Tbl_TeamRevertComplain" Role="Tbl_TeamRevertComplain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Grievance">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Tbl_TeamRevertComplain">
               <PropertyRef Name="GrievanceId_fk" />
             </Dependent>
           </ReferentialConstraint>
@@ -888,34 +890,6 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="Tbl_TeamRevertComplain">
-            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_TeamRevertComplain">
-              <MappingFragment StoreEntitySet="Tbl_TeamRevertComplain">
-                <ScalarProperty Name="SentMailRevertDuration" ColumnName="SentMailRevertDuration" />
-                <ScalarProperty Name="IsSentMailRevertDuration" ColumnName="IsSentMailRevertDuration" />
-                <ScalarProperty Name="RevertDuration" ColumnName="RevertDuration" />
-                <ScalarProperty Name="UserIsSent" ColumnName="UserIsSent" />
-                <ScalarProperty Name="UserIsSentDate" ColumnName="UserIsSentDate" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UserRevert_Date" ColumnName="UserRevert_Date" />
-                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
-                <ScalarProperty Name="UserRevertMessage" ColumnName="UserRevertMessage" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="TeamIsSentDate" ColumnName="TeamIsSentDate" />
-                <ScalarProperty Name="TeamIsSent" ColumnName="TeamIsSent" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="TeamRevert_Date" ColumnName="TeamRevert_Date" />
-                <ScalarProperty Name="TeamRoleId" ColumnName="TeamRoleId" />
-                <ScalarProperty Name="TeamRevertMessage" ColumnName="TeamRevertMessage" />
-                <ScalarProperty Name="RevertTypeId" ColumnName="RevertTypeId" />
-                <ScalarProperty Name="GrievanceId_fk" ColumnName="GrievanceId_fk" />
-                <ScalarProperty Name="TeamId_pk" ColumnName="TeamId_pk" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Grievance_Documents">
             <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_Grievance_Documents">
               <MappingFragment StoreEntitySet="Tbl_Grievance_Documents">
@@ -977,6 +951,35 @@
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="CaseId" ColumnName="CaseId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_TeamRevertComplain">
+            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_TeamRevertComplain">
+              <MappingFragment StoreEntitySet="Tbl_TeamRevertComplain">
+                <ScalarProperty Name="UserRevertId" ColumnName="UserRevertId" />
+                <ScalarProperty Name="SentMailRevertDuration" ColumnName="SentMailRevertDuration" />
+                <ScalarProperty Name="IsSentMailRevertDuration" ColumnName="IsSentMailRevertDuration" />
+                <ScalarProperty Name="RevertDuration" ColumnName="RevertDuration" />
+                <ScalarProperty Name="UserIsSent" ColumnName="UserIsSent" />
+                <ScalarProperty Name="UserIsSentDate" ColumnName="UserIsSentDate" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UserRevert_Date" ColumnName="UserRevert_Date" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+                <ScalarProperty Name="UserRevertMessage" ColumnName="UserRevertMessage" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TeamIsSentDate" ColumnName="TeamIsSentDate" />
+                <ScalarProperty Name="TeamIsSent" ColumnName="TeamIsSent" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TeamRevert_Date" ColumnName="TeamRevert_Date" />
+                <ScalarProperty Name="TeamRoleId" ColumnName="TeamRoleId" />
+                <ScalarProperty Name="TeamRevertMessage" ColumnName="TeamRevertMessage" />
+                <ScalarProperty Name="RevertTypeId" ColumnName="RevertTypeId" />
+                <ScalarProperty Name="GrievanceId_fk" ColumnName="GrievanceId_fk" />
+                <ScalarProperty Name="TeamId_pk" ColumnName="TeamId_pk" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

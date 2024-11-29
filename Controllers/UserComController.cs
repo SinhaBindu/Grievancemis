@@ -123,6 +123,10 @@ namespace Grievancemis.Controllers
                 {
                     return Json(new { success = false, message = "All fields are required.", Data = 0 });
                 }
+                if (filterModel.UserRevertId.ToString() == string.Empty || string.IsNullOrWhiteSpace(filterModel.UserRevertId.ToString()))
+                {
+                    return Json(new { success = false, message = "All fields are required.", Data = 0 });
+                }
                 if (filterModel.RevertId == 0)
                 {
                     return Json(new { success = false, message = "All fields are required.", Data = 0 });
@@ -140,6 +144,7 @@ namespace Grievancemis.Controllers
                     if (teamRevertComplain != null)
                     {
                         teamRevertComplain.GrievanceId_fk = filterModel.GrievanceId_fk;
+                        teamRevertComplain.UserRevertId = filterModel.UserRevertId;
                         ////teamRevertComplain.RevertTypeId = filterModel.RevertTypeId;
                         teamRevertComplain.UserRevertMessage = filterModel.TeamRevertMessage;
                         teamRevertComplain.UserRoleId = Convert.ToInt32(MvcApplication.CUser.RoleId);

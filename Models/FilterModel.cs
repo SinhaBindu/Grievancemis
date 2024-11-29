@@ -46,6 +46,10 @@ namespace Grievancemis.Models
         //[Required]
         public int RevertTypeId { get; set; }
 
+        [Display(Name = " User Revert Type")]
+        //[Required]
+        public int UserRevertId { get; set; }
+
 
         [Display(Name = "Message")]
         //[Required]
@@ -86,7 +90,7 @@ namespace Grievancemis.Models
 
         public int AssignCase_Idpk { get; set; }
 
-        public Guid AspUser_Idfk { get; set; }
+        public string AspUser_Idfk { get; set; }
 
         [Display(Name = "Panel Member")]
         public int Role_Idfk { get; set; }

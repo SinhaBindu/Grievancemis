@@ -19,11 +19,11 @@ namespace Grievancemis.Models
         public string Email { get; set; }
 
         [Display(Name = "Name")]
-        [Required]
+        //[Required]
         public string Name { get; set; }
 
         [Display(Name = "Phone Number")]
-        [Required]
+        //[Required]
         public string PhoneNo { get; set; }
 
         [Display(Name = "Grievance Type")]

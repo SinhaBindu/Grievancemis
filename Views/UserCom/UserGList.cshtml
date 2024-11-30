@@ -82,6 +82,20 @@
                     </div>
 
                     <div class="form-group mar-bom">
+                        @Html.LabelFor(model => model.Revertcb_value, htmlAttributes: new { @class = "control-label " })
+                        <div>
+                            <label>
+                                @Html.RadioButtonFor(model => model.Revertcb_value, "1", new { @id = "RevertOptionYes"}) Yes
+                            </label>
+                            <label>
+                                @Html.RadioButtonFor(model => model.Revertcb_value, "2", new { @id = "RevertOptionNo", @checked = "checked" }) No
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group mar-bom">
                         @Html.LabelFor(model => model.UserRevertId, htmlAttributes: new { @class = "control-label" })
                         @Html.DropDownListFor(model => model.UserRevertId, CommonModel.GetUserRevertType(), null, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.UserRevertId, "", new { @class = "text-danger" })
@@ -135,8 +149,24 @@
                 PostData();
             });
         });
+        $('input[name="Revertcb_value"]').on('change', function () {
+            toggleUserRevertDropdown();
+        });
 
+        // Function to toggle the visibility of the dropdown
+        function toggleUserRevertDropdown() {
+            if ($('#RevertOptionYes').is(':checked')) {
+                $('#UserRevertId').closest('.form-group').hide();
+            } else {
+                $('#UserRevertId').closest('.form-group').show();
+            }
+        }
 
+        // Initialize visibility of the dropdown based on the default selection
+        toggleUserRevertDropdown();
+    
+
+        
         function PostData() {
             if ($('#TeamRevertMessage').val() == '') {
                 toastr.error('Enter the Message');
@@ -154,6 +184,11 @@
                 formData.append('TeamRevertMessage', $('#TeamRevertMessage').val());
                 formData.append('RevertId', $('#RevertId').val());
                 formData.append('UserRevertId', $('#UserRevertId').val());
+
+
+                var revertValue = $('input[name="Revertcb_value"]:checked').val();
+                formData.append('Revertcb_value', revertValue); // Append the selected value
+
 
 
                 // Get the files from the file input

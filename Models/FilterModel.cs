@@ -50,6 +50,10 @@ namespace Grievancemis.Models
         //[Required]
         public int UserRevertId { get; set; }
 
+        [Display(Name = " Radiobutton")]
+        //[Required]
+        public int Revertcb_value { get; set; }
+
 
         [Display(Name = "Message")]
         //[Required]

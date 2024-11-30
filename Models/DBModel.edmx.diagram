@@ -24,7 +24,7 @@
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Grievance" Width="1.5" PointX="0.75" PointY="4.375" />
         <AssociationConnector Association="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" />
         <AssociationConnector Association="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance" />
-        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_TeamRevertComplain" Width="1.5" PointX="3" PointY="16.25" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_TeamRevertComplain" Width="1.5" PointX="3" PointY="16.125" />
         <AssociationConnector Association="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" />
         </Diagram>
     </edmx:Diagrams>

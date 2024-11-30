@@ -26,6 +26,7 @@ namespace Grievancemis.Models
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<int> UserRevertId { get; set; }
         public string UserRevertMessage { get; set; }
         public Nullable<int> UserRoleId { get; set; }
         public Nullable<System.DateTime> UserRevert_Date { get; set; }
@@ -36,7 +37,7 @@ namespace Grievancemis.Models
         public Nullable<int> RevertDuration { get; set; }
         public Nullable<bool> IsSentMailRevertDuration { get; set; }
         public Nullable<System.DateTime> SentMailRevertDuration { get; set; }
-        public Nullable<int> UserRevertId { get; set; }
+        public Nullable<int> Revertcb_value { get; set; }
     
         public virtual Tbl_Grievance Tbl_Grievance { get; set; }
     }

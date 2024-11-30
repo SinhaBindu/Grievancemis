@@ -198,6 +198,7 @@
           <Property Name="IsActive" Type="bit" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UserRevertId" Type="int" />
           <Property Name="UserRevertMessage" Type="nvarchar(max)" />
           <Property Name="UserRoleId" Type="int" />
           <Property Name="UserRevert_Date" Type="date" />
@@ -208,7 +209,7 @@
           <Property Name="RevertDuration" Type="int" />
           <Property Name="IsSentMailRevertDuration" Type="bit" />
           <Property Name="SentMailRevertDuration" Type="datetime" />
-          <Property Name="UserRevertId" Type="int" />
+          <Property Name="Revertcb_value" Type="int" />
         </EntityType>
         <EntityType Name="tbl_UserRegistration">
           <Key>
@@ -705,6 +706,7 @@
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UserRevertId" Type="Int32" />
           <Property Name="UserRevertMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserRoleId" Type="Int32" />
           <Property Name="UserRevert_Date" Type="DateTime" Precision="0" />
@@ -715,7 +717,7 @@
           <Property Name="RevertDuration" Type="Int32" />
           <Property Name="IsSentMailRevertDuration" Type="Boolean" />
           <Property Name="SentMailRevertDuration" Type="DateTime" Precision="3" />
-          <Property Name="UserRevertId" Type="Int32" />
+          <Property Name="Revertcb_value" Type="Int32" />
           <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_TeamRevertComplain_Tbl_Grievance" FromRole="Tbl_TeamRevertComplain" ToRole="Tbl_Grievance" />
         </EntityType>
         <Association Name="FK_Tbl_TeamRevertComplain_Tbl_Grievance">
@@ -957,7 +959,7 @@
           <EntitySetMapping Name="Tbl_TeamRevertComplain">
             <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_TeamRevertComplain">
               <MappingFragment StoreEntitySet="Tbl_TeamRevertComplain">
-                <ScalarProperty Name="UserRevertId" ColumnName="UserRevertId" />
+                <ScalarProperty Name="Revertcb_value" ColumnName="Revertcb_value" />
                 <ScalarProperty Name="SentMailRevertDuration" ColumnName="SentMailRevertDuration" />
                 <ScalarProperty Name="IsSentMailRevertDuration" ColumnName="IsSentMailRevertDuration" />
                 <ScalarProperty Name="RevertDuration" ColumnName="RevertDuration" />
@@ -968,6 +970,7 @@
                 <ScalarProperty Name="UserRevert_Date" ColumnName="UserRevert_Date" />
                 <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
                 <ScalarProperty Name="UserRevertMessage" ColumnName="UserRevertMessage" />
+                <ScalarProperty Name="UserRevertId" ColumnName="UserRevertId" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />

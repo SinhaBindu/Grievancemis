@@ -93,9 +93,7 @@
                         </div>
                     </div>
 
-
-
-                    <div class="form-group mar-bom">
+                    <div class="form-group mar-bom " id="div-UserRevertId" style="display:none;">
                         @Html.LabelFor(model => model.UserRevertId, htmlAttributes: new { @class = "control-label" })
                         @Html.DropDownListFor(model => model.UserRevertId, CommonModel.GetUserRevertType(), null, new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.UserRevertId, "", new { @class = "text-danger" })
@@ -104,7 +102,7 @@
                         @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
                         <span style="color:red;">*</span>
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
+                            @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5, @required = "required" })
                             @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -131,7 +129,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval");
-    <script>
+<script>
         $(document).ready(function () {
             bindload();
             $('#progressModal').modal({
@@ -164,9 +162,7 @@
 
         // Initialize visibility of the dropdown based on the default selection
         toggleUserRevertDropdown();
-    
 
-        
         function PostData() {
             if ($('#TeamRevertMessage').val() == '') {
                 toastr.error('Enter the Message');
@@ -188,8 +184,6 @@
 
                 var revertValue = $('input[name="Revertcb_value"]:checked').val();
                 formData.append('Revertcb_value', revertValue); // Append the selected value
-
-
 
                 // Get the files from the file input
                 var files = $('#DocUpload')[0].files;
@@ -230,11 +224,12 @@
             var name = $(this).data('name');
             var createdOn = $(this).data('createdon');
             var revertid = $(this).data('revertid');
+            var reverttypeid = $(this).data('reverttypeid');
 
-            POPDisplay(id, caseid, name, createdOn, revertid);
+            POPDisplay(id, caseid, name, createdOn, revertid, reverttypeid);
         });
 
-        function POPDisplay(id, caseid, name, CreatedOn, revertid) {
+        function POPDisplay(id, caseid, name, CreatedOn, revertid, reverttypeid) {
             $('#GrievanceId_fk').val('');
             $('#RevertId').val('');
             $('#TeamRevertMessage').val('');
@@ -244,12 +239,18 @@
                 $('#cname').html(name);
                 $('#CId').html(caseid);
                 $('#con').html(CreatedOn);
+                $('#div-UserRevertId').hide();
+                $('#UserRevertId').val('');
+                $('#UserRevertId').removeAttr('required');
+                if (reverttypeid == "2" || reverttypeid == 2) {
+                    $('#div-UserRevertId').show(); $('#UserRevertId').attr('required', 'required');
+                }
                 $('#progressModal').modal('show'); // Ensure this line is present
             }
             else {
                 window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
             }
-           
+
         }
 
         function bindload() {
@@ -311,7 +312,7 @@
         }
 
 
-    </script>
+</script>
 
 
 }

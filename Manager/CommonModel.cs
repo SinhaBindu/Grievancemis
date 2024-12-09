@@ -152,7 +152,7 @@ namespace Grievancemis.Manager
         {
             List<SelectListItem> list = new List<SelectListItem>();
             list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
-            list.Add(new SelectListItem { Value = "1", Text = "Clarification" });
+            list.Add(new SelectListItem { Value = "1", Text = "In Process" });
             list.Add(new SelectListItem { Value = "2", Text = "Redressed" });
 
             // Sort items based on a custom order

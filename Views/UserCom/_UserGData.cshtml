@@ -47,7 +47,7 @@
                                         <strong><i class="fa fa-download"></i></strong>
                                     </a>
                                 </td>
-                                @if (row["RevertType_Id"].ToString() == "1")//|| string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString())
+                                @if (row["RevertType_Id"].ToString() == "1" && row["RevertType_Id"].ToString() == "2")//|| string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString())
                                 {
                                     <td>
                                         <button class="btn btn-info progress-button"
@@ -55,6 +55,7 @@
                                                 data-caseid="@row["CaseId"]"
                                                 data-name="@row["Name"]"
                                                 data-revertid="@row["MaxRevertID"]"
+                                                data-reverttypeid="@row["RevertType_Id"].ToString()"
                                                 data-createdon="@row["CreatedOn"]">
                                             Revert 
                                         </button>

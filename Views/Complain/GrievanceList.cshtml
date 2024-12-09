@@ -90,7 +90,7 @@
                         @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
                         <span style="color:red;">*</span>
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5 })
+                            @Html.TextAreaFor(model => model.TeamRevertMessage, new { @class = "form-control-input", style = "height:100px;", rows = 5, @required = "required" })
                             @Html.ValidationMessageFor(model => model.TeamRevertMessage, "", new { @class = "text-danger" })
                         </div>
                     </div>

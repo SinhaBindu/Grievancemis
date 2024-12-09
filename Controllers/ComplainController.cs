@@ -9,6 +9,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.Ajax.Utilities;
+using System.Web.Services.Description;
+using SubSonic.Extensions;
 
 
 
@@ -24,7 +27,32 @@ namespace Grievancemis.Controllers
         {
             return View();
         }
+        public ActionResult CaseAssign()
+        {
+            return View();
+        }
+        public ActionResult GetCaseAssignGList(FilterModel filtermodel)
+        {
+            try
+            {
+                bool IsCheck = false;
+                var dt = SP_Model.GetCaseAssignGList(filtermodel);
+                if (dt.Rows.Count > 0)
+                {
+                    IsCheck = true;
+                }
+                var html = ConvertViewToString("_CaseAssiggnGData", dt);
+                var res = Json(new { IsSuccess = IsCheck, Data = html }, JsonRequestBehavior.AllowGet);
+                res.MaxJsonLength = int.MaxValue;
+                return res;
 
+            }
+            catch (Exception ex)
+            {
+                string er = ex.Message;
+                return Json(new { IsSuccess = false, Data = "There are communication error...." }, JsonRequestBehavior.AllowGet); throw;
+            }
+        }
         public ActionResult GrievanceList()
         {
             return View();
@@ -198,17 +226,24 @@ namespace Grievancemis.Controllers
             {
                 return Json(new { success = false, message = "No roles selected." });
             }
-
             try
             {
+                int res = 0;
                 using (var db = new Grievance_DBEntities())
                 {
+                    var gid =filterModels[0].Grievance_Idfk;
+                    var strdellist = db.tbl_AssignCase.Where(x => x.Grievance_Idfk == gid).ToList();
+                    if (strdellist != null)
+                    {
+                        db.tbl_AssignCase.RemoveRange(strdellist);
+                        db.SaveChanges();
+                    }
                     // Prepare the list of new assignments to be added
                     var newAssignments = filterModels.Select(assignCase => new tbl_AssignCase
                     {
                         Grievance_Idfk = assignCase.Grievance_Idfk,
                         Role_Idfk = Convert.ToInt32(MvcApplication.CUser.RoleId),
-                        //AspUser_Idfk = MvcApplication.CUser.UserId.to // Ensure this is set correctly
+                        AspUser_Idfk = Guid.Parse(assignCase.User_Idfk), // Ensure this is set correctly
                         IsActive = true,
                         CreatedBy = User.Identity.Name,
                         CreatedOn = DateTime.Now,
@@ -216,12 +251,14 @@ namespace Grievancemis.Controllers
 
                     // Add all new assignments to the context at once
                     db.tbl_AssignCase.AddRange(newAssignments);
-
                     // Save changes to the database
-                    db.SaveChanges();
+                    res = db.SaveChanges();
                 }
-
-                return Json(new { success = true, message = "Work assigned successfully." });
+                if (res > 0)
+                {
+                    return Json(new { success = true, message = "Case assigned successfully." });
+                }
+                return Json(new { success = false, message = "Case can't be assign." });
             }
             catch (Exception ex)
             {

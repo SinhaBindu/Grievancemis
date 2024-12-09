@@ -195,8 +195,8 @@ namespace Grievancemis.Controllers
                         dt = SP_Model.GetTeamMailID();
                         if (dt.Rows.Count > 0)
                         {
-                            res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail, Greid);
-                            res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name);
+                            res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail, Greid, "New Case");
+                            res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name,"New Case");
                         }
                         if (res > 0)
                         {

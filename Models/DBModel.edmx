@@ -409,7 +409,6 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
           <EntitySet Name="Tbl_Grievance_Documents" EntityType="Grievance_DBModel.Tbl_Grievance_Documents" />
-          <EntitySet Name="tbl_AssignCase" EntityType="Grievance_DBModel.tbl_AssignCase" />
           <EntitySet Name="Tbl_Grievance" EntityType="Grievance_DBModel.Tbl_Grievance" />
           <AssociationSet Name="FK_Tbl_Grievance_Documents_Tbl_Grievance" Association="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance">
             <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
@@ -424,6 +423,7 @@
             <End Role="Tbl_Grievance" EntitySet="Tbl_Grievance" />
             <End Role="Tbl_TeamRevertComplain" EntitySet="Tbl_TeamRevertComplain" />
           </AssociationSet>
+          <EntitySet Name="tbl_AssignCase" EntityType="Grievance_DBModel.tbl_AssignCase" />
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -612,20 +612,6 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_Grievance" Relationship="Grievance_DBModel.FK_Tbl_Grievance_Documents_Tbl_Grievance" FromRole="Tbl_Grievance_Documents" ToRole="Tbl_Grievance" />
         </EntityType>
-        <EntityType Name="tbl_AssignCase">
-          <Key>
-            <PropertyRef Name="AssignCase_Idpk" />
-          </Key>
-          <Property Name="AssignCase_Idpk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AspUser_Idfk" Type="Guid" />
-          <Property Name="Role_Idfk" Type="Int32" />
-          <Property Name="Grievance_Idfk" Type="Guid" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="Tbl_Grievance">
           <Key>
             <PropertyRef Name="Id" />
@@ -734,6 +720,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tbl_AssignCase">
+          <Key>
+            <PropertyRef Name="AssignCase_Idpk" />
+          </Key>
+          <Property Name="AssignCase_Idpk" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AspUser_Idfk" Type="Guid" />
+          <Property Name="Role_Idfk" Type="Int32" />
+          <Property Name="Grievance_Idfk" Type="Guid" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -905,21 +905,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_AssignCase">
-            <EntityTypeMapping TypeName="Grievance_DBModel.tbl_AssignCase">
-              <MappingFragment StoreEntitySet="tbl_AssignCase">
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Grievance_Idfk" ColumnName="Grievance_Idfk" />
-                <ScalarProperty Name="Role_Idfk" ColumnName="Role_Idfk" />
-                <ScalarProperty Name="AspUser_Idfk" ColumnName="AspUser_Idfk" />
-                <ScalarProperty Name="AssignCase_Idpk" ColumnName="AssignCase_Idpk" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Grievance">
             <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_Grievance">
               <MappingFragment StoreEntitySet="Tbl_Grievance">
@@ -983,6 +968,21 @@
                 <ScalarProperty Name="RevertTypeId" ColumnName="RevertTypeId" />
                 <ScalarProperty Name="GrievanceId_fk" ColumnName="GrievanceId_fk" />
                 <ScalarProperty Name="TeamId_pk" ColumnName="TeamId_pk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_AssignCase">
+            <EntityTypeMapping TypeName="Grievance_DBModel.tbl_AssignCase">
+              <MappingFragment StoreEntitySet="tbl_AssignCase">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Grievance_Idfk" ColumnName="Grievance_Idfk" />
+                <ScalarProperty Name="Role_Idfk" ColumnName="Role_Idfk" />
+                <ScalarProperty Name="AspUser_Idfk" ColumnName="AspUser_Idfk" />
+                <ScalarProperty Name="AssignCase_Idpk" ColumnName="AssignCase_Idpk" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -17,6 +17,15 @@ namespace Grievancemis.Manager
 {
     public class SP_Model
     {
+        public static DataTable GetCaseAssignGList(FilterModel filtermodel)
+        {
+            StoredProcedure sp = new StoredProcedure("USP_GetCaseAssignGList");
+            sp.Command.AddParameter("@StateId", filtermodel.StateId, DbType.String);
+            sp.Command.AddParameter("@TypeGId", filtermodel.TypeGId, DbType.String);
+            //sp.Command.AddParameter("@GrievanceId", filtermodel.GrievanceId, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
         public static DataTable GetGrievanceList(FilterModel filtermodel)
         {
             StoredProcedure sp = new StoredProcedure("USP_GetGrievancefilterList");

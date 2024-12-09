@@ -128,7 +128,7 @@
                                             @Html.LabelFor(model => model.Other, htmlAttributes: new { @class = "control-label col-md-2" })
                                             <span style="color:red;">*</span>
                                             <div class="col-md-10">
-                                                @Html.TextBoxFor(model => model.Other, new { @class = "form-control-input", @required = "required" })
+                                                @Html.TextBoxFor(model => model.Other, new { @class = "form-control-input"})
                                                 @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
@@ -420,11 +420,12 @@
             });
             $('#GrievanceType').change(function () {
                 var selectedValue = $(this).val();
+                $('#Other').val(''); 
                 if (selectedValue == '12') { // Assuming the value for "Other" is 12
                     $('#dv_Other').show(); // Show the Other textbox
                 } else {
                     $('#dv_Other').hide(); // Hide the Other textbox
-                    $('#Other').val(''); // Clear the Other textbox
+                    // Clear the Other textbox
                 }
             });
 
@@ -449,7 +450,7 @@
                     toastr.error('Enter the State.');
                     return false;
                 }
-                if ($('#Other').val() == '') {
+                if ($('#Other').val() == '' && $('#GrievanceType').val()=='12') {
                     toastr.error('Enter the Other.');
                     return false;
                 }
@@ -510,6 +511,7 @@
         });
         function VerifyEamilMailSendPost() {
             debugger;
+            document.getElementById('btnverify').disabled = true;
             if ($('#Email_Id').val() == '') {
                 toastr.error('Enter the EmailID.');
                 return false;
@@ -524,6 +526,7 @@
                 success: function (resp) {
                     $('#OptCode').val('');
                     if (resp.success) {
+                        document.getElementById('btnverify').disabled = false;
                         if (resp.resdata == 1) {
                             $('#Email_Id').attr('readonly', true);
                             $('#div-vc').show();

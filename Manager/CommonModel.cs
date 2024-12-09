@@ -153,7 +153,7 @@ namespace Grievancemis.Manager
             List<SelectListItem> list = new List<SelectListItem>();
             list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
             list.Add(new SelectListItem { Value = "1", Text = "Clarification" });
-            list.Add(new SelectListItem { Value = "2", Text = "Closed" });
+            list.Add(new SelectListItem { Value = "2", Text = "Redressed" });
 
             // Sort items based on a custom order
             var order = new List<string> { "0", "1", "2" }; // Define the desired order by Value
@@ -164,10 +164,10 @@ namespace Grievancemis.Manager
             List<SelectListItem> list = new List<SelectListItem>();
             list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
             //list.Add(new SelectListItem { Value = "1", Text = "Clarification" });
-            list.Add(new SelectListItem { Value = "1", Text = "Closed" });
+            list.Add(new SelectListItem { Value = "99", Text = "Closed" });
 
             // Sort items based on a custom order
-            var order = new List<string> { "0", "1" }; // Define the desired order by Value
+            var order = new List<string> { "0", "99" }; // Define the desired order by Value
             return list.OrderBy(x => order.IndexOf(x.Value)).ToList(); // Sort according to the custom order
         }
         //public static List<SelectListItem> GetGenderType()
@@ -366,8 +366,7 @@ namespace Grievancemis.Manager
             Grievance_DBEntities _db = new Grievance_DBEntities();
             //int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = "Hi", maxID = "", RandomValue = "", OTPCode = "";
-            //string ASDT = ""; string DurationTime = ""; 
-            string OtherEmailID = "sinhabinduk@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
+            string OtherEmailID = "sinhabinduk@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -449,15 +448,13 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }// end OTP
-        public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail, string Greid)
+        public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail, string Greid,string CurrentStatus)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = "Dear Panel Member"
                 , SenderName = "", RandomValue = "", OTPCode = "";
-            string ASDT = ""; string DurationTime = ""; string BatchName = "";
-            string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
-            string OtherEmailID = "sinhabinduk@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
+            string OtherEmailID = "sinhabinduk@gmail.com"; 
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -469,19 +466,16 @@ namespace Grievancemis.Manager
             }
             try
             {
-
                 string[] tokens = Toemailid.Split(',');
                 To = tokens[0];
+                Body = "The grievance <b> Case ID : "+ Greid + "</ b> Status is " + CurrentStatus + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() +"></a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
-                    .Replace("{bodytext}", bodytext)
-                    .Replace("{EmailID}", Greid);
+                    //.Replace("{bodytext}", bodytext)
+                    .Replace("{bodytext}", bodytext);
+                   // .Replace("{CaseID}", Greid);
                 //.Replace("{OTPCode}", tbl_v.VerificationCode);
-                //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
-                //{
-                //    bodyTemplate = reader.ReadToEnd();
-                //}
-                //bodyTemplate = "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n\t\t<tbody>\r\n <tr>\r\n\t\t\t<td align=\"center\"> " + bodydata + "\r\n\t\t\t\t\r\n  \t</tbody></tr>\r\n</table>";
+               
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
                 //mail.To.Add(To + "," + OtherEmailID + "," + partymail);
@@ -525,39 +519,33 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }
-        public static int SendMailPartUser(string Toemailid, string gvid, string Name)
+        public static int SendMailPartUser(string Toemailid, string gvid, string Name, string CurrentStatus)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = "Dear"
                 , SenderName = "", RandomValue = "", OTPCode = "";
-            string ASDT = ""; string DurationTime = ""; string BatchName = "";
-            string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
-            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
+            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com"; 
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
             Guid AssessmentScheduleId_pk = Guid.Empty;
             Guid ParticipantId = Guid.Empty;
-            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/UserTemplate.html")))
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/UserTemplateMailMail.html")))
             {
                 bodyTemplate = reader.ReadToEnd();
             }
             try
             {
-
                 To = Toemailid;
+                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + CurrentStatus + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() + "></a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName + Name)
-                    .Replace("{bodytext}", "Thank's For Your Co-Operation. Your Grievance has been sucessfully Registered with Us.We'll Reach out to You as soon as possible.")
+                    .Replace("{bodytext}", Body)
+                    //.Replace("{bodytext}", "Thank's For Your Co-Operation. Your Grievance has been sucessfully Registered with Us.We'll Reach out to You as soon as possible.")
                     .Replace("{EmailID}", To)
-                    .Replace("{newusername}", Name)
-                    .Replace("{gvid}", gvid);
-                //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
-                //{
-                //    bodyTemplate = reader.ReadToEnd();
-                //}
-                //bodyTemplate = "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n\t\t<tbody>\r\n <tr>\r\n\t\t\t<td align=\"center\"> " + bodydata + "\r\n\t\t\t\t\r\n  \t</tbody></tr>\r\n</table>";
+                    .Replace("{newusername}", Name);
+                   // .Replace("{gvid}", gvid);
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
                 mail.To.Add(To);
@@ -598,9 +586,7 @@ namespace Grievancemis.Manager
             int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = ""
                 , SenderName = "", RandomValue = "", OTPCode = "";
-            string ASDT = ""; string DurationTime = ""; string BatchName = "";
-            string TrainerName = ""; string DistrictAgencyTrainingCenter = "";
-            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com"; string maxdateExam = ""; string maxdateExamTimeStartEnd = "";
+            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -637,12 +623,15 @@ namespace Grievancemis.Manager
 
                 To = Toemailid;
 
+                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + status + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() + "></a> </b> for details.";
+
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
-                    .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To <b>" + status + "</b>.We'll Inform You on next Update.")
-                    .Replace("{EmailID}", To)
-                    .Replace("{OTPCode}", gvid)
-                    .Replace("{Status}", status)
-                    .Replace("{message}", TeamRevertMessage);
+                    // .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To <b>" + status + "</b>.We'll Inform You on next Update.")
+                    .Replace("{bodytext}", Body)
+                    .Replace("{EmailID}", To);
+                    //.Replace("{CaseID}", gvid)
+                    //.Replace("{Status}", status)
+                   // .Replace("{message}", TeamRevertMessage);
 
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
                 //{

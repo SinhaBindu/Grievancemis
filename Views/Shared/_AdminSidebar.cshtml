@@ -108,6 +108,19 @@
                                 <use xlink:href="#custom-presentation-chart"></use>
                             </svg>
                         </li>
+                        if (MvcApplication.CUser.RoleId == "1" || MvcApplication.CUser.RoleId == "3" )
+                        {
+                            <li class="pc-item">
+                                <a href="~/Complain/CaseAssign"
+                                   class="pc-link">
+                                    <span class="pc-micon">
+                                        <svg class="pc-icon">
+                                            <use xlink:href="#custom-story"></use>
+                                        </svg>
+                                    </span><span class="pc-mtext">Case Assign</span>
+                                </a>
+                            </li>
+                        }
                         <li class="pc-item">
                             <a href="~/Complain/GrievanceList"
                                class="pc-link">
@@ -140,6 +153,16 @@
                                 </span><span class="pc-mtext">User Details</span>
                             </a>
                         </li>
+                        if (MvcApplication.CUser.RoleId == "1")
+                        {
+                            <li class="pc-item">
+                                <a href="~/Account/Register" class="pc-link">
+                                    <span class="pc-micon">
+                                        <svg class="pc-icon"><use xlink:href="#custom-shield"></use></svg>
+                                    </span><span class="pc-mtext">User Registration</span>
+                                </a>
+                            </li>
+                        }
                     }
                     if (MvcApplication.CUser.RoleId == "2")
                     {
@@ -157,7 +180,8 @@
                         </li>
                         <li class="pc-item">
                             <a href="~/UserCom/AddNGrievance" class="pc-link">
-                                <span class="pc-micon"><svg class="pc-icon"><use xlink:href="#custom-element-plus"></use></svg>
+                                <span class="pc-micon">
+                                    <svg class="pc-icon"><use xlink:href="#custom-element-plus"></use></svg>
                                 </span><span class="pc-mtext">Complain Register</span>
                             </a>
                         </li>
@@ -171,9 +195,11 @@
                         </span><span class="pc-mtext">Revert List</span>
                     </a>
                 </li>*@
+                    }
+                    if (MvcApplication.CUser.RoleId == "4")
+                    {
 
                     }
-
                 }
 
                 <!--<li class="pc-item">

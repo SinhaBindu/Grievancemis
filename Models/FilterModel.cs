@@ -97,7 +97,7 @@ namespace Grievancemis.Models
         public string AspUser_Idfk { get; set; }
 
         [Display(Name = "Panel Member")]
-        public int Role_Idfk { get; set; }
+        public string User_Idfk { get; set; }
 
         public Guid Grievance_Idfk { get; set; }
 

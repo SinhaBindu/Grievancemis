@@ -123,7 +123,7 @@ namespace Grievancemis.Controllers
                 {
                     return Json(new { success = false, message = "All fields are required.", Data = 0 });
                 }
-                if (filterModel.UserRevertId.ToString() == string.Empty || string.IsNullOrWhiteSpace(filterModel.UserRevertId.ToString()))
+                if (filterModel.UserRevertId==0 && filterModel.RevertTypeId == 2)
                 {
                     return Json(new { success = false, message = "All fields are required.", Data = 0 });
                 }
@@ -148,7 +148,10 @@ namespace Grievancemis.Controllers
                     if (teamRevertComplain != null)
                     {
                         teamRevertComplain.GrievanceId_fk = filterModel.GrievanceId_fk;
-                        teamRevertComplain.UserRevertId = filterModel.UserRevertId;
+                        if (filterModel.RevertTypeId == 2)
+                        {
+                            teamRevertComplain.UserRevertId = filterModel.UserRevertId;
+                        }
                         teamRevertComplain.Revertcb_value = filterModel.Revertcb_value;
                         ////teamRevertComplain.RevertTypeId = filterModel.RevertTypeId;
                         teamRevertComplain.UserRevertMessage = filterModel.TeamRevertMessage;
@@ -194,7 +197,14 @@ namespace Grievancemis.Controllers
                         }
 
                         //db.Tbl_TeamRevertComplain.Add(teamRevertComplain);
-                        db_.SaveChanges(); // Save changes to get the GrievanceId_fk
+                        int resD = db_.SaveChanges(); // Save changes to get the GrievanceId_fk
+                        if (resD>0)
+                        {
+                            var maintbl = db_.Tbl_Grievance.Find(teamRevertComplain.GrievanceId_fk);
+                            maintbl.RevertType_Id=filterModel.UserRevertId;
+                            maintbl.RevertTypeDate=DateTime.Now;
+                            db_.SaveChanges();
+                        }
 
                         // Handle email sending
                         DataTable dt = SP_Model.GetRevartMail(teamRevertComplain.GrievanceId_fk.ToString(), filterModel.RevertId.ToString());
@@ -207,10 +217,18 @@ namespace Grievancemis.Controllers
                             //string revertStatus = //(filterModel.RevertTypeId == 1) ? "Clarification" : "Closed";
                             string revertStatus = dt.Rows[0]["RevertStatus"].ToString();
 
-                            DataTable dtteamemails = SP_Model.GetTeamMailID();//RolesIdcont.Community
+                            DataTable dtteamemails = SP_Model.GetTeamMailID(4);//RolesIdcont.Community
 
                             // Send email notification
-                            int emailResult = CommonModel.SendMailRevartPartUser(dtteamemails.Rows[0]["EmailList"].ToString(), email, CaseId, name, revertMessage, revertStatus);
+                            int emailResult = 0;
+                            if (filterModel.Revertcb_value==1)//Head Chief Executive Officer & Country Director Get Email Id
+                            {
+                                emailResult = CommonModel.SendMailRevartPartUser(dtteamemails.Rows[0]["EmailList"].ToString(), email, CaseId, name, revertMessage, revertStatus);
+                            }
+                            else
+                            {
+                                emailResult = CommonModel.SendMailRevartPartUser(dtteamemails.Rows[0]["EmailList"].ToString(), email, CaseId, name, revertMessage, revertStatus);
+                            }
 
                             if (emailResult > 0)
                             {

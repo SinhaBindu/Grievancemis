@@ -77,10 +77,10 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
-        public static DataTable GetTeamMailID()
+        public static DataTable GetTeamMailID(int RoleId = 0)
         {
             StoredProcedure sp = new StoredProcedure("GetEmailsByRoleId");
-            sp.Command.AddParameter("@RoleId", 0, DbType.Int32);
+            sp.Command.AddParameter("@RoleId", RoleId, DbType.Int32);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }

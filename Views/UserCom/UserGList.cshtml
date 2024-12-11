@@ -65,6 +65,7 @@
                 <div class="row">
                     @Html.HiddenFor(x => x.GrievanceId_fk)
                     @Html.HiddenFor(x => x.RevertId)
+                    @Html.HiddenFor(x => x.RevertTypeId)
                     <div class="modal-design">
                         <p>
                             Case Id :
@@ -178,9 +179,11 @@
                 formData.append('GrievanceId_fk', $('#GrievanceId_fk').val());
                 //formData.append('RevertTypeId', $('#RevertTypeId').val());
                 formData.append('TeamRevertMessage', $('#TeamRevertMessage').val());
-                formData.append('RevertId', $('#RevertId').val());
+                if ($('#RevertTypeId').val() == "2" || $('#RevertTypeId').val() == 2) {
+                    formData.append('RevertId', $('#RevertId').val());
+                    formData.append('RevertTypeId', $('#RevertTypeId').val());
+                }
                 formData.append('UserRevertId', $('#UserRevertId').val());
-
 
                 var revertValue = $('input[name="Revertcb_value"]:checked').val();
                 formData.append('Revertcb_value', revertValue); // Append the selected value
@@ -201,6 +204,7 @@
                         if (response.success) {
                             toastr.success(response.message);
                             $('#progressModal').modal('hide');
+                            bindload();
                         } else {
                             toastr.error(response.message);
                             if (response.Data == 201) {
@@ -233,17 +237,20 @@
             $('#GrievanceId_fk').val('');
             $('#RevertId').val('');
             $('#TeamRevertMessage').val('');
+            $('#RevertTypeId').val('');
             if (id != null && id != '') {
                 $('#GrievanceId_fk').val(id);
                 $('#RevertId').val(revertid);
                 $('#cname').html(name);
                 $('#CId').html(caseid);
                 $('#con').html(CreatedOn);
+
                 $('#div-UserRevertId').hide();
                 $('#UserRevertId').val('');
                 $('#UserRevertId').removeAttr('required');
                 if (reverttypeid == "2" || reverttypeid == 2) {
                     $('#div-UserRevertId').show(); $('#UserRevertId').attr('required', 'required');
+                    $('#RevertTypeId').val(reverttypeid);
                 }
                 $('#progressModal').modal('show'); // Ensure this line is present
             }

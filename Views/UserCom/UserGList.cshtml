@@ -153,11 +153,14 @@
         });
 
         // Function to toggle the visibility of the dropdown
-        function toggleUserRevertDropdown() {
+    function toggleUserRevertDropdown() {
+            $('#UserRevertId').val('');
             if ($('#RevertOptionYes').is(':checked')) {
                 $('#UserRevertId').closest('.form-group').hide();
             } else {
-                $('#UserRevertId').closest('.form-group').show();
+                if ($('#RevertTypeId').val() == "2" || $('#RevertTypeId').val() == 2) {
+                    $('#UserRevertId').closest('.form-group').show();
+                }
             }
         }
 

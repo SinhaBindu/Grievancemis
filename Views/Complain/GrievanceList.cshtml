@@ -155,6 +155,7 @@
                         if (response.success) {
                             toastr.success(response.message);
                             $('#progressModal').modal('hide');
+                            bindload();
                         } else {
                             toastr.error(response.message);
                             if (response.Data == 201) {

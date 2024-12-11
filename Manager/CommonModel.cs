@@ -473,7 +473,7 @@ namespace Grievancemis.Manager
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     //.Replace("{bodytext}", bodytext)
-                    .Replace("{bodytext}", bodytext);
+                    .Replace("{bodytext}", Body);
                    // .Replace("{CaseID}", Greid);
                 //.Replace("{OTPCode}", tbl_v.VerificationCode);
                

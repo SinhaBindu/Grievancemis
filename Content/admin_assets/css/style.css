@@ -13517,8 +13517,11 @@ body {
 .bgrbule-7 {
     background: #324ab2;
 }
-bgrlight-7 {
+.bgrlight-7 {
     background: #0047ab;
+}
+.bgrlight-8 {
+    background: rgb(165 114 187) !important;
 }
 
 .data-icon {

@@ -405,7 +405,8 @@ namespace Grievancemis.Manager
                 }
                 To = Toemailid;
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
-                    .Replace("{bodytext}", "When the user submits the code for verification, check if the code was generated within the last hour. If the current time exceeds the one-hour limit, the OTP is invalid.")
+                    //.Replace("{bodytext}", "When the user submits the code for verification, check if the code was generated within the last hour. If the current time exceeds the one-hour limit, the OTP is invalid.")
+                    .Replace("{bodytext}", "OTP valid for 1 hour.")
                     .Replace("{EmailID}", To)
                     .Replace("{OTPCode}", RandomValue);
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
@@ -531,7 +532,7 @@ namespace Grievancemis.Manager
             string bodyTemplate = string.Empty;
             Guid AssessmentScheduleId_pk = Guid.Empty;
             Guid ParticipantId = Guid.Empty;
-            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/UserTemplateMailMail.html")))
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/UserTemplateMail.html")))
             {
                 bodyTemplate = reader.ReadToEnd();
             }

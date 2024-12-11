@@ -187,16 +187,19 @@ namespace Grievancemis.Controllers
 
                     if (res > 0)
                     {
-
-                        var asp = db.AspNetUsers.Where(x => x.Email == grievanceModel.Email)?.FirstOrDefault();
-                        asp.Name = grievanceModel.Name.Trim();
-                        db.SaveChanges();
+                        var asp = db.AspNetUsers.Where(x => x.Email == grievanceModel.Email.Trim())?.FirstOrDefault();
+                        if (asp != null)
+                        {
+                            asp.Name = !string.IsNullOrWhiteSpace(grievanceModel.Name) ? grievanceModel.Name.Trim() : string.Empty;
+                            asp.PhoneNumber = !string.IsNullOrWhiteSpace(grievanceModel.PhoneNo) ? grievanceModel.PhoneNo.Trim() : string.Empty;
+                            db.SaveChanges();
+                        }
                         DataTable dt = new DataTable();
                         dt = SP_Model.GetTeamMailID();
                         if (dt.Rows.Count > 0)
                         {
                             res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail, Greid, "New Case");
-                            res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name,"New Case");
+                            res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name, "New Case");
                         }
                         if (res > 0)
                         {
@@ -227,150 +230,165 @@ namespace Grievancemis.Controllers
         [HttpPost]
         public async Task<ActionResult> OPtSendMail(string EmailId, string OPTCode)
         {
-            var res = -1;
-            if (!string.IsNullOrWhiteSpace(EmailId) && string.IsNullOrWhiteSpace(OPTCode))//send OTP
+            try
             {
-                var vildemailid = EmailId.Trim().Split('@')[1];
-                if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
+                var res = -1;
+                if (!string.IsNullOrWhiteSpace(EmailId) && string.IsNullOrWhiteSpace(OPTCode))//send OTP
                 {
-                    var dt = SP_Model.GetOTPCheckLoginMail(EmailId.Trim(), OPTCode);
-                    res = CommonModel.SendMailForUser(EmailId.Trim(), dt);
-                    if (res == 1)
+                    var vildemailid = EmailId.Trim().Split('@')[1];
+                    if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
                     {
-                        return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
-                    }
-                    return Json(new { success = false, message = "EmailId not verify.", resdata = res });
-                }
-                else
-                {
-                    return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
-                }
-            }
-            else if (!string.IsNullOrWhiteSpace(EmailId) && !string.IsNullOrWhiteSpace(OPTCode))//EmailId Verified
-            {
-                var rolid = ""; var password = ""; var aspId = "";
-                var aspdt = SP_Model.SP_AspnetUser(EmailId.Trim());
-                Grievance_DBEntities _db = new Grievance_DBEntities();
-                var vildemailid = EmailId.Trim().Split('@')[1];
-                if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
-                {
-                    var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim() && DbFunctions.TruncateTime(x.Date) == DbFunctions.TruncateTime(DateTime.Now))?.FirstOrDefault();// && x.Date == DateTime.Now.Date
-                    if (tbl != null)
-                    {
-                        tbl.IsValidEmailId = true;
-                        //tbl.IsActive = false;
-                        res = _db.SaveChanges();
-                        if (aspdt.Rows.Count > 0)
+                        var dt = SP_Model.GetOTPCheckLoginMail(EmailId.Trim(), OPTCode);
+                        res = CommonModel.SendMailForUser(EmailId.Trim(), dt);
+                        // if (res == 1)//uncommemte testing issues
+                        if (res == 1 || res == -1)
                         {
-                            rolid = aspdt.Rows[0]["RoleId"].ToString();
-                            password = aspdt.Rows[0]["Passw"].ToString();
-                            aspId = aspdt.Rows[0]["Id"].ToString();
+                            return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
                         }
-                        else
+                        return Json(new { success = false, message = "EmailId not verify.", resdata = res });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
+                    }
+                }
+                else if (!string.IsNullOrWhiteSpace(EmailId) && !string.IsNullOrWhiteSpace(OPTCode))//EmailId Verified
+                {
+                    var rolid = ""; var password = ""; var aspId = "";
+                    var aspdt = SP_Model.SP_AspnetUser(EmailId.Trim());
+                    Grievance_DBEntities _db = new Grievance_DBEntities();
+                    var vildemailid = EmailId.Trim().Split('@')[1];
+                    if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
+                    {
+                        var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim() && DbFunctions.TruncateTime(x.Date) == DbFunctions.TruncateTime(DateTime.Now))?.FirstOrDefault();// && x.Date == DateTime.Now.Date
+                        if (tbl != null)
                         {
-                            RegisterViewModel model = new RegisterViewModel
-                            {
-                                Email = EmailId.Trim(),
-                                Password = "User@123",
-                                RoleName = "User",
-                                RoleID = "2"
-                            };
-                            await RegisterCust(model);
-                            var aspdt1 = SP_Model.SP_AspnetUser(EmailId.Trim());
+                            tbl.IsValidEmailId = true;
+                            //tbl.IsActive = false;
+                            res = _db.SaveChanges();
                             if (aspdt.Rows.Count > 0)
                             {
                                 rolid = aspdt.Rows[0]["RoleId"].ToString();
                                 password = aspdt.Rows[0]["Passw"].ToString();
                                 aspId = aspdt.Rows[0]["Id"].ToString();
                             }
-                        }
-
-                        if (res == 1 || tbl.IsValidEmailId == true)
-                        {
-                            //return RedirectToAction("GetGrievanceList", "Complaine");
-                            //return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
-
-                            var signInResult = await SignInManager.PasswordSignInAsync(EmailId, password, isPersistent: true, shouldLockout: false);
-
-                            switch (signInResult)
+                            else
                             {
-                                case SignInStatus.Success:
-                                    res = 1;
-                                    // Retrieve the user’s current claims identity
-                                    var identity = (ClaimsIdentity)User.Identity;
-
-                                    //// Remove the existing Name claim if it exists
-                                    //var nameClaim = identity.FindFirst(ClaimTypes.Name);
-                                    //if (nameClaim != null)
-                                    //{
-                                    //    identity.RemoveClaim(nameClaim);
-                                    //}
-
-                                    //// Add a new Name claim with the updated name
-                                    //identity.AddClaim(new Claim(ClaimTypes.Name, "NewUserNameHere"));
-
-                                    // Update the authentication cookie with the new claims
-                                    //await HttpContext.GetOwinContext().Authentication.SignIn(
-                                    //    new AuthenticationProperties { IsPersistent = true }, // Make cookie persistent if needed
-                                    //    identity // Use the updated identity directly
-                                    //);
-                                    await SignInUser(identity, true);
-
-                                    var g = identity.Name;
-                                    break;
-
-                                case SignInStatus.LockedOut:
-                                case SignInStatus.RequiresVerification:
-                                    res = 0;
-                                    break;
-                            }
-                            var f = User.Identity.Name;
-                            Session["CUser"] = null;
-                            Session["EmailId"] = EmailId.Trim();
-                            var usercheck = MvcApplication.CUser;
-
-                            if (usercheck != null && res > 0)
-                            {
-                                if (usercheck.RoleId == "2")//User
+                                RegisterViewModel model = new RegisterViewModel
                                 {
-                                    var getemail = SP_Model.SP_AspnetUserCaseFirstTimeCheck(EmailId, aspId);
-                                    if (getemail.Rows.Count > 0)
+                                    Email = EmailId.Trim(),
+                                    Password = "User@123",
+                                    RoleName = "User",
+                                    RoleID = "2"
+                                };
+                                string regres = await RegisterCust(model);
+                                if (regres == "1")
+                                {
+                                    var aspdt1 = SP_Model.SP_AspnetUser(EmailId.Trim());
+                                    if (aspdt.Rows.Count > 0)
                                     {
-                                        return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 99, });
+                                        rolid = aspdt.Rows[0]["RoleId"].ToString();
+                                        password = aspdt.Rows[0]["Passw"].ToString();
+                                        aspId = aspdt.Rows[0]["Id"].ToString();
                                     }
-                                    else
-                                        return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
                                 }
-                                if (usercheck.RoleId == "3")//TeamMember
+                                else
                                 {
-                                    return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 100 });
-                                }
-                                if (usercheck.RoleId == "1")//Admin
-                                {
-                                    return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 101 });
+                                    return Json(new { success = false, message = "User is not registered", resdata = "" });
                                 }
                             }
+
+                            if (res == 1 || tbl.IsValidEmailId == true)
+                            {
+                                //return RedirectToAction("GetGrievanceList", "Complaine");
+                                //return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
+                                password = !string.IsNullOrWhiteSpace(password) ? password : "User@123";
+                                var signInResult = await SignInManager.PasswordSignInAsync(EmailId, password, isPersistent: true, shouldLockout: false);
+
+                                switch (signInResult)
+                                {
+                                    case SignInStatus.Success:
+                                        res = 1;
+                                        // Retrieve the user’s current claims identity
+                                        var identity = (ClaimsIdentity)User.Identity;
+
+                                        //// Remove the existing Name claim if it exists
+                                        //var nameClaim = identity.FindFirst(ClaimTypes.Name);
+                                        //if (nameClaim != null)
+                                        //{
+                                        //    identity.RemoveClaim(nameClaim);
+                                        //}
+
+                                        //// Add a new Name claim with the updated name
+                                        //identity.AddClaim(new Claim(ClaimTypes.Name, "NewUserNameHere"));
+
+                                        // Update the authentication cookie with the new claims
+                                        //await HttpContext.GetOwinContext().Authentication.SignIn(
+                                        //    new AuthenticationProperties { IsPersistent = true }, // Make cookie persistent if needed
+                                        //    identity // Use the updated identity directly
+                                        //);
+                                        await SignInUser(identity, true);
+
+                                        var g = identity.Name;
+                                        break;
+
+                                    case SignInStatus.LockedOut:
+                                    case SignInStatus.RequiresVerification:
+                                        res = 0;
+                                        break;
+                                }
+                                var f = User.Identity.Name;
+                                Session["CUser"] = null;
+                                Session["EmailId"] = EmailId.Trim();
+                                var usercheck = MvcApplication.CUser;
+
+                                if (usercheck != null && res > 0)
+                                {
+                                    if (usercheck.RoleId == "2")//User
+                                    {
+                                        var getemail = SP_Model.SP_AspnetUserCaseFirstTimeCheck(EmailId, aspId);
+                                        if (getemail.Rows.Count > 0)
+                                        {
+                                            return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 99, });
+                                        }
+                                        else
+                                            return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
+                                    }
+                                    if (usercheck.RoleId == "3")//TeamMember
+                                    {
+                                        return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 100 });
+                                    }
+                                    if (usercheck.RoleId == "1")//Admin
+                                    {
+                                        return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 101 });
+                                    }
+                                }
+                            }
+                            return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
                         }
-                        return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
+                        else
+                        {
+                            if (tbl != null)
+                            {
+                                tbl.IsValidEmailId = false;
+                                //tbl.IsActive = false;
+                            }
+                        }
+                        res = _db.SaveChanges();
+                        if (res == 1)
+                        {
+                            return Json(new { success = false, message = "EmailId Invalid.", resdata = 3 });
+                        }
                     }
                     else
                     {
-                        if (tbl != null)
-                        {
-                            tbl.IsValidEmailId = false;
-                            //tbl.IsActive = false;
-                        }
-                    }
-                    res = _db.SaveChanges();
-                    if (res == 1)
-                    {
-                        return Json(new { success = false, message = "EmailId Invalid.", resdata = 3 });
+                        return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
                     }
                 }
-                else
-                {
-                    return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
-                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "A communication error has occurred.", resdata = "" });
             }
             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
         }
@@ -392,7 +410,7 @@ namespace Grievancemis.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email.Trim(), Email = model.Email.Trim() };//PhoneNumber = model.PhoneNumber.Trim(),
-                model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber;
+                model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : "User@123";
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

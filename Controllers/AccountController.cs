@@ -62,14 +62,14 @@ namespace Grievancemis.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-           // return View();
+            // return View();
             return RedirectToAction("GrievanceCaseAdd", "Grievnce");
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model,string returnUrl)
+        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -96,182 +96,182 @@ namespace Grievancemis.Controllers
 
 
         //
-       // // POST: /Account/Login
-       // [HttpPost]
-       // [AllowAnonymous]
-       //// [ValidateAntiForgeryToken]
-       // public async Task<ActionResult> Login_Grievance(string EmailId, string OPTCode)
-       // {
-       //     //if (!ModelState.IsValid)
-       //     //{
-       //     //    return View(model);
-       //     //}
+        // // POST: /Account/Login
+        // [HttpPost]
+        // [AllowAnonymous]
+        //// [ValidateAntiForgeryToken]
+        // public async Task<ActionResult> Login_Grievance(string EmailId, string OPTCode)
+        // {
+        //     //if (!ModelState.IsValid)
+        //     //{
+        //     //    return View(model);
+        //     //}
 
-       //     //// This doesn't count login failures towards account lockout
-       //     //// To enable password failures to trigger account lockout, change to shouldLockout: true
-       //     //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-       //     //switch (result)
-       //     //{
-       //     //    case SignInStatus.Success:
-       //     //        return RedirectToLocal(returnUrl);
-       //     //    case SignInStatus.LockedOut:
-       //     //        return View("Lockout");
-       //     //    case SignInStatus.RequiresVerification:
-       //     //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-       //     //    case SignInStatus.Failure:
-       //     //    default:
-       //     //        ModelState.AddModelError("", "Invalid login attempt.");
-       //     //        return View(model);
-       //     //}
-       //     var res = -1;
-       //     if (!string.IsNullOrWhiteSpace(EmailId) && string.IsNullOrWhiteSpace(OPTCode))//send OTP
-       //     {
-       //         var vildemailid = EmailId.Trim().Split('@')[1];
-       //         if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
-       //         {
-       //             var dt = SP_Model.GetOTPCheckLoginMail(EmailId.Trim(), OPTCode);
-       //             res = CommonModel.SendMailForUser(EmailId.Trim(), dt);
-       //             if (res == 1)
-       //             {
-       //                 return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
-       //             }
-       //             return Json(new { success = false, message = "EmailId not verify.", resdata = res });
-       //         }
-       //         else
-       //         {
-       //             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
-       //         }
-       //     }
-       //     else if (!string.IsNullOrWhiteSpace(EmailId) && !string.IsNullOrWhiteSpace(OPTCode))//EmailId Verified
-       //     {
-       //         var rolid = ""; var password = ""; var aspId = "";
-       //         var aspdt = SP_Model.SP_AspnetUser(EmailId.Trim());
-       //         Grievance_DBEntities _db = new Grievance_DBEntities();
-       //         var vildemailid = EmailId.Trim().Split('@')[1];
-       //         if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
-       //         {
-       //             var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim() && DbFunctions.TruncateTime(x.Date) == DbFunctions.TruncateTime(DateTime.Now))?.FirstOrDefault();// && x.Date == DateTime.Now.Date
-       //             if (tbl != null)
-       //             {
-       //                 tbl.IsValidEmailId = true;
-       //                 //tbl.IsActive = false;
-       //                 res = _db.SaveChanges();
-       //                 if (aspdt.Rows.Count > 0)
-       //                 {
-       //                     rolid = aspdt.Rows[0]["RoleId"].ToString();
-       //                     password = aspdt.Rows[0]["Passw"].ToString();
-       //                     aspId = aspdt.Rows[0]["Id"].ToString();
-       //                 }
-       //                 else
-       //                 {
-       //                     RegisterViewModel model1 = new RegisterViewModel
-       //                     {
-       //                         Email = EmailId.Trim(),
-       //                         Password = "User@123",
-       //                         RoleName = "User",
-       //                         RoleID = "2"
-       //                     };
-       //                     await RegisterCust(model1);
-       //                     var aspdt1 = SP_Model.SP_AspnetUser(EmailId.Trim());
-       //                     if (aspdt.Rows.Count > 0)
-       //                     {
-       //                         rolid = aspdt.Rows[0]["RoleId"].ToString();
-       //                         password = aspdt.Rows[0]["Passw"].ToString();
-       //                         aspId = aspdt.Rows[0]["Id"].ToString();
-       //                     }
-       //                 }
+        //     //// This doesn't count login failures towards account lockout
+        //     //// To enable password failures to trigger account lockout, change to shouldLockout: true
+        //     //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+        //     //switch (result)
+        //     //{
+        //     //    case SignInStatus.Success:
+        //     //        return RedirectToLocal(returnUrl);
+        //     //    case SignInStatus.LockedOut:
+        //     //        return View("Lockout");
+        //     //    case SignInStatus.RequiresVerification:
+        //     //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+        //     //    case SignInStatus.Failure:
+        //     //    default:
+        //     //        ModelState.AddModelError("", "Invalid login attempt.");
+        //     //        return View(model);
+        //     //}
+        //     var res = -1;
+        //     if (!string.IsNullOrWhiteSpace(EmailId) && string.IsNullOrWhiteSpace(OPTCode))//send OTP
+        //     {
+        //         var vildemailid = EmailId.Trim().Split('@')[1];
+        //         if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
+        //         {
+        //             var dt = SP_Model.GetOTPCheckLoginMail(EmailId.Trim(), OPTCode);
+        //             res = CommonModel.SendMailForUser(EmailId.Trim(), dt);
+        //             if (res == 1)
+        //             {
+        //                 return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
+        //             }
+        //             return Json(new { success = false, message = "EmailId not verify.", resdata = res });
+        //         }
+        //         else
+        //         {
+        //             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
+        //         }
+        //     }
+        //     else if (!string.IsNullOrWhiteSpace(EmailId) && !string.IsNullOrWhiteSpace(OPTCode))//EmailId Verified
+        //     {
+        //         var rolid = ""; var password = ""; var aspId = "";
+        //         var aspdt = SP_Model.SP_AspnetUser(EmailId.Trim());
+        //         Grievance_DBEntities _db = new Grievance_DBEntities();
+        //         var vildemailid = EmailId.Trim().Split('@')[1];
+        //         if (vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org")
+        //         {
+        //             var tbl = _db.Tbl_LoginVerification.Where(x => x.EmailId.ToLower() == EmailId.Trim().ToLower() && x.IsActive == true && x.VerificationCode.ToLower() == OPTCode.ToLower().Trim() && DbFunctions.TruncateTime(x.Date) == DbFunctions.TruncateTime(DateTime.Now))?.FirstOrDefault();// && x.Date == DateTime.Now.Date
+        //             if (tbl != null)
+        //             {
+        //                 tbl.IsValidEmailId = true;
+        //                 //tbl.IsActive = false;
+        //                 res = _db.SaveChanges();
+        //                 if (aspdt.Rows.Count > 0)
+        //                 {
+        //                     rolid = aspdt.Rows[0]["RoleId"].ToString();
+        //                     password = aspdt.Rows[0]["Passw"].ToString();
+        //                     aspId = aspdt.Rows[0]["Id"].ToString();
+        //                 }
+        //                 else
+        //                 {
+        //                     RegisterViewModel model1 = new RegisterViewModel
+        //                     {
+        //                         Email = EmailId.Trim(),
+        //                         Password = "User@123",
+        //                         RoleName = "User",
+        //                         RoleID = "2"
+        //                     };
+        //                     await RegisterCust(model1);
+        //                     var aspdt1 = SP_Model.SP_AspnetUser(EmailId.Trim());
+        //                     if (aspdt.Rows.Count > 0)
+        //                     {
+        //                         rolid = aspdt.Rows[0]["RoleId"].ToString();
+        //                         password = aspdt.Rows[0]["Passw"].ToString();
+        //                         aspId = aspdt.Rows[0]["Id"].ToString();
+        //                     }
+        //                 }
 
-       //                 if (res == 1 || tbl.IsValidEmailId == true)
-       //                 {
-       //                     //return RedirectToAction("GetGrievanceList", "Complaine");
-       //                     //return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
-       //                     //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-       //                     //switch (result)
-       //                     //{
+        //                 if (res == 1 || tbl.IsValidEmailId == true)
+        //                 {
+        //                     //return RedirectToAction("GetGrievanceList", "Complaine");
+        //                     //return Json(new { success = true, message = "EmailId Verified.", resdata = 2 });
+        //                     //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+        //                     //switch (result)
+        //                     //{
 
-       //                     var signInResult = await SignInManager.PasswordSignInAsync(EmailId.Trim(), password, isPersistent: true, shouldLockout: false);
+        //                     var signInResult = await SignInManager.PasswordSignInAsync(EmailId.Trim(), password, isPersistent: true, shouldLockout: false);
 
-       //                     switch (signInResult)
-       //                     {
-       //                         case SignInStatus.Success:
-       //                             res = 1;
-       //                             // Retrieve the user’s current claims identity
-       //                            // var identity = (ClaimsIdentity)User.Identity;
+        //                     switch (signInResult)
+        //                     {
+        //                         case SignInStatus.Success:
+        //                             res = 1;
+        //                             // Retrieve the user’s current claims identity
+        //                            // var identity = (ClaimsIdentity)User.Identity;
 
-       //                             //// Remove the existing Name claim if it exists
-       //                             //var nameClaim = identity.FindFirst(ClaimTypes.Name);
-       //                             //if (nameClaim != null)
-       //                             //{
-       //                             //    identity.RemoveClaim(nameClaim);
-       //                             //}
+        //                             //// Remove the existing Name claim if it exists
+        //                             //var nameClaim = identity.FindFirst(ClaimTypes.Name);
+        //                             //if (nameClaim != null)
+        //                             //{
+        //                             //    identity.RemoveClaim(nameClaim);
+        //                             //}
 
-       //                             //// Add a new Name claim with the updated name
-       //                             //identity.AddClaim(new Claim(ClaimTypes.Name, "NewUserNameHere"));
+        //                             //// Add a new Name claim with the updated name
+        //                             //identity.AddClaim(new Claim(ClaimTypes.Name, "NewUserNameHere"));
 
-       //                             // Update the authentication cookie with the new claims
-       //                             //await HttpContext.GetOwinContext().Authentication.SignIn(
-       //                             //    new AuthenticationProperties { IsPersistent = true }, // Make cookie persistent if needed
-       //                             //    identity // Use the updated identity directly
-       //                             //);
-       //                            // await SignInUser(identity, true);
+        //                             // Update the authentication cookie with the new claims
+        //                             //await HttpContext.GetOwinContext().Authentication.SignIn(
+        //                             //    new AuthenticationProperties { IsPersistent = true }, // Make cookie persistent if needed
+        //                             //    identity // Use the updated identity directly
+        //                             //);
+        //                            // await SignInUser(identity, true);
 
-       //                            // var g = identity.Name;
-       //                             break;
+        //                            // var g = identity.Name;
+        //                             break;
 
-       //                         case SignInStatus.LockedOut:
-       //                         case SignInStatus.RequiresVerification:
-       //                             res = 0;
-       //                             break;
-       //                     }
-       //                     var f = User.Identity.Name;
+        //                         case SignInStatus.LockedOut:
+        //                         case SignInStatus.RequiresVerification:
+        //                             res = 0;
+        //                             break;
+        //                     }
+        //                     var f = User.Identity.Name;
 
-       //                     Session["EmailId"] = EmailId.Trim();
-       //                     var usercheck = MvcApplication.CUser;
-       //                     if (usercheck != null && res > 0)
-       //                     {
-       //                         if (usercheck.RoleId == "2")//User
-       //                         {
-       //                             var getemail = SP_Model.SP_AspnetUserCaseFirstTimeCheck(EmailId, aspId);
-       //                             if (getemail.Rows.Count > 0)
-       //                             {
-       //                                 return Json(new { success = true, message = "EmailId Verified.", redirect = "/UserCom/UserGList", resdata = 99, });
-       //                             }
-       //                             else
-       //                                 return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
-       //                         }
-       //                         if (usercheck.RoleId == "3")//TeamMember
-       //                         {
-       //                             return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complain/GrievanceList", resdata = 100 });
-       //                         }
-       //                         if (usercheck.RoleId == "1")//Admin
-       //                         {
-       //                             return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complain/GrievanceList", resdata = 101 });
-       //                         }
-       //                     }
-       //                 }
-       //                 return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
-       //             }
-       //             else
-       //             {
-       //                 if (tbl != null)
-       //                 {
-       //                     tbl.IsValidEmailId = false;
-       //                     //tbl.IsActive = false;
-       //                 }
-       //             }
-       //             res = _db.SaveChanges();
-       //             if (res == 1)
-       //             {
-       //                 return Json(new { success = false, message = "EmailId Invalid.", resdata = 3 });
-       //             }
-       //         }
-       //         else
-       //         {
-       //             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
-       //         }
-       //     }
-       //     return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
-       // }
+        //                     Session["EmailId"] = EmailId.Trim();
+        //                     var usercheck = MvcApplication.CUser;
+        //                     if (usercheck != null && res > 0)
+        //                     {
+        //                         if (usercheck.RoleId == "2")//User
+        //                         {
+        //                             var getemail = SP_Model.SP_AspnetUserCaseFirstTimeCheck(EmailId, aspId);
+        //                             if (getemail.Rows.Count > 0)
+        //                             {
+        //                                 return Json(new { success = true, message = "EmailId Verified.", redirect = "/UserCom/UserGList", resdata = 99, });
+        //                             }
+        //                             else
+        //                                 return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
+        //                         }
+        //                         if (usercheck.RoleId == "3")//TeamMember
+        //                         {
+        //                             return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complain/GrievanceList", resdata = 100 });
+        //                         }
+        //                         if (usercheck.RoleId == "1")//Admin
+        //                         {
+        //                             return Json(new { success = true, message = "EmailId Verified.", redirect = "/Complain/GrievanceList", resdata = 101 });
+        //                         }
+        //                     }
+        //                 }
+        //                 return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
+        //             }
+        //             else
+        //             {
+        //                 if (tbl != null)
+        //                 {
+        //                     tbl.IsValidEmailId = false;
+        //                     //tbl.IsActive = false;
+        //                 }
+        //             }
+        //             res = _db.SaveChanges();
+        //             if (res == 1)
+        //             {
+        //                 return Json(new { success = false, message = "EmailId Invalid.", resdata = 3 });
+        //             }
+        //         }
+        //         else
+        //         {
+        //             return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
+        //         }
+        //     }
+        //     return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
+        // }
         public async Task<string> RegisterCust(RegisterViewModel model)
         {
             Grievance_DBEntities db_ = new Grievance_DBEntities();
@@ -371,8 +371,8 @@ namespace Grievancemis.Controllers
             {
                 if (!string.IsNullOrWhiteSpace(model.Id))
                 {
-
-                    model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber.Trim();
+                    model.Password = model.RoleID == "3" ? "Team@123" : model.RoleID == "2" ? "User@123" : model.RoleID == "4" ? "Head@123" : "Admin@1234";
+                    //model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber.Trim();
                     var tbLu = db_.AspNetUsers.Find(model.Id);
 
                     var passwordHasher = new Microsoft.AspNet.Identity.PasswordHasher();
@@ -400,7 +400,7 @@ namespace Grievancemis.Controllers
                 else
                 {
                     var user = new ApplicationUser { PhoneNumber = model.PhoneNumber.Trim(), UserName = model.Email.Trim(), Email = model.Email.Trim() };
-                    model.Password = !string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber;
+                    model.Password = model.RoleID == "3" ? "Team@123" : model.RoleID == "2" ? "User@123" : model.RoleID == "4" ? "Head@123" : "Admin@1234"; //!string.IsNullOrWhiteSpace(model.Password) ? model.Password : model.PhoneNumber;
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {

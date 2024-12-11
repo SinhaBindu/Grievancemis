@@ -221,6 +221,7 @@ namespace Grievancemis.Controllers
         [HttpPost]
         public ActionResult AssignWork(List<FilterModel> filterModels)
         {
+            Grievance_DBEntities db_ = new Grievance_DBEntities();
             // Check if the list is null or empty
             if (filterModels == null || !filterModels.Any())
             {
@@ -231,12 +232,15 @@ namespace Grievancemis.Controllers
                 int res = 0;
                 using (var db = new Grievance_DBEntities())
                 {
-                    var gid =filterModels[0].Grievance_Idfk;
-                    var strdellist = db.tbl_AssignCase.Where(x => x.Grievance_Idfk == gid).ToList();
+                    var gid = filterModels[0].Grievance_Idfk;
+                    var strdellist = db_.tbl_AssignCase.Where(x => x.Grievance_Idfk == gid).ToList();
                     if (strdellist != null)
                     {
-                        db.tbl_AssignCase.RemoveRange(strdellist);
-                        db.SaveChanges();
+                        if (strdellist.Count > 0)
+                        {
+                            db_.tbl_AssignCase.RemoveRange(strdellist);
+                            db_.SaveChanges();
+                        }
                     }
                     // Prepare the list of new assignments to be added
                     var newAssignments = filterModels.Select(assignCase => new tbl_AssignCase
@@ -262,8 +266,9 @@ namespace Grievancemis.Controllers
             }
             catch (Exception ex)
             {
+                string msg = ex.Message;    
                 // Handle general exceptions
-                return Json(new { success = false, message = "Error: " + ex.Message });
+                return Json(new { success = false, message = "A communication error has occurred: "});
             }
         }
         //[HttpPost]

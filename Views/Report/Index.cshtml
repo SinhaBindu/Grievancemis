@@ -34,7 +34,12 @@
     <div class="datas bgr-5">
         <span class="data-icon"><i class="fa fa-clipboard"></i></span>
         <h3 id="dv-clarification"></h3>
-        <p>Clarification</p>
+        <p>In Process</p>
+    </div>
+    <div class="datas bgrlight-8">
+        <span class="data-icon"><i class="fa fa-check"></i></span>
+        <h3 id="dv-redressed"></h3>
+        <p>Redressed</p>
     </div>
     <div class="datas bgrSuccess-2">
         <span class="data-icon"><i class="fa fa-check"></i></span>
@@ -120,7 +125,7 @@
                         DGender = datamain.Table2;
                         DGType = datamain.Table3;
                         $('#dv-total').html(Dlist1[0].TotalCount); $('#dv-new').html(Dlist1[0].Newsub);
-                        $('#dv-clarification').html(Dlist1[0].ClarificationSub); $('#dv-close').html(Dlist1[0].ClosedSub);
+                        $('#dv-clarification').html(Dlist1[0].ClarificationSub); $('#dv-redressed').html(Dlist1[0].RedressedSub); $('#dv-close').html(Dlist1[0].ClosedSub);
                         BindComplainStatus(Dlist1); Load_DistrictMap(DlistMap);
                         BindGender(DGender); BindGrievanceType(DGType);
                     }
@@ -142,7 +147,8 @@
                 for (var i = 0; i < RData.length; i++) {
                     DataTitle = RData[i].TotalCount;
                     datanboj.push({ name: 'New Cases', y: RData[i].Newsub, color: '#f0ad92' });
-                    datanboj.push({ name: 'Clarifications', y: RData[i].ClarificationSub, color:'#85c1e9' });
+                    datanboj.push({ name: 'In Process', y: RData[i].ClarificationSub, color:'#85c1e9' });
+                    datanboj.push({ name: 'Redressed', y: RData[i].RedressedSub, color:'rgb(165 114 187)' });
                     datanboj.push({ name: 'Closed', y: RData[i].ClosedSub, color:'#82e0aa' });
                 }
                 Highcharts.chart('myPieChart', {
@@ -322,13 +328,14 @@
         }
 
         function BindGender(RData) {
+            debugger;
             if (RData) {
                 Highcharts.setOptions({
-                    colors: ['#76d7c4','#bb8fce']
+                    colors: ['#FFDE59','#EBAB50']
                 });
                 var sumtotal = 0; var datanboj = [];
                 for (var i = 0; i < RData.length; i++) {
-                    sumtotal = RData[i].Total;
+                    sumtotal += RData[i].Total;
                     datanboj.push({ name: RData[i].Gender, y: RData[i].Total });
                 }
                 Highcharts.chart('genderchart', {
@@ -413,7 +420,7 @@
                     },
                     series: [{
                         name: 'Grievance Type',
-                        colors: ['#c39bd3'],
+                        colors: ['#4EAAAA'],
                         //colors: [
                         //    '#9b20d9', '#9215ac', '#861ec9', '#7a17e6', '#7010f9', '#691af3',
                         //    '#6225ed', '#5b30e7', '#533be1', '#4c46db', '#4551d5', '#3e5ccf',

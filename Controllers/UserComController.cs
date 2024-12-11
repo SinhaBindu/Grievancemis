@@ -419,16 +419,16 @@ namespace Grievancemis.Controllers
                         str.Append("<tr><td>Other</td><td colspan='2'>Message</td></tr>");
                         str.Append("<tr><td>" + tbl_Grievance.Other + "</td><td colspan='2'>" + tbl_Grievance.Grievance_Message + "</td></tr>");
                         str.Append("</table>");
-
                     }
-
-
                     if (res > 0)
                     {
                         var asp = db.AspNetUsers.Where(x => x.Email == grievanceModel.Email.Trim())?.FirstOrDefault();
-                        asp.Name = grievanceModel.Name.Trim();
-                        asp.PhoneNumber = grievanceModel.PhoneNo.Trim();
-                        db.SaveChanges();
+                        if (asp != null)
+                        {
+                            asp.Name = !string.IsNullOrWhiteSpace(grievanceModel.Name) ? grievanceModel.Name.Trim() : string.Empty;
+                            asp.PhoneNumber = !string.IsNullOrWhiteSpace(grievanceModel.PhoneNo) ? grievanceModel.PhoneNo.Trim() : string.Empty;
+                            db.SaveChanges();
+                        }
                         DataTable dt = new DataTable();
                         dt = SP_Model.GetTeamMailID();
                         if (dt.Rows.Count > 0)

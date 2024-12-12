@@ -265,6 +265,9 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GrivanceModel.cs" />
+    <Compile Include="Models\M_RevertType.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\m_State_Master.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

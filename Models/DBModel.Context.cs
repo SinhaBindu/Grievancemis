@@ -40,5 +40,6 @@ namespace Grievancemis.Models
         public virtual DbSet<Tbl_Grievance> Tbl_Grievance { get; set; }
         public virtual DbSet<Tbl_TeamRevertComplain> Tbl_TeamRevertComplain { get; set; }
         public virtual DbSet<tbl_AssignCase> tbl_AssignCase { get; set; }
+        public virtual DbSet<M_RevertType> M_RevertType { get; set; }
     }
 }

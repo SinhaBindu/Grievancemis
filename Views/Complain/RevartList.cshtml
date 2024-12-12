@@ -43,7 +43,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.RevertTypeId, htmlAttributes: new { @class = "control-label" })
                     <span style="color:red;">*</span>
-                    @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetRevertType(), null, new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.RevertTypeId, CommonModel.GetMasterRevertType(), null, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.RevertTypeId, "", new { @class = "text-danger" })
                 </div>
             </div>

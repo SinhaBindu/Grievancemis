@@ -80,6 +80,16 @@
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="CreatedOn" Type="datetime" />
         </EntityType>
+        <EntityType Name="M_RevertType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RevertType" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="m_State_Master">
           <Key>
             <PropertyRef Name="LGD_State_Code" />
@@ -342,6 +352,7 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="m_District_Master" EntityType="Self.m_District_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="M_GrievanceType" EntityType="Self.M_GrievanceType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_RevertType" EntityType="Self.M_RevertType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="m_State_Master" EntityType="Self.m_State_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_AssignCase" EntityType="Self.tbl_AssignCase" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_ExceptionHandle" EntityType="Self.Tbl_ExceptionHandle" Schema="dbo" store:Type="Tables" />
@@ -424,6 +435,7 @@
             <End Role="Tbl_TeamRevertComplain" EntitySet="Tbl_TeamRevertComplain" />
           </AssociationSet>
           <EntitySet Name="tbl_AssignCase" EntityType="Grievance_DBModel.tbl_AssignCase" />
+          <EntitySet Name="M_RevertType" EntityType="Grievance_DBModel.M_RevertType" />
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -734,6 +746,16 @@
           <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="M_RevertType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RevertType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -983,6 +1005,17 @@
                 <ScalarProperty Name="Role_Idfk" ColumnName="Role_Idfk" />
                 <ScalarProperty Name="AspUser_Idfk" ColumnName="AspUser_Idfk" />
                 <ScalarProperty Name="AssignCase_Idpk" ColumnName="AssignCase_Idpk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_RevertType">
+            <EntityTypeMapping TypeName="Grievance_DBModel.M_RevertType">
+              <MappingFragment StoreEntitySet="M_RevertType">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RevertType" ColumnName="RevertType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

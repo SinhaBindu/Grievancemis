@@ -148,27 +148,63 @@ namespace Grievancemis.Manager
                 throw;
             }
         }
-        public static List<SelectListItem> GetRevertType()
+        public static List<SelectListItem> GetRevertType(int IsAll = 0)
         {
+            Grievance_DBEntities db_ = new Grievance_DBEntities();
             List<SelectListItem> list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
-            list.Add(new SelectListItem { Value = "1", Text = "In Process" });
-            list.Add(new SelectListItem { Value = "2", Text = "Redressed" });
+            if (IsAll == 1)
+                list.Add(new SelectListItem { Value = "0", Text = "All" });
+            else if (IsAll == 0)
+            {
+                list.Add(new SelectListItem { Value = "0", Text = "Select" });
+            }
+            list = new SelectList(db_.M_RevertType.Where(x => x.IsActive == true && x.Id != 99).ToList(), "Id", "RevertType").OrderBy(x => x.Text).ToList();
+            return list.OrderBy(x => Convert.ToInt32(x.Value)).ToList(); // Sort according to the custom order
 
-            // Sort items based on a custom order
-            var order = new List<string> { "0", "1", "2" }; // Define the desired order by Value
-            return list.OrderBy(x => order.IndexOf(x.Value)).ToList(); // Sort according to the custom order
+            //List<SelectListItem> list = new List<SelectListItem>();
+            //list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
+            //list.Add(new SelectListItem { Value = "1", Text = "In Process" });
+            //list.Add(new SelectListItem { Value = "2", Text = "Redressed" });
+            //// Sort items based on a custom order
+            //var order = new List<string> { "0", "1", "2" }; // Define the desired order by Value
+            //return list.OrderBy(x => order.IndexOf(x.Value)).ToList(); // Sort according to the custom order
         }
-        public static List<SelectListItem> GetUserRevertType()
+        public static List<SelectListItem> GetUserRevertType(int IsAll = 0)
         {
-            List<SelectListItem> list = new List<SelectListItem>();
-            list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
-            //list.Add(new SelectListItem { Value = "1", Text = "Clarification" });
-            list.Add(new SelectListItem { Value = "99", Text = "Closed" });
 
-            // Sort items based on a custom order
-            var order = new List<string> { "0", "99" }; // Define the desired order by Value
-            return list.OrderBy(x => order.IndexOf(x.Value)).ToList(); // Sort according to the custom order
+            Grievance_DBEntities db_ = new Grievance_DBEntities();
+            List<SelectListItem> list = new List<SelectListItem>();
+            if (IsAll == 1)
+                list.Add(new SelectListItem { Value = "0", Text = "All" });
+            else if (IsAll == 0)
+            {
+                list.Add(new SelectListItem { Value = "0", Text = "Select" });
+            }
+            list = new SelectList(db_.M_RevertType.Where(x => x.IsActive == true && x.Id == 99).ToList(), "Id", "RevertType").OrderBy(x => x.Text).ToList();
+            //  var order = new List<string> { "0", "99" }; // Define the desired order by Value
+            return list.OrderBy(x => Convert.ToInt32(x.Value)).ToList(); // Sort according to the custom order
+
+            //List<SelectListItem> list = new List<SelectListItem>();
+            //list.Add(new SelectListItem { Value = "0", Text = "Please Select" });
+            ////list.Add(new SelectListItem { Value = "1", Text = "Clarification" });
+            //list.Add(new SelectListItem { Value = "99", Text = "Closed" });
+            //// Sort items based on a custom order
+            //var order = new List<string> { "0", "99" }; // Define the desired order by Value
+            //return list.OrderBy(x => order.IndexOf(x.Value)).ToList(); // Sort according to the custom order
+        }
+        public static List<SelectListItem> GetMasterRevertType(int IsAll = 0)
+        {
+            Grievance_DBEntities db_ = new Grievance_DBEntities();
+            List<SelectListItem> list = new List<SelectListItem>();
+            if (IsAll == 1)
+                list.Add(new SelectListItem { Value = "0", Text = "All" });
+            else if (IsAll == 0)
+            {
+                list.Add(new SelectListItem { Value = "0", Text = "Select" });
+            }
+            list = new SelectList(db_.M_RevertType.Where(x => x.IsActive == true).ToList(), "Id", "RevertType").OrderBy(x => x.Text).ToList();
+            //  var order = new List<string> { "0", "99" }; // Define the desired order by Value
+            return list.OrderBy(x => Convert.ToInt32(x.Value)).ToList(); // Sort according to the custom order
         }
         //public static List<SelectListItem> GetGenderType()
         //{
@@ -313,7 +349,7 @@ namespace Grievancemis.Manager
                     {
                         URL = Fldpath;
                     }
-                     URL = "/Doc_Upload/" + Fldpath + "/"; 
+                    URL = "/Doc_Upload/" + Fldpath + "/";
                     string folderPath = HttpContext.Current.Server.MapPath("~" + URL);
 
                     var supportedTypes = new[] { "pdf", "xls", "xlsx", "jpeg", "png", "jpg" };
@@ -404,11 +440,12 @@ namespace Grievancemis.Manager
                     RandomValue = randomNumber.ToString();
                 }
                 To = Toemailid;
-                bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
-                    //.Replace("{bodytext}", "When the user submits the code for verification, check if the code was generated within the last hour. If the current time exceeds the one-hour limit, the OTP is invalid.")
-                    .Replace("{bodytext}", "OTP valid for 1 hour.")
+                bodydata = bodyTemplate.Replace("{bodytext}", "Enter the above OTP Code to log in to the grievance portal. OTP would be valid for next 1 hour.")
                     .Replace("{EmailID}", To)
                     .Replace("{OTPCode}", RandomValue);
+                //.Replace("{Dearusername}", ReceiverName)
+                //.Replace("{bodytext}", "When the user submits the code for verification, check if the code was generated within the last hour. If the current time exceeds the one-hour limit, the OTP is invalid.")
+
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
                 //{
                 //    bodyTemplate = reader.ReadToEnd();
@@ -449,13 +486,13 @@ namespace Grievancemis.Manager
                 return 0;
             }
         }// end OTP
-        public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail, string Greid,string CurrentStatus)
+        public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail, string Greid, string CurrentStatus)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = "Dear Panel Member"
                 , SenderName = "", RandomValue = "", OTPCode = "";
-            string OtherEmailID = "sinhabinduk@gmail.com"; 
+            string OtherEmailID = "sinhabinduk@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -469,14 +506,15 @@ namespace Grievancemis.Manager
             {
                 string[] tokens = Toemailid.Split(',');
                 To = tokens[0];
-                Body = "The grievance <b> Case ID : "+ Greid + "</ b> Status is " + CurrentStatus + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() +"></a> </b> for details.";
+                //Body = "The grievance <b> Case ID : "+ Greid + "</ b> Status is " + CurrentStatus + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() +" ></a> </b> for details.";
+                Body = "The grievance <b> Case ID : " + Greid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     //.Replace("{bodytext}", bodytext)
                     .Replace("{bodytext}", Body);
-                   // .Replace("{CaseID}", Greid);
+                // .Replace("{CaseID}", Greid);
                 //.Replace("{OTPCode}", tbl_v.VerificationCode);
-               
+
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
                 //mail.To.Add(To + "," + OtherEmailID + "," + partymail);
@@ -488,7 +526,7 @@ namespace Grievancemis.Manager
                 stcc = stcc.Substring(0, stcc.Length - 1);
                 mail.To.Add(To);
                 //mail.CC.Add(stcc);
-                mail.Bcc.Add(stcc +","+ OtherEmailID);
+                mail.Bcc.Add(stcc + "," + OtherEmailID);
                 mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
@@ -526,7 +564,7 @@ namespace Grievancemis.Manager
             int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = "Dear"
                 , SenderName = "", RandomValue = "", OTPCode = "";
-            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com"; 
+            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -539,14 +577,14 @@ namespace Grievancemis.Manager
             try
             {
                 To = Toemailid;
-                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + CurrentStatus + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() + "></a> </b> for details.";
+                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName + Name)
                     .Replace("{bodytext}", Body)
                     //.Replace("{bodytext}", "Thank's For Your Co-Operation. Your Grievance has been sucessfully Registered with Us.We'll Reach out to You as soon as possible.")
                     .Replace("{EmailID}", To)
                     .Replace("{newusername}", Name);
-                   // .Replace("{gvid}", gvid);
+                // .Replace("{gvid}", gvid);
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
                 mail.To.Add(To);
@@ -624,15 +662,15 @@ namespace Grievancemis.Manager
 
                 To = Toemailid;
 
-                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + status + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() + "></a> </b> for details.";
+                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + status + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     // .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To <b>" + status + "</b>.We'll Inform You on next Update.")
                     .Replace("{bodytext}", Body)
                     .Replace("{EmailID}", To);
-                    //.Replace("{CaseID}", gvid)
-                    //.Replace("{Status}", status)
-                   // .Replace("{message}", TeamRevertMessage);
+                //.Replace("{CaseID}", gvid)
+                //.Replace("{Status}", status)
+                // .Replace("{message}", TeamRevertMessage);
 
                 //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
                 //{

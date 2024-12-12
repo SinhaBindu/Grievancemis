@@ -27,4 +27,11 @@ namespace Grievancemis.Manager
         public static string Community = "Community";
         public static string Head = "Head";
     }
+    public static class CaseOfStatus
+    {
+        public static string NewCase = "New";
+        public static string Inprocess = "In Process";
+        public static string Redressed = "Redressed";
+        public static string Closed = "Closed";
+    }
 }

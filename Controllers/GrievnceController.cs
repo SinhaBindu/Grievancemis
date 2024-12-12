@@ -90,15 +90,14 @@ namespace Grievancemis.Controllers
         {
             try
             {
-                DataTable dtcheck = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
-                if (dtcheck.Rows.Count > 0)
-                {
-                    return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
-                }
-
                 int res = 0; System.Text.StringBuilder str = new System.Text.StringBuilder(); string partymail = string.Empty, Greid = string.Empty, stGuid = string.Empty;
                 if (ModelState.IsValid)
                 {
+                    DataTable dtcheck = SP_Model.GetSPCheckGrievanceAlready(grievanceModel.Email.Trim(), DateTime.Now.Date.ToDateTimeyyyyMMdd());
+                    if (dtcheck.Rows.Count > 0)
+                    {
+                        return Json(new { success = false, message = "This record is already exists.....", resdata = 1 });
+                    }
                     using (var db = new Grievance_DBEntities())
                     {
 
@@ -198,8 +197,8 @@ namespace Grievancemis.Controllers
                         dt = SP_Model.GetTeamMailID();
                         if (dt.Rows.Count > 0)
                         {
-                            res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail, Greid, "New Case");
-                            res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name, "New Case");
+                            res = CommonModel.SendSucessfullMailForUserTeam(dt.Rows[0]["EmailList"].ToString(), str.ToString(), partymail, Greid, CaseOfStatus.NewCase);
+                            res = CommonModel.SendMailPartUser(partymail, Greid, grievanceModel.Name, CaseOfStatus.NewCase);
                         }
                         if (res > 0)
                         {
@@ -344,7 +343,7 @@ namespace Grievancemis.Controllers
 
                                 if (usercheck != null && res > 0)
                                 {
-                                    if (usercheck.RoleId == "2")//User
+                                    if (usercheck.RoleId == RolesIdcont.User)//User-2
                                     {
                                         var getemail = SP_Model.SP_AspnetUserCaseFirstTimeCheck(EmailId, aspId);
                                         if (getemail.Rows.Count > 0)
@@ -354,11 +353,11 @@ namespace Grievancemis.Controllers
                                         else
                                             return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
                                     }
-                                    if (usercheck.RoleId == "3")//TeamMember
+                                    if (usercheck.RoleId == RolesIdcont.Community)//TeamMember-3
                                     {
                                         return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 100 });
                                     }
-                                    if (usercheck.RoleId == "1")//Admin
+                                    if (usercheck.RoleId == RolesIdcont.Admin || usercheck.RoleId == RolesIdcont.Head)//Admin-1
                                     {
                                         return Json(new { success = true, message = "EmailId Verified.", redirect = "/Report/Index", resdata = 101 });
                                     }
@@ -385,12 +384,12 @@ namespace Grievancemis.Controllers
                         return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
                     }
                 }
+                return Json(new { success = false, message = "EmailId Empty or Invalid.", resdata = "" });
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = "A communication error has occurred.", resdata = "" });
             }
-            return Json(new { success = false, message = "EmailId Invalid.", resdata = "" });
         }
 
         public async Task SignInUser(ClaimsIdentity identity, bool isPersistent)

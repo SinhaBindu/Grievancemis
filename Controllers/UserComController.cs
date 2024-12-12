@@ -155,10 +155,6 @@ namespace Grievancemis.Controllers
                         {
                             teamRevertComplain.UserRevertId = filterModel.UserRevertId;
                         }
-                        else
-                        {
-                            teamRevertComplain.UserRevertId = null;
-                        }
                         teamRevertComplain.Revertcb_value = filterModel.Revertcb_value;
                         ////teamRevertComplain.RevertTypeId = filterModel.RevertTypeId;
                         teamRevertComplain.UserRevertMessage = filterModel.TeamRevertMessage;
@@ -207,10 +203,13 @@ namespace Grievancemis.Controllers
                         int resD = db_.SaveChanges(); // Save changes to get the GrievanceId_fk
                         if (resD > 0)
                         {
-                            var maintbl = db_.Tbl_Grievance.Find(teamRevertComplain.GrievanceId_fk);
-                            maintbl.RevertType_Id = filterModel.UserRevertId;
-                            maintbl.RevertTypeDate = DateTime.Now;
-                            db_.SaveChanges();
+                            if (filterModel.RevertTypeId == 2)
+                            {
+                                var maintbl = db_.Tbl_Grievance.Find(teamRevertComplain.GrievanceId_fk);
+                                maintbl.RevertType_Id = filterModel.UserRevertId;
+                                maintbl.RevertTypeDate = DateTime.Now;
+                                db_.SaveChanges();
+                            }
                         }
 
                         // Handle email sending

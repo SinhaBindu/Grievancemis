@@ -401,6 +401,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\fSelect.css" />
+    <Content Include="Content\fSelect.js" />
+    <Content Include="Content\images\dropdown-icon.png" />
     <Content Include="Content\images\pcilogo.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

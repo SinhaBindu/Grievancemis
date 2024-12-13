@@ -1,0 +1,147 @@
+body {
+	/*font-family: 'Open Sans';*/
+	background-color: #F5F7FA
+}
+
+.fs-wrap {
+	position: relative;
+	display: inline-block;
+	width: 250px;
+	background: #27B5A5;
+	line-height: 1;
+}
+
+.fs-dropdown::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+.fs-dropdown::-webkit-scrollbar {
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+.fs-dropdown::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+			left bottom,
+			left top,
+			color-stop(0.44, rgb(122, 153, 217)),
+			color-stop(0.72, rgb(73, 125, 189)),
+			color-stop(0.86, rgb(28, 58, 148)));
+}
+
+.fs-label-wrap {
+	position: relative;
+	border: 1px solid #27B5A5;
+	cursor: default;
+	color: #fff;
+	padding: 4px 0;
+	font-size: 15px;
+}
+
+.fs-label-wrap,
+.fs-dropdown {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	font-size: 15px;
+}
+
+.fs-label-wrap .fs-label {
+	padding: 5px 22px 5px 8px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.fs-arrow {
+	position: absolute;
+	background-image: url('images/dropdown-icon.png');
+	background-repeat: no-repeat;
+	background-size: 13px;
+	width: 13px;
+	height: 13px;
+	top: 0;
+	right: 5px;
+	bottom: 0;
+	margin: auto;
+}
+
+.fs-dropdown {
+	position: absolute;
+	background-color: #fff;
+	border: 1px solid #E7E7E7;
+	margin-top: 5px;
+	max-height: 240px;
+	overflow: auto;
+	width: 100%;
+	z-index: 1000;
+}
+
+.fs-search input {
+	width: 100%;
+	padding: 4px 8px;
+	border: 0;
+	border: 1px solid #ccc;
+	font-size: 14px;
+	display: none;
+}
+
+.fs-option,
+.fs-search,
+.fs-optgroup-label {
+	padding: 6px 8px;
+	border-bottom: 1px solid #eee;
+	cursor: default;
+}
+
+.fs-wrap.multiple .fs-option {
+	position: relative;
+	padding-left: 30px;
+}
+
+.fs-wrap.multiple .fs-checkbox {
+	position: absolute;
+	display: block;
+	width: 30px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+}
+
+.fs-wrap.multiple .fs-option .fs-checkbox i {
+	position: absolute;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 14px;
+	height: 14px;
+	border: 1px solid #aeaeae;
+	border-radius: 2px;
+	background-color: #fff;
+}
+
+.fs-wrap.multiple .fs-option.selected .fs-checkbox i {
+	background-color: rgb(17, 169, 17);
+	border-color: transparent;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAGCAYAAAD+Bd/7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNXG14zYAAABMSURBVAiZfc0xDkAAFIPhd2Kr1WRjcAExuIgzGUTIZ/AkImjSofnbNBAfHvzAHjOKNzhiQ42IDFXCDivaaxAJd0xYshT3QqBxqnxeHvhunpu23xnmAAAAAElFTkSuQmCC');
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.fs-wrap .fs-option:hover {
+	background-color: #eee;
+}
+
+.fs-optgroup-label {
+	font-weight: bold;
+}
+
+.hidden {
+	display: none;
+}

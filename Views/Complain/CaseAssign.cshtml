@@ -6,7 +6,7 @@
     ViewBag.SubTitle = "Case Assign";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<link href="~/Content/fSelect.css" rel="stylesheet" />
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
@@ -77,12 +77,22 @@
                             <span><strong id="assignCreatedOn"></strong></span>
                         </p>
                     </div>
-                    <div class="form-group mar-bom">
-                        @Html.LabelFor(model => model.User_Idfk, htmlAttributes: new { @class = "control-label" })
-                        <span style="color:red;">*</span>
-                        @Html.DropDownList("User_Idfk", CommonModel.GetpanelList(false), new { @class = "form-control", @multiple = "multiple", @required = "required" })
-                        @Html.ValidationMessageFor(model => model.User_Idfk, "", new { @class = "text-danger" })
-                    </div>
+                    <select class="multiselect" multiple="multiple">
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                    </select>
+                    @*<div class="form-group mar-bom">
+                            @Html.LabelFor(model => model.User_Idfk, htmlAttributes: new { @class = "control-label" })
+                            <span style="color:red;">*</span>
+                            @Html.DropDownList("User_Idfk", CommonModel.GetpanelList(false), new { @class = "form-control", @multiple = "multiple", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.User_Idfk, "", new { @class = "text-danger" })
+                        </div>*@
                 </div>
             </div>
             <div class="modal-footer">
@@ -95,6 +105,14 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval");
+
+    <script src="~/Content/fSelect.js"></script>
+    <script>
+        $(function () {
+            $('.multiselect').fSelect();
+        });
+    </script>
+
     @*<script src="~/Scripts/JS/Master.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>*@
@@ -110,7 +128,7 @@
     @*<link href="https://cdn.jsdelivr.net/npm/bootstrap-multiselect@1.1.0/dist/css/bootstrap-multiselect.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-multiselect@1.1.0/dist/js/bootstrap-multiselect.min.js"></script>*@
     <link href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script>
         $(document).ready(function () {
             bindload();
@@ -176,12 +194,12 @@
         // Handle progress button click
 
         function openWorkAssignPopup(id, caseId, name, createdOn, UserAspIds) {
-         
+
             if (id != null && id != '') {
                 $('#assignCaseId').html('');
                 $('#assignName').html('');
                 $('#assignCreatedOn').html('');
-                 //const choices=  new Choices('#User_Idfk');
+                //const choices=  new Choices('#User_Idfk');
                 //document.getElementById("User_Idfk").options.length = 0;
                 //$('#User_Idfk').empty();
                 //const choices = new Choices('#User_Idfk');
@@ -197,7 +215,7 @@
                 //    includeSelectAllOption: true
                 //});
                 if (UserAspIds) {
-                    const choices =  new Choices('#User_Idfk', {
+                    const choices = new Choices('#User_Idfk', {
                         removeItemButton: true,
                         searchEnabled: true,          // Enable/disable search
                         itemSelectText: '',           // Custom text for selection

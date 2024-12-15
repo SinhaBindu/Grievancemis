@@ -394,7 +394,24 @@ namespace Grievancemis.Manager
             public string FolderPath { get; set; }
             public bool IsvalidFile { get; set; }
         }
-
+        #region Error Expestion
+        public static void ExpSubmit(string Table, string Controller, string Action, string Method, string ExMessage)
+        {
+            Grievance_DBEntities gdb = new Grievance_DBEntities();
+            Tbl_ExceptionHandle tblexp = new Tbl_ExceptionHandle();
+            tblexp.Id_pk = Guid.NewGuid();
+            tblexp.Table = Table;
+            tblexp.Controller = Controller;
+            tblexp.Action = Action;
+            tblexp.Method = Method;
+            tblexp.E_Exception = ExMessage;
+            tblexp.IsActive = true;
+            tblexp.CreatedBy = MvcApplication.CUser!=null? MvcApplication.CUser.UserId:null;
+            tblexp.CreatedOn = DateTime.Now;
+            gdb.Tbl_ExceptionHandle.Add(tblexp);
+            gdb.SaveChanges();
+        }
+        #endregion
 
         //OTP mail method
         public static int SendMailForUser(string Toemailid, DataTable dt)
@@ -402,12 +419,14 @@ namespace Grievancemis.Manager
             Grievance_DBEntities _db = new Grievance_DBEntities();
             //int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = "Hi", maxID = "", RandomValue = "", OTPCode = "";
-            string OtherEmailID = "sinhabinduk@gmail.com";
+            string OtherEmailID = "sinhabinduk@gmail.com,,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
             Guid AssessmentScheduleId_pk = Guid.Empty;
             Guid ParticipantId = Guid.Empty;
+            var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
+            var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
             using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
             {
                 bodyTemplate = reader.ReadToEnd();
@@ -424,8 +443,6 @@ namespace Grievancemis.Manager
                     Random random = new Random();
                     // Generate a random double between 0.0 and 1.0
                     int randomNumber = random.Next(0, 1011455462); // Generates a number between 0.0 and 1.0
-                    var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
-                    var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
                     tbl_v.Id = Guid.NewGuid();
                     tbl_v.EmailId = Toemailid.Trim();
                     tbl_v.VerificationCode = randomNumber.ToString();
@@ -441,7 +458,7 @@ namespace Grievancemis.Manager
                 }
                 To = Toemailid;
                 bodydata = bodyTemplate.Replace("{bodytext}", "Enter the above OTP Code to log in to the grievance portal. OTP would be valid for next 1 hour.")
-                    .Replace("{EmailID}", To)
+                    //.Replace("{EmailID}", To)
                     .Replace("{OTPCode}", RandomValue);
                 //.Replace("{Dearusername}", ReceiverName)
                 //.Replace("{bodytext}", "When the user submits the code for verification, check if the code was generated within the last hour. If the current time exceeds the one-hour limit, the OTP is invalid.")
@@ -473,17 +490,33 @@ namespace Grievancemis.Manager
                 smtp.Send(mail);
                 if (dt.Rows.Count > 0)
                 {
-                    var tbl_v = _db.Tbl_LoginVerification.Find(Guid.Parse(maxID));
-                    tbl_v.Issent = true;
-                    tbl_v.SentOn = DateTime.Now;
+                    var tbl_vup = _db.Tbl_LoginVerification.Find(Guid.Parse(maxID));
+                    tbl_vup.Issent = true;
+                    tbl_vup.SentOn = DateTime.Now;
                     _db.SaveChanges();
+                }
+                else
+                {
+                    if (tbl_v != null)
+                    {
+                        if (tbl_v.Id != Guid.Empty)
+                        {
+                            var tbl_vup = _db.Tbl_LoginVerification.Find(tbl_v.Id);
+                            tbl_vup.Issent = true;
+                            tbl_vup.SentOn = DateTime.Now;
+                            _db.SaveChanges();
+                        }
+                    }
+
                 }
                 return 1;
 
             }
             catch (Exception ex)
             {
+                CommonModel.ExpSubmit("Tbl_LoginVerification" + tbl_v.Issent, "Grievnce", "SendMailForUser_OTP", "SendMailForUser_commonmodel", ex.Message);
                 return 0;
+
             }
         }// end OTP
         public static int SendSucessfullMailForUserTeam(string Toemailid, string bodytext, string partymail, string Greid, string CurrentStatus)
@@ -492,7 +525,7 @@ namespace Grievancemis.Manager
             int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = "Dear Panel Member"
                 , SenderName = "", RandomValue = "", OTPCode = "";
-            string OtherEmailID = "sinhabinduk@gmail.com";
+            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -507,7 +540,7 @@ namespace Grievancemis.Manager
                 string[] tokens = Toemailid.Split(',');
                 To = tokens[0];
                 //Body = "The grievance <b> Case ID : "+ Greid + "</ b> Status is " + CurrentStatus + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() +" ></a> </b> for details.";
-                Body = "The grievance <b> Case ID : " + Greid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>click here</a> </b> for details.";
+                Body = "The grievance <b> Case ID : " + Greid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>Click Here</a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     //.Replace("{bodytext}", bodytext)
@@ -555,6 +588,7 @@ namespace Grievancemis.Manager
             }
             catch (Exception ex)
             {
+                CommonModel.ExpSubmit("Tbl_Grievance", "Grievnce", "PanalMailTemplate", "SendSucessfullMailForUserTeam_commonmodel", ex.Message);
                 return 0;
             }
         }
@@ -577,7 +611,7 @@ namespace Grievancemis.Manager
             try
             {
                 To = Toemailid;
-                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>click here</a> </b> for details.";
+                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>Click Here</a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName + Name)
                     .Replace("{bodytext}", Body)
@@ -616,6 +650,7 @@ namespace Grievancemis.Manager
             }
             catch (Exception ex)
             {
+                CommonModel.ExpSubmit("Tbl_Grievance", "Grievnce", "UserTemplateMail", "SendMailPartUser_commonmodel", ex.Message);
                 return 0;
             }
         }
@@ -641,36 +676,15 @@ namespace Grievancemis.Manager
                 {
                     ReceiverName = MvcApplication.CUser.RoleId == "3" ? "Dear User" : "Dear Panel Member";
                 }
-                Random random = new Random();
-
-                // Generate a random double between 0.0 and 1.0
-                int randomNumber = random.Next(0, 1011455); // Generates a number between 0.0 and 1.0
-
-                var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
-                var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
-                tbl_v.Id = Guid.NewGuid();
-                tbl_v.EmailId = Toemailid.Trim();
-                tbl_v.VerificationCode = randomNumber.ToString();
-                tbl_v.CreatedOn = DateTime.Now;
-                tbl_v.StartTime = DateTime.Now.TimeOfDay;
-                tbl_v.EndTime = tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
-                tbl_v.Date = DateTime.Now.Date;
-                tbl_v.IsActive = true;
-                tbl_v.IsValidEmailId = false;
-                _db.Tbl_LoginVerification.Add(tbl_v);
-                _db.SaveChanges();
-
                 To = Toemailid;
-
                 //Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + status + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
-                Body = @"The grievance <b> Case ID : " + gvid + "</b> Status is " + status + ". <br/><b>Visit: <a href='" + CommonModel.GetBaseUrl() + "' style='font-size:medium !important;'>Click here</a></b> for details.";
-
+                Body = @"The grievance <b> Case ID : " + gvid + "</b> Status is " + status + ". <br/><b>Visit: <a href='" + CommonModel.GetBaseUrl() + "' style='font-size:medium !important;'>Click Here</a></b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     // .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To <b>" + status + "</b>.We'll Inform You on next Update.")
-                    .Replace("{bodytext}", Body)
-                    .Replace("{EmailID}", To);
-                    //.Replace("{newusername}", Name);
+                    .Replace("{bodytext}", Body);
+                // .Replace("{EmailID}", To)
+                //.Replace("{newusername}", Name);
                 //.Replace("{CaseID}", gvid)
                 //.Replace("{Status}", status)
                 // .Replace("{message}", TeamRevertMessage);
@@ -701,14 +715,12 @@ namespace Grievancemis.Manager
                 smtp.Credentials = new System.Net.NetworkCredential("pci4tech@gmail.com", "tylodouomqitatre");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
-                tbl_v.Issent = true;
-                tbl_v.SentOn = DateTime.Now;
-                _db.SaveChanges();
                 return 1;
 
             }
             catch (Exception ex)
             {
+                CommonModel.ExpSubmit("Tbl_TeamRevertComplain", "Complain_UserCom", "RevartMail", "SendMailRevartPartUser_commonmodel", ex.Message);
                 return 0;
             }
         }

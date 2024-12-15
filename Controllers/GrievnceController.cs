@@ -240,7 +240,7 @@ namespace Grievancemis.Controllers
                         var dt = SP_Model.GetOTPCheckLoginMail(EmailId.Trim(), OPTCode);
                         res = CommonModel.SendMailForUser(EmailId.Trim(), dt);
                         // if (res == 1)//uncommemte testing issues
-                        if (res == 1 || res == -1)
+                        if (res == 1 || (res == -1 || res==0) )
                         {
                             return Json(new { success = true, message = "Please check the mail sent otp code.", resdata = 1 });
                         }

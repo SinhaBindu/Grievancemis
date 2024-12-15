@@ -418,7 +418,7 @@ namespace Grievancemis.Manager
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             //int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Hi", maxID = "", RandomValue = "", OTPCode = "";
+            string To = "", Subject = "", Body = "", ReceiverName = "Hi ", maxID = "", RandomValue = "", OTPCode = "";
             string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
@@ -441,14 +441,18 @@ namespace Grievancemis.Manager
                 else
                 {
                     Random random = new Random();
+                    var stspantime = DateTime.Now.TimeOfDay;
+                    var st = new TimeSpan(stspantime.Hours, stspantime.Minutes, stspantime.Seconds);
+                    var endtimespan = st.Add(new TimeSpan(1, 0, 0));
+                    var et= new TimeSpan(endtimespan.Hours, endtimespan.Minutes, endtimespan.Seconds);
                     // Generate a random double between 0.0 and 1.0
                     int randomNumber = random.Next(0, 1011455462); // Generates a number between 0.0 and 1.0
                     tbl_v.Id = Guid.NewGuid();
                     tbl_v.EmailId = Toemailid.Trim();
                     tbl_v.VerificationCode = randomNumber.ToString();
                     tbl_v.CreatedOn = DateTime.Now;
-                    tbl_v.StartTime = DateTime.Now.TimeOfDay;
-                    tbl_v.EndTime = tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
+                    tbl_v.StartTime = st;//DateTime.Now.TimeOfDay;
+                    tbl_v.EndTime = et;// tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
                     tbl_v.Date = DateTime.Now.Date;
                     tbl_v.IsActive = true;
                     tbl_v.IsValidEmailId = false;

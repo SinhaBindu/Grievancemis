@@ -404,7 +404,6 @@
           <EntitySet Name="M_GrievanceType" EntityType="Grievance_DBModel.M_GrievanceType" />
           <EntitySet Name="m_State_Master" EntityType="Grievance_DBModel.m_State_Master" />
           <EntitySet Name="Tbl_ExceptionHandle" EntityType="Grievance_DBModel.Tbl_ExceptionHandle" />
-          <EntitySet Name="Tbl_LoginVerification" EntityType="Grievance_DBModel.Tbl_LoginVerification" />
           <EntitySet Name="tbl_UserRegistration" EntityType="Grievance_DBModel.tbl_UserRegistration" />
           <EntitySet Name="Tbl_UserRevertComplain" EntityType="Grievance_DBModel.Tbl_UserRevertComplain" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Grievance_DBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -436,6 +435,7 @@
           </AssociationSet>
           <EntitySet Name="tbl_AssignCase" EntityType="Grievance_DBModel.tbl_AssignCase" />
           <EntitySet Name="M_RevertType" EntityType="Grievance_DBModel.M_RevertType" />
+          <EntitySet Name="Tbl_LoginVerification" EntityType="Grievance_DBModel.Tbl_LoginVerification" />
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -532,24 +532,6 @@
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
           <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="Tbl_LoginVerification">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Guid" Nullable="false" />
-          <Property Name="IntId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmailId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="DateTime" Precision="0" />
-          <Property Name="VerificationCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="StartTime" Type="Time" Precision="7" />
-          <Property Name="EndTime" Type="Time" Precision="7" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <Property Name="Issent" Type="Boolean" />
-          <Property Name="SentOn" Type="DateTime" Precision="3" />
-          <Property Name="IsValidEmailId" Type="Boolean" />
-          <Property Name="VerificationCodeOn" Type="DateTime" Precision="3" />
-          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <EntityType Name="tbl_UserRegistration">
           <Key>
@@ -756,6 +738,24 @@
           <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Tbl_LoginVerification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Guid" Nullable="false" />
+          <Property Name="IntId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="VerificationCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="Issent" Type="Boolean" />
+          <Property Name="SentOn" Type="DateTime" Precision="3" />
+          <Property Name="IsValidEmailId" Type="Boolean" />
+          <Property Name="VerificationCodeOn" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -855,25 +855,6 @@
                 <ScalarProperty Name="Controller" ColumnName="Controller" />
                 <ScalarProperty Name="Table" ColumnName="Table" />
                 <ScalarProperty Name="Id_pk" ColumnName="Id_pk" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_LoginVerification">
-            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_LoginVerification">
-              <MappingFragment StoreEntitySet="Tbl_LoginVerification">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="VerificationCodeOn" ColumnName="VerificationCodeOn" />
-                <ScalarProperty Name="IsValidEmailId" ColumnName="IsValidEmailId" />
-                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
-                <ScalarProperty Name="Issent" ColumnName="Issent" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
-                <ScalarProperty Name="IntId" ColumnName="IntId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1015,6 +996,25 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="RevertType" ColumnName="RevertType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_LoginVerification">
+            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_LoginVerification">
+              <MappingFragment StoreEntitySet="Tbl_LoginVerification">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="VerificationCodeOn" ColumnName="VerificationCodeOn" />
+                <ScalarProperty Name="IsValidEmailId" ColumnName="IsValidEmailId" />
+                <ScalarProperty Name="SentOn" ColumnName="SentOn" />
+                <ScalarProperty Name="Issent" ColumnName="Issent" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="VerificationCode" ColumnName="VerificationCode" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="IntId" ColumnName="IntId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

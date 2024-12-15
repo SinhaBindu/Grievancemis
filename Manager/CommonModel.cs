@@ -596,7 +596,7 @@ namespace Grievancemis.Manager
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Dear"
+            string To = "", Subject = "", Body = "", ReceiverName = "Dear "
                 , SenderName = "", RandomValue = "", OTPCode = "";
             string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();

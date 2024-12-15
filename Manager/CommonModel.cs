@@ -507,7 +507,7 @@ namespace Grievancemis.Manager
                 string[] tokens = Toemailid.Split(',');
                 To = tokens[0];
                 //Body = "The grievance <b> Case ID : "+ Greid + "</ b> Status is " + CurrentStatus + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() +" ></a> </b> for details.";
-                Body = "The grievance <b> Case ID : " + Greid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
+                Body = "The grievance <b> Case ID : " + Greid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>click here</a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     //.Replace("{bodytext}", bodytext)
@@ -577,7 +577,7 @@ namespace Grievancemis.Manager
             try
             {
                 To = Toemailid;
-                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
+                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>click here</a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName + Name)
                     .Replace("{bodytext}", Body)
@@ -662,12 +662,15 @@ namespace Grievancemis.Manager
 
                 To = Toemailid;
 
-                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + status + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
+                //Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + status + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
+                Body = @"The grievance <b> Case ID : " + gvid + "</b> Status is " + status + ". <br/><b>Visit: <a href='" + CommonModel.GetBaseUrl() + "' style='font-size:medium !important;'>Click here</a></b> for details.";
+
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     // .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To <b>" + status + "</b>.We'll Inform You on next Update.")
                     .Replace("{bodytext}", Body)
                     .Replace("{EmailID}", To);
+                    //.Replace("{newusername}", Name);
                 //.Replace("{CaseID}", gvid)
                 //.Replace("{Status}", status)
                 // .Replace("{message}", TeamRevertMessage);

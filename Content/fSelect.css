@@ -74,8 +74,8 @@ body {
 	position: absolute;
 	background-color: #fff;
 	border: 1px solid #E7E7E7;
-	margin-top: 5px;
-	max-height: 240px;
+	/* margin-top: 5px; */
+	max-height: 100px;
 	overflow: auto;
 	width: 100%;
 	z-index: 1000;

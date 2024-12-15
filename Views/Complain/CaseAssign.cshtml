@@ -51,7 +51,7 @@
 @*------------Work Assign Model popup---------------------*@
 
 <div class="modal fade animate" id="workAssignModal" tabindex="-1" role="dialog" aria-labelledby="workAssignModalLabel" aria-hidden="true"
-     data-backdrop="static" data-keyboard="false">
+     data-backdrop="static" data-keyboard="false" aria-modal="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -114,35 +114,7 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval");
-
-    <script src="~/Content/fSelect.js"></script>
-    <script>
-        $(function () {
-            $('.multiselect').fSelect();
-        });
-    </script>
-
-    @*<script src="~/Scripts/JS/Master.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>*@
-
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">*@
-
-    <!-- Include Bootstrap CSS and JS -->
-    @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>*@
-
-    <!-- Include Bootstrap Multiselect CSS and JS -->
-    @*<link href="https://cdn.jsdelivr.net/npm/bootstrap-multiselect@1.1.0/dist/css/bootstrap-multiselect.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap-multiselect@1.1.0/dist/js/bootstrap-multiselect.min.js"></script>*@
-
-    @*<link href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>*@
-
-        @*<link href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>*@
-
+    <script src="~/Content/fSelect.js?v=002"></script>
     <script>
         $(document).ready(function () {
             $('#workAssignModal').modal({
@@ -155,24 +127,9 @@
                 e.preventDefault();
                 bindload();
             });
-            document.addEventListener("click", e => {
-                // Find the currently open modal
-                const activeModal = document.querySelector(".modal.show");
-                if (!activeModal) return;
-
-                const modalContent = activeModal.querySelector(".modal-content");
-                // If modalContent exists and the click is outside it, close the modal
-                if (modalContent && !modalContent.contains(e.target)) {
-                    $(activeModal).modal('hide'); // Bootstrap's method to close the modal
-                }
-            });
             $(document).on('click', '.popup-close', function () {
-                $('#workAssignModal').modal();
                 $('#workAssignModal').modal('hide');
             });
-            //$('.popup-close').on('click', function () {
-            //    $('#workAssignModal').modal('hide');
-            //});
 
             $('#confirmWorkAssign').on('click', function () {
                 var grievanceId = $('#GrievanceId_fk').val(); // Get the grievance ID
@@ -210,134 +167,48 @@
                     }
                 });
             });
-            //let choicesInstance;
-            //choicesInstance = new Choices('#User_Idfk', { removeItemButton: true });
-            //$('#workAssignModal').on('hidden.bs.modal', function () {
-            //    if (choicesInstance) {
-            //        choicesInstance.destroy(); // Clean up on modal close
-            //        choicesInstance = null;
-            //    }
-            //});
 
         });
-        //function defaults() {
-        //    return labels.map((lbl, i) => ({ value: i, label: lbl }));
-        //}
-
-        function reset() {
-            choicesInstance.clearChoices();
-            //choicesInstance.setChoices(defaults(), 'value', 'label', false);
-        }
-        // Handle progress button click
-        //document.querySelector('.popup-close').addEventListener('click', () => {
-        //    debugger;
-        //    const modal = document.querySelector('#workAssignModal');
-        //    modal.style.display = 'none';
-
-        //    if (choicesInstance) {
-        //        choicesInstance.destroy();
-        //        choicesInstance = null; // Allow reinitialization
-        //    }
-        //});
-
         function openWorkAssignPopup(id, caseId, name, createdOn, UserAspIds) {
 
             if (id != null && id != '') {
-                $('#workAssignModal').modal();
+              
                 $('#workAssignModal').modal('show');
+                $('#workAssignModal').attr('aria-hidden', 'true');
                 $('#assignCaseId').html('');
                 $('#assignName').html('');
                 $('#assignCreatedOn').html('');
-
-                //const choices=  new Choices('#User_Idfk');
-                //document.getElementById("User_Idfk").options.length = 0;
-                //$('#User_Idfk').empty();
-                //const choices = new Choices('#User_Idfk');
-                //choices.clearStore();
 
                 $('#GrievanceId_fk').val(id);
                 $('#assignCaseId').html(caseId);
                 $('#assignName').html(name);
                 $('#assignCreatedOn').html(createdOn);
-                //const selectElement = document.querySelector('#User_Idfk');
-                //selectElement.destroy();
-                //let choices1;
-                //if (!choices1) {
-                //    const selectElement = document.querySelector('#User_Idfk');
-                //    choices1 = new Choices(selectElement, { removeItemButton: true });
-                //}
-                //// Later, you can safely call:
-                //choices1.clearChoices();
-               
-               
-                //$('#User_Idfk').val("");
-                //const selectElement = document.querySelector('#User_Idfk');
-                //new Choices(selectElement, {
-                //    removeItemButton: true,
-                //});
-                //$("#User_Idfk").Choices('refresh');
-                //$('#User_Idfk').multiselect({
-                //    includeSelectAllOption: true
-                //});
-                debugger;
-               // $('#User_Idfk').fSelect('destroy');
-                if ($('#User_Idfk').data('fSelect')) {
-                    $('#User_Idfk').fSelect('destroy'); // Destroy the existing instance
-                }
-                $('#User_Idfk').fSelect(); // Reinitialize
-               
-               // const choicesfrt = new Choices($('#User_Idfk')[0]);
                 if (UserAspIds) {
-                  //var choices = new Choices('#User_Idfk', {
-                  //       removeItemButton: true,
-
-                  //      searchEnabled: true,          // Enable/disable search
-                  //      itemSelectText: '',           // Custom text for selection
-                  //    duplicateItemsAllowed: false, // Prevent duplicate selections
-                  //    //choices: defaults()
-
-                  //});
                     let str = UserAspIds;//'"1ea6f120-698b-4172-81c7-5126d8229dc9","fa207900-0224-4f12-aa80-cec4316bb871"';
-                    let formattedArray = str.replace(/"/g, '').split(',').map(val => `${val}`);
-                   // $('#User_Idfk').setSelectedValues(formattedArray);//["1ea6f120-698b-4172-81c7-5126d8229dc9","fa207900-0224-4f12-aa80-cec4316bb871"]
-                    // $('#User_Idfk').fSelect('reload');
-
-                    setSelectedValues('User_Idfk', formattedArray);
-                    console.log(formattedArray);
-                    //$('#User_Idfk').fSelect('reload');
+                    let AarrayselectedValues = str.replace(/"/g, '').split(',').map(val => `${val}`);
+                    //AarrayselectedValues = ["1ea6f120-698b-4172-81c7-5126d8229dc9", "fa207900-0224-4f12-aa80-cec4316bb871"];
+                    console.log(AarrayselectedValues);
+                    resetAndSetValues('#User_Idfk', AarrayselectedValues);
                 }
                 else {
-                    $('#User_Idfk').fSelect('reload');
-                    //User_Idfkfselect.destroy();
-                    //$('#User_Idfk').fSelect();
-                   // $('#User_Idfk').fSelect('reload');
-                   //var choices = new Choices('#User_Idfk', {
-                   //     removeItemButton: true,
-                   //     searchEnabled: true,          // Enable/disable search
-                   //     itemSelectText: '',           // Custom text for selection
-                   //    duplicateItemsAllowed: false, // Prevent duplicate selections
-                   //    //choices: defaults()
-                   //});
-                    ////choices.passedElement.element.addEventListener('addItem', () => reset(), false);
-                    ////choices.passedElement.element.addEventListener('removeItem', () => reset(), false);
-
-                    ////function reset() {
-                    ////    choices.clearChoices();
-                    ////    choices.setChoices("", "value", "label", false);
-                    ////}
-                    ////choices.destroy();
-                    ////choices.init();
-                    //// choices.setChoiceByValue(['']);
-                    ////choices.setChoiceByValue([]);
+                    resetAndSetValues('#User_Idfk', []);
                 }
-                //$('#User_Idfk').remove();
-                //$('#User_Idfk').trigger("change");
             }
             else {
                 window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
             }
         }
-        // Function to set selected values
+        function resetAndSetValues(selector, valuesArray) {
+            const $element = $(selector);
+            if ($element) {
+                $element.fSelect();
+                if (valuesArray) {
+                    $element.fSelect('setSelectedValues', valuesArray);
+                } else {
+                    $element.fSelect('setSelectedValues', []);
+                }
+            }           
+        }
         function setSelectedValues(elementId, valuesArray) {
             // Update the underlying <select> element's value
             $('#' + elementId).val(valuesArray);

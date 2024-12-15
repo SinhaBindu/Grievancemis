@@ -81,8 +81,8 @@
                                 </a>
                             }
                         </td>*@
-                        <td>
-                            <button class="btn btn-success btn-sm assign-button" onclick="openWorkAssignPopup('@row["Id"]', '@row["CaseId"]', '@row["Name"]', '@row["CreatedOn"]','@(row["UserAspIdsJsonArray"])')">Case Assign</button>
+                        <td >
+                            <button class="btn btn-success btn-sm assign-button" onclick="return openWorkAssignPopup('@row["Id"]', '@row["CaseId"]', '@row["Name"]', '@row["CreatedOn"]', '@(row["UserAspIdsJsonArray"])')">Case Assign</button>
                         </td>
 
 

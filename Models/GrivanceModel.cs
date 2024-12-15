@@ -21,10 +21,12 @@ namespace Grievancemis.Models
         [Display(Name = "Name")]
         //[Required]
         public string Name { get; set; }
-
         [Display(Name = "Phone Number")]
-        //[Required]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be exactly 10 digits.")]
         public string PhoneNo { get; set; }
+        //[Display(Name = "Phone Number")]
+        ////[Required]
+        //public string PhoneNo { get; set; }
 
         [Display(Name = "Grievance Type")]
         [Required]

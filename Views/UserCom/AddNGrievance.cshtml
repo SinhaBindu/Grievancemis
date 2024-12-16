@@ -182,11 +182,15 @@
 
             $('#formid').submit(function (e) {
 
-
-                if ($('#Email').val() == '') {
+                if ($('#Email').val() == '' || $('#Email').val() == null) {
                     toastr.error('Enter the EmailID.');
                     return false;
                 }
+                //if ($('#PhoneNo').val().length !== 10) {
+                //    toastr.error('Phone number must be exactly 10 digits.');
+                //    return false;
+                //}
+
                 //if ($('#Name').val() == '') {
                 //    toastr.error('Enter the Name.');
                 //    return false;
@@ -195,15 +199,15 @@
                 //    toastr.error('Enter the PhoneNo.');
                 //    return false;
                 //}
-                if ($('#GrievanceType').val() == '' || $('#GrievanceType').val() == '0') {
+                if ($('#GrievanceType').val() == null || $('#GrievanceType').val() == '' || $('#GrievanceType').val() == '0') {
                     toastr.error('Enter the Grievance Type.');
                     return false;
                 }
-                if ($('#State').val() == '' || $('#State').val() == '0') {
+                if ($('#StateId').val() == null || $('#StateId').val() == '' || $('#StateId').val() == '0') {
                     toastr.error('Enter the State.');
                     return false;
                 }
-                if ($('#Other').val() == '' && $('#GrievanceType').val() == '12') {
+                if (($('#Other').val() == '' || $('#Other').val() == null) && $('#GrievanceType').val() == '12') {
                     toastr.error('Enter the Other.');
                     return false;
                 }

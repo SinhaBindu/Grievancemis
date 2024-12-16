@@ -21,8 +21,8 @@
                     <th>Status</th>
                     @*<th>Image Download</th>*@
                     @*<th>Action</th>
-                    <th>View</th>
-                    <th>Image Download</th>*@
+                        <th>View</th>
+                        <th>Image Download</th>*@
                     <th>Case Assign</th>
                 </tr>
             </thead>
@@ -53,39 +53,44 @@
 
                         <td>@row["RevertTypeText"]</td>
                         @*@if (row["RevertType_Id"].ToString() == "1" || string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
-                        {
-                            <td>
-                                <button class="btn btn-warning btn-sm progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]','@row["MaxRevertID"]')">Revert</button>
-                            </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
-                        {
-                            <td>
-                                <a href="~/Complain/RevartList?GId=@row["Id"].ToString()" class="btn btn-primary btn-sm progress-button"><i class="ti ti-star text-lg leading-none"></i></a>
-                            </td>
-                        }
-                        else
-                        {
-                            <td></td>
-                        }
-
-                        <td class="text-center tbltd tdtextwrp">
-                            @if (!string.IsNullOrWhiteSpace(row["DocGId"].ToString()))
                             {
-                                <a href="@Url.Action("GetDownGImgDocZip", "Complain", new { grievanceId = (Guid)row["Id"] })" target="_blank">
-                                    <strong><i class="fa fa-download"></i></strong>
-                                </a>
+                                <td>
+                                    <button class="btn btn-warning btn-sm progress-button" data-id="@row["Id"]" onclick="POPDisplay('@row["Id"]','@row["CaseId"]','@row["Name"]','@row["CreatedOn"]','@row["MaxRevertID"]')">Revert</button>
+                                </td>
                             }
-                        </td>*@
-                        <td >
-                            <button class="btn btn-success btn-sm assign-button" onclick="return openWorkAssignPopup('@row["Id"]', '@row["CaseId"]', '@row["Name"]', '@row["CreatedOn"]', '@(row["UserAspIdsJsonArray"])')">Assign Case</button>
-                        </td>
+                            else
+                            {
+                                <td></td>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString()))
+                            {
+                                <td>
+                                    <a href="~/Complain/RevartList?GId=@row["Id"].ToString()" class="btn btn-primary btn-sm progress-button"><i class="ti ti-star text-lg leading-none"></i></a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
 
-
+                            <td class="text-center tbltd tdtextwrp">
+                                @if (!string.IsNullOrWhiteSpace(row["DocGId"].ToString()))
+                                {
+                                    <a href="@Url.Action("GetDownGImgDocZip", "Complain", new { grievanceId = (Guid)row["Id"] })" target="_blank">
+                                        <strong><i class="fa fa-download"></i></strong>
+                                    </a>
+                                }
+                            </td>*@
+                        @if (row["RevertType_Id"].ToString() == "99" || row["RevertType_Id"].ToString() == "2")
+                        {
+                            <td></td>
+                        }
+                        else
+                        {
+                            <td>
+                                <button class="btn btn-success btn-sm assign-button" onclick="return openWorkAssignPopup('@row["Id"]', '@row["CaseId"]', '@row["Name"]', '@row["CreatedOn"]', '@(row["UserAspIdsJsonArray"])')">Assign Case</button>
+                            </td>
+                        }
                     </tr>
                 }
             </tbody>
@@ -95,5 +100,5 @@
 
 
 @section Script{
- 
+
 }

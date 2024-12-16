@@ -27,5 +27,9 @@ namespace Grievancemis.Models
         public Nullable<bool> IsValidEmailId { get; set; }
         public Nullable<System.DateTime> VerificationCodeOn { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public Nullable<bool> Resend { get; set; }
+        public Nullable<System.DateTime> ResendDt { get; set; }
+        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public Nullable<System.DateTime> ExpiryAt { get; set; }
     }
 }

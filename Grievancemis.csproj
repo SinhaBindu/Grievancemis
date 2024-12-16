@@ -258,13 +258,13 @@
     <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\GrivanceModel.cs" />
     <Compile Include="Models\m_District_Master.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\M_GrievanceType.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GrivanceModel.cs" />
     <Compile Include="Models\M_RevertType.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -273,6 +273,9 @@
     </Compile>
     <Compile Include="Models\RevertComplaint.cs" />
     <Compile Include="Models\tbl_AssignCase.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_AssignCase_Log.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_ExceptionHandle.cs">
@@ -429,13 +432,6 @@
     <Content Include="objects\pack\pack-0f2d6b4a34dcad6aa1f4c6d62d8378de7de0305e.idx" />
     <Content Include="objects\pack\pack-0f2d6b4a34dcad6aa1f4c6d62d8378de7de0305e.pack" />
     <Content Include="README.md" />
-    <EntityDeploy Include="Models\DBModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DBModel.edmx.diagram">
-      <DependentUpon>DBModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\admin_assets\fonts\feather\feathere8ab.eot" />
     <Content Include="Content\admin_assets\fonts\feather\feathere8ab.ttf" />
     <Content Include="Content\admin_assets\fonts\feather\feathere8ab.woff" />
@@ -464,6 +460,13 @@
     <Content Include="Content\admin_assets\fonts\tabler\tabler-icons.woff" />
     <Content Include="Content\admin_assets\fonts\tabler\tabler-icons.woff2" />
     <Content Include="Content\admin_assets\fonts\tabler\tabler-iconsd41d.eot" />
+    <EntityDeploy Include="Models\DBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DBModel.edmx.diagram">
+      <DependentUpon>DBModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -547,6 +550,7 @@
     <Content Include="Scripts\JS\India_State_Boundary.js" />
     <Content Include="Views\Complain\CaseAssign.cshtml" />
     <Content Include="Views\Complain\_CaseAssiggnGData.cshtml" />
+    <Content Include="Views\Account\LoginTeamUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

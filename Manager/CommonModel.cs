@@ -423,8 +423,6 @@ namespace Grievancemis.Manager
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
-            Guid AssessmentScheduleId_pk = Guid.Empty;
-            Guid ParticipantId = Guid.Empty;
             var tblget = new Tbl_LoginVerification();//_db.Tbl_LoginVerification.Where(x => x.EmailId == Toemailid.Trim()).OrderByDescending(x=>x.CreatedOn)?.FirstOrDefault();
             var tbl_v = tblget != null ? tblget : new Tbl_LoginVerification();
             using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
@@ -436,14 +434,15 @@ namespace Grievancemis.Manager
                 if (dt.Rows.Count > 0)
                 {
                     RandomValue = dt.Rows[0]["VerificationCode"].ToString();
-                    maxID = dt.Rows[0]["MaxId"].ToString();
+                    maxID = dt.Rows[0]["IntId"].ToString();
+                    tblget.Id=Guid.Parse(dt.Rows[0]["ID"].ToString());
                 }
                 else
                 {
                     Random random = new Random();
                     var stspantime = DateTime.Now.TimeOfDay;
                     var st = new TimeSpan(stspantime.Hours, stspantime.Minutes, stspantime.Seconds);
-                    var endtimespan = st.Add(new TimeSpan(1, 0, 0));
+                    var endtimespan = st.Add(new TimeSpan(1,0 , 0));
                     var et= new TimeSpan(endtimespan.Hours, endtimespan.Minutes, endtimespan.Seconds);
                     // Generate a random double between 0.0 and 1.0
                     int randomNumber = random.Next(0, 1011455462); // Generates a number between 0.0 and 1.0
@@ -451,11 +450,14 @@ namespace Grievancemis.Manager
                     tbl_v.EmailId = Toemailid.Trim();
                     tbl_v.VerificationCode = randomNumber.ToString();
                     tbl_v.CreatedOn = DateTime.Now;
-                    tbl_v.StartTime = st;//DateTime.Now.TimeOfDay;
-                    tbl_v.EndTime = et;// tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
+                    //tbl_v.StartTime = st;//DateTime.Now.TimeOfDay;
+                    //tbl_v.EndTime = et;// tbl_v.StartTime.Value.Add(new TimeSpan(1, 0, 0));
                     tbl_v.Date = DateTime.Now.Date;
                     tbl_v.IsActive = true;
                     tbl_v.IsValidEmailId = false;
+                    tbl_v.Resend = false;
+                    tbl_v.CreatedAt = DateTime.Now;
+                    tbl_v.ExpiryAt = DateTime.Now.AddHours(1);
                     _db.Tbl_LoginVerification.Add(tbl_v);
                     _db.SaveChanges();
                     RandomValue = randomNumber.ToString();
@@ -464,14 +466,6 @@ namespace Grievancemis.Manager
                 bodydata = bodyTemplate.Replace("{bodytext}", "Enter the above OTP Code to log in to the grievance portal. OTP would be valid for next 1 hour.")
                     //.Replace("{EmailID}", To)
                     .Replace("{OTPCode}", RandomValue);
-                //.Replace("{Dearusername}", ReceiverName)
-                //.Replace("{bodytext}", "When the user submits the code for verification, check if the code was generated within the last hour. If the current time exceeds the one-hour limit, the OTP is invalid.")
-
-                //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
-                //{
-                //    bodyTemplate = reader.ReadToEnd();
-                //}
-                //bodyTemplate = "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n\t\t<tbody>\r\n <tr>\r\n\t\t\t<td align=\"center\"> " + bodydata + "\r\n\t\t\t\t\r\n  \t</tbody></tr>\r\n</table>";
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
                 mail.To.Add(To + "," + OtherEmailID);
@@ -494,7 +488,7 @@ namespace Grievancemis.Manager
                 smtp.Send(mail);
                 if (dt.Rows.Count > 0)
                 {
-                    var tbl_vup = _db.Tbl_LoginVerification.Find(Guid.Parse(maxID));
+                    var tbl_vup = _db.Tbl_LoginVerification.Find(tblget.Id);
                     tbl_vup.Issent = true;
                     tbl_vup.SentOn = DateTime.Now;
                     _db.SaveChanges();

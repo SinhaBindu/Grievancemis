@@ -12,6 +12,8 @@ using Grievancemis.Models;
 using Grievancemis.Manager;
 using Grievancemis.Helpers;
 using System.Data.Entity;
+using System.Security.Cryptography;
+using Microsoft.Ajax.Utilities;
 
 namespace Grievancemis.Controllers
 {
@@ -92,6 +94,88 @@ namespace Grievancemis.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+        [AllowAnonymous]
+        public async Task<ActionResult> LoginTeamUser(string EmailId)
+        {
+            LoginViewModel model = new LoginViewModel();
+            if (Session["EmailId"] == null || string.IsNullOrWhiteSpace(Session["EmailId"].ToString()))
+            {
+                return RedirectToAction("GrievanceCaseAdd", "Grievnce");
+            }
+            else
+            {
+                EmailId= Session["EmailId"].ToString();
+                model.Email = !string.IsNullOrWhiteSpace(EmailId) ? EmailId.Trim() : string.Empty;
+                if (!ModelState.IsValid)
+                {
+                    return RedirectToAction("GrievanceCaseAdd", "Grievnce");
+                }
+                var getpas = SP_Model.SP_AspnetUser(model.Email);
+                if (getpas.Rows.Count > 0)
+                    model.Password = getpas.Rows[0]["Passw"].ToString();
+                else
+                    return RedirectToAction("GrievanceCaseAdd", "Grievnce");
+
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, change to shouldLockout: true
+                var result = await SignInManager.PasswordSignInAsync(EmailId.Trim(), model.Password, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        var user = MvcApplication.CUser;
+                        return RedirectToAction("Index", "Report");
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    default:
+                        return RedirectToAction("GrievanceCaseAdd", "Grievnce");
+                        // ModelState.AddModelError("", "Invalid login attempt.");
+                        // return View(model);
+                }
+
+            }
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> GetLoginTeamUser(string EmailId, string RId)
+        {
+            LoginViewModel model = new LoginViewModel();
+            if (Session["EmailId"] == null || string.IsNullOrWhiteSpace(Session["EmailId"].ToString()))
+            {
+                return RedirectToAction("GrievanceCaseAdd", "Grievnce");
+            }
+            else
+            {
+                model.Email = !string.IsNullOrWhiteSpace(EmailId) ? EmailId.Trim() : string.Empty;
+                if (!ModelState.IsValid)
+                {
+                    return RedirectToAction("GrievanceCaseAdd", "Grievnce");
+                }
+                var getpas = SP_Model.SP_AspnetUser(model.Email);
+                if (getpas.Rows.Count > 0)
+                    model.Password = getpas.Rows[0]["Passw"].ToString();
+                else
+                    return RedirectToAction("GrievanceCaseAdd", "Grievnce");
+
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, change to shouldLockout: true
+                var result = await SignInManager.PasswordSignInAsync(EmailId.Trim(), model.Password, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        var user = MvcApplication.CUser;
+                        return RedirectToAction("Index", "Report");
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    default:
+                        return RedirectToAction("GrievanceCaseAdd", "Grievnce");
+                        // ModelState.AddModelError("", "Invalid login attempt.");
+                        // return View(model);
+                }
+
+            }
+           
         }
 
 

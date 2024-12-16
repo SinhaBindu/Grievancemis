@@ -100,14 +100,23 @@ namespace Grievancemis.Manager
             DataSet ds = sp.ExecuteDataSet();
             return ds;
         }
-        public static DataTable GetOTPCheckLoginMail(string EmailId, string OTP)
+        #region Email OTP 
+        public static DataTable Usp_OTPValid(string EmailId, string OTP)
         {
-            StoredProcedure sp = new StoredProcedure("Usp_CheckhourOtp");
+            StoredProcedure sp = new StoredProcedure("Usp_OTPValid");
             sp.Command.AddParameter("@EmailId", EmailId, DbType.String);
             sp.Command.AddParameter("@OTP", OTP, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable Usp_SendInsertandUpdate(string EmailId)
+        {
+            StoredProcedure sp = new StoredProcedure("Usp_SendInsertandUpdateOTP");
+            sp.Command.AddParameter("@EmailId", EmailId, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
+        #endregion
         public static DataTable SP_AspnetUser(string EmailId)
         {
             StoredProcedure sp = new StoredProcedure("SP_AspnetUser");

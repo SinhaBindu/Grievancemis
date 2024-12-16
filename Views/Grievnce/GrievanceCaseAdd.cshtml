@@ -47,14 +47,22 @@
                         <div class="form-group" id="div-emailid" style="display:block">
                             <input id="Email_Id" name="Email_Id" class="form-control-input" maxlength="100" placeholder="Enter the email" required>
                         </div>
+                        <div id="div-sendotp">
+                            <div class="col-md-offset-2 col-md-12" style="margin-bottom:10px;">
+                                <button id="btnsentotp" name="btnsentotp" value="Send OTP" class="btn-submit" onclick="return EamilMailSendOTPPost()"> Send OTP</button>
+                            </div>
+                        </div>
                         <div class="form-group" id="div-vc" style="display:none">
                             <label>
                                 OTP
                             </label>
                             <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Otp Code" required>
+                            <div class="col-md-offset-2 col-md-6" style="margin-bottom:10px;">
+                                <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyOTPEamilMailSendPost()"> Proceed</button>
+                            </div>
                         </div>
-                        <div class="col-md-offset-2 col-md-10" style="margin-bottom:10px;">
-                            <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyEamilMailSendPost()"> Proceed</button>
+                        <div class="col-md-offset-2 col-md-4" style="margin-bottom:10px;" id="div-resendotp">
+                            <button id="btnresend" name="btnresend" value="Resend OTP" class="btn-warning" hidden onclick="return ResendOTPSendMail()"> Resend OTP</button>
                         </div>
                     </div>
                     <div class="row" id="div-g" style="display:none;">
@@ -140,13 +148,13 @@
                                         </div>
                                         <div class="flex-form">
                                             <div class="form-group" id="dv_Other" style="display:none">
-                                                    @Html.LabelFor(model => model.Other, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <span style="color:red;">*</span>
-                                                    <div class="col-md-10">
-                                                        @Html.TextBoxFor(model => model.Other, new { @class = "form-control-input"})
-                                                        @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger" })
-                                                    </div>
+                                                @Html.LabelFor(model => model.Other, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Other, new { @class = "form-control-input" })
+                                                    @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger" })
                                                 </div>
+                                            </div>
 
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -281,8 +289,9 @@
                 }
             });
 
+
             $('#formid').submit(function (e) {
-                if ($('#Email').val() == '') {
+                if ($('#Email').val() == '' || $('#Email').val() == null) {
                     toastr.error('Enter the EmailID.');
                     return false;
                 }
@@ -299,15 +308,15 @@
                 //    toastr.error('Enter the PhoneNo.');
                 //    return false;
                 //}
-                if ($('#GrievanceType').val() == '' || $('#GrievanceType').val() == '0') {
+                if ($('#GrievanceType').val() == null || $('#GrievanceType').val() == '' || $('#GrievanceType').val() == '0') {
                     toastr.error('Enter the Grievance Type.');
                     return false;
                 }
-                if ($('#State').val() == '' || $('#State').val() == '0') {
+                if ($('#GrievanceType').val() == null || $('#GrievanceType').val() == '' || $('#State').val() == '0') {
                     toastr.error('Enter the State.');
                     return false;
                 }
-                if ($('#Other').val() == '' && $('#GrievanceType').val() == '12') {
+                if (($('#Other').val() == '' || $('#Other').val() == null) && $('#GrievanceType').val() == '12') {
                     toastr.error('Enter the Other.');
                     return false;
                 }
@@ -345,15 +354,17 @@
                             //if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
                             //    window.location.href = resp.redirect;//document.baseURI +
                             //}
-                            //window.location.href = document.baseURI + "/Grievnce/GrievanceCaseAdd";
-                            $('#formid')[0].reset();
-                            $('#div-evc').show();
-                            $('#div-vc').hide();
-                            $('#div-g').hide();
-                            $('#div-emailid').show();
-                            $('#Email_Id').val('');
-                            $('#Email_Id').removeAttr('readonly');
-                            $('#OptCode').val('');
+                            window.location.href = document.baseURI + "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
+
+                            //commnet yest16dec
+                            //$('#formid')[0].reset();
+                            //$('#div-evc').show();
+                            //$('#div-vc').hide();
+                            //$('#div-g').hide();
+                            //$('#div-emailid').show();
+                            //$('#Email_Id').val('');
+                            //$('#Email_Id').removeAttr('readonly');
+                            //$('#OptCode').val('');
                         }
                         else {
                             toastr.error(data.message);
@@ -366,18 +377,93 @@
             });
 
         });
-        function VerifyEamilMailSendPost() {
-            debugger;
+        function EamilMailSendOTPPost() {
             document.getElementById('btnverify').disabled = true;
-            if ($('#Email_Id').val() == '') {
+            $('#btnreset').hide();
+            $('#div-vc').hide();
+            $('#OptCode').val('');
+            if ($('#Email_Id').val() == null || $('#Email_Id').val() == '') {
+                toastr.error('Email Id not empty');
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Grievnce/OTPSendEmailMail",
+                    data: { 'EmailId': $('#Email_Id').val() },
+                    success: function (resp) {
+                        if (resp.success) {
+                            toastr.success(resp.message);
+                            document.getElementById('btnverify').disabled = false;
+                            $('#btnsentotp').hide();
+                            $('#div-vc').show();
+                            $('#OptCode').val('');
+                            setInterval(function () {
+                                $('#btnreset').show();
+                            }, 60000);//1 mint//60000 milisecond
+                            
+                        }
+                        else {
+                            toastr.error(resp.message);
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("Error: " + xhr.status + " - " + error);
+                        return false;
+                    }
+                });
+            }
+        }
+        function ResendOTPSendMail() {
+            $('#btnreset').hide();
+            $('#btnsentotp').hide();
+            //$('#div-vc').hide();
+            $('#OptCode').val('');
+            if ($('#Email_Id').val() == null || $('#Email_Id').val() == '') {
+                toastr.error('Email Id not empty');
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Grievnce/ResendOTPSendMail",
+                    data: { 'EmailId': $('#Email_Id').val()},
+                    success: function (resp) {
+                        if (resp.success) {
+                            debugger;
+                            toastr.success(resp.message);
+                            setInterval(function () {
+                                $('#btnreset').show();
+                            }, 60000);//1 mint//60000 milisecond
+                        }
+                        else {
+                            toastr.error(resp.message);
+                            return false;
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("Error: " + xhr.status + " - " + error);
+                        return false;
+                    }
+                });
+            }
+        }
+        function VerifyOTPEamilMailSendPost() {
+            debugger;
+            $('#btnreset').hide();
+          
+            if ($('#Email_Id').val() == null || $('#Email_Id').val() == '') {
                 toastr.error('Enter the EmailID.');
+                return false;
+            }
+            if ($('#OptCode').val() == null || $('#OptCode').val() == '') {
+                toastr.error('Enter the OptCode.');
                 return false;
             }
             $('#div-g').hide();
             var optc = $('#OptCode').val();
             $.ajax({
                 type: "POST",
-                url: "/Grievnce/OPtSendMail",
+                url: "/Grievnce/OTPVerifyEmailMail",
                 //url: "/Account/Login_Grievance",
                 data: { 'EmailId': $('#Email_Id').val(), 'OPTCode': $('#OptCode').val() },
                 success: function (resp) {
@@ -398,7 +484,9 @@
                             $('#div-evc').hide();
                         }
                         if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
-                            window.location.href = resp.redirect;//document.baseURI +
+                            // window.location.href = resp.redirect;//document.baseURI +
+                           window.location.href = document.baseURI + "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
+
                         }
                         toastr.success(resp.message);
                     }

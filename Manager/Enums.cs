@@ -90,6 +90,18 @@ namespace Grievancemis.Manager
             ExceptionError = 6,
             [Description("All fields are mandatory !!.")]
             AllFieldsRequired = 7,
+            [Description("Email id Invalid")]
+            EmailNotValid = 8,
+            [Description("EmailId not verify")]
+            EmailidNotverify = 9,
+            [Description("Please check the mail sent otp code.")]
+            EmailidSentOTPCode = 10,
+            [Description("Valid OTP")]
+            ValidOTP = 11,
+            [Description("OTP Expired")]
+            OTPExpired = 12,
+            [Description("Invalid OTP")]
+            InvalidOTP = 13
         }
 
         public enum eIsStatus

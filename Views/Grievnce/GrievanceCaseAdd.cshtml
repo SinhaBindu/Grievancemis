@@ -341,39 +341,44 @@
                 }
 
                 e.preventDefault();
-                var formData = new FormData(this);
-                $.ajax({
-                    type: "POST",
-                    url: "/Grievnce/GrievanceCaseAdd",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
-                        if (data.success) {
-                            toastr.success(data.message);
-                            //if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
-                            //    window.location.href = resp.redirect;//document.baseURI +
-                            //}
-                            window.location.href = document.baseURI + "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
+                if (confirm("Are you sure you want to Complain Register this?")) {
+                    var formData = new FormData(this);
+                    $.ajax({
+                        type: "POST",
+                        url: "/Grievnce/GrievanceCaseAdd",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                //if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
+                                //    window.location.href = resp.redirect;//document.baseURI +
+                                //}
+                                window.location.href = document.baseURI + "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
 
-                            //commnet yest16dec
-                            //$('#formid')[0].reset();
-                            //$('#div-evc').show();
-                            //$('#div-vc').hide();
-                            //$('#div-g').hide();
-                            //$('#div-emailid').show();
-                            //$('#Email_Id').val('');
-                            //$('#Email_Id').removeAttr('readonly');
-                            //$('#OptCode').val('');
+                                //commnet yest16dec
+                                //$('#formid')[0].reset();
+                                //$('#div-evc').show();
+                                //$('#div-vc').hide();
+                                //$('#div-g').hide();
+                                //$('#div-emailid').show();
+                                //$('#Email_Id').val('');
+                                //$('#Email_Id').removeAttr('readonly');
+                                //$('#OptCode').val('');
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("Error: " + xhr.status + " - " + error);
                         }
-                        else {
-                            toastr.error(data.message);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        toastr.error("Error: " + xhr.status + " - " + error);
-                    }
-                });
+                    });
+                }
+                else {
+                    return false;
+                }
             });
 
         });
@@ -400,7 +405,7 @@
                             setInterval(function () {
                                 $('#btnreset').show();
                             }, 60000);//1 mint//60000 milisecond
-                            
+
                         }
                         else {
                             toastr.error(resp.message);
@@ -426,7 +431,7 @@
                 $.ajax({
                     type: "POST",
                     url: "/Grievnce/ResendOTPSendMail",
-                    data: { 'EmailId': $('#Email_Id').val()},
+                    data: { 'EmailId': $('#Email_Id').val() },
                     success: function (resp) {
                         if (resp.success) {
                             debugger;
@@ -450,7 +455,7 @@
         function VerifyOTPEamilMailSendPost() {
             debugger;
             $('#btnreset').hide();
-          
+
             if ($('#Email_Id').val() == null || $('#Email_Id').val() == '') {
                 toastr.error('Enter the EmailID.');
                 return false;
@@ -485,7 +490,7 @@
                         }
                         if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
                             // window.location.href = resp.redirect;//document.baseURI +
-                           window.location.href = document.baseURI + "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
+                            window.location.href = document.baseURI + "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
 
                         }
                         toastr.success(resp.message);

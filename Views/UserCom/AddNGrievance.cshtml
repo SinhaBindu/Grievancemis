@@ -181,7 +181,7 @@
             });
 
             $('#formid').submit(function (e) {
-
+               
                 if ($('#Email').val() == '' || $('#Email').val() == null) {
                     toastr.error('Enter the EmailID.');
                     return false;
@@ -257,7 +257,9 @@
                 else {
                     return false;
                 }
-            });
+
+                });
+
 
         });
     </script>

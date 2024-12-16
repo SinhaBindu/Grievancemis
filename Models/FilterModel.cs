@@ -50,7 +50,7 @@ namespace Grievancemis.Models
         //[Required]
         public int UserRevertId { get; set; }
 
-        [Display(Name = "Processed Status")]
+        [Display(Name = "Escalate to CD & CEO")]
         //[Required]
         public int Revertcb_value { get; set; }
 

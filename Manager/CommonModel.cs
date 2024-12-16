@@ -508,7 +508,6 @@ namespace Grievancemis.Manager
 
                 }
                 return 1;
-
             }
             catch (Exception ex)
             {
@@ -593,15 +592,11 @@ namespace Grievancemis.Manager
         public static int SendMailPartUser(string Toemailid, string gvid, string Name, string CurrentStatus)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
-            int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = "Dear "
-                , SenderName = "", RandomValue = "", OTPCode = "";
+            string To = "", Subject = "", Body = "", ReceiverName = "Dear ";
             string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
-            Guid AssessmentScheduleId_pk = Guid.Empty;
-            Guid ParticipantId = Guid.Empty;
             using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/UserTemplateMail.html")))
             {
                 bodyTemplate = reader.ReadToEnd();
@@ -639,10 +634,13 @@ namespace Grievancemis.Manager
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
 
-                //var tblu = _db.Tbl_Grievance.Where(x => x.CaseId == Convert.ToInt32(gvid))?.FirstOrDefault();
-                //tblu.Issent = true;
-                //tblu.UpdatedOn = DateTime.Now;
-                db_.SaveChanges();
+                if (!string.IsNullOrWhiteSpace(gvid))
+                {
+                    var tblu = _db.Tbl_Grievance.Where(x => x.CaseId == Convert.ToInt32(gvid))?.FirstOrDefault();
+                    tblu.Issent = true;
+                    tblu.UpdatedOn = DateTime.Now;
+                    db_.SaveChanges();
+                }
                 return 1;
 
             }
@@ -655,15 +653,11 @@ namespace Grievancemis.Manager
         public static int SendMailRevartPartUser(string ToTeamemailids, string Toemailid, string gvid, string name, string TeamRevertMessage, string status)
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
-            int noofsend = 0;
-            string To = "", Subject = "", Body = "", ReceiverName = ""
-                , SenderName = "", RandomValue = "", OTPCode = "";
+            string To = "", Subject = "", Body = "", ReceiverName = "";
             string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
-            Guid AssessmentScheduleId_pk = Guid.Empty;
-            Guid ParticipantId = Guid.Empty;
             using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/RevartMail.html")))
             {
                 bodyTemplate = reader.ReadToEnd();

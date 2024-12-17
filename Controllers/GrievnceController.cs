@@ -358,7 +358,7 @@ namespace Grievancemis.Controllers
                             }
                             else
                             {
-                                return Json(new { success = false, message =Enums.GetEnumDescription(Enums.eReturnReg.InvalidOTP) , resdata = "", });
+                                return Json(new { success = false, message = Enums.GetEnumDescription(Enums.eReturnReg.InvalidOTP), resdata = "", });
                             }
                         }
                         if (aspdt.Rows.Count > 0)
@@ -382,9 +382,9 @@ namespace Grievancemis.Controllers
                                 var aspdt1 = SP_Model.SP_AspnetUser(EmailId.Trim());
                                 if (aspdt1.Rows.Count > 0)
                                 {
-                                    rolid = aspdt.Rows[0]["RoleId"].ToString();
-                                    password = aspdt.Rows[0]["Passw"].ToString();
-                                    aspId = aspdt.Rows[0]["Id"].ToString();
+                                    rolid = aspdt1.Rows[0]["RoleId"].ToString();
+                                    password = aspdt1.Rows[0]["Passw"].ToString();
+                                    aspId = aspdt1.Rows[0]["Id"].ToString();
                                 }
                             }
                             else
@@ -419,6 +419,8 @@ namespace Grievancemis.Controllers
                             {
                                 if (usercheck.RoleId == RolesIdcont.User)//User-2
                                 {
+                                    Grievance_DBEntities _DBEntities = new Grievance_DBEntities();
+
                                     var getemail = SP_Model.SP_AspnetUserCaseFirstTimeCheck(EmailId, aspId);
                                     if (getemail.Rows.Count > 0)
                                     {
@@ -426,6 +428,7 @@ namespace Grievancemis.Controllers
                                     }
                                     else
                                         return Json(new { success = true, message = "EmailId Verified.", resdata = 2, });
+
                                 }
                                 if (usercheck.RoleId == RolesIdcont.Community)//TeamMember-3
                                 {

@@ -12,6 +12,7 @@ namespace Grievancemis.Models
 
         [Display(Name = "Feedback")]
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Feedback_Id { get; set; }
         public bool IsActive { get; set; }
         public string CreatedBy { get; set; }

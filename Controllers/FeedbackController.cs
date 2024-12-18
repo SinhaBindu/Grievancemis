@@ -14,10 +14,6 @@ namespace Grievancemis.Controllers
     {
         private Grievance_DBEntities db = new Grievance_DBEntities();
         // GET: Feedback
-        public ActionResult Index()
-        {
-            return View();
-        }
         public ActionResult Feedback()
         {
          
@@ -28,20 +24,34 @@ namespace Grievancemis.Controllers
         {
             try
             {
+                int res = 0;
                 if (ModelState.IsValid)
                 {
-                    var feedbackEntity = new Tbl_Feedback
+                    if (!string.IsNullOrWhiteSpace(model.Feedback_Id))
                     {
-                        Id = model.Id,
-                        Feedback_Id = model.Feedback_Id,
-                        IsActive = true,
-                        CreatedBy = User.Identity.Name,
-                        CreatedOn = DateTime.Now,
-                        UpdatedBy = MvcApplication.CUser.UserId,
-                    };
-                    db.Tbl_Feedback.Add(feedbackEntity);
-                    db.SaveChanges();
-                    ViewBag.SuccessMessage = "Feedback submitted successfully.";
+                        res = 1;
+                    }
+                    if (res > 0)
+                    {
+                        using (var db = new Grievance_DBEntities())
+                        {
+                            Tbl_Feedback feedbackEntity = new Tbl_Feedback
+                            {
+                                Feedback_Id = model.Feedback_Id,
+                                IsActive = true,
+                                CreatedBy = User.Identity.Name,
+                                CreatedOn = DateTime.Now,
+                                UpdatedBy = MvcApplication.CUser.UserId,
+                            };
+                            db.Tbl_Feedback.Add(feedbackEntity);
+                            db.SaveChanges();
+                            ViewBag.SuccessMessage = "Feedback submitted successfully.";
+                        }
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Feedback is not valid. Please correct the errors in the form.";
+                    }
                 }
                 else
                 {

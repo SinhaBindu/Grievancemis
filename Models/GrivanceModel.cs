@@ -43,9 +43,9 @@ namespace Grievancemis.Models
         [Display(Name = "Is Sent")]
         public bool IsSent { get; set; }
 
-        [Display(Name = "Title")]
-        [Required]
-        public string Title { get; set; }
+        //[Display(Name = "Title")]
+        //[Required]
+        //public string Title { get; set; }
 
         [Display(Name = "Grievance Message")]
         [Required]

@@ -112,7 +112,7 @@ namespace Grievancemis.Controllers
                             StateId = grievanceModel.StateId,
                             //Location = grievanceModel.Location,
                             Other = grievanceModel.Other,
-                            Title = grievanceModel.Title,
+                            //Title = grievanceModel.Title,
                             ComplainRegDate = DateTime.Now.Date,
                             Grievance_Message = grievanceModel.GrievanceMessage,
                             IsConsent = grievanceModel.IsConsent,

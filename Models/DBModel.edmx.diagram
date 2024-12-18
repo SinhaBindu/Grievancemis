@@ -28,6 +28,7 @@
         <AssociationConnector Association="Grievance_DBModel.FK_Tbl_UserRevertComplain_Tbl_Grievance" ManuallyRouted="false" />
         <AssociationConnector Association="Grievance_DBModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Grievance_DBModel.Tbl_LoginVerification" Width="1.5" PointX="12.375" PointY="10.75" />
+        <EntityTypeShape EntityType="Grievance_DBModel.Tbl_Feedback" Width="1.5" PointX="5.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -205,6 +205,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ComplainController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\GrievnceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -271,6 +272,7 @@
     <Compile Include="Models\m_State_Master.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\RevertComplaint.cs" />
     <Compile Include="Models\tbl_AssignCase.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
@@ -279,6 +281,9 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_ExceptionHandle.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tbl_Feedback.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Tbl_Grievance.cs">
@@ -551,6 +556,7 @@
     <Content Include="Views\Complain\CaseAssign.cshtml" />
     <Content Include="Views\Complain\_CaseAssiggnGData.cshtml" />
     <Content Include="Views\Account\LoginTeamUser.cshtml" />
+    <Content Include="Views\Feedback\Feedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

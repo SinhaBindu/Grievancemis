@@ -42,5 +42,6 @@ namespace Grievancemis.Models
         public virtual DbSet<tbl_UserRegistration> tbl_UserRegistration { get; set; }
         public virtual DbSet<Tbl_UserRevertComplain> Tbl_UserRevertComplain { get; set; }
         public virtual DbSet<Tbl_LoginVerification> Tbl_LoginVerification { get; set; }
+        public virtual DbSet<Tbl_Feedback> Tbl_Feedback { get; set; }
     }
 }

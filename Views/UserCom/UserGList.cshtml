@@ -82,17 +82,7 @@
 
                     </div>
 
-                    <div class="form-group mar-bom">
-                        @Html.LabelFor(model => model.Revertcb_value, htmlAttributes: new { @class = "control-label " })
-                        <div>
-                            <label>
-                                @Html.RadioButtonFor(model => model.Revertcb_value, "1", new { @id = "RevertOptionYes"}) Yes
-                            </label>
-                            <label>
-                                @Html.RadioButtonFor(model => model.Revertcb_value, "2", new { @id = "RevertOptionNo", @checked = "checked" }) No
-                            </label>
-                        </div>
-                    </div>
+
 
                     <div class="form-group mar-bom " id="div-UserRevertId" style="display:none;">
                         @Html.LabelFor(model => model.UserRevertId, htmlAttributes: new { @class = "control-label" })
@@ -114,6 +104,17 @@
                             @*, multiple = "multiple"*@
                             @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control", type = "file", @id = "DocUpload" })
                             @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group mar-bom">
+                        @Html.LabelFor(model => model.Revertcb_value, htmlAttributes: new { @class = "control-label " })
+                        <div>
+                            <label>
+                                @Html.RadioButtonFor(model => model.Revertcb_value, "1", new { @id = "RevertOptionYes" }) Yes
+                            </label>
+                            <label>
+                                @Html.RadioButtonFor(model => model.Revertcb_value, "2", new { @id = "RevertOptionNo", @checked = "checked" }) No
+                            </label>
                         </div>
                     </div>
 

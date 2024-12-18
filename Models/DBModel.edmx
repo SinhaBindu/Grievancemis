@@ -143,6 +143,22 @@
           <Property Name="UpdatedBy" Type="varchar" MaxLength="200" />
           <Property Name="UpdatedOn" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Grievance_DB.dbo.Tbl_Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Tbl_Feedback">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Feedback_Id" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsDeletedOn" Type="datetime" />
+        </EntityType>
         <EntityType Name="Tbl_Grievance">
           <Key>
             <PropertyRef Name="Id" />
@@ -383,6 +399,19 @@
           <EntitySet Name="Tbl_TeamRevertComplain" EntityType="Self.Tbl_TeamRevertComplain" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_UserRegistration" EntityType="Self.tbl_UserRegistration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserRevertComplain" EntityType="Self.Tbl_UserRevertComplain" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Feedback" EntityType="Self.Tbl_Feedback" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Tbl_Feedback].[Id] AS [Id], 
+    [Tbl_Feedback].[Feedback_Id] AS [Feedback_Id], 
+    [Tbl_Feedback].[IsActive] AS [IsActive], 
+    [Tbl_Feedback].[CreatedBy] AS [CreatedBy], 
+    [Tbl_Feedback].[CreatedOn] AS [CreatedOn], 
+    [Tbl_Feedback].[UpdatedBy] AS [UpdatedBy], 
+    [Tbl_Feedback].[UpdatedOn] AS [UpdatedOn], 
+    [Tbl_Feedback].[IsDeleted] AS [IsDeleted], 
+    [Tbl_Feedback].[IsDeletedOn] AS [IsDeletedOn]
+    FROM [dbo].[Tbl_Feedback] AS [Tbl_Feedback]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -775,6 +804,7 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <EntitySet Name="Tbl_LoginVerification" EntityType="Grievance_DBModel.Tbl_LoginVerification" />
+          <EntitySet Name="Tbl_Feedback" EntityType="Grievance_DBModel.Tbl_Feedback" />
         </EntityContainer>
         <EntityType Name="Tbl_LoginVerification">
           <Key>
@@ -797,6 +827,20 @@
           <Property Name="ResendDt" Type="DateTime" Precision="3" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="ExpiryAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Tbl_Feedback">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Feedback_Id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsDeletedOn" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1078,6 +1122,21 @@
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="EmailId" ColumnName="EmailId" />
                 <ScalarProperty Name="IntId" ColumnName="IntId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Feedback">
+            <EntityTypeMapping TypeName="Grievance_DBModel.Tbl_Feedback">
+              <MappingFragment StoreEntitySet="Tbl_Feedback">
+                <ScalarProperty Name="IsDeletedOn" ColumnName="IsDeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Feedback_Id" ColumnName="Feedback_Id" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -4,6 +4,7 @@
     ViewBag.Title = "Feedback Form";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 <div class="page-header">
     <div class="page-block">
         <div class="page-header-title">
@@ -28,10 +29,10 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         <div class="mb-4">
-                            @Html.LabelFor(model => model.Feedback_Id, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.Grievance_Feedback, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.Feedback_Id, new { @class = "form-control", @required = "required", rows = 5 })
-                                @Html.ValidationMessageFor(model => model.Feedback_Id, "", new { @class = "text-danger" })
+                                @Html.TextAreaFor(model => model.Grievance_Feedback, new { @class = "form-control", @required = "required", rows = 5 })
+                                @Html.ValidationMessageFor(model => model.Grievance_Feedback, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="mb-4">
@@ -46,3 +47,36 @@
     </div>
 </div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval") // Ensure jQuery validation is included
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> // Include jQuery if not already included
+
+    <script>
+        $(document).ready(function () {
+            $('#formid').submit(function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Get the anti-forgery token
+                var token = $('input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize() + '&__RequestVerificationToken=' + token, // Include the token
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message); // Show success message
+                            // Optionally, redirect or clear the form
+                            $('#formid')[0].reset(); // Clear the form after successful submission
+                        } else {
+                            alert(response.message); // Show error message
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred while submitting the form.'); // Handle AJAX error
+                    }
+                });
+            });
+        });
+    </script>
+}

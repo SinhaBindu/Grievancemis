@@ -24,48 +24,39 @@ namespace Grievancemis.Controllers
         {
             try
             {
-                int res = 0;
-                if (ModelState.IsValid)
+                // Validate the model state
+                if (!ModelState.IsValid)
                 {
-                    if (!string.IsNullOrWhiteSpace(model.Feedback_Id))
-                    {
-                        res = 1;
-                    }
-                    if (res > 0)
-                    {
-                        using (var db = new Grievance_DBEntities())
-                        {
-                            Tbl_Feedback feedbackEntity = new Tbl_Feedback
-                            {
-                                Feedback_Id = model.Feedback_Id,
-                                IsActive = true,
-                                CreatedBy = User.Identity.Name,
-                                CreatedOn = DateTime.Now,
-                                UpdatedBy = MvcApplication.CUser.UserId,
-                            };
-                            db.Tbl_Feedback.Add(feedbackEntity);
-                            db.SaveChanges();
-                            ViewBag.SuccessMessage = "Feedback submitted successfully.";
-                        }
-                    }
-                    else
-                    {
-                        ViewBag.ErrorMessage = "Feedback is not valid. Please correct the errors in the form.";
-                    }
+                    return Json(new { success = false, message = "Please correct the errors in the form." });
                 }
-                else
+
+                // Check if feedback is empty
+                if (string.IsNullOrWhiteSpace(model.Grievance_Feedback))
                 {
-                    ViewBag.ErrorMessage = "Please correct the errors in the form.";
+                    return Json(new { success = false, message = "Feedback cannot be empty." });
                 }
+
+                // Create and save feedback
+                var feedbackEntity = new Tbl_Feedback
+                {
+                    Grievance_Feedback = model.Grievance_Feedback,
+                    IsActive = true,
+                    CreatedBy = MvcApplication.CUser.Name,
+                    CreatedOn = DateTime.Now,
+                    UpdatedBy = MvcApplication.CUser.UserId,
+                };
+
+                db.Tbl_Feedback.Add(feedbackEntity);
+                db.SaveChanges();
+
+                return Json(new { success = true, message = "Feedback submitted successfully." });
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "An error occurred while saving your feedback. Please try again.";
+                // Log the exception (if logging is implemented)
+                return Json(new { success = false, message = $"An error occurred: {ex.Message}" });
             }
-            return View(model);
         }
-
-
         private string ConvertViewToString(string viewName, object model)
         {
             ViewData.Model = model;

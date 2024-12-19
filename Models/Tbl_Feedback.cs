@@ -14,8 +14,7 @@ namespace Grievancemis.Models
     
     public partial class Tbl_Feedback
     {
-        public int Id { get; set; }
-        public string Feedback_Id { get; set; }
+        public string Grievance_Feedback { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
@@ -23,5 +22,6 @@ namespace Grievancemis.Models
         public Nullable<System.DateTime> UpdatedOn { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> IsDeletedOn { get; set; }
+        public int Feedback_Id { get; set; }
     }
 }

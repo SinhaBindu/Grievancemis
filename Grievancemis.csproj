@@ -257,6 +257,7 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\FilterModel.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\GrivanceModel.cs" />
@@ -272,7 +273,6 @@
     <Compile Include="Models\m_State_Master.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\RevertComplaint.cs" />
     <Compile Include="Models\tbl_AssignCase.cs">
       <DependentUpon>DBModel.tt</DependentUpon>

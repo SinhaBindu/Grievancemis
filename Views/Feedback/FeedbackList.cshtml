@@ -1,11 +1,32 @@
-﻿@{
+﻿@model Grievancemis.Models.Feedback
+@{
+    ViewBag.Title = "Feedback List";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Feedback List</h2>
-<div id="feedback-container">
-    <div id="feedback-content">
-        <!-- The table will be dynamically loaded here -->
+<div class="page-header">
+    <div class="page-block">
+        <div class="page-header-title">
+            <h2 class="mb-0">@ViewBag.Title</h2>
+            <ul class="breadcrumb">
+                <!-- Optional breadcrumb links -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="grievances-list">
+    <div class="box-design">
+        @using (Html.BeginForm("GetFeedbackList", "Feedback", FormMethod.Post,new { id = "formid", @class = "form-inline", role = "form", autocomplete = "off", enctype = "multipart/form-data" }))
+        {
+            <!-- Add form inputs if required -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        }
+
+        <!-- Placeholder for feedback data -->
+        <div id="feedback-content" class="mt-4">
+            <!-- Feedback data will be loaded here -->
+        </div>
     </div>
 </div>
 

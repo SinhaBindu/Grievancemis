@@ -523,7 +523,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Complain\_GrievanceData.cshtml" />
     <Content Include="Views\Grievnce\GrievanceCaseAdd.cshtml" />
     <Content Include="Views\Complain\GrievanceList.cshtml" />
     <Content Include="Views\Shared\_Alerts.cshtml" />
@@ -557,6 +556,9 @@
     <Content Include="Views\Complain\_CaseAssiggnGData.cshtml" />
     <Content Include="Views\Account\LoginTeamUser.cshtml" />
     <Content Include="Views\Feedback\Feedback.cshtml" />
+    <Content Include="Views\Feedback\_FeedbackData.cshtml" />
+    <Content Include="Views\Complain\_GrievanceData.cshtml" />
+    <Content Include="Views\Feedback\FeedbackList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

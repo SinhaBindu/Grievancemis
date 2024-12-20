@@ -1,0 +1,34 @@
+﻿@model DataTable
+@using System.Data
+
+<div class="table-box">
+    <div class="table-responsive">
+        @*<h2>Grievances List</h2>*@
+        <table class="table table-bordered table-hover dt-responsive display tbl" id="tbl" width="100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Feedback Response</th>
+                    <th>Reportedby</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DataRow row in Model.Rows)
+                {
+                    <tr @*style="background-color:@row["RevertStatusBgColor"]"*@>
+                        <td>@row["Name"]</td>
+                        <td>@row["Reported_Email"]</td>
+                        <td>@row["Feedback_Response"]</td>
+                        <td>@row["Reportedby"]</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Script{
+
+}

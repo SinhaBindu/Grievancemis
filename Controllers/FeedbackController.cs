@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Grievancemis.Manager;
 using Grievancemis.Models;
 
 namespace Grievancemis.Controllers
@@ -41,9 +42,9 @@ namespace Grievancemis.Controllers
                 {
                     Grievance_Feedback = model.Grievance_Feedback,
                     IsActive = true,
-                    CreatedBy = MvcApplication.CUser.Name,
+                    CreatedBy = MvcApplication.CUser.UserId, //user ride
                     CreatedOn = DateTime.Now,
-                    UpdatedBy = MvcApplication.CUser.UserId,
+                    //UpdatedBy = MvcApplication.CUser.UserId,
                 };
 
                 db.Tbl_Feedback.Add(feedbackEntity);
@@ -55,6 +56,31 @@ namespace Grievancemis.Controllers
             {
                 // Log the exception (if logging is implemented)
                 return Json(new { success = false, message = $"An error occurred: {ex.Message}" });
+            }
+        }
+        public ActionResult FeedbackList()
+        {
+            return View();
+        }
+
+        public ActionResult GetFeedbackList(Feedback feedback)
+        {
+            try
+            {
+                var dt = SP_Model.GetFeedbackData(feedback);
+
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    return Json(new { IsSuccess = false, Data = "No data found." }, JsonRequestBehavior.AllowGet);
+                }
+
+                // Convert the partial view into HTML
+                var html = ConvertViewToString("_FeedbackData", dt);
+                return Json(new { IsSuccess = true, Data = html }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { IsSuccess = false, Data = $"Error: {ex.Message}" }, JsonRequestBehavior.AllowGet);
             }
         }
         private string ConvertViewToString(string viewName, object model)

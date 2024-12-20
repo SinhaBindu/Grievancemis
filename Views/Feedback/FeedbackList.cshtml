@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Feedback List</h2>
+<div id="feedback-container">
+    <div id="feedback-content">
+        <!-- The table will be dynamically loaded here -->
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            loadFeedbackData();
+
+            function loadFeedbackData() {
+                $.ajax({
+                    url: '/Feedback/GetFeedbackList',
+                    type: 'GET',
+                    success: function (response) {
+                        if (response.IsSuccess) {
+                            $('#feedback-content').html(response.Data);
+                        } else {
+                            alert(response.Data || "No data found.");
+                        }
+                    },
+                    error: function () {
+                        alert('Error loading feedback data.');
+                    }
+                });
+            }
+        });
+    </script>
+}

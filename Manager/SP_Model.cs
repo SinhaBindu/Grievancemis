@@ -153,6 +153,12 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable GetFeedbackData(Feedback feedback)
+        {
+            StoredProcedure sp = new StoredProcedure("GetFeedbackData");
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
 
         public static DataSet GetDashboard()
         {

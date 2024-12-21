@@ -1,5 +1,8 @@
 ﻿@model DataTable
 @using System.Data
+@{
+    int srno = 1;
+}
 
 <div class="table-box">
     <div class="table-responsive">
@@ -7,20 +10,23 @@
         <table class="table table-bordered table-hover dt-responsive display tbl" id="tbl" width="100%">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
+                    <th>Srno.</th>
+                    <th>Reported Date</th>
+                    <th>Reported Name</th>
+                    <th>Reported Email</th>
                     <th>Feedback Response</th>
-                    <th>Reportedby</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (DataRow row in Model.Rows)
                 {
+                   
                     <tr @*style="background-color:@row["RevertStatusBgColor"]"*@>
-                        <td>@row["Name"]</td>
-                        <td>@row["Reported_Email"]</td>
-                        <td>@row["Feedback_Response"]</td>
+                        <td>@(srno++)</td>
                         <td>@row["Reportedby"]</td>
+                        <td>@row["ReportedBy"]</td>
+                        <td>@row["ReportedEmail"]</td>
+                        <td style="word-wrap:break-word;">@row["Feedbackmsg"]</td>
                     </tr>
                 }
             </tbody>

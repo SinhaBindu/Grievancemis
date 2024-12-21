@@ -48,8 +48,7 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval") // Ensure jQuery validation is included
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> // Include jQuery if not already included
+    @Scripts.Render("~/bundles/jqueryval")
 
     <script>
         $(document).ready(function () {
@@ -65,15 +64,15 @@
                     data: $(this).serialize() + '&__RequestVerificationToken=' + token, // Include the token
                     success: function (response) {
                         if (response.success) {
-                            alert(response.message); // Show success message
+                            toastr.success(response.message); // Show success message
                             // Optionally, redirect or clear the form
                             $('#formid')[0].reset(); // Clear the form after successful submission
                         } else {
-                            alert(response.message); // Show error message
+                            toastr.error(response.message); // Show error message
                         }
                     },
                     error: function () {
-                        alert('An error occurred while submitting the form.'); // Handle AJAX error
+                        toastr.error('An error occurred while submitting the form.'); // Handle AJAX error
                     }
                 });
             });

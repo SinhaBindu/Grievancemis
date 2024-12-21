@@ -30,8 +30,9 @@
 
                     <div class="mb-4">
                         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <span style="color:red;">*</span>
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @required = "required",@readonly= "readonly" })
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @required = "required", @readonly = "readonly" })
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -40,30 +41,34 @@
                         <h5 class="mt-3"><span style="color:red;">*</span> Gender</h5>
                         @*@Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })*@
                         @*<span style="color:red;">*</span>*@
-                    <div class="form-check inline-block mr-2">
-                        @*<input class="form-check-input"
-                               type="radio" name="flexRadioDefault" id="flexRadioDefault11">*@
-                        @Html.RadioButtonFor(model => model.Gender, "Male", new { @class = "form-check-input", id = "GenderMale" })
-                        <label class="form-check-label" for="GenderMale">Male</label>
-                    </div>
-                    <div class="form-check inline-block mr-2">
-                        @*<input class="form-check-input"
-                               type="radio" name="flexRadioDefault" id="flexRadioDefault12"
-                               checked="checked">*@
-                        @Html.RadioButtonFor(model => model.Gender, "Female", new { @class = "form-check-input", id = "GenderFemale", @checked = "checked" })
-                        <label class="form-check-label" for="GenderFemale">Female</label>
-                    </div>
+                        <div class="form-check inline-block mr-2">
+                            @*<input class="form-check-input"
+                type="radio" name="flexRadioDefault" id="flexRadioDefault11">*@
+                            @Html.RadioButtonFor(model => model.Gender, "Male", new { @class = "form-check-input", id = "GenderMale" })
+                            <label class="form-check-label" for="GenderMale">Male</label>
+                        </div>
+                        <div class="form-check inline-block mr-2">
+                            @*<input class="form-check-input"
+                type="radio" name="flexRadioDefault" id="flexRadioDefault12"
+                checked="checked">*@
+                            @Html.RadioButtonFor(model => model.Gender, "Female", new { @class = "form-check-input", id = "GenderFemale", @checked = "checked" })
+                            <label class="form-check-label" for="GenderFemale">Female</label>
+                        </div>
                         @*<div class="col-md-10">
-            @Html.RadioButtonFor(model => model.Gender, "Male", new { id = "GenderMale" }) Male
-            @Html.RadioButtonFor(model => model.Gender, "Female", new { id = "GenderFemale", @checked = "checked" }) Female
-            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-        </div>*@
+                @Html.RadioButtonFor(model => model.Gender, "Male", new { id = "GenderMale" }) Male
+                @Html.RadioButtonFor(model => model.Gender, "Female", new { id = "GenderFemale", @checked = "checked" }) Female
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            </div>*@
                     </div>
                     <div class="mb-4">
-                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2"@*, @required = "required"*@ })
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new
+                        {
+                            @class = "control-label col-md-2"@*, @required = "required"*@})
                         @*<span style="color:red;">*</span>*@
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control"@*, @required = "required"*@ })
+                            @Html.TextBoxFor(model => model.Name, new
+                            {
+                                @class = "form-control"@*, @required = "required"*@})
                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -71,8 +76,14 @@
                         @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
                         @*<span style="color:red;">*</span>*@
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control", @*@required = "required",*@
-                           @maxlength = "10", type = "tel", pattern = @"\d{10}", title = "Please enter a 10-digit phone number." })
+                            @Html.TextBoxFor(model => model.PhoneNo, new
+                            {
+                                @class = "form-control",@*@required = "required",*@
+@maxlength = "10",
+                                type = "tel",
+                                pattern = @"\d{10}",
+                                title = "Please enter a 10-digit phone number."
+                            })
                             @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -85,15 +96,6 @@
                             @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
-                    <div class="mb-4" >
-                        @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <span style="color:red;">*</span>
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
                     <div class="mb-4" id="dv_Other" style="display:none">
                         @Html.LabelFor(model => model.Other, htmlAttributes: new { @class = "control-label col-md-2" })
                         <span style="color:red;">*</span>
@@ -103,14 +105,15 @@
                         </div>
                     </div>
 
-                    @*<div class="mb-4">
-                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="mb-4">
+                        @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
                         <span style="color:red;">*</span>
                         <div class="col-md-10">
-                            @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @required = "required" })
-                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                            @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
                         </div>
-                    </div>*@
+                    </div>
+
 
                     <div class="mb-4">
                         @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -136,10 +139,10 @@
                         <label for="IsConsentCheckbox">All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence</label>
                         @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
                         @*<div class="col-md-10">
-            @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox" })
-            @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
-            @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
-        </div>*@
+                @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox" })
+                @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
+                @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
+            </div>*@
                     </div>
                     <div class="mb-4">
                         <div class="col-md-offset-2 col-md-10">
@@ -211,10 +214,7 @@
                     toastr.error('Enter the Other.');
                     return false;
                 }
-                //if ($('#Title').val() == '') {
-                //    toastr.error('Enter the Title.');
-                //    return false;
-                //}
+               
                 if ($('#GrievanceMessage').val() == '') {
                     toastr.error('Enter the Message.');
                     return false;

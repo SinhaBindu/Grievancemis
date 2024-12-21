@@ -196,13 +196,13 @@ namespace Grievancemis.Manager
         {
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             List<SelectListItem> list = new List<SelectListItem>();
+            list = new SelectList(db_.M_RevertType.Where(x => x.IsActive == true).ToList(), "Id", "RevertType").OrderBy(x => x.Text).ToList();
             if (IsAll == 1)
                 list.Add(new SelectListItem { Value = "0", Text = "All" });
             else if (IsAll == 0)
             {
                 list.Add(new SelectListItem { Value = "0", Text = "Select" });
             }
-            list = new SelectList(db_.M_RevertType.Where(x => x.IsActive == true).ToList(), "Id", "RevertType").OrderBy(x => x.Text).ToList();
             //  var order = new List<string> { "0", "99" }; // Define the desired order by Value
             return list.OrderBy(x => Convert.ToInt32(x.Value)).ToList(); // Sort according to the custom order
         }

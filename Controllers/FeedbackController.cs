@@ -28,7 +28,7 @@ namespace Grievancemis.Controllers
                 // Validate the model state
                 if (!ModelState.IsValid)
                 {
-                    return Json(new { success = false, message = "Please correct the errors in the form." });
+                    return Json(new { success = false, message = "All fields are required." });
                 }
 
                 // Check if feedback is empty

@@ -16,7 +16,6 @@
                     @*<th>State</th>
                         <th>Location</th>*@
                     @*<th>Duration In Days</th>*@
-                    <th>Title</th>
                     <th>Message</th>
                     <th>Status</th>
                     @*<th>Image Download</th>*@
@@ -36,7 +35,6 @@
                         <td>@row["Name"]</td>
                         @*<td>@row["Gender"]</td>*@
                         <td>@row["GrievanceType"]</td>
-                        <td><div style="word-wrap: break-word; width: 100px">@row["Title"]</div></td>
                         <td>
                             <div style="word-wrap: break-word; width: 150px">
                                 @if (row["Grievance_Message"].ToString().Length <= 100)
@@ -83,7 +81,7 @@
                             </td>*@
                         @if (row["RevertType_Id"].ToString() == "99" || row["RevertType_Id"].ToString() == "2")
                         {
-                            <td></td>
+                            <td> </td>
                         }
                         else
                         {
@@ -91,6 +89,10 @@
                                 <button class="btn btn-success btn-sm assign-button" onclick="return openWorkAssignPopup('@row["Id"]', '@row["CaseId"]', '@row["Name"]', '@row["CreatedOn"]', '@(row["UserAspIdsJsonArray"])')">Assign Case</button>
                             </td>
                         }
+
+
+
+
                     </tr>
                 }
             </tbody>

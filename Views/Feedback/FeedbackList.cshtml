@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Feedback List";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var now = DateTime.Now;
+    var startDate = new DateTime(now.Year, now.Month, 1);
+    var endDate = startDate.AddMonths(1).AddDays(-1);
 }
 
 <div class="page-header">
@@ -19,8 +22,29 @@
     <div class="box-design">
         @using (Html.BeginForm("GetFeedbackList", "Feedback", FormMethod.Post, new { id = "formid", @class = "form-inline", role = "form", autocomplete = "off", enctype = "multipart/form-data" }))
         {
-            <!-- Add form inputs if required -->
-            @*<button type="submit" class="btn btn-primary">Submit</button>*@
+            <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]">
+                <div class="content form excerpt border-b-color dark:border-[#ffffff1a]">
+                    <div>
+                        <div class="border-all flex items-center">
+                            <!-- Increased spacing -->
+                            <div class="form-group" style="margin-right: 30px;">
+                                <label for="FD" class="form-label">From Date</label>
+                                <input type="text" name="FD" id="FD" class="datepicker form-control w-[10rem] text-[13px] text-body-color border rounded-lg py-1.5 px-3" autocomplete="off" />
+                            </div>
+                            <div class="form-group" style="margin-right: 30px;">
+                                <label for="TD" class="form-label">To Date</label>
+                                <input type="text" name="TD" id="TD" class="datepicker form-control w-[10rem] text-[13px] text-body-color border rounded-lg py-1.5 px-3" autocomplete="off" />
+                            </div>
+                            <div>
+                                <button name="btnsubmit" id="btnsubmit"
+                                        class="inline-block text-white bg-primary border rounded-lg px-4 py-2 hover:bg-hover-primary duration-300">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
 
         <!-- Placeholder for feedback data -->
@@ -31,10 +55,47 @@
 </div>
 
 @section Scripts {
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     <script>
+        $(function () {
+            var dateFormat = "dd-M-yy",
+                from = $("#FD")
+                    .datepicker({
+                        defaultDate: "+1w",
+                        changeMonth: true,
+                        numberOfMonths: 1,
+                        dateFormat: 'dd-M-yy'
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));
+                    }),
+                to = $("#TD").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    numberOfMonths: 1,
+                    dateFormat: 'dd-M-yy'
+
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));
+                    });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+        });
         $(document).ready(function () {
-           
+
             loadFeedbackData();
         });
         function loadFeedbackData() {

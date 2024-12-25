@@ -20,7 +20,7 @@
 
 <div class="grievances-list">
     <div class="box-design">
-        @using (Html.BeginForm("GetFeedbackList", "Feedback", FormMethod.Post, new { id = "formid", @class = "form-inline", role = "form", autocomplete = "off", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("FeedbackList", "Feedback", FormMethod.Post, new { id = "formid", @class = "form-inline", role = "form", autocomplete = "off", enctype = "multipart/form-data" }))
         {
             <div class="filter cm-content-box box-primary relative rounded-lg mb-0 bg-white dark:bg-[#1b1b1b]">
                 <div class="content form excerpt border-b-color dark:border-[#ffffff1a]">
@@ -36,7 +36,7 @@
                                 <input type="text" name="TD" id="TD" class="datepicker form-control w-[10rem] text-[13px] text-body-color border rounded-lg py-1.5 px-3" autocomplete="off" />
                             </div>
                             <div>
-                                <button name="btnsubmit" id="btnsubmit"
+                                <button name="btnsubmit" id="btnsubmit" onclick="loadFeedbackData(); return false;"
                                         class="inline-block text-white bg-primary border rounded-lg px-4 py-2 hover:bg-hover-primary duration-300">
                                     Search
                                 </button>
@@ -95,14 +95,33 @@
             }
         });
         $(document).ready(function () {
+            //$('#btnsubmit').on('click', function () {
+            //var fromDate = $('#FD').val();
+            //var toDate = $('#TD').val();
+
+            //// Validate dates
+            //if (!fromDate || !toDate) {
+            //    toastr.error('Please select both From Date and To Date.');
+            //    return;
+            //}
+
+            //// Prepare data to send
+            //var data = {
+            //    FormDt: fromDate,
+            //    ToDT: toDate
+            //};
 
             loadFeedbackData();
         });
         function loadFeedbackData() {
+            var fromDate = $('#FD').val() == "" ? "0" : $('#FD').val();
+            var toDate = $('#TD').val() == "" ? "0" : $('#TD').val();
+            var adata = { 'fdt': fromDate, 'tdt': toDate };
             $('#feedback-content').html('');
             $.ajax({
-                url: '/Feedback/GetFeedbackList',
-                type: 'GET',
+                url: '/Feedback/GetFeedbackListAjax',
+                type: 'POST',
+                data: { 'fdt': fromDate, 'tdt': toDate },
                 success: function (response) {
                     if (response.IsSuccess) {
                         $('#feedback-content').html(response.Data);

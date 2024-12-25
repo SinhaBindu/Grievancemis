@@ -62,13 +62,19 @@ namespace Grievancemis.Controllers
         {
             return View();
         }
-
-        public ActionResult GetFeedbackList(Feedback feedback)
+        [HttpPost]
+        public ActionResult GetFeedbackListAjax(string fdt,string tdt)
         {
             try
             {
+                if (string.IsNullOrEmpty(fdt) || string.IsNullOrEmpty(tdt))
+                {
+                    return Json(new { IsSuccess = false, Data = "Please provide valid dates." }, JsonRequestBehavior.AllowGet);
+                }
+                Feedback feedback = new Feedback();
+                feedback.FormDt = fdt;
+                feedback.ToDT = tdt;
                 var dt = SP_Model.GetFeedbackData(feedback);
-
                 if (dt == null || dt.Rows.Count == 0)
                 {
                     return Json(new { IsSuccess = false, Data = "No data found." }, JsonRequestBehavior.AllowGet);

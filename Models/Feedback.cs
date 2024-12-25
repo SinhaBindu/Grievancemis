@@ -19,5 +19,7 @@ namespace Grievancemis.Models
         public DateTime CreatedOn { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedOn { get; set; }
+        public string FormDt { get; set; }
+        public string ToDT { get; set; }
     }
 }

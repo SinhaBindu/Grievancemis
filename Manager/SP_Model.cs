@@ -156,6 +156,8 @@ namespace Grievancemis.Manager
         public static DataTable GetFeedbackData(Feedback feedback)
         {
             StoredProcedure sp = new StoredProcedure("GetFeedbackData");
+            sp.Command.AddParameter("@FD", (feedback.FormDt.Length>0)?feedback.FormDt:string.Empty,DbType.String);
+            sp.Command.AddParameter("@TD", (feedback.ToDT.Length > 0) ? feedback.ToDT : string.Empty, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }

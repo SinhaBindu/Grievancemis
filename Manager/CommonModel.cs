@@ -537,7 +537,7 @@ namespace Grievancemis.Manager
                 string[] tokens = Toemailid.Split(',');
                 To = tokens[0];
                 //Body = "The grievance <b> Case ID : "+ Greid + "</ b> Status is " + CurrentStatus + ". </ br> Login in to grievance portal <b> Web Link : <a href=" + CommonModel.GetBaseUrl() +" ></a> </b> for details.";
-                Body = "The grievance <b> Case ID : " + Greid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>Click Here</a> </b> for details.";
+                Body = "The grievance <b> Case ID : " + Greid + "</ b> Status is " + CurrentStatus + ". </ br> <b> <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>Click Here</a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     //.Replace("{bodytext}", bodytext)
@@ -604,7 +604,7 @@ namespace Grievancemis.Manager
             try
             {
                 To = Toemailid;
-                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + CurrentStatus + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>Click Here</a> </b> for details.";
+                Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + CurrentStatus + ". </ br> <b> <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'>Click Here</a> </b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName + Name)
                     .Replace("{bodytext}", Body)
@@ -670,7 +670,74 @@ namespace Grievancemis.Manager
                 }
                 To = Toemailid;
                 //Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + status + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
-                Body = @"The grievance <b> Case ID : " + gvid + "</b> Status is " + status + ". <br/><b>Visit: <a href='" + CommonModel.GetBaseUrl() + "' style='font-size:medium !important;'>Click Here</a></b> for details.";
+                Body = @"The grievance <b> Case ID : " + gvid + "</b> Status is " + status + ". <br/><b> <a href='" + CommonModel.GetBaseUrl() + "' style='font-size:medium !important;'>Click Here</a></b> for details.";
+
+                bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
+                    // .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To <b>" + status + "</b>.We'll Inform You on next Update.")
+                    .Replace("{bodytext}", Body);
+                // .Replace("{EmailID}", To)
+                //.Replace("{newusername}", Name);
+                //.Replace("{CaseID}", gvid)
+                //.Replace("{Status}", status)
+                // .Replace("{message}", TeamRevertMessage);
+
+                //using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/MailTemplate.html")))
+                //{
+                //    bodyTemplate = reader.ReadToEnd();
+                //}
+                //bodyTemplate = "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n\t\t<tbody>\r\n <tr>\r\n\t\t\t<td align=\"center\"> " + bodydata + "\r\n\t\t\t\t\r\n  \t</tbody></tr>\r\n</table>";
+                MailMessage mail = new MailMessage();
+                //mail.To.Add("bindu@careindia.org");
+                mail.To.Add(To);// + "," + OtherEmailID
+                mail.Bcc.Add(ToTeamemailids + "," + OtherEmailID);
+                mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
+                //mail.From = new MailAddress("hunarmis2024@gmail.com");
+                mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
+
+                //bodydata = bodyTemplate.Replace("{bodytext}", Body);
+                mail.Body = bodydata;
+                mail.IsBodyHtml = true;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.UseDefaultCredentials = false;
+                //smtp.Credentials = new System.Net.NetworkCredential("hunarmis2024@gmail.com", "Hunar@2024");//Pasw-Care@321 // Enter seders User name and password       
+                //smtp.Credentials = new System.Net.NetworkCredential("careindiabtsp@gmail.com", "gupczsbvzinhivzw");//Pasw-Care@321 // Enter seders User name and password       
+                //smtp.Credentials = new System.Net.NetworkCredential("kgbvjh4care@gmail.com", "yklzeazktmknvcbu");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                smtp.Credentials = new System.Net.NetworkCredential("pci4tech@gmail.com", "tylodouomqitatre");// yklz eazk tmkn vcbu//Pasw-Care@321 // Enter seders User name and password       
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+                return 1;
+
+            }
+            catch (Exception ex)
+            {
+                CommonModel.ExpSubmit("Tbl_TeamRevertComplain", "Complain_UserCom", "RevartMail", "SendMailRevartPartUser_commonmodel", ex.Message + "_" + Toemailid);
+                return 0;
+            }
+        }
+
+        public static int SendMailRevartPartUserHead(string ToTeamemailids, string Toemailid, string gvid, string name, string TeamRevertMessage, string status)
+        {
+            Grievance_DBEntities _db = new Grievance_DBEntities();
+            string To = "", Subject = "", Body = "", ReceiverName = "";
+            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
+            Grievance_DBEntities db_ = new Grievance_DBEntities();
+            string bodydata = string.Empty;
+            string bodyTemplate = string.Empty;
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/Views/Shared/RevartMail.html")))
+            {
+                bodyTemplate = reader.ReadToEnd();
+            }
+            try
+            {
+                if (MvcApplication.CUser != null)
+                {
+                    ReceiverName = "Dear Sir,";
+                }
+                To = Toemailid;
+                //Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + status + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";
+                Body = @"Please find a grievance case escalated for you , vide Case ID : " + gvid + ".<br/> <b> <a href='" + CommonModel.GetBaseUrl() + "' style='font-size:medium !important;'>Click Here</a></b> for details.";
 
                 bodydata = bodyTemplate.Replace("{Dearusername}", ReceiverName)
                     // .Replace("{bodytext}", name + ", Your Grievance Status has been Changed To <b>" + status + "</b>.We'll Inform You on next Update.")

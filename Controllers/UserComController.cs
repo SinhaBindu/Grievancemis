@@ -154,8 +154,8 @@ namespace Grievancemis.Controllers
                         if (filterModel.RevertTypeId == 2)
                         {
                             teamRevertComplain.UserRevertId = filterModel.UserRevertId;
+                            teamRevertComplain.Revertcb_value = filterModel.Revertcb_value;
                         }
-                        teamRevertComplain.Revertcb_value = filterModel.Revertcb_value;
                         ////teamRevertComplain.RevertTypeId = filterModel.RevertTypeId;
                         teamRevertComplain.UserRevertMessage = filterModel.TeamRevertMessage;
                         teamRevertComplain.UserRoleId = Convert.ToInt32(MvcApplication.CUser.RoleId);
@@ -223,14 +223,20 @@ namespace Grievancemis.Controllers
                             //string revertStatus = //(filterModel.RevertTypeId == 1) ? "Clarification" : "Closed";
                             string revertStatus = dt.Rows[0]["RevertStatus"].ToString();
 
-                            DataTable dtteamemails = SP_Model.GetTeamMailID(Convert.ToInt16(RolesIdcont.Community));
+                            DataTable dtPlanmembers = new DataTable();
                             // Send email notification
                             int emailResult = 0;
                             if (filterModel.Revertcb_value == 1)//Head Chief Executive Officer & Country Director Get Email Id
                             {
-                                dtteamemails = SP_Model.GetTeamMailID(Convert.ToInt16(RolesIdcont.Head));//RolesIdcont.Head
+                                var strcomm = Convert.ToInt16(RolesIdcont.Community)+","+ Convert.ToInt16(RolesIdcont.Head);
+                                dtPlanmembers = SP_Model.GetPlaneEmailID(strcomm);
+                                emailResult = CommonModel.SendMailRevartPartUserHead(dtPlanmembers.Rows[0]["EmailList"].ToString(), email, CaseId, name, revertMessage, revertStatus);
                             }
-                            emailResult = CommonModel.SendMailRevartPartUser(dtteamemails.Rows[0]["EmailList"].ToString(), email, CaseId, name, revertMessage, revertStatus);
+                            else
+                            {
+                                dtPlanmembers = SP_Model.GetTeamMailID(Convert.ToInt16(RolesIdcont.Community));
+                                emailResult = CommonModel.SendMailRevartPartUser(dtPlanmembers.Rows[0]["EmailList"].ToString(), email, CaseId, name, revertMessage, revertStatus);
+                            }
 
                             if (emailResult > 0)
                             {

@@ -81,11 +81,6 @@
                         </p>
 
                     </div>
-                    <div class="form-group mar-bom " id="div-UserRevertId" style="display:none;">
-                        @Html.LabelFor(model => model.UserRevertId, htmlAttributes: new { @class = "control-label" })
-                        @Html.DropDownListFor(model => model.UserRevertId, CommonModel.GetUserRevertType(), null, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.UserRevertId, "", new { @class = "text-danger" })
-                    </div>
                     <div class="form-group mar-bom">
                         @Html.LabelFor(model => model.TeamRevertMessage, htmlAttributes: new { @class = "control-label col-md-2" })
                         <span style="color:red;">*</span>
@@ -103,7 +98,12 @@
                             @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group mar-bom">
+                    <div class="form-group mar-bom div-UserRevertId" id="div-UserRevertId" style="display:none;">
+                        @Html.LabelFor(model => model.UserRevertId, htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.UserRevertId, CommonModel.GetUserRevertType(), null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.UserRevertId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group mar-bom div-UserRevertId" style="display:none;">
                         @Html.LabelFor(model => model.Revertcb_value, htmlAttributes: new { @class = "control-label " })
                         <div>
                             <label>
@@ -247,11 +247,12 @@
                 $('#CId').html(caseid);
                 $('#con').html(CreatedOn);
 
-                $('#div-UserRevertId').hide();
+               // $('#div-UserRevertId').hide();
+                $('.div-UserRevertId').hide();
                 $('#UserRevertId').val('');
                 $('#UserRevertId').removeAttr('required');
                 if (reverttypeid == "2" || reverttypeid == 2) {
-                    $('#div-UserRevertId').show(); $('#UserRevertId').attr('required', 'required');
+                    $('.div-UserRevertId').show(); $('#UserRevertId').attr('required', 'required');
                     $('#RevertTypeId').val(reverttypeid);
                 }
                 $('#progressModal').modal('show'); // Ensure this line is present

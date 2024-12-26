@@ -84,6 +84,13 @@ namespace Grievancemis.Manager
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }
+        public static DataTable GetPlaneEmailID(string RoleId ="")
+        {
+            StoredProcedure sp = new StoredProcedure("GetPlaneEmailID");
+            sp.Command.AddParameter("@RoleIds", RoleId, DbType.String);
+            DataTable dt = sp.ExecuteDataSet().Tables[0];
+            return dt;
+        }
 
         public static DataTable GetRevartMail(string GVID, string RevertId)
         {

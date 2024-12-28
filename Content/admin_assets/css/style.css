@@ -798,8 +798,9 @@ b, strong{
     z-index: 1025;
     display: flex;
     height: 74px;
-    background-color: rgba( 248,249,250, 0.7);
-    background: #704368;
+    /*background-color: rgba( 248,249,250, 0.7);
+    background: #704368;*/
+    background: #00234A;
     --tw-text-opacity: 1;
     color: rgb(91 107 121 / var(--tw-text-opacity));
     --tw-backdrop-blur: blur(7px);
@@ -1060,19 +1061,23 @@ b, strong{
 .pc-navbar .pc-caption svg{
   display: none;
 }
-.pc-navbar .pc-link{
-  position: relative;
-  display: block;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  padding-top: 0.875rem;
-  padding-bottom: 0.875rem;
-  font-size: 0.875rem;
-  --tw-text-opacity: 1;
-  color: rgb(91 107 121 / var(--tw-text-opacity));
+.pc-navbar .pc-link {
+    position: relative;
+    display: block;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+    font-size: 0.875rem;
+    --tw-text-opacity: 1;
+    color: rgb(91 107 121 / var(--tw-text-opacity));
+    color: #7490D5
 }
-.pc-navbar .pc-link:is([data-pc-theme="dark"] *){
-  color: rgba(255, 255, 255, 0.5);
+.pc-item label {
+    color: #FFDD00
+}
+.pc-navbar .pc-link:is([data-pc-theme="dark"] *) {
+    color: rgba(255, 255, 255, 0.5);
 }
 .pc-navbar .pc-link .pc-micon{
   display: inline-block;
@@ -1292,6 +1297,7 @@ b, strong{
   font-size: 13px;
 }
 .pc-footer{
+    color: #fff;
   position: relative;
   z-index: 995;
   margin-top: 74px;
@@ -5082,7 +5088,8 @@ button.swal2-styled:focus{
     margin-top: -20px
 }
 .header-logo {
-    background: #704368
+    background: #704368;
+    background: #062355;
 }
 .table thead {
     background-color: rgba(248,249,250,0.5);
@@ -8447,9 +8454,10 @@ table.\!dataTable thead tr >.dtfc-fixed-start:is([data-pc-theme="dark"] *),table
   --tw-bg-opacity: 1;
   background-color: rgb(91 107 121 / var(--tw-bg-opacity));
 }
-.bg-theme-sidebaruserbg{
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 245 247 / var(--tw-bg-opacity));
+.bg-theme-sidebaruserbg {
+    --tw-bg-opacity: 1;
+    /*background-color: rgb(243 245 247 / var(--tw-bg-opacity));*/
+    background: #FAC206
 }
 .bg-themedark-activebg{
   --tw-bg-opacity: 1;

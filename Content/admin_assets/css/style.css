@@ -13544,5 +13544,10 @@ body {
         transition: 200ms linear 50ms;
     }
 .datas:hover i {
-    font-size: 38px
+    font-size: 38px;
+}
+.log-bg a {
+    background: #fff !important;
+    display: block;
+    padding: 5px 12px;
 }

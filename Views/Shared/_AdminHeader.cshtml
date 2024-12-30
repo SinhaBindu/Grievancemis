@@ -30,8 +30,9 @@
                                 @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                 {
                                     @Html.AntiForgeryToken()
-                                    <div class="grid mb-3">
-                                        <a href="javascript:document.getElementById('logoutForm').submit()"><i class="demo-pli-unlock icon-lg icon-fw"></i> Logout</a>
+                                
+                                    <div class="grids mb-3s log-bg">
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
                                     </div>
                                 }
                             </div>

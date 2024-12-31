@@ -19,6 +19,11 @@
     <link rel="stylesheet" href="~/Content/admin_assets/fonts/material.css">
     <link rel="stylesheet" href="~/Content/admin_assets/css/style.css" id="main-style-link">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <!-- Data Table and Calendar css link -->
+    <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.jqueryui.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/scroller/2.4.3/css/scroller.jqueryui.css" rel="stylesheet" />
+
 
     <style>
         .fnsz {
@@ -79,6 +84,13 @@
     <script src="~/Content/admin_assets/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <!-- Data Table and Calendar script link -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.jqueryui.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.3/js/dataTables.scroller.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.4.3/js/scroller.jqueryui.js"></script>
+
 
     <script>layout_change('false');</script>
     <script>layout_theme_contrast_change('false');</script>
@@ -91,11 +103,19 @@
     {
         <script>
             $(document).ready(function () {
-                window.location.href = document.baseURI +"Grievnce/GrievanceCaseAdd";
+                window.location.href = document.baseURI + "Grievnce/GrievanceCaseAdd";
             }
         </script>
     }
-
+    <script>
+        $(document).ready(function () {
+            new DataTable('.tbl', {
+                scrollCollapse: true,
+                scroller: true,
+                scrollY: 200
+            });
+        })
+    </script>
 </body>
 
 </html>

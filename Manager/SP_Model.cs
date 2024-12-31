@@ -164,7 +164,9 @@ namespace Grievancemis.Manager
         {
             StoredProcedure sp = new StoredProcedure("GetFeedbackData");
             sp.Command.AddParameter("@FD", (feedback.FormDt.Length>0)?feedback.FormDt:string.Empty,DbType.String);
-            sp.Command.AddParameter("@TD", (feedback.ToDT.Length > 0) ? feedback.ToDT : string.Empty, DbType.String);
+            sp.Command.AddParameter("@TD", (feedback.ToDT.Length>0)?feedback.ToDT:string.Empty,DbType.String);
+            sp.Command.AddParameter("@RoleId", MvcApplication.CUser.RoleId, DbType.String);
+            sp.Command.AddParameter("@ReportedId", MvcApplication.CUser.UserId, DbType.String);
             DataTable dt = sp.ExecuteDataSet().Tables[0];
             return dt;
         }

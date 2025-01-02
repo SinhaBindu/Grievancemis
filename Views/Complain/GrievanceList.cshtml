@@ -21,29 +21,51 @@
     </div>
 </div>
 
+
 <div class="grievances-list">
     <div class="box-design">
         @using (Html.BeginForm("GetGrievanceList", "Complain", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
         {
-            <div class="flex-row">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
-                    <span style="color:red;">*</span>
-                    @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
-                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-                </div>
+        <div class="flex-row">
+            <div class="form-group">
+                @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label" })
+                <span style="color:red;">*</span>
+                @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control", @required = "required" })
+                @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+            </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TypeGId, htmlAttributes: new { @class = "control-label" })
-                    <span style="color:red;">*</span>
-                    @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
-                    @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-btn">
-                    <button id="search-button" class="btn btn-primary">Search</button>
+            <div class="form-group">
+                @Html.LabelFor(model => model.TypeGId, htmlAttributes: new { @class = "control-label" })
+                <span style="color:red;">*</span>
+                @Html.DropDownListFor(model => model.TypeGId, CommonModel.GetGrievanceType(), null, new { @class = "form-control", @required = "required" })
+                @Html.ValidationMessageFor(model => model.TypeGId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-btn">
+                <button id="search-button" class="btn btn-primary">Search</button>
+                <div style="display: inline-block; margin-left: 20px; font-size: small;">
+                    <h5 style="margin: 0; font-size: medium;">Status</h5>
+                    <ul style="list-style-type: none; padding: 0; margin: 5px 0;">
+                        <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                            <span style="width: 12px; height: 12px; background-color: orange; border-radius: 50%; margin-right: 10px;"></span>
+                            In Process
+                        </li>
+                        <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                            <span style="width: 12px; height: 12px; background-color: green; border-radius: 50%; margin-right: 10px;"></span>
+                            Redressed
+                        </li>
+                        <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                            <span style="width: 12px; height: 12px; background-color: blue; border-radius: 50%; margin-right: 10px;"></span>
+                            New Case
+                        </li>
+                        <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                            <span style="width: 12px; height: 12px; background-color: gray; border-radius: 50%; margin-right: 10px;"></span>
+                            Closed
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
+
         }
     </div>
 </div>

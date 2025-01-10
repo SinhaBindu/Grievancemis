@@ -460,11 +460,14 @@
     <Content Include="Content\assets\css\aos.js" />
     <Content Include="Content\assets\css\style.css" />
     <Content Include="Content\assets\css\style.min.css" />
+    <Content Include="Content\assets\images\complaint-1.png" />
     <Content Include="Content\assets\images\facilities.png" />
     <Content Include="Content\assets\images\fairness.png" />
     <Content Include="Content\assets\images\GReport.png" />
+    <Content Include="Content\assets\images\grievance-2.png" />
     <Content Include="Content\assets\images\grievance-banner.jpg" />
     <Content Include="Content\assets\images\grievance-handling.png" />
+    <Content Include="Content\assets\images\grivance-1.png" />
     <Content Include="Content\assets\images\pci_logo.png" />
     <Content Include="Content\assets\images\pci_logo1.png" />
     <Content Include="Content\assets\images\grievance.png" />

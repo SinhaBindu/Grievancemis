@@ -733,7 +733,7 @@ namespace Grievancemis.Manager
             {
                 if (MvcApplication.CUser != null)
                 {
-                    ReceiverName = "Dear Sir,";
+                    ReceiverName = "Dear Sir";
                 }
                 To = Toemailid;
                 //Body = "The grievance <b> Case ID : " + gvid + "</ b> Status is " + status + ". </ br> <b>Visit : <a href=" + CommonModel.GetBaseUrl() + " style='font-size:medium !important;'></a> </b> for details.";

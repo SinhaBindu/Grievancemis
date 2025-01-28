@@ -153,7 +153,10 @@ namespace Grievancemis.Controllers
                         teamRevertComplain.GrievanceId_fk = filterModel.GrievanceId_fk;
                         if (filterModel.RevertTypeId == 2)
                         {
-                            teamRevertComplain.UserRevertId = filterModel.UserRevertId;
+                            if (filterModel.Revertcb_value == 2)
+                            {
+                                teamRevertComplain.UserRevertId = filterModel.UserRevertId;
+                            }
                             teamRevertComplain.Revertcb_value = filterModel.Revertcb_value;
                         }
                         ////teamRevertComplain.RevertTypeId = filterModel.RevertTypeId;
@@ -206,9 +209,12 @@ namespace Grievancemis.Controllers
                             if (filterModel.RevertTypeId == 2)
                             {
                                 var maintbl = db_.Tbl_Grievance.Find(teamRevertComplain.GrievanceId_fk);
-                                maintbl.RevertType_Id = filterModel.UserRevertId;
-                                maintbl.RevertTypeDate = DateTime.Now;
-                                db_.SaveChanges();
+                                if (filterModel.Revertcb_value == 2)
+                                {
+                                    maintbl.RevertType_Id = filterModel.UserRevertId;
+                                    maintbl.RevertTypeDate = DateTime.Now;
+                                    db_.SaveChanges();
+                                }
                             }
                         }
 
@@ -228,7 +234,7 @@ namespace Grievancemis.Controllers
                             int emailResult = 0;
                             if (filterModel.Revertcb_value == 1)//Head Chief Executive Officer & Country Director Get Email Id
                             {
-                                var strcomm = Convert.ToInt16(RolesIdcont.Community)+","+ Convert.ToInt16(RolesIdcont.Head);
+                                var strcomm = Convert.ToInt16(RolesIdcont.Community) + "," + Convert.ToInt16(RolesIdcont.Head);
                                 dtPlanmembers = SP_Model.GetPlaneEmailID(strcomm);
                                 emailResult = CommonModel.SendMailRevartPartUserHead(dtPlanmembers.Rows[0]["EmailList"].ToString(), email, CaseId, name, revertMessage, revertStatus);
                             }

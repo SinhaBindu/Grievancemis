@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                            <img src="~/Content/assets/images/grievance-2.png" alt="grievance" />
+                            <img src="~/Content/assets/images/grievance-handling.png" alt="Grievance Handling" />
                         </div>
                     </div>
                 </div>
@@ -256,13 +256,13 @@
                     <img src="~/Content/assets/images/promptness.png" alt="Fairness" class="step4-img" />
                 </div>
             </div>
-            <img src="~/Content/assets/images/grievance-handling.png" alt="Grievance Handling" class="grievance-handling" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500" />
+            <img src="~/Content/assets/images/grievance-2.png" alt="grievance" class="grievance-handling" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500" />
         </div>
     </div>
     <!-- Footer -->
     <footer class="main-footer">
         <div class="footer-copyright">
-            Copyright © 2024 PCI India, All rights reserved.
+            Copyright © 2025 PCI India, All rights reserved.
         </div>
     </footer>
     <script src="~/Scripts/jquery-3.4.1.js"></script>
@@ -353,9 +353,9 @@
                             if (data.success) {
                                 toastr.success(data.message);
                                 //if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
-                                //    window.location.href = resp.redirect;//document.baseURI +
+                                //    window.location.href = resp.redirect;//document.baseURI +//document.baseURI +
                                 //}
-                                window.location.href = document.baseURI + "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
+                                window.location.href =  "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
 
                                 //commnet yest16dec
                                 //$('#formid')[0].reset();
@@ -490,7 +490,8 @@
                         }
                         if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
                             // window.location.href = resp.redirect;//document.baseURI +
-                            window.location.href = document.baseURI + "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
+                            $('#Email').val($('#Email_Id').val());//document.baseURI +
+                            window.location.href =  "/Account/LoginTeamUser?EmailId=" + $('#Email_Id').val();
 
                         }
                         toastr.success(resp.message);

@@ -124,8 +124,10 @@ namespace Grievancemis.Controllers
                         // Add the file to the zip
                         //var file = Directory.GetFiles(filePath, "*.*");
                         string filePathc = Path.Combine(folderPath + "/GID" + grievanceId, fileName);
-
-                        zip.CreateEntryFromFile(filePathc, fileName);
+                        if (!string.IsNullOrWhiteSpace(filePathc) && !string.IsNullOrWhiteSpace(fileName))
+                        {
+                            zip.CreateEntryFromFile(filePathc, fileName);
+                        }
                     }
                 }
             }
@@ -266,9 +268,9 @@ namespace Grievancemis.Controllers
             }
             catch (Exception ex)
             {
-                string msg = ex.Message;    
+                string msg = ex.Message;
                 // Handle general exceptions
-                return Json(new { success = false, message = "A communication error has occurred: "});
+                return Json(new { success = false, message = "A communication error has occurred: " });
             }
         }
         //[HttpPost]

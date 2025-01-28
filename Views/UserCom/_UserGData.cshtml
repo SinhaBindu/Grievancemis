@@ -15,7 +15,6 @@
                     <th>Grievance Type</th>
                     <th>State</th>
                     @*<th>Location</th>*@
-                    <th>Title</th>
                     <th>Message</th>
                     <th>Status</th>
                     <th>File Download</th>
@@ -39,13 +38,16 @@
                                 <td>@row["GrievanceType"]</td>
                                 <td>@row["StateName"]</td>
                                 @*<td>@row["Location"]</td>*@
-                                <td>@row["Title"]</td>
                                 <td style="word-wrap:break-word;">@row["Grievance_Message"]</td>
                                 <td>@row["RevertTypeText"]</td>
+
                                 <td class="text-center tbltd tdtextwrp">
-                                    <a href="@Url.Action("GetDownGImgDocZip", "UserCom", new { grievanceId = (Guid)row["Id"] })" target="_blank">
-                                        <strong><i class="fa fa-download"></i></strong>
-                                    </a>
+                                    @if (!string.IsNullOrWhiteSpace(row["DocData"].ToString()))
+                                    {
+                                        <a href="@Url.Action("GetDownGImgDocZip", "UserCom", new { grievanceId = (Guid)row["Id"] })" target="_blank">
+                                            <strong><i class="fa fa-download"></i></strong>
+                                        </a>
+                                    }
                                 </td>
                                 @if (row["RevertType_Id"].ToString() == "1" || row["RevertType_Id"].ToString() == "2")//|| string.IsNullOrWhiteSpace(row["RevertType_Id"].ToString())
                                 {

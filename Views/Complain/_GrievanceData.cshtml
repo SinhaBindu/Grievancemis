@@ -81,7 +81,7 @@
                         }
 
                         <td class="text-center tbltd tdtextwrp">
-                            @if (!string.IsNullOrWhiteSpace(row["DocGId"].ToString()))
+                            @if (!string.IsNullOrWhiteSpace(row["DocData"].ToString()))
                             {
                                 <a href="@Url.Action("GetDownGImgDocZip", "Complain", new { grievanceId = (Guid)row["Id"] })" target="_blank">
                                     <strong><i class="fa fa-download"></i></strong>

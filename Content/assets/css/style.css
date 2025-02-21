@@ -29,12 +29,12 @@ img {
 }
     .header-middle span {
         padding: 7px 15px;
-        background: #F3987A;
-        border-radius: 5px;
+        /*background: #F3987A;
+        border-radius: 5px;*/
         cursor: pointer;
-        font-size: 20px;
-        font-weight: normal;
-        color: #fff;
+        font-size: 24px;
+        font-weight: bold;
+        color: #F3987A;
         margin-right: 12px
     }
 .header-middle i {

@@ -275,3 +275,27 @@ img {
     width: 140px;
     margin-top: 60px
 }
+.sop-box {
+    position: fixed;
+    width: 170px;
+    padding: 5px;
+    background: #FC5A5C;
+    text-align: center;
+    left: 10px;
+    bottom: 10px;
+    z-index: 5
+}
+
+    .sop-box a {
+        display: block;
+        padding: 6px 10px;
+        border: 2px solid #FFCCCC;
+        color: #fff;
+        font-size: 15px;
+    }
+.down-icon {
+    font-size: 26px;
+    position: fixed;
+    bottom: -10px;
+    color: #FA5B5A
+}

@@ -13551,3 +13551,27 @@ body {
     display: block;
     padding: 5px 12px;
 }
+
+.form-deaign-box {
+    background: #fff;
+    padding: 20px;
+    margin-top: 14px;
+    border-radius: 10px
+}
+
+    .form-deaign-box h4 {
+        margin-bottom: 6px;
+        color: #F3987A;
+        font-size: 19px;
+    }
+    .form-deaign-box input[type="text"], .form-deaign-box select {
+        padding: 8px 15px !important;
+    }
+.form-deaign-box label {
+    display: block;
+    margin-top: 1px;
+    padding-bottom: 2px
+}
+    .form-deaign-box input[type="submit"] {
+        margin-top: 20px !important
+    }

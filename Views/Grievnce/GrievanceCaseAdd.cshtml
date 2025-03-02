@@ -41,15 +41,27 @@
             </a>
         </div>
     </div>
-    <!-- New Banner -->
+    <!-- Banner -->
+    <div class="grievance-banner">
+        <h2>Seamless Grievance Redressal</h2>
+        <h3>Your Grievances, Our Redressal</h3>
+        <p>We are here to solve your grievances</p>
+        <ul>
+            <li>Create Grievance</li>
+            <li>View Reference</li>
+            <li>Track Status</li>
+        </ul>
+    </div>
+    <!-- Grievance Form -->
     <div class="main-banner">
             <div class="manage-grieve-forms">                
                 <div id="div-evc" style="display:block;">
                     <div class="banner-manage">
                         <div class="manage-grieve-form">
-                            <h3 data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">Your Grievances, Our Redressal</h3>
-                            <p data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">We are here to solve your grievances</p>
+                            @*<h3 data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">Your Grievances, Our Redressal</h3>
+                            <p data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">We are here to solve your grievances</p>*@
                             <div class="left-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                                <h3>Raise a Grievance or Check your Status</h3>
                                 <label>
                                     Email ID :<span style="color:red;">*</span>
                                 </label>
@@ -75,17 +87,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                        @*<div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
                             <img src="~/Content/assets/images/grievance-handling.png" alt="Grievance Handling" />
-                        </div>
+                        </div>*@
                     </div>
                 </div>
                 <div class="row" id="div-g" style="display:none;">
                     <div class="banner-manage">
                         <div class="manage-grieve-form">
-                            <h3 data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">Your Grievances, Our Redressal</h3>
-                            <p data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">We are here to solve your grievances</p>
+                            @*<h3 data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">Your Grievances, Our Redressal</h3>
+                            <p data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">We are here to solve your grievances</p>*@
                             <div class="left-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                                <h3>Raise a Grievance or Check your Status</h3>
                                 <div class="card">
                                     @using (Html.BeginForm("GrievanceCaseAdd", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
                                     {
@@ -136,14 +149,14 @@
                                                     </div>
                                                 </div>
                                                 @*<div class="form-group">
-                                @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.TextBoxFor(model => model.PhoneNo, new
-                                    {
-                                        @class = "form-control-input", @maxlength = "10"})
-                                    @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
-                                </div>
-                            </div>*@
+                            @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.PhoneNo, new
+                                {
+                                    @class = "form-control-input", @maxlength = "10"})
+                                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
                                             </div>
 
                                             <div class="flex-form">
@@ -177,7 +190,7 @@
                                                 <div class="form-group">
                                                     @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md- 2" })
                                                     <div class="col-md-10">
-                                                        @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control-input-2", type = "file", multiple = "multiple" })
+                                                        @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control-input", type = "file", multiple = "multiple" })
                                                         @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -211,9 +224,9 @@
                                 </div>
                             </div>
                         </div>                        
-                        <div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                        @*<div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
                             <img src="~/Content/assets/images/grivance-1.png" alt="grievance" />
-                        </div>                        
+                        </div>*@
                     </div>                    
                 </div>
             </div>

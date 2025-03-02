@@ -94,7 +94,8 @@ namespace Grievancemis.Manager
             EmailNotValid = 8,
             [Description("EmailId not verify")]
             EmailidNotverify = 9,
-            [Description("Please check the mail sent otp code.")]
+            //[Description("Please check the mail sent otp code.")]
+            [Description("Please check the your mailbox sent otp code. OTP valid for the next 1 hour..")]
             EmailidSentOTPCode = 10,
             [Description("Valid OTP")]
             ValidOTP = 11,

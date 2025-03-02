@@ -419,7 +419,7 @@ namespace Grievancemis.Manager
             Grievance_DBEntities _db = new Grievance_DBEntities();
             //int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = "Hi ", maxID = "", RandomValue = "", OTPCode = "";
-            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
+            string OtherEmailID = "";// "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -468,7 +468,8 @@ namespace Grievancemis.Manager
                     .Replace("{OTPCode}", RandomValue);
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
-                mail.To.Add(To + "," + OtherEmailID);
+                //mail.To.Add(To + "," + OtherEmailID);
+                mail.To.Add(To);
                 mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
@@ -522,7 +523,7 @@ namespace Grievancemis.Manager
             int noofsend = 0;
             string To = "", Subject = "", Body = "", ReceiverName = "Dear Panel Member"
                 , SenderName = "", RandomValue = "", OTPCode = "";
-            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
+            string OtherEmailID = "";// "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -556,7 +557,7 @@ namespace Grievancemis.Manager
                 stcc = stcc.Substring(0, stcc.Length - 1);
                 mail.To.Add(To);
                 //mail.CC.Add(stcc);
-                mail.Bcc.Add(stcc + "," + OtherEmailID);
+                mail.Bcc.Add(stcc);//+ "," + OtherEmailID
                 mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
@@ -593,7 +594,7 @@ namespace Grievancemis.Manager
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             string To = "", Subject = "", Body = "", ReceiverName = "Dear ";
-            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
+            string OtherEmailID = "";// "sinhabinduk@gmail.com";//,sinhaharshit829@gmail.com";
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -654,7 +655,7 @@ namespace Grievancemis.Manager
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             string To = "", Subject = "", Body = "", ReceiverName = "";
-            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
+            string OtherEmailID = "";// "sinhabinduk@gmail.com";//sinhaharshit829@gmail.com
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -689,7 +690,7 @@ namespace Grievancemis.Manager
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
                 mail.To.Add(To);// + "," + OtherEmailID
-                mail.Bcc.Add(ToTeamemailids + "," + OtherEmailID);
+                mail.Bcc.Add(ToTeamemailids);//+ "," + OtherEmailID
                 mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";
@@ -721,7 +722,7 @@ namespace Grievancemis.Manager
         {
             Grievance_DBEntities _db = new Grievance_DBEntities();
             string To = "", Subject = "", Body = "", ReceiverName = "";
-            string OtherEmailID = "sinhabinduk@gmail.com,sinhaharshit829@gmail.com";
+            string OtherEmailID = "";// "sinhabinduk@gmail.com";//sinhaharshit829@gmail.com
             Grievance_DBEntities db_ = new Grievance_DBEntities();
             string bodydata = string.Empty;
             string bodyTemplate = string.Empty;
@@ -756,7 +757,7 @@ namespace Grievancemis.Manager
                 MailMessage mail = new MailMessage();
                 //mail.To.Add("bindu@careindia.org");
                 mail.To.Add(To);// + "," + OtherEmailID
-                mail.Bcc.Add(ToTeamemailids + "," + OtherEmailID);
+                mail.Bcc.Add(ToTeamemailids);//+ "," + OtherEmailID
                 mail.From = new MailAddress("pci4tech@gmail.com", "Grievance Query");
                 //mail.From = new MailAddress("hunarmis2024@gmail.com");
                 mail.Subject = Subject + " ( Grievance : ) ";// + " ( " + SenderName + " )";

@@ -248,7 +248,7 @@ namespace Grievancemis.Controllers
                     res = CommonModel.SendMailForUser(EmailId.Trim(), dt);
                     TempData["SendStatus"] = res;
                     TempData["SendMailFstOTP"] = dt;
-                    if (res == 1 || (res == -1 || res == 0))
+                    if (res == 1)//testing check || (res == -1 || res == 0)
                     {
                         return Json(new { success = true, message = Enums.GetEnumDescription(Enums.eReturnReg.EmailidSentOTPCode), resdata = 1 });
                     }

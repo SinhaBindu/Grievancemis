@@ -189,8 +189,10 @@
                                                 </div>
                                                 <div class="form-group">
                                                     @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md- 2" })
+                                                    <span>JPEG,JPG,PND & PDF (File size must be less than 5 MB.)</span>
                                                     <div class="col-md-10">
-                                                        @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control-input", type = "file", multiple = "multiple" })
+                                                        @*, multiple = "multiple"*@
+                                                        @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control-input", type = "file" })
                                                         @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -313,12 +315,44 @@
                     this.value = this.value.slice(0, 10); // Limit to 10 digits
                 }
             });
+            const maxSize = 5 * 1024 * 1024; // 5 MB in bytes
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+            $('#DocUpload').on('change', function () {
+                debugger;
+                const files = this.files; // Get the selected files
+                for (let i = 0; i < files.length; i++) {
+                    if (!allowedTypes.includes(files[i].type)) {
+                        toastr.error('Invalid file type.')
+                        $('#DocUpload').val('');
+                        return false;
+                    }
+                    if (files[i].size > maxSize) {
+                        toastr.error('Invalid file size.')
+                        $('#DocUpload').val('');
+                        return false;
+                    }
+                }
+            });
 
 
             $('#formid').submit(function (e) {
                 if ($('#Email').val() == '' || $('#Email').val() == null) {
                     toastr.error('Enter the EmailID.');
                     return false;
+                }
+                const fileInput = $('#DocUpload')[0]; // Get the file input element
+                if (fileInput.files.length > 0) {
+                    const fileSize = fileInput.files[0].size; // Get the file size
+                    if (fileSize > maxSize) {
+                        toastr.error('Invalid file size.')
+                        $('#DocUpload').val('');
+                        return false;
+                    }
+                    if (!allowedTypes.includes(fileInput.files[0].type)) {
+                        toastr.error('Invalid file type.')
+                        $('#DocUpload').val('');
+                        return false;
+                    }
                 }
                 //if ($('#PhoneNo').val().length !== 10) {
                 //    toastr.error('Phone number must be exactly 10 digits.');
@@ -360,6 +394,7 @@
                     toastr.error('Check the All information given is accurate to the best of my knowledge.');
                     return false;
                 }
+
 
                 e.preventDefault();
                 if (confirm("Are you sure you want to Complain Register this?")) {
@@ -404,7 +439,10 @@
 
         });
         function EamilMailSendOTPPost() {
-            document.getElementById('btnverify').disabled = true;
+            debugger;
+            $('#div-sendotp').css('pointer-events','none');
+            document.getElementById('btnsentotp').disabled = true;
+            toastr.success('You will get the OTP in your mailbox within 3 minutes. OTP valid for the next 1 hour..')
             $('#btnreset').hide();
             $('#div-vc').hide();
             $('#OptCode').val('');
@@ -420,6 +458,7 @@
                         if (resp.success) {
                             toastr.success(resp.message);
                             document.getElementById('btnverify').disabled = false;
+                            $('#div-sendotp').css('pointer-events', 'unset');
                             $('#btnsentotp').hide();
                             $('#div-vc').show();
                             $('#OptCode').val('');
@@ -430,6 +469,7 @@
                         }
                         else {
                             toastr.error(resp.message);
+                            $('#div-sendotp').css('pointer-events', 'unset');
                             return false;
                         }
                     },

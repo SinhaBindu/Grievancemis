@@ -20,12 +20,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
     <link href="~/Content/assets/css/aos.css" rel="stylesheet" />
+    <!-- Banner -->
+    <link href="~/Content/assets/banner/banner.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Content/assets/banner/index.css" rel="stylesheet" type="text/css" media="all" />
+    
 </head>
 <body>
     <!-- Download SOP -->
     <div class="sop-box">
         <a href="~/Content/admin_assets/file/TrustPoint_Grievance Redressal Portal_Standard Operating Procedure.pdf" target="_blank">
-            TrustPoint<br /> (Portal for Grievance Redressal)
+            POS of TrustPoint
         </a>
         <span class="down-icon"><i class="fa fa-caret-down"></i></span>
     </div>
@@ -34,7 +38,7 @@
         <div class="header">
 
             <div class="header-middle">
-                <span class="">TrustPoint</span>                
+                <span class="">TrustPoint</span>
             </div>
             <a href="/">
                 <img src="~/Content/assets/images/pci_logo.png" alt="PCI logo" />
@@ -42,199 +46,245 @@
         </div>
     </div>
     <!-- Banner -->
-    <div class="grievance-banner">
-        <h2>Seamless Grievance Redressal</h2>
-        <h3>Your Grievances, Our Redressal</h3>
-        <p>We are here to solve your grievances</p>
-        <ul>
-            <li>Create Grievance</li>
-            <li>View Reference</li>
-            <li>Track Status</li>
-        </ul>
+    @*<div class="grievance-banner">
+            <h2>Seamless Grievance Redressal</h2>
+            <h3>Your Grievances, Our Redressal</h3>
+            <p>We are here to solve your grievances</p>
+            <ul>
+                <li>Create Grievance</li>
+                <li>View Reference</li>
+                <li>Track Status</li>
+            </ul>
+        </div>*@
+    <!-- Banner -->
+    @*<img src="~/Content/assets/images/redressal-banner.jpg" />*@
+<div id="carousel-example-generic" class="carousel slide main-carousel" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        <div class="header-gradient"></div>
+        <div class="item active">
+            <div class="carousel-img-container"></div>
+            <div class="carousel-img-container-content">
+                <div class="grievance-banner">
+                    <h2>Seamless Grievance Redressal</h2>
+                    <h3>Your Grievances, Our Redressal</h3>
+                    <p>We are here to solve your grievances</p>
+                    <ul>
+                        <li>Create Grievance</li>
+                        <li>View Reference</li>
+                        <li>Track Status</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="carousel-img-container"></div>
+
+            <div class="carousel-img-container-content">
+                <div class="grievance-banner-2">
+                    <h2>Seamless Grievance Redressal</h2>
+                    <h3>Your Grievances, Our Redressal</h3>
+                    <p>We are here to solve your grievances</p>
+                    <ul>
+                        <li>Create Grievance</li>
+                        <li>View Reference</li>
+                        <li>Track Status</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <a class="left carousel-control visible-sm visible-xs" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="fa fa-chevron-left" aria-hidden="true"></span>
+        </a>
+        <a class="right carousel-control visible-sm visible-xs" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="fa fa-chevron-right" aria-hidden="true"></span>
+        </a>
     </div>
+    
+</div>
     <!-- Grievance Form -->
     <div class="main-banner">
-            <div class="manage-grieve-forms">                
-                <div id="div-evc" style="display:block;">
-                    <div class="banner-manage">
-                        <div class="manage-grieve-form">
-                            @*<h3 data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">Your Grievances, Our Redressal</h3>
+        <div class="manage-grieve-forms">
+            <div id="div-evc" style="display:block;">
+                <div class="banner-manage">
+                    <div class="manage-grieve-form">
+                        @*<h3 data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">Your Grievances, Our Redressal</h3>
                             <p data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">We are here to solve your grievances</p>*@
-                            <div class="left-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                                <h3>Raise a Grievance or Check your Status</h3>
+                        <div class="left-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                            <h3>Raise a Grievance or Check your Status</h3>
+                            <label>
+                                Email ID :<span style="color:red;">*</span>
+                            </label>
+                            <div class="form-group" id="div-emailid" style="display:block">
+                                <input id="Email_Id" name="Email_Id" class="form-control-input" maxlength="100" placeholder="Enter the email" required>
+                            </div>
+                            <div id="div-sendotp">
+                                <div class="col-md-offset-2 col-md-12" style="margin-bottom:10px;">
+                                    <button id="btnsentotp" name="btnsentotp" value="Send OTP" class="btn-submit" onclick="return EamilMailSendOTPPost()"> Send OTP</button>
+                                </div>
+                            </div>
+                            <div class="form-group" id="div-vc" style="display:none">
                                 <label>
-                                    Email ID :<span style="color:red;">*</span>
+                                    OTP
                                 </label>
-                                <div class="form-group" id="div-emailid" style="display:block">
-                                    <input id="Email_Id" name="Email_Id" class="form-control-input" maxlength="100" placeholder="Enter the email" required>
+                                <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Otp Code" required>
+                                <div class="col-md-offset-2 col-md-6" style="margin-bottom:10px;">
+                                    <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyOTPEamilMailSendPost()"> Proceed</button>
                                 </div>
-                                <div id="div-sendotp">
-                                    <div class="col-md-offset-2 col-md-12" style="margin-bottom:10px;">
-                                        <button id="btnsentotp" name="btnsentotp" value="Send OTP" class="btn-submit" onclick="return EamilMailSendOTPPost()"> Send OTP</button>
-                                    </div>
-                                </div>
-                                <div class="form-group" id="div-vc" style="display:none">
-                                    <label>
-                                        OTP
-                                    </label>
-                                    <input id="OptCode" name="OptCode" class="form-control-input" maxlength="15" placeholder="Enter the Otp Code" required>
-                                    <div class="col-md-offset-2 col-md-6" style="margin-bottom:10px;">
-                                        <button id="btnverify" name="btnverify" value="Verify Code" class="btn-submit" onclick="return VerifyOTPEamilMailSendPost()"> Proceed</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-offset-2 col-md-4" style="margin-bottom:10px;" id="div-resendotp">
-                                    <button id="btnresend" name="btnresend" value="Resend OTP" class="btn-warning" hidden onclick="return ResendOTPSendMail()"> Resend OTP</button>
-                                </div>
+                            </div>
+                            <div class="col-md-offset-2 col-md-4" style="margin-bottom:10px;" id="div-resendotp">
+                                <button id="btnresend" name="btnresend" value="Resend OTP" class="btn-warning" hidden onclick="return ResendOTPSendMail()"> Resend OTP</button>
                             </div>
                         </div>
-                        @*<div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                    </div>
+                    @*<div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
                             <img src="~/Content/assets/images/grievance-handling.png" alt="Grievance Handling" />
                         </div>*@
-                    </div>
                 </div>
-                <div class="row" id="div-g" style="display:none;">
-                    <div class="banner-manage">
-                        <div class="manage-grieve-form">
-                            @*<h3 data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">Your Grievances, Our Redressal</h3>
+            </div>
+            <div class="row" id="div-g" style="display:none;">
+                <div class="banner-manage">
+                    <div class="manage-grieve-form">
+                        @*<h3 data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">Your Grievances, Our Redressal</h3>
                             <p data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">We are here to solve your grievances</p>*@
-                            <div class="left-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                                <h3>Raise a Grievance or Check your Status</h3>
-                                <div class="card">
-                                    @using (Html.BeginForm("GrievanceCaseAdd", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-
-                                        <div class="form-horizontal">
-                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                            <div class="flex-form">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <span style="color:red;">*</span>
-                                                    <div class="col-md-10">
-                                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control-input", @required = "required" })
-                                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <span style="color:red;">*</span>
-                                                    <div class="col-md-10">
-                                                        @Html.RadioButtonFor(model => model.Gender, "Male", new { id = "GenderMale" }) Male
-                                                        @Html.RadioButtonFor(model => model.Gender, "Female", new { id = "GenderFemale", @checked = "checked" }) Female
-                                                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="flex-form">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.Name, htmlAttributes: new
-                                                    {
-                                                        @class = "control-label col-md-2"@*@required = "required"*@})
-                                                    @*<span style="color:red;">*</span>*@
-                                                    <div class="col-md-10">
-                                                        @Html.TextBoxFor(model => model.Name, new
-                                                        {
-                                                            @class = "form-control-input"@*@required = "required"*@})
-                                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <div class="col-md-10">
-                                                        @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input", @maxlength = "10", type = "tel", pattern = @"\d{10}", title = "Please enter a 10-digit phone number." })
-                                                        @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-                                                @*<div class="form-group">
-                            @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.TextBoxFor(model => model.PhoneNo, new
+                        <div class="left-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                            <h3>Raise a Grievance or Check your Status</h3>
+                            <div class="card">
+                                @using (Html.BeginForm("GrievanceCaseAdd", "Grievnce", FormMethod.Post, new { @id = "formid", @class = "", role = "form", autocomplete = "off", enctype = "multipart/form-data", noValidate = "novalidate" }))
                                 {
-                                    @class = "form-control-input", @maxlength = "10"})
-                                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
-                            </div>
-                        </div>*@
-                                            </div>
+                                    @Html.AntiForgeryToken()
 
-                                            <div class="flex-form">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <span style="color:red;">*</span>
-                                                    <div class="col-md-10">
-                                                        @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control-input", @required = "required" })
-                                                        @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <span style="color:red;">*</span>
-                                                    <div class="col-md-10">
-                                                        @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control-input", @required = "required" })
-                                                        @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="flex-form">
-                                                <div class="form-group" id="dv_Other" style="display:none">
-                                                    @Html.LabelFor(model => model.Other, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <span style="color:red;">*</span>
-                                                    <div class="col-md-10">
-                                                        @Html.TextBoxFor(model => model.Other, new { @class = "form-control-input" })
-                                                        @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md- 2" })
-                                                    <span>JPEG,JPG,PND & PDF (File size must be less than 5 MB.)</span>
-                                                    <div class="col-md-10">
-                                                        @*, multiple = "multiple"*@
-                                                        @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control-input", type = "file" })
-                                                        @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                    <div class="form-horizontal">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="flex-form">
                                             <div class="form-group">
-                                                @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                                                 <span style="color:red;">*</span>
                                                 <div class="col-md-10">
-                                                    @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:80px;", rows = 5, @required = "required" })
-                                                    @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
+                                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-
+                                                @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
                                                 <div class="col-md-10">
-                                                    @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox", @required = "required" })
-                                                    @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
-                                                    <span style="color:red;">*</span>
-                                                    @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-offset-2 col-md-10">
-                                                    <input type="submit" value="Submit" class="btn-submit" />
+                                                    @Html.RadioButtonFor(model => model.Gender, "Male", new { id = "GenderMale" }) Male
+                                                    @Html.RadioButtonFor(model => model.Gender, "Female", new { id = "GenderFemale", @checked = "checked" }) Female
+                                                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
                                         </div>
-                                    }
-                                </div>
+
+
+                                        <div class="flex-form">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.Name, htmlAttributes: new
+                                                {
+                                                    @class = "control-label col-md-2"@*@required = "required"*@})
+                                                @*<span style="color:red;">*</span>*@
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Name, new
+                                                    {
+                                                        @class = "form-control-input"@*@required = "required"*@})
+                                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.PhoneNo, new { @class = "form-control-input", @maxlength = "10", type = "tel", pattern = @"\d{10}", title = "Please enter a 10-digit phone number." })
+                                                    @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            @*<div class="form-group">
+                                                    @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.TextBoxFor(model => model.PhoneNo, new
+                                                        {
+                                                            @class = "form-control-input", @maxlength = "10"})
+                                                        @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>*@
+                                        </div>
+
+                                        <div class="flex-form">
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.GrievanceType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.DropDownListFor(model => model.GrievanceType, CommonModel.GetGrievanceType(), null, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.GrievanceType, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.DropDownListFor(model => model.StateId, CommonModel.GetState(), null, new { @class = "form-control-input", @required = "required" })
+                                                    @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex-form">
+                                            <div class="form-group" id="dv_Other" style="display:none">
+                                                @Html.LabelFor(model => model.Other, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                <span style="color:red;">*</span>
+                                                <div class="col-md-10">
+                                                    @Html.TextBoxFor(model => model.Other, new { @class = "form-control-input" })
+                                                    @Html.ValidationMessageFor(model => model.Other, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.DocUpload, htmlAttributes: new { @class = "control-label col-md- 2" })
+                                                <span>JPEG,JPG,PND & PDF (File size must be less than 5 MB.)</span>
+                                                <div class="col-md-10">
+                                                    @*, multiple = "multiple"*@
+                                                    @Html.TextBoxFor(model => model.DocUpload, new { @class = "form-control-input", type = "file" })
+                                                    @Html.ValidationMessageFor(model => model.DocUpload, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.GrievanceMessage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <span style="color:red;">*</span>
+                                            <div class="col-md-10">
+                                                @Html.TextAreaFor(model => model.GrievanceMessage, new { @class = "form-control-input", style = "height:80px;", rows = 5, @required = "required" })
+                                                @Html.ValidationMessageFor(model => model.GrievanceMessage, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <div class="col-md-10">
+                                                @Html.CheckBoxFor(model => model.IsConsent, new { id = "IsConsentCheckbox", @required = "required" })
+                                                @Html.Label("All information given is accurate to the best of my knowledge. I am willing to provide any additional document, email, messages, chats as support proof/evidence", htmlAttributes: new { @class = "form-check-label" })
+                                                <span style="color:red;">*</span>
+                                                @Html.ValidationMessageFor(model => model.IsConsent, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input type="submit" value="Submit" class="btn-submit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
-                        </div>                        
-                        @*<div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                        </div>
+                    </div>
+                    @*<div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
                             <img src="~/Content/assets/images/grivance-1.png" alt="grievance" />
                         </div>*@
-                    </div>                    
                 </div>
             </div>
-            @*<div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
-                
-                
+        </div>
+        @*<div class="right-box" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+
+
             </div>*@
     </div>
     <!-- Grievance -->
@@ -279,7 +329,8 @@
                     <img src="~/Content/assets/images/promptness.png" alt="Fairness" class="step4-img" />
                 </div>
             </div>
-            <img src="~/Content/assets/images/grievance-2.png" alt="grievance" class="grievance-handling" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500" />
+            <img src="~/Content/assets/images/team-work.png" alt="grievance" class="grievance-handling" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500" />
+            @*<img src="~/Content/assets/images/grievance-2.png" alt="grievance" class="grievance-handling" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="500" />*@
         </div>
     </div>
     <!-- Footer -->
@@ -411,7 +462,7 @@
                                 //if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
                                 //    window.location.href = resp.redirect;//document.baseURI +//document.baseURI +
                                 //}
-                                window.location.href =  "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
+                                window.location.href = "/Account/LoginTeamUser?EmailId=" + $('#Email').val();
 
                                 //commnet yest16dec
                                 //$('#formid')[0].reset();
@@ -440,7 +491,7 @@
         });
         function EamilMailSendOTPPost() {
             debugger;
-            $('#div-sendotp').css('pointer-events','none');
+            $('#div-sendotp').css('pointer-events', 'none');
             document.getElementById('btnsentotp').disabled = true;
             toastr.success('You will get the OTP in your mailbox within 3 minutes. OTP valid for the next 1 hour..')
             $('#btnreset').hide();
@@ -552,7 +603,7 @@
                         if (resp.resdata == 99 || resp.resdata == 100 || resp.resdata == 101) {
                             // window.location.href = resp.redirect;//document.baseURI +
                             $('#Email').val($('#Email_Id').val());//document.baseURI +
-                            window.location.href =  "/Account/LoginTeamUser?EmailId=" + $('#Email_Id').val();
+                            window.location.href = "/Account/LoginTeamUser?EmailId=" + $('#Email_Id').val();
 
                         }
                         toastr.success(resp.message);
@@ -576,5 +627,8 @@
             duration: 1000
         });
     </script>
+    <script async src="~/Content/assets/banner/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script async src="~/Content/assets/banner/bootstrap.min.js" type="text/javascript"></script>
+    <script async src="~/Content/assets/banner/index.js" type="text/javascript"></script>
 </body>
 </html>

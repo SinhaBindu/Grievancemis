@@ -1,0 +1,105 @@
+.margin-auto {
+	float: none;
+	margin: 0px auto;
+}
+.label-aim {
+	padding: 9px 22px;
+	background: #F7DA0B;
+	font-weight: normal;
+	font-size: 18px;
+	font-weight: bold;
+	width: 180px;
+	text-align: center;
+	display: block;
+	margin: auto;
+	border-radius: 3px;
+	color: #000;
+}
+.label-aim:hover {
+	background: #EA5707;
+	color: #fff;
+}
+.carousel-img-container {
+	background-image: url('../../img/demo/index/mac-1300x866.jpg');
+	opacity: 0.8;
+	background-size: cover;
+}
+.main-carousel .carousel-inner {
+	background: #2B2B2B;
+}
+.main-carousel .carousel-indicators li {
+	display: block;
+	width: 25%;
+	background: transparent;
+	border: none;
+	height: auto;
+	border-top: 2px solid rgba(255, 255, 255, 0.22);
+	border-radius: 0;
+	float: left;
+	margin: 0;
+	text-indent: 0px;
+	padding: 30px 0 0;
+}
+.main-carousel .carousel-indicators {
+	position: static;
+	width: 90%;
+	overflow: hidden;
+}
+.carousel-indicators-container {
+	position: absolute;
+	bottom: 30px;
+	z-index: 21;
+	width: 100%;
+}
+img.carousel-indicators-thumb {
+	float: left;
+	width: 60px;
+	height: 60px;
+	border-radius: 4px;
+}
+.carousel-indicators-content-container {
+	overflow: hidden;
+	text-align: left;
+	padding-left: 15px;
+}
+.prev-icon {
+	width: 24px;
+	margin-top: 200px;	
+}
+.carousel-indicators-content-container .title {
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 16px;
+	font-weight: normal;
+	padding-bottom: 5px;
+	margin: 0px 0 2px;
+	font-weight: 600;
+}
+.carousel-indicators-content-container .time {
+	color: rgba(255, 255, 255, 0.5);
+	font-size: 13px;
+}
+.carousel-indicators-container .carousel-indicators li.active .carousel-indicators-content-container .title {
+	color: #FFF;
+}
+.carousel-indicators-container .carousel-indicators li.active {
+	border-color: rgb(255, 255, 255);
+}
+.carousel-indicators-container .carousel-indicators li.active .carousel-indicators-content-container .time {
+	color: rgba(255, 255, 255, 0.69);
+}
+.carousel-img-container-content {
+	width: 100%;
+	margin: 0 auto;
+	padding: 20px 0 0;
+	position: absolute;
+	top: 0;
+	z-index: 22;
+}
+.carousel-img-container-content-main {
+	width: 90%;
+	margin: 0 auto;
+}
+.carousel-img-container-content-main .user-profile {
+	color: #FFF;
+	letter-spacing: 0.5px;
+}

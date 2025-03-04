@@ -301,34 +301,39 @@ img {
     bottom: -10px;
     color: #FA5B5A
 }
-.grievance-banner {
+.grievance-banner, .grievance-banner-2 {
     height: 450px;
     width: 100%;
-    background: url('../images/redressal-banner.jpg') bottom center;
     color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start
 }
-.grievance-banner h2 {
-    font-size: 33px;
-    margin: 35px 0 15px
+.grievance-banner {
+    background: url('../images/redressal-banner.jpg') bottom center;
 }
-    .grievance-banner h3 {
+.grievance-banner-2 {
+    background: url('../images/redsessal-banner-2.jpg') bottom center;
+}
+    .grievance-banner h2, .grievance-banner-2 h2 {
+        font-size: 33px;
+        margin: 35px 0 15px
+    }
+    .grievance-banner h3, .grievance-banner-2 h3 {
         font-size: 25px;
         font-weight: normal;
         color: #FE5C5E;
         margin: 0
     }
-.grievance-banner p {
-    font-size: 18px;
-}
-    .grievance-banner ul {
+    .grievance-banner p, .grievance-banner-2 p {
+        font-size: 18px;
+    }
+    .grievance-banner ul, .grievance-banner-2 ul {
         display: flex;
         gap: 12px
     }
-    .grievance-banner li {
+    .grievance-banner li, .grievance-banner-2 li {
         padding: 5px 17px;
         background: #fff;
         color: #000;
@@ -336,7 +341,8 @@ img {
     }
 .left-box {
     position: relative;
-    margin-top: -110px !important;
+    margin-top: -140px !important;
+    margin-bottom: 30px;
 }
 .left-box h3 {
     color: #5B2C54;

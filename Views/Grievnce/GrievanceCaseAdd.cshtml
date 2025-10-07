@@ -498,6 +498,7 @@
                         },
                         error: function (xhr, status, error) {
                             toastr.error("Error: " + xhr.status + " - " + error);
+                            return false;
                         }
                     });
                 }
@@ -517,6 +518,7 @@
             $('#OptCode').val('');
             if ($('#Email_Id').val() == null || $('#Email_Id').val() == '') {
                 toastr.error('Email Id not empty');
+                return false;
             }
             else {
                 $.ajax({
@@ -538,6 +540,7 @@
                         }
                         else {
                             toastr.error(resp.message);
+                            document.getElementById('btnsentotp').disabled = false;
                             $('#div-sendotp').css('pointer-events', 'unset');
                             return false;
                         }

@@ -37,14 +37,15 @@
                         <td>@row["GrievanceTypeText"]</td>
                         <td>
                             <div style="word-wrap: break-word; width: 150px">
-                                @if (row["Grievance_Message"].ToString().Length <= 100)
+                                <span class="txtshow">@row["Grievance_Message"].ToString()</span>
+                                @*@if (row["Grievance_Message"].ToString().Length <= 100)
                                 {
                                     <span class="txtshow">@row["Grievance_Message"].ToString()</span>
                                 }
                                 else
                                 {
                                     <span class="txtshow">@row["Grievance_Message"].ToString().Substring(0, 100)...</span>
-                                }
+                                }*@
                             </div>
 
                         </td>

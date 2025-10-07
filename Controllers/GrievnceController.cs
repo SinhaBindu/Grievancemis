@@ -239,7 +239,7 @@ namespace Grievancemis.Controllers
                 else
                 {
                     var vildemailid = EmailId.Trim().Split('@')[1];
-                    if (!(vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org"))
+                    if (!(vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "projectconcernindia.org"))//|| vildemailid.ToLower() == "gmail.com"
                     {
                         return Json(new { success = false, message = Enums.GetEnumDescription(Enums.eReturnReg.EmailNotValid), resdata = "" });
                     }
@@ -273,7 +273,7 @@ namespace Grievancemis.Controllers
                 else
                 {
                     var vildemailid = EmailId.Trim().Split('@')[1];
-                    if (!(vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org"))
+                    if (!(vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "projectconcernindia.org"))//|| vildemailid.ToLower() == "gmail.com"
                     {
                         return Json(new { success = false, message = Enums.GetEnumDescription(Enums.eReturnReg.EmailNotValid), resdata = "" });
                     }
@@ -328,7 +328,7 @@ namespace Grievancemis.Controllers
                 else
                 {
                     var vildemailid = EmailId.Trim().Split('@')[1];
-                    if (!(vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "gmail.com" || vildemailid.ToLower() == "projectconcernindia.org"))
+                    if (!(vildemailid.ToLower() == "pciglobal.in" || vildemailid.ToLower() == "projectconcernindia.org"))//|| vildemailid.ToLower() == "gmail.com"
                     {
                         return Json(new { success = false, message = "Email Invalid.", resdata = "" });
                     }

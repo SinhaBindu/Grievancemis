@@ -1,6 +1,11 @@
 ﻿@model DataTable
 @using System.Data
 
+<style>
+    #more {
+        display: none;
+    }
+</style>
 <div class="table-box">
     <div class="table-responsive">
         @*<h2>Grievances List</h2>*@
@@ -39,14 +44,18 @@
                         <td>@row["DateDiff"]</td>
                         <td>
                             <div style="word-wrap: break-word; width: 150px">
-                                @if (row["Grievance_Message"].ToString().Length <= 100)
-                                {
-                                    <span class="txtshow">@row["Grievance_Message"].ToString()</span>
-                                }
-                                else
-                                {
-                                    <span class="txtshow">@row["Grievance_Message"].ToString().Substring(0, 100)...</span>
-                                }
+                                <span class="txtshow">
+                                    @row["Grievance_Message"].ToString()
+                                    @*<span id="dots">...</span><span id="more"></span>
+                                    <button onclick="myFunction()" id="myBtn">Read more</button>*@
+                                    @*@if (row["Grievance_Message"].ToString().Length <= 100)
+                                        {
+                                            <span class="txtshow">@row["Grievance_Message"].ToString()</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="txtshow">@row["Grievance_Message"].ToString().Substring(0, 100)...</span>
+                                        }*@
                             </div>
 
                         </td>
